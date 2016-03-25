@@ -9,6 +9,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'scrooloose/syntastic'
 call vundle#end()
 filetype plugin indent on
 
@@ -31,6 +32,17 @@ map <Leader>. <esc>:tabnext<CR>
 " better indentation for code blocks
 vnoremap < <gv
 vnoremap > >gv
+
+" Synstastic settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_python_exec = '/opt/local/bin/python2'
 
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
