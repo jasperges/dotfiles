@@ -1,6 +1,17 @@
 set encoding=utf-8
 " Pathogen
-execute pathogen#infect()
+" execute pathogen#infect()
+
+" Vundle
+filetype off
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'davidhalter/jedi-vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+call vundle#end()
+filetype plugin indent on
+
 " Japsers dingetjes
 colo slate
 set number
@@ -58,7 +69,7 @@ if has("autocmd")
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
   " 'cindent' is on in C files, etc.
   " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
+  " filetype plugin indent on
 
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
