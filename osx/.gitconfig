@@ -1,0 +1,28 @@
+# Set default username and e-mail
+[user]
+	name = Jasper van Nieuwenhuizen
+	email = jaspervannieuwenhuizen@gmail.com
+# Set default so that only current branch will be pushed ('simple')
+[push]
+	default = simple
+# Set default so that you avoid unnecessary commits
+[branch]
+	autosetuprebase = always
+# Set color highlighting
+[color]
+	status = auto
+	branch = auto
+	ui = auto
+# Set the default editor
+[core]
+	editor = vim
+	excludesfile = /Users/jasperge/.gitignore
+	deltaBaseCacheLimit = 1G
+[credential]
+	helper = osxkeychain
+[alias]
+	co = checkout
+	st = status
+	br = branch
+	ci = commit
+	st = status
