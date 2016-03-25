@@ -10,11 +10,13 @@ call vundle#begin()
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/syntastic'
+Plugin 'altercation/vim-colors-solarized'
 call vundle#end()
 filetype plugin indent on
 
 " Japsers dingetjes
-colo slate
+set background=dark
+colorscheme solarized
 set number
 set modeline
 set listchars=eol:$,tab:>-,space:.
@@ -39,10 +41,24 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = '/opt/local/bin/python2'
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_python_pylint_args =
+    \ '--max-line-length=120 --extension-pkg-whitelist=PySide,shiboken'
+" let g:syntastic_python_pylint_args = '--extension-pkg-whitelist=PySide'
+let g:syntastic_python_flake8_args = '--max-line_length=120'
+map <Leader>s <esc>:SyntasticCheck<CR>
+map <Leader>a <esc>:SyntasticReset<CR>
+
+" Show trailing whitespace
+" =========================
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+au InsertLeave * match ExtraWhitespace /\s\+$/
+map <Leader>x :%s/\s\+$//<CR>
 
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
