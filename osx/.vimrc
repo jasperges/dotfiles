@@ -11,6 +11,10 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-surround'
 call vundle#end()
 filetype plugin indent on
 
@@ -34,6 +38,15 @@ map <Leader>. <esc>:tabnext<CR>
 " better indentation for code blocks
 vnoremap < <gv
 vnoremap > >gv
+" Delete comment character when joining commented lines
+set formatoptions+=j
+" Use <C-L> to clear the highlighting of :set hlsearch.
+if maparg('<C-L>', 'n') ==# ''
+  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
+
+" Color column at +1 of text width
+set colorcolumn=+1
 
 " Synstastic settings
 set statusline+=%#warningmsg#
