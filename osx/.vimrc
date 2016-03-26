@@ -7,6 +7,7 @@ filetype off
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/syntastic'
@@ -15,15 +16,18 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
+Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim'}
 call vundle#end()
 filetype plugin indent on
+
+let g:Powerline_symbols = 'fancy'
 
 " Japsers dingetjes
 set background=dark
 colorscheme solarized
 set number
 set modeline
-set listchars=eol:$,tab:>-,space:.
+set listchars=eol:¬,tab:>―,space:·
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -44,16 +48,14 @@ set formatoptions+=j
 if maparg('<C-L>', 'n') ==# ''
   nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
-
-" Color column at +1 of text width
-set colorcolumn=+1
+set laststatus=2
 
 " Synstastic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
@@ -149,3 +151,6 @@ if has('langmap') && exists('+langnoremap')
   " compatible).
   set langnoremap
 endif
+
+" Color column at 80 and 120
+set colorcolumn=80,120
