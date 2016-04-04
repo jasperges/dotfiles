@@ -17,6 +17,7 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim'}
+Plugin 'taglist.vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -66,6 +67,7 @@ let g:syntastic_python_pylint_args =
     \ '--max-line-length=120 --extension-pkg-whitelist=PySide,shiboken'
 " let g:syntastic_python_pylint_args = '--extension-pkg-whitelist=PySide'
 let g:syntastic_python_flake8_args = '--max-line_length=120'
+let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
 map <Leader>s <esc>:SyntasticCheck<CR>
 map <Leader>a <esc>:SyntasticReset<CR>
 
@@ -104,6 +106,22 @@ set mouse=a
 " Also switch on highlighting the last used search pattern.
 syntax on
 set hlsearch
+
+" Awesome line number magic
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
+  endif
+endfunc
+
+nnoremap <Leader>l :call NumberToggle()<cr>
+:au FocusLost * set number
+:au FocusGained * set relativenumber
+autocmd InsertEnter * set number
+autocmd InsertLeave * set relativenumber
+set relativenumber
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
