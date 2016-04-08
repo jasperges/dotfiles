@@ -50,6 +50,9 @@ if maparg('<C-L>', 'n') ==# ''
   nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
 set laststatus=2
+" Map TagList toggle to <leader> t
+nnoremap <Leader>t <esc>:Tlist<CR>
+let g:Tlist_Inc_Winwidth = 1
 
 " Synstastic settings
 " set statusline+=%#warningmsg#
@@ -68,8 +71,8 @@ let g:syntastic_python_pylint_args =
 " let g:syntastic_python_pylint_args = '--extension-pkg-whitelist=PySide'
 let g:syntastic_python_flake8_args = '--max-line_length=120'
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
-map <Leader>s <esc>:SyntasticCheck<CR>
-map <Leader>a <esc>:SyntasticReset<CR>
+nnoremap <Leader>s <esc>:SyntasticCheck<CR>
+nnoremap <Leader>a <esc>:SyntasticReset<CR>
 
 " Show trailing whitespace
 " =========================
@@ -84,7 +87,8 @@ set nocompatible
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-set backup		" keep a backup file (restore to previous version)
+" set backup		" keep a backup file (restore to previous version)
+set nobackup
 set undofile		" keep an undo file (undo changes after closing)
 set history=700		" keep 700 lines of command line history
 set undolevels=700
