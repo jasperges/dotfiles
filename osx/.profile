@@ -1,6 +1,8 @@
 #MAYA_LOCATION=/Applications/Autodesk/maya2015/Maya.app/Contents
 #export MAYA_LOCATION
 
+export DISABLE_AUTO_TITLE="true"
+
 export RMANTREE=/Applications/Pixar/RenderManProServer-20.2
 # export RMANFB=$RMANTREE/../RenderManStudio-20.2-maya2015/bin/it.app
 
@@ -10,9 +12,9 @@ export PATH=/Users/jasperge/python_scripts:/Users/jasperge/bash_scripts:$PATH
 export PATH=/opt/local/Library/Frameworks/Python.framework/Versions/3.5/bin:$PATH
 export PATH=$RMANTREE/bin:$PATH
 
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/opt/local/bin/python3
-source /opt/local/Library/Frameworks/Python.framework/Versions/3.4/bin/virtualenvwrapper.sh
+# export WORKON_HOME=$HOME/.virtualenvs
+# export VIRTUALENVWRAPPER_PYTHON=/opt/local/bin/python3
+# source /opt/local/Library/Frameworks/Python.framework/Versions/3.4/bin/virtualenvwrapper.sh
 
 export PYTHONPATH="/Users/jasperge/src/singledispatch:/Users/jasperge/src/unotools:$PYTHONPATH"
 
@@ -78,4 +80,7 @@ alias waker4='wakeonlan 00:1f:29:01:a5:ff'
 alias waker5='wakeonlan 00:1f:29:00:4d:e1'
 
 # rsync
-alias rsync='rsync --exclude-form="/Users/jasperge/.rsync_exlcude"'
+alias rsync='rsync --exclude-from="/Users/jasperge/.rsync_exclude"'
+
+# for typos
+alias gti='git'
