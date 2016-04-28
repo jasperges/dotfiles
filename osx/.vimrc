@@ -18,6 +18,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim'}
 Plugin 'taglist.vim'
+Plugin 'restore_view.vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -176,3 +177,13 @@ endif
 
 " Color column at 80 and 120
 set colorcolumn=80,120
+
+" Fold settings
+" augroup vimrc
+"     au BufReadPre * setlocal foldmethod=indent
+"     au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+" augroup END
+set foldnestmax=2
+
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
