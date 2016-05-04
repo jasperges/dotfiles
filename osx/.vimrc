@@ -187,3 +187,6 @@ set foldnestmax=2
 
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
+
+" Search and replace mappings
+nnoremap <Leader>f :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
