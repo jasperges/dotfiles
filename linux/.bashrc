@@ -17,7 +17,7 @@ alias c='clear'
 alias blender='~/blender/blender --enable-new-depsgraph'
 # alias blender='/Applications/blender.app/Contents/MacOS/blender'
 alias b=blender
-alias bf-blender='~/bf-blender/blender.app/Contents/MacOS/blender'
+alias bf-blender='~/bf-blender/blender'
 alias bfb=bf-blender
 alias bu='~/bash_scripts/blenderUpdateLinux.sh'
 
