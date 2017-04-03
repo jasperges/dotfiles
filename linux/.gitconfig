@@ -18,8 +18,8 @@
     editor = vim
     excludesfile = /Users/jasperge/.gitignore
     deltaBaseCacheLimit = 1G
-[credential]
-    helper = osxkeychain
+# [credential]
+#     helper = 
 [alias]
     co = checkout
     st = status
