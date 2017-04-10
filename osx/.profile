@@ -10,7 +10,7 @@ export PATH=$RMANTREE/bin:$PATH
 
 export PATH=/Applications/gaffer/bin:$PATH
 
-export PYTHONPATH="${HOME}/src/singledispatch:${HOME}/src/unotools:$PYTHONPATH"
+export PYTHONPATH=${HOME}/src/singledispatch:${HOME}/src/unotools:$PYTHONPATH
 
 # MacPorts Installer addition on 2013-01-11_at_16:02:53: adding an appropriate PATH variable for use with MacPorts.
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
@@ -30,7 +30,6 @@ export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
 # VisualSFM
 export PATH=${HOME}/src/VisualSFM_OS_X_Installer/vsfm/bin:$PATH
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/src/VisualSFM_OS_X_Installer/vsfm/bin
-export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:${HOME}/src/VisualSFM_OS_X_Installer/vsfm/bin
 
 # Aliasses
 alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
@@ -42,6 +41,8 @@ alias c='clear'
 alias blender='/Applications/blender.app/Contents/MacOS/blender --enable-new-depsgraph'
 # alias blender='/Applications/blender.app/Contents/MacOS/blender'
 alias b=blender
+alias bc11='/Applications/blender-cxx11.app/Contents/MacOS/blender --enable-new-depsgraph'
+alias bbb='/Applications/blender-buildbot/blender.app/Contents/MacOS/blender --enable-new-depsgraph'
 alias bf-blender='/Applications/bf-blender/blender.app/Contents/MacOS/blender'
 alias bfb=bf-blender
 alias bu='~/bash_scripts/blenderUpdate.sh'
@@ -59,9 +60,10 @@ alias .5='cd ../../../../../'
 
 # ls
 alias ls='ls -G'
-alias ll='ls -la'
-alias la='ls -a'
+alias ll='ls -l'
+alias la='ls -lA'
 alias llc='c; ll'
+alias lac='c; la'
 
 # Create parent dirs on demand
 alias mkdir='mkdir -pv'
@@ -70,7 +72,7 @@ alias mkdir='mkdir -pv'
 alias path='echo -e ${PATH//:/\\n}'
 alias now='date +"%T"'
 alias nowtime=now
-alias date='date +"%d-%m-%Y"'
+alias todate='date +"%Y-%m-%d"'
 
 # wget resume
 alias wget='wget -c'
