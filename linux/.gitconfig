@@ -16,7 +16,7 @@
 # Set the default editor
 [core]
     editor = vim
-    excludesfile = /Users/jasperge/.gitignore
+    excludesfile = ~/.gitignore
     deltaBaseCacheLimit = 1G
 # [credential]
 #     helper = 
