@@ -1,6 +1,8 @@
 set encoding=utf-8
-" Pathogen
-" execute pathogen#infect()
+
+if exists('py2') && has('python')
+elseif has('python3')
+endif
 
 " Vundle
 filetype off
@@ -8,29 +10,73 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+
+" Python stuff
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ctrlpvim/ctrlp.vim'
+
+" Miscellaneous stuff
 Plugin 'vim-syntastic/syntastic'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-eunuch'
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim'}
 Plugin 'taglist.vim'
 Plugin 'restore_view.vim'
 Plugin 'ervandew/supertab'
 Plugin 'AutoComplPop'
+
 " Plugin 'othree/html5.vim'
 " Plugin 'fatih/vim-go'
 " Plugin 'garbas/vim-snipmate'
+
 Plugin 'Sirver/ultisnips'
 Plugin 'honza/vim-snippets'
+Plugin 'greg-js/vim-react-es6-snippets'
+
+" Indent guides
+Plugin 'nathanaelkane/vim-indent-guides'
+
+" Auto close brackets etc.
+Plugin 'Raimondi/delimitMate'
+
+" Jinja
+Plugin 'HiPhish/jinja.vim'
+
+" Javascript plugins
+" Plugin 'pangloss/vim-javascript'
+" Plugin 'jelera/vim-javascript-syntax'
+" Plugin 'ternjs/tern_for_vim'
+Plugin 'othree/yajs'
+" Plugin 'othree/es.next.syntax'
+Plugin 'mxw/vim-jsx'
+
+" Plugin 'Valloric/YouCompleteMe'
 " Plugin 'AutoClose'
+
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'sbdchd/neoformat'
+" Plugin 'HTML-AutoCloseTag'
+" Plugin 'jiangmiao/auto-pairs'
+
+Plugin 'mattn/emmet-vim'
+
+" Restructured text
+Plugin 'Rykka/riv.vim'
+Plugin 'Rykka/InstantRst'
+
+Plugin 'peterhoeg/vim-qml'
+
 call vundle#end()
 filetype plugin indent on
 
-let g:Powerline_symbols = 'fancy'
+let g:powerline_symbols = 'fancy'
+" let g:powerline_pycmd = 'py3'
+" let g:jedi#force_py_version = 3
 
 " Japsers dingetjes
 set background=dark
@@ -42,6 +88,11 @@ set listchars=eol:¬,tab:>―,space:·
 " set tabstop=4
 " set softtabstop=4
 " set shiftwidth=4
+
+let g:pyindent_open_paren = '&sw'
+let g:pyindent_nested_paren = '&sw'
+let g:pyindent_continue = '&sw'
+
 set shiftround
 set expandtab
 set autoread    " reload file when changes happen in another editor
@@ -63,6 +114,7 @@ set laststatus=2
 " Map TagList toggle to <leader> t
 nnoremap <Leader>t <esc>:Tlist<CR>
 let g:Tlist_Inc_Winwidth = 1
+let g:Tlist_WinWidth = 56
 
 " Synstastic settings
 " set statusline+=%#warningmsg#
@@ -76,17 +128,15 @@ let g:syntastic_check_on_wq = 0
 " let g:syntastic_python_checkers = ['python', 'flake8', 'pep8', 'pylint', 'pyflakes']
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_python_exec = 'python'
-" let g:syntastic_python_flake8_exe = 'python -m flake8'
-" let g:syntastic_python_pep8_exe = 'python -m pep8'
-" let g:syntastic_python_pylint_exe = 'python -m pylint'
-" let g:syntastic_python_pyflakes_exe = 'python -m pyflakes'
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_json_checkers = ['jsonlint']
+let g:syntastic_html_checkers = ['htmlbeautify']
 let g:syntastic_aggregate_errors = 1
-let g:syntastic_loc_list_height = 5
-let g:syntastic_python_pylint_args =
-    \ '--max-line-length=120 --extension-pkg-whitelist=PySide,shiboken'
+let g:syntastic_loc_list_height = 10
+" let g:syntastic_python_pylint_args =
+"     \ '--max-line-length=120 --extension-pkg-whitelist=PySide,shiboken'
 " let g:syntastic_python_pylint_args = '--extension-pkg-whitelist=PySide'
-" let g:syntastic_python_flake8_args = '--max-line_length=120'
+" let g:syntastic_python_flake8_args = '--max-line-length=120'
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
 nnoremap <Leader>s <esc>:SyntasticCheck<CR>
 nnoremap <Leader>a <esc>:SyntasticReset<CR>
@@ -199,16 +249,18 @@ set colorcolumn=80,120
 "     au BufReadPre * setlocal foldmethod=indent
 "     au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
 " augroup END
-set foldnestmax=2
-set foldcolumn=2
+set foldnestmax=4
+set foldcolumn=4
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
 
 " Search and replace mappings
 nnoremap <Leader>f :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+nnoremap <Leader>F :,$s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 
 " CtrlP options
 nnoremap <leader>. :CtrlPTag<CR>
+let g:ctrlp_custom_ignore = '\v[\/]node_modules'
 
 " tags
 set tags+=tags;/,.git/tags;/
@@ -225,6 +277,9 @@ autocmd FileType python nnoremap <buffer> <Leader>p :exec '!python' shellescape(
 
 " autocomplete for html
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+
+" autocomplete for javascript
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -244,4 +299,39 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
 set cursorline
+set cursorcolumn
 nmap <Leader>c <Plug>ToggleAutoCloseMappings
+
+" vim-markdown settings
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_json_frontmatter = 1
+
+" Neoformat
+let g:neoformat_run_all_formatters = 1
+let g:neoformat_enabled_python = ['yapf', 'isort']
+let g:neoformat_enabled_javascript = ['prettier']
+let g:neoformat_enabled_html = ['htmlbeautify', 'tidy']
+" let g:neoformat_python_yapf = {
+"         \ 'exe': 'yapf',
+"         \ 'args': ['--style="{based_on_style: pep8, column_limit: 100, indent_dictionary_value: true, allow_split_before_dict_value: false, each_dict_entry_on_separate_line: false}"'],
+"         \ 'stdin': 1,
+"         \ }
+nnoremap <Leader>m <esc>:Neoformat<CR>
+
+" delimitMate
+let g:delimitMate_expand_cr=1
+let g:delimitMate_expand_space=1
+
+" JSX syntax highlighting
+let g:jsx_ext_required=0
+
+" emmet-vim
+let g:user_emmet_settings = {
+\    'js': {
+\      'extends': 'html',
+\    },
+\}
+
+" riv (restructured text)
+let g:riv_fold_auto_update=0
