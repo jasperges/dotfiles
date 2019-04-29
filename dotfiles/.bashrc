@@ -20,9 +20,6 @@ alias c='clear'
 alias vim='gvim -v'
 alias vimpy2='vim --cmd "let py2 = 1"'
 
-# emacs
-alias emacs='emacs -fs'
-
 # Blender
 alias b='$HOME/blender/blender'
 alias blender-buildbot='$HOME/blender-buildbot/blender'
@@ -48,8 +45,9 @@ alias .4='cd ../../../../'
 alias .5='cd ../../../../../'
 
 # ls
-alias ll='ls -l --color=auto'
-alias la='ls -lA --color=auto'
+alias ls='ls -G --color=auto'
+alias ll='ls -l'
+alias la='ls -lA'
 alias llc='c; ll'
 alias lac='c; la'
 
@@ -80,13 +78,3 @@ alias qmake='/usr/bin/qmake-qt5'
 
 # ping
 alias ping='ping -c 3'
-
-# added by travis gem
-[ -f /home/jasperge/.travis/travis.sh ] && source /home/jasperge/.travis/travis.sh
-
-if [ -f /usr/bin/powerline-daemon ]; then
-  powerline-daemon -q
-  POWERLINE_BASH_CONTINUATION=1
-  POWERLINE_BASH_SELECT=1
-  . /usr/share/powerline/bash/powerline.sh
-fi
