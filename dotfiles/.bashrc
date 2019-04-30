@@ -32,8 +32,6 @@ alias bfb='bf-blender'
 alias bu='$HOME/bash_scripts/blenderUpdate.sh'
 alias downloadbbb27='blender_buildbot_download.py --extract'
 alias downloadbbb='blender_buildbot_download.py --extract --blender-version 2.80'
-alias bpip='$HOME/bf-blender/2.79/python/bin/pip3.5'
-alias bpython='$HOME/bf-blender/2.79/python/bin/python3.5m'
 alias bfm='$HOME/blender_fracture_modifier/blender'
 
 # cd aliasses
