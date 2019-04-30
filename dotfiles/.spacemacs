@@ -471,6 +471,18 @@ before packages are loaded."
    org-re-reveal-root "file:///home/jasperge/.config/yarn/global/node_modules/reveal.js"
    display-time-day-and-date t
    display-time-24hr-format t
+   whitespace-display-mappings '((space-mark 32
+                                             [183]
+                                             [46])
+                                 (space-mark 160
+                                             [164]
+                                             [95])
+                                 (newline-mark 10
+                                               [172 10]
+                                               [36 10])
+                                 (tab-mark 9
+                                           [187 9]
+                                           [92 9]))
    org-ellipsis "↴")
   (display-time-mode 1)
   (spacemacs/toggle-minibuffer-system-monitor-on)
