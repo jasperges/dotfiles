@@ -470,7 +470,8 @@ before packages are loaded."
   (setq
    org-re-reveal-root "file:///home/jasperge/.config/yarn/global/node_modules/reveal.js"
    display-time-day-and-date t
-   display-time-24hr-format t)
+   display-time-24hr-format t
+   org-ellipsis "↴")
   (display-time-mode 1)
   (spacemacs/toggle-minibuffer-system-monitor-on)
   )
