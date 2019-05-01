@@ -33,7 +33,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(yaml
+   '(javascript
+     yaml
      rust
      html
      ;; ----------------------------------------------------------------
@@ -57,7 +58,14 @@ This function should only modify configuration layer settings."
           org-directory "~/Dropbox/org"
           org-projectile-file (concat org-directory "/projects/project-todos.org")
           org-re-reveal-root "file:///home/jasperge/.config/yarn/global/node_modules/reveal.js"
-          org-ellipsis "↴")
+          org-ellipsis "↴"
+          org-pandoc-menu-entry
+          '((106 "to json and open." org-pandoc-export-to-json-and-open)
+            (74 "as json." org-pandoc-export-as-json)
+            (120 "to docx and open." org-pandoc-export-to-docx-and-open)
+            (88 "to docx." org-pandoc-export-to-docx)
+            (114 "to rst and open." org-pandoc-export-to-rst-and-open)
+            (82 "to rst." org-pandoc-export-to-rst)))
      ;; ranger
      (shell :variables
             shell-default-height 16
