@@ -55,7 +55,9 @@ This function should only modify configuration layer settings."
           org-enable-bootstrap-support t
           org-enable-reveal-js-support t
           org-directory "~/Dropbox/org"
-          org-projectile-file (concat org-directory "/projects/project-todos.org"))
+          org-projectile-file (concat org-directory "/projects/project-todos.org")
+          org-re-reveal-root "file:///home/jasperge/.config/yarn/global/node_modules/reveal.js"
+          org-ellipsis "↴")
      ;; ranger
      (shell :variables
             shell-default-height 16
@@ -468,7 +470,6 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (setq
-   org-re-reveal-root "file:///home/jasperge/.config/yarn/global/node_modules/reveal.js"
    display-time-day-and-date t
    display-time-24hr-format t
    whitespace-display-mappings '((space-mark 32
@@ -482,10 +483,9 @@ before packages are loaded."
                                                [36 10])
                                  (tab-mark 9
                                            [187 9]
-                                           [92 9]))
-   org-ellipsis "↴")
+                                           [92 9])))
   (display-time-mode 1)
-  (spacemacs/toggle-minibuffer-system-monitor-on)
+  (add-hook 'org-capture-mode-hook 'evil-insert-state)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
