@@ -53,6 +53,9 @@ This function should only modify configuration layer settings."
           org-default-notes-file (concat org-directory "/notes.org")
           org-projectile-file (concat org-directory "/projects/project-todos.org")
           org-re-reveal-root "file:///home/jasperge/.config/yarn/global/node_modules/reveal.js"
+          ;; org-bullets-bullet-list '("◉" "○" "✸" "✿") original values
+          ;; org-bullets-bullet-list '("●" "▶" "◆" "◾")
+          org-bullets-bullet-list '("●" "○" "◾" "◽")
           org-ellipsis "↴"
           org-pandoc-menu-entry
           '((106 "to json and open." org-pandoc-export-to-json-and-open)
@@ -63,6 +66,7 @@ This function should only modify configuration layer settings."
             (82 "to rst." org-pandoc-export-to-rst))
           )
      ;; ranger
+     rust
      (shell :variables
             shell-default-height 16
             shell-default-position 'bottom)
@@ -72,8 +76,7 @@ This function should only modify configuration layer settings."
      syntax-checking
      version-control
      vimscript
-     yaml
-     )
+     yaml)
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
