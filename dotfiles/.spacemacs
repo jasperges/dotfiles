@@ -33,19 +33,12 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(javascript
-     yaml
-     rust
-     html
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
-     ;; `M-m f e R' (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     auto-completion
+   '(auto-completion
      emacs-lisp
      git
      helm
+     html
+     javascript
      markdown
      pandoc
      (python :variables
@@ -56,6 +49,8 @@ This function should only modify configuration layer settings."
           org-enable-bootstrap-support t
           org-enable-reveal-js-support t
           org-directory "~/Dropbox/org"
+          org-agenda-files (directory-files-recursively org-directory "\\.org$")
+          org-default-notes-file (concat org-directory "/notes.org")
           org-projectile-file (concat org-directory "/projects/project-todos.org")
           org-re-reveal-root "file:///home/jasperge/.config/yarn/global/node_modules/reveal.js"
           org-ellipsis "↴"
@@ -65,7 +60,8 @@ This function should only modify configuration layer settings."
             (120 "to docx and open." org-pandoc-export-to-docx-and-open)
             (88 "to docx." org-pandoc-export-to-docx)
             (114 "to rst and open." org-pandoc-export-to-rst-and-open)
-            (82 "to rst." org-pandoc-export-to-rst)))
+            (82 "to rst." org-pandoc-export-to-rst))
+          )
      ;; ranger
      (shell :variables
             shell-default-height 16
@@ -76,6 +72,7 @@ This function should only modify configuration layer settings."
      syntax-checking
      version-control
      vimscript
+     yaml
      )
 
    ;; List of additional packages that will be installed without being
@@ -494,7 +491,26 @@ before packages are loaded."
                                            [92 9])))
   (display-time-mode 1)
   (add-hook 'org-capture-mode-hook 'evil-insert-state)
-  )
+
+  (with-eval-after-load 'org-capture
+    (add-to-list 'org-capture-templates
+                 '("b" "Tidbit: quote, zinger, one-liner or textlet" entry
+                   (file+headline org-default-notes-file "Tidbits")
+                   (file "~/.emacs.d/private/org-templates/tidbit.orgcaptmpl")))
+    (add-to-list 'org-capture-templates
+                 '("j" "Journal Entry" entry
+                   (file+datetree "~/Dropbox/org/journal.org")
+                   (file "~/.emacs.d/private/org-templates/journal.orgcaptmpl")))
+    (add-to-list 'org-capture-templates
+                 '("t" "Todo List Item" entry
+                   (file+headline org-default-notes-file "Tasks")
+                   (file "~/.emacs.d/private/org-templates/todo.orgcaptmpl")))
+    (add-to-list 'org-capture-templates
+                 (org-projectile-project-todo-entry
+                  :capture-character "l"
+                  :capture-heading "Linked Project Todo"
+                  :capture-template (f-read-text "~/.emacs.d/private/org-templates/project-todos.orgcaptmpl")) t)
+    ))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
