@@ -498,6 +498,13 @@ before packages are loaded."
                                            [92 9])))
   (display-time-mode 1)
   (add-hook 'org-capture-mode-hook 'evil-insert-state)
+  (add-hook 'org-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
+  (add-hook 'org-mode-hook 'spacemacs/toggle-auto-fill-mode-on)
+  (add-hook 'rst-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
+  (add-hook 'rst-mode-hook 'spacemacs/toggle-auto-fill-mode-on)
+  (add-hook 'text-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
+  (add-hook 'text-mode-hook 'spacemacs/toggle-auto-fill-mode-on)
+  (add-hook 'python-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
 
   (with-eval-after-load 'org-capture
     (setq org-capture-templates
