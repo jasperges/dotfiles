@@ -64,6 +64,9 @@ This function should only modify configuration layer settings."
             (88 "to docx." org-pandoc-export-to-docx)
             (114 "to rst and open." org-pandoc-export-to-rst-and-open)
             (82 "to rst." org-pandoc-export-to-rst))
+          org-mobile-inbox-for-pull (concat org-directory "/mobile-inbox.org")
+          org-mobile-directory "~/Dropbox/Apps/MobileOrg"
+          org-mobile-use-encryption t
           )
      ;; ranger
      rust
