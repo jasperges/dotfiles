@@ -49,7 +49,9 @@ This function should only modify configuration layer settings."
           org-enable-bootstrap-support t
           org-enable-reveal-js-support t
           org-directory "~/Dropbox/org"
-          org-agenda-files (directory-files-recursively org-directory "\\.org$")
+          org-agenda-files '("~/Dropbox/org/gtd.org"
+                             "~/Dropbox/org/notes.org"
+                             "~/Dropbox/org/projects/project-todos.org")
           org-default-notes-file (concat org-directory "/notes.org")
           org-projectile-file (concat org-directory "/projects/project-todos.org")
           org-re-reveal-root "file:///home/jasperge/.config/yarn/global/node_modules/reveal.js"
@@ -64,6 +66,9 @@ This function should only modify configuration layer settings."
             (88 "to docx." org-pandoc-export-to-docx)
             (114 "to rst and open." org-pandoc-export-to-rst-and-open)
             (82 "to rst." org-pandoc-export-to-rst))
+          org-refile-targets
+          '((nil :maxlevel . 3)
+            (org-agenda-files :maxlevel . 3))
           org-mobile-inbox-for-pull (concat org-directory "/mobile-inbox.org")
           org-mobile-directory "~/Dropbox/Apps/MobileOrg"
           org-mobile-use-encryption t
@@ -509,10 +514,10 @@ before packages are loaded."
   (with-eval-after-load 'org-capture
     (setq org-capture-templates
           '(("t" "Todo" entry
-             (file+headline org-default-notes-file "Tasks")
+             (file+headline "~/Dropbox/org/gtd.org" "Tasks")
              (file "~/.emacs.d/private/org-templates/todo.orgcaptmpl"))
             ("l" "Linked Todo" entry
-             (file+headline org-default-notes-file "Tasks")
+             (file+headline "~/Dropbox/org/gtd.org" "Tasks")
              (file "~/.emacs.d/private/org-templates/todo-linked.orgcaptmpl"))
             ))
     (add-to-list 'org-capture-templates
