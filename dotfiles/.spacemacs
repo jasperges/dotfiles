@@ -483,6 +483,7 @@ before packages are loaded."
   (setq
    display-time-day-and-date t
    display-time-24hr-format t
+   treemacs-width 45
    whitespace-display-mappings '((space-mark 32
                                              [183]
                                              [46])
@@ -499,23 +500,32 @@ before packages are loaded."
   (add-hook 'org-capture-mode-hook 'evil-insert-state)
 
   (with-eval-after-load 'org-capture
+    (setq org-capture-templates
+          '(("t" "Todo" entry
+             (file+headline org-default-notes-file "Tasks")
+             (file "~/.emacs.d/private/org-templates/todo.orgcaptmpl"))
+            ("l" "Linked Todo" entry
+             (file+headline org-default-notes-file "Tasks")
+             (file "~/.emacs.d/private/org-templates/todo-linked.orgcaptmpl"))
+            ))
+    (add-to-list 'org-capture-templates
+                 (org-projectile-project-todo-entry
+                  :capture-character "p"
+                  :capture-heading "Project Todo"
+                  :capture-template (f-read-text "~/.emacs.d/private/org-templates/project-todo.orgcaptmpl")) t)
+    (add-to-list 'org-capture-templates
+                 (org-projectile-project-todo-entry
+                  :capture-character "i"
+                  :capture-heading "Linked Project Todo"
+                  :capture-template (f-read-text "~/.emacs.d/private/org-templates/project-todo-linked.orgcaptmpl")) t)
+    (add-to-list 'org-capture-templates
+                 '("j" "Journal Entry" entry
+                   (file+olp+datetree "~/Dropbox/org/journal.org")
+                   (file "~/.emacs.d/private/org-templates/journal.orgcaptmpl")) t)
     (add-to-list 'org-capture-templates
                  '("b" "Tidbit: quote, zinger, one-liner or textlet" entry
                    (file+headline org-default-notes-file "Tidbits")
-                   (file "~/.emacs.d/private/org-templates/tidbit.orgcaptmpl")))
-    (add-to-list 'org-capture-templates
-                 '("j" "Journal Entry" entry
-                   (file+datetree "~/Dropbox/org/journal.org")
-                   (file "~/.emacs.d/private/org-templates/journal.orgcaptmpl")))
-    (add-to-list 'org-capture-templates
-                 '("t" "Todo List Item" entry
-                   (file+headline org-default-notes-file "Tasks")
-                   (file "~/.emacs.d/private/org-templates/todo.orgcaptmpl")))
-    (add-to-list 'org-capture-templates
-                 (org-projectile-project-todo-entry
-                  :capture-character "l"
-                  :capture-heading "Linked Project Todo"
-                  :capture-template (f-read-text "~/.emacs.d/private/org-templates/project-todos.orgcaptmpl")) t)
+                   (file "~/.emacs.d/private/org-templates/tidbit.orgcaptmpl")) t)
     ))
 
 ;; Do not write anything past this comment. This is where Emacs will
