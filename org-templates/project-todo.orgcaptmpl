@@ -1,2 +1,4 @@
 * TODO %?
-  %U
+  :LOGBOOK:
+  - Added: %U
+  :END:

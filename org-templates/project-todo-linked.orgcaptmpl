@@ -1,6 +1,8 @@
 * TODO %?
-  %U
   #+begin_src
   %i
   #+end_src
   %a
+  :LOGBOOK:
+  - Added: %U
+  :END:

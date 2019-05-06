@@ -1,4 +1,7 @@
-* %^{Name} captured %U
+* %^{Name}
   %^{Tidbit type|quote|zinger|one-line|textlet}
   Possible Inspiration: %a %i
   %?
+  :LOGBOOK:
+  - Added: %U
+  :END:
