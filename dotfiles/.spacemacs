@@ -72,6 +72,9 @@ This function should only modify configuration layer settings."
           org-log-into-drawer "LOGBOOK"
           org-log-redeadline "note"
           org-log-reschedule "note"
+          org-enforce-todo-dependencies t
+          org-enforce-todo-checkbox-dependencies t
+          org-track-ordered-property-with-tag t
           org-mobile-inbox-for-pull (concat org-directory "/mobile-inbox.org")
           org-mobile-directory "~/Dropbox/Apps/MobileOrg"
           org-mobile-use-encryption t
