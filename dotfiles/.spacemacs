@@ -50,10 +50,9 @@ This function should only modify configuration layer settings."
           org-enable-reveal-js-support t
           org-directory "~/Dropbox/org"
           org-agenda-files '("~/Dropbox/org/gtd.org"
-                             "~/Dropbox/org/notes.org"
-                             "~/Dropbox/org/projects/project-todos.org")
+                             "~/Dropbox/org/notes.org")
           org-default-notes-file (concat org-directory "/notes.org")
-          org-projectile-file (concat org-directory "/projects/project-todos.org")
+          org-projectile-file (concat org-directory "/gtd.org")
           org-re-reveal-root "file:///home/jasperge/.config/yarn/global/node_modules/reveal.js"
           ;; org-bullets-bullet-list '("◉" "○" "✸" "✿") original values
           ;; org-bullets-bullet-list '("●" "▶" "◆" "◾")
@@ -69,6 +68,18 @@ This function should only modify configuration layer settings."
           org-refile-targets
           '((nil :maxlevel . 3)
             (org-agenda-files :maxlevel . 3))
+          org-agenda-custom-commands
+          '(("H" "Office and Home Lists"
+             ((agenda)
+              (tags-todo "OFFICE")
+              (tags-todo "HOME")
+              (tags-todo "COMPUTER")
+              (tags-todo "READING")))
+            ("D" "Daily Action List"
+             ((agenda "" ((org-agenda-ndays 1)
+                          (org-agenda-sorting-strategy
+                           (quote ((agenda time-up priority-down tag-up) )))
+                          (org-deadline-warning-days 0))))))
           org-log-into-drawer "LOGBOOK"
           org-log-redeadline "note"
           org-log-reschedule "note"
@@ -491,6 +502,9 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (use-package ox-rst
+    :ensure t
+    :after ox)
   (setq
    display-time-day-and-date t
    display-time-24hr-format t
@@ -520,10 +534,10 @@ before packages are loaded."
   (with-eval-after-load 'org-capture
     (setq org-capture-templates
           '(("t" "Todo" entry
-             (file+headline "~/Dropbox/org/gtd.org" "Inbox")
+             (file+headline "~/Dropbox/org/inbox.org" "Inbox")
              (file "~/.emacs.d/private/org-templates/todo.orgcaptmpl"))
             ("l" "Linked Todo" entry
-             (file+headline "~/Dropbox/org/gtd.org" "Inbox")
+             (file+headline "~/Dropbox/org/inbox.org" "Inbox")
              (file "~/.emacs.d/private/org-templates/todo-linked.orgcaptmpl"))
             ))
     (add-to-list 'org-capture-templates
