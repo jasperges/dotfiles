@@ -1,4 +1,5 @@
-* TODO %?
+* TODO %^{Korte omschrijving} %^g
   :LOGBOOK:
   - Added: %U
   :END:
+  %?

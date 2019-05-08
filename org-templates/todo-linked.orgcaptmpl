@@ -1,6 +1,7 @@
-* TODO %?
-  %i
-  %a"
+* TODO %^{Korte omschrijving} %^g
   :LOGBOOK:
   - Added: %U
+  - Link: %A"
+  - Context: %i
   :END:
+  %?
