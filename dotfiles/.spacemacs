@@ -89,8 +89,9 @@ This function should only modify configuration layer settings."
           org-mobile-inbox-for-pull (concat org-directory "/inbox.org")
           org-mobile-directory "~/Dropbox/Apps/MobileOrg"
           org-mobile-use-encryption t
-          )
-     ;; ranger
+     (ranger :variables
+             ranger-preview-file t
+             ranger-show-literal nil)
      rust
      (shell :variables
             shell-default-height 16
@@ -502,9 +503,9 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (use-package ox-rst
-    :ensure t
-    :after ox)
+  ;; (use-package ox-rst
+  ;;   :ensure t
+  ;;   :after ox)
   (setq
    display-time-day-and-date t
    display-time-24hr-format t
@@ -573,6 +574,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol nil)
+ '(flycheck-python-pycompile-executable "python3")
  '(hl-todo-keyword-faces
    (quote
     (("TODO" . "#dc752f")
@@ -590,6 +592,7 @@ This function is called at the very end of Spacemacs initialization."
      ("FIXME" . "#dc752f")
      ("XXX" . "#dc752f")
      ("XXXX" . "#dc752f"))))
+ '(importmagic-python-interpreter "ipython3")
  '(package-selected-packages
    (quote
     (ranger pandoc-mode ox-pandoc org-re-reveal ox-twbs ox-hugo org-trello dash-functional request-deferred yaml-mode auto-complete-rst xterm-color spotify shell-pop multi-term helm-spotify-plus multi eshell-z eshell-prompt-extras esh-help yasnippet-snippets yapfify ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-evil toml-mode toc-org tagedit symon string-inflection spaceline-all-the-icons solarized-theme smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters racer pytest pyenv-mode py-isort pug-mode prettier-js popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file nameless move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum live-py-mode link-hint indent-guide importmagic impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-rust flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl define-word dactyl-mode cython-mode counsel-projectile company-web company-statistics company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode cargo browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
