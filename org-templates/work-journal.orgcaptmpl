@@ -1,3 +1,4 @@
-**** %U
-     What I did today.
-     - %?
+**** %?
+     :LOGBOOK:
+     - Added: %U
+     :END:
