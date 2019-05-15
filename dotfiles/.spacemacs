@@ -504,9 +504,6 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  ;; (use-package ox-rst
-  ;;   :ensure t
-  ;;   :after ox)
   (setq
    display-time-day-and-date t
    display-time-24hr-format t
