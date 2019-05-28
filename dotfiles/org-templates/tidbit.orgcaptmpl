@@ -1,5 +1,5 @@
 * %^{Name}
-  %^{Tidbit type|quote|zinger|one-line|textlet}
+  %^{Tidbit type|quote|zinger|one-line|textlet|code}
   :LOGBOOK:
   - Added: %U
   :END:

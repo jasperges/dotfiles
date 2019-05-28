@@ -18,8 +18,8 @@
     editor = vim
     excludesfile = ~/.gitignore
     deltaBaseCacheLimit = 1G
+    autocrlf = input
 # [credential]
-#     helper = 
 [alias]
     co = checkout
     st = status

@@ -524,6 +524,7 @@ before packages are loaded."
   (add-hook 'org-capture-mode-hook 'evil-insert-state)
   (add-hook 'org-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
   (add-hook 'org-mode-hook 'spacemacs/toggle-auto-fill-mode-on)
+  (add-hook 'org-agenda-mode-hook 'org-agenda-dim-blocked-tasks)
   (add-hook 'rst-mode-hook 'spacemacs/toggle-fill-column-indicator-on)
   (add-hook 'rst-mode-hook 'spacemacs/toggle-auto-fill-mode-on)
   (add-hook 'text-mode-hook 'spacemacs/toggle-fill-column-indicator-on)

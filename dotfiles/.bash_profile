@@ -15,8 +15,11 @@ export PATH
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/bin/visualsfm:$HOME/bin/meshlab
 export LD_LIBRARY_PATH
 
-# Stalker
-export STALKER_PATH=$HOME/.strc
-
 # Deadline
 export DEADLINE_PATH=/opt/Thinkbox/Deadline10
+
+# Default Terminal
+export TERMINAL=st
+
+# Default webbrowser
+export BROWSER=firefox

@@ -64,15 +64,31 @@ alias wget='wget -c'
 # du
 # alias du='du -ch'
 
-
 # rsync
 alias rsync='rsync --exclude-from="$HOME/.rsync_exclude"'
 
 # for typos
 alias gti='git'
+alias dfn='dnf'
 
 # qt5
 alias qmake='/usr/bin/qmake-qt5'
 
+# ssh
+[ -f ~/.sshrc ] && source ~/.sshrc
+
 # ping
 alias ping='ping -c 3'
+
+# python/pip
+alias pip2userupdate='pip2 list --user --outdated --format=freeze | grep -v "^\-e" | cut -d = -f 1  | xargs -n1 pip2 install --user --upgrade'
+alias pip3userupdate='pip3 list --user --outdated --format=freeze | grep -v "^\-e" | cut -d = -f 1  | xargs -n1 pip3 install --user --upgrade'
+
+# fuzzy finder
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# Auto cd into typed dir
+shopt -s autocd globstar
+
+# Set vim key bindings
+set -o vi
