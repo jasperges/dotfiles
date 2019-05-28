@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Terminate already running instances
+killall -q sxhkd
+
+# Wait until the processes have been shut down
+while pgrep -u $UID -x sxhkd >/dev/null; do sleep 1; done
+
+# Launch new instance
+sxhkd &
+
+echo "Simple X Hot Key Daemon Launched..."

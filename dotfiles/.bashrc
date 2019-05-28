@@ -74,15 +74,22 @@ alias dfn='dnf'
 # qt5
 alias qmake='/usr/bin/qmake-qt5'
 
+# ping
+alias ping='ping -c 3'
+
 # ssh
 [ -f ~/.sshrc ] && source ~/.sshrc
 
-# ping
-alias ping='ping -c 3'
 
 # python/pip
 alias pip2userupdate='pip2 list --user --outdated --format=freeze | grep -v "^\-e" | cut -d = -f 1  | xargs -n1 pip2 install --user --upgrade'
 alias pip3userupdate='pip3 list --user --outdated --format=freeze | grep -v "^\-e" | cut -d = -f 1  | xargs -n1 pip3 install --user --upgrade'
+
+# Use Rofi instead of dmenu
+alias dmenu='rofi -dmenu'
+
+# colorful cat
+alias ccat='highlight -O ansi'
 
 # fuzzy finder
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -90,5 +97,5 @@ alias pip3userupdate='pip3 list --user --outdated --format=freeze | grep -v "^\-
 # Auto cd into typed dir
 shopt -s autocd globstar
 
-# Set vim key bindings
+# use a vi-style line editing interface
 set -o vi

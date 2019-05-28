@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Get all vpn connection names and if they are activated.
+# List them with dmenu/rofi and show them in a different color when they are active.
+# Also include a 'disconnect all' option at the end.
+# All entries act like a toggle.
+
+# Using nmcli, because that also works at home, while openvpn itself doesn't.
+# TODO: auto select the first row with an active vpn in a cleaner way
+# TODO: Only use password for ProtonVPN right now
+
+readarray -t vpnlist < <(nmcli --terse --fields NAME,STATE,TYPE c show | grep "vpn$" | sort | uniq -u)
+vpnidx="$(printf '%s\n' "${vpnlist[@]}" | \
+    sed -e 's/^\(.*\):activated:vpn/<span foreground="#00FA9A" font_weight="bold">🙈 \1<\/span>/' \
+    -e 's/^\(.*\)::vpn/❌ \1/' | \
+    rofi -dmenu -lines 5 -p "Toggle VPN connection" -i -markup-rows \
+    -select "font_weight" -format i)"
+[[ "$vpnidx" ]] || exit
+vpn="${vpnlist[vpnidx]}"
+case $(echo "$vpn" | awk -F : '{print $2}') in
+    "activated")
+        nmcli c down "$(echo "$vpn" | awk -F : '{print $1}')"
+        ;;
+    *)
+        [[ "$vpn" == *"ProtonVPN"* ]] && pass show protonvpn | \
+            nmcli --ask c up "$(echo "$vpn" | awk -F : '{print $1}')" 2>/dev/null 1>&2 \
+            || nmcli c up "$(echo "$vpn" | awk -F : '{print $1}')"
+        ;;
+esac
+# echo "$vpn"
+

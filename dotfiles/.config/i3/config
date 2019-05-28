@@ -45,11 +45,6 @@ bindsym $mod+Shift+q kill
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-# bindsym $mod+d exec --no-startup-id rofi -combi-modi "window#drun#run" -show combi -modi combi -theme solarized_alternate
-# bindsym $mod+d exec --no-startup-id rofi_launch
-# bindsym $mod+space exec --no-startup-id rofi_launch
-# bindsym $mod+c exec --no-startup-id rofi_calc
 
 # bindsym $mod+Ctrl+l exec --no-startup-id i3lock --image "$HOME/Pictures/backgrounds/background_01.png"
 
@@ -106,28 +101,16 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1: web"
-set $ws2 "2: mail"
-set $ws3 "3: work"
-set $ws4 "4: terminal"
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
-set $ws7 "7: chat/music"
-set $ws8 "8: deadline"
+set $ws7 "7"
+set $ws8 "8"
 set $ws9 "9"
-set $ws10 "10"
-
-# Specify on which monitor workspaces go.
-workspace $ws1 output DP-0
-workspace $ws2 output DP-0
-workspace $ws3 output DP-0
-workspace $ws4 output DP-0
-workspace $ws5 output DP-0
-workspace $ws6 output DP-0
-workspace $ws7 output DP-2
-workspace $ws8 output DP-2
-workspace $ws9 output DP-2
-workspace $ws10 output DP-2
+set $ws10 "10: chat/music"
 
 # Set auto workspace toggle
 workspace_auto_back_and_forth yes
@@ -160,34 +143,16 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
 # Assign applications to workspaces
-# 1: web
-assign [class="Firefox"] → number $ws1
-# 2: mail
-assign [class="Evolution"] → number $ws2
-assign [class="Protonmail Desktop"] → number $ws2
-assign [class="St" instance="neomutt"] → number $ws2
-# 3: work
-assign [class="Emacs"] →  number $ws3
-# 4: terminal
-assign [class="Gnome-terminal"] → number $ws4
-assign [class="URxvt"] → number $ws4
-assign [class="St"] → number $ws4
-# 5
-# 6
-# 7: chat/music
-assign [class="Mattermost"] →  number $ws7
-assign [class="Telegram"] → number $ws7
-assign [class="Spotify"] →  number $ws7
-for_window [instance="spotify"] move workspace $ws7
-assign [class="Rhythmbox"] → number $ws7
-assign [class="Franz"] → number $ws7
-# 8: deadline
-assign [title="^Deadline"] → number $ws8
-# 9
-# 10
+# 10: chat/music
+assign [class="Mattermost"] →  number $ws10
+assign [class="Telegram"] → number $ws10
+assign [class="Spotify"] →  number $ws10
+for_window [class="Spotify"] move workspace $ws10
+assign [class="Rhythmbox"] → number $ws10
+assign [class="Franz"] → number $ws10
 
 # Some 'favorite' apps...
-# bindsym $mod+Mod1+m exec st -n neomutt -e neomutt
+bindsym $mod+Mod1+m exec st -n neomutt -e neomutt
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -208,15 +173,12 @@ bindsym Shift+XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @D
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
 #
 # Sreen brightness controls
-# This does not work (because of NVidia driver?)
-# Maybe make a script to adjust /sys/class/backlight/gmux_backlight/brightness ?
-# bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-# bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec screen_backlight --increase
+bindsym XF86MonBrightnessDown exec screen_backlight --decrease
 
 # Keyboard Backlight control
-# XF86KbdBrightnessDown and XF86KbdBrightnessUp
-# Make a script to adjust /sys/class/leds/smc::kbd_backlight/brightness ?
-# But you must be root, how to do that?
+bindsym XF86KbdBrightnessUp exec keyboard_backlight --increase
+bindsym XF86KbdBrightnessDown exec keyboard_backlight --decrease
 
 # Touchpad controls
 # bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
@@ -254,80 +216,42 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
 default_border pixel 4
 
-# Start Simple X Hot Key Daemon
-exec_always --no-startup-id sxhkd
+# Simple X Hot Key Daemon
+exec_always --no-startup-id sxhkd_run &
 
-# Properly set up monitors
-exec --no-startup-id xrandr --output DP-0 --primary
-exec --no-startup-id xrandr --output DP-2 --right-of DP-0
-
-
-# Enable tapping, drag lock and natural scrolling
-# exec --no-startup-id xinput set-prop 14 301 1
-# exec --no-startup-id xinput set-prop 14 305 1
-exec_always --no-startup-id xinput set-prop 8 290 1
-
-# Always turn on numlock
-exec_always --no-startup-id numlockx on
+# Set xinput device properties
+setxinputs
 
 bar {
-  i3bar_command $HOME/.config/polybar/launch.sh
+  i3bar_command polybar_run
 }
 
 # Applications to start at launch
-exec_always --no-startup-id startdropbox
-exec --no-startup-id shutter --min_at_startup
-# exec --no-startup-id syncthing
+exec_always --no-startup-id dropbox_run
 exec --no-startup-id syncthing-gtk --minimized
-# exec --no-startup-id mpd
 exec --no-startup-id protonmail-bridge --no-window
-
-# Auto lock - the number is after how many minutes of idleness the screen should be locked.
-# TODO: don't lock the screen when a movie plays in full screen (Youtube, Netflix, VLC, mpv, etc.).
-exec_always --no-startup-id $HOME/.config/i3/autolock.sh 10
 
 # Background image
 exec --no-startup-id feh --bg-fill '/usr/share/backgrounds/elementary/Ryan Schroeder.jpg'
 
-exec --no-startup-id compton &
-exec --no-startup-id dunst &
-
 # Terminal for scratchpad
-# exec --no-startup-id gnome-terminal --role=scratch
-# exec --no-startup-id urxvt -name=scratchpad
 exec --no-startup-id st -n scratchpad
-# for_window [window_role="scratch"] move scratchpad
-# for_window [class="^URxvt$" instance="scratchpad"] move scratchpad
 for_window [class="St" instance="scratchpad"] move scratchpad; [class="St" instance="scratchpad"] scratchpad show; resize set 1000px 600px; move position center; move scratchpad
-
-# Force locale to my wishes
-exec --no-startup-id localectl set-locale LANG=en_US.UTF-8
-exec --no-startup-id localectl set-locale LC_MONETARY=nl_NL.UTF-8
-exec --no-startup-id localectl set-locale LC_PAPER=nl_NL.UTF-8
-exec --no-startup-id localectl set-locale LC_MEASUREMENT=nl_NL.UTF-8
-exec --no-startup-id localectl set-locale LC_TIME=en_US.UTF-8
-exec --no-startup-id localectl set-locale LC_NUMERIC=en_US.UTF-8
 
 # Logout, suspend, shutdown etc.
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
-  bindsym l exec --no-startup-id $HOME/.config/i3/i3exit lock, mode "default"
-  bindsym e exec --no-startup-id $HOME/.config/i3/i3exit logout, mode "default"
-  bindsym s exec --no-startup-id $HOME/.config/i3/i3exit suspend, mode "default"
-  bindsym h exec --no-startup-id $HOME/.config/i3/i3exit hibernate, mode "default"
-  bindsym r exec --no-startup-id $HOME/.config/i3/i3exit reboot, mode "default"
-  bindsym Shift+s exec --no-startup-id $HOME/.config/i3/i3exit shutdown, mode "default"
+  bindsym l exec --no-startup-id i3exit lock, mode "default"
+  bindsym e exec --no-startup-id i3exit logout, mode "default"
+  bindsym s exec --no-startup-id i3exit suspend, mode "default"
+  bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+  bindsym r exec --no-startup-id i3exit reboot, mode "default"
+  bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
 
   # back to normal: Enter or Escape
   bindsym Return mode "default"
   bindsym Escape mode "default"
 }
 bindsym $mod+Ctrl+l mode "$mode_system"
-
-# bindsym $mod+v exec managevpn
-
-# bindsym $mod+b exec dmenuunicode

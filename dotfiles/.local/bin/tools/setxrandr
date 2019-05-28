@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ $(hostname) = 'fedorajappie' ]
+then
+    xrandr --output LVDS-1-1 --off
+elif [ $(hostname) = 'soeperjaps' ]
+then
+    xrandr --output DP-0 --primary
+    xrandr --output DP-2 --right-of DP-0
+elif [ $(hostname) = 'astudio09' ]
+then
+    xrandr --output DP-0 --primary
+    xrandr --output HDMI-0 --right-of DP-0
+else
+    # Nothing to do
+    exit 0
+fi
