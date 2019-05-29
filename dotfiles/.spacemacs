@@ -35,6 +35,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layers
    '(auto-completion
      emacs-lisp
+     emoji
      git
      helm
      html

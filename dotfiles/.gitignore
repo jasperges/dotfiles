@@ -13,7 +13,7 @@ ENV/
 *~
 *.*~
 
-# Mac OSX
+# macOS
 .DS_Store
 
 # Windows
