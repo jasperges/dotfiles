@@ -17,14 +17,13 @@
 ;==========================================================
 
 [colors]
-background = #222
+background = #cc222222
 background-alt = #444
 foreground = #dfdfdf
 foreground-alt = #777
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
-
 
 [bar/topbar]
 monitor = DP-0
@@ -53,7 +52,7 @@ font-2 = fixed:pixelsize=10;1
 
 modules-left = i3
 modules-center = date spotify mpd
-modules-right = cpu memory eth vpn-openvpn-status temperature alsa
+modules-right = cpu memory wlan eth vpn-openvpn-status battery temperature alsa
 
 tray-position = right
 tray-padding = 6
@@ -67,6 +66,7 @@ scroll-down = i3wm-wsprev
 cursor-click = pointer
 cursor-scroll = ns-resize
 
+enable-ipc = true
 
 [bar/topbar-secondary]
 monitor = DP-2
@@ -110,7 +110,6 @@ cursor-scroll = ns-resize
 type = internal/xwindow
 label = %title:0:30:...%
 
-
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
@@ -124,7 +123,6 @@ label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
 
-
 [module/filesystem]
 type = internal/fs
 interval = 25
@@ -134,7 +132,6 @@ mount-0 = /
 label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
-
 
 [module/bspwm]
 type = internal/bspwm
@@ -155,22 +152,11 @@ label-empty = %index%
 label-empty-foreground = ${colors.foreground-alt}
 label-empty-padding = 2
 
-; Separator in between workspaces
-; label-separator = |
-
 [module/i3]
 type = internal/i3
 format = <label-state> <label-mode>
 index-sort = true
 wrapping-scroll = false
-
-; Assign icons to the workspaces
-; ws-icon-0 = 1;♚
-; ws-icon-1 = 2;♛
-; ws-icon-2 = 3;♜
-; ws-icon-0 = 4;♚
-; ws-icon-4 = 5;♞
-; ws-icon-default = ♟
 
 ; Only show workspaces on the same output as the bar
 pin-workspaces = true
@@ -200,12 +186,9 @@ label-urgent = %name%
 label-urgent-background = ${module/bspwm.label-urgent-background}
 label-urgent-padding = ${module/bspwm.label-urgent-padding}
 
-; Separator in between workspaces
-; label-separator = |
-
-
 [module/mpd]
 type = internal/mpd
+format-online-prefix = "奈 "
 format-online = <label-song>  <icon-prev> <toggle> <icon-next>
 
 ; icon: next 怜; prev 玲; pause ; play 契; stop 栗
@@ -215,9 +198,8 @@ icon-play = 契
 icon-pause = 
 icon-next = 怜
 
-label-song-maxlen = 25
+label-song-maxlen = 40
 label-song-ellipsis = true
-
 
 [module/xbacklight]
 type = internal/xbacklight
@@ -284,37 +266,7 @@ interval = 2
 format-prefix-foreground = ${colors.foreground-alt}
 label = %percentage_used%%
 
-; Available tags:
-;   <label> (default)
-;   <bar-used>
-;   <bar-free>
-;   <ramp-used>
-;   <ramp-free>
-;   <bar-swap-used>
-;   <bar-swap-free>
-;   <ramp-swap-used>
-;   <ramp-swap-free>
 format = <ramp-used> <label>
-
-; Available tokens:
-;   %percentage_used% (default)
-;   %percentage_free%
-;   %gb_used%
-;   %gb_free%
-;   %gb_total%
-;   %mb_used%
-;   %mb_free%
-;   %mb_total%
-;   %percentage_swap_used%
-;   %percentage_swap_free%
-;   %mb_swap_total%
-;   %mb_swap_free%
-;   %mb_swap_used%
-;   %gb_swap_total%
-;   %gb_swap_free%
-;   %gb_swap_used%
-
-; label = RAM %gb_used%/%gb_total%
 
 ; Only applies if <bar-used> is used
 bar-used-indicator =
@@ -347,6 +299,20 @@ ramp-free-5 = ▆
 ramp-free-6 = ▇
 ramp-free-7 = █
 
+[module/wlan]
+type = internal/network
+interface = wlp3s0
+interval = 3.0
+
+format-connected-prefix-font = 2
+format-connected-prefix = "直 "
+format-connected = <label-connected>
+label-connected = %essid%
+
+format-disconnected-prefix-font = 2
+format-disconnected-prefix = "睊 "
+format-disconnected = <label-disconnected>
+label-disconnected =
 
 [module/eth]
 type = internal/network
@@ -354,12 +320,10 @@ interface = enp6s0
 interval = 3.0
 
 format-connected-prefix-font = 2
-; format-connected-prefix = "%{F#1db954}%{F-}"
 format-connected-prefix = ""
 label-connected = %downspeed:9% %upspeed:9%
 
 format-disconnected =
-
 
 [module/date]
 type = internal/date
@@ -374,7 +338,6 @@ time-alt = %H:%M:%S
 format-prefix-foreground = ${colors.foreground-alt}
 
 label = %date% %time%
-
 
 [module/pulseaudio]
 type = internal/pulseaudio
@@ -402,7 +365,6 @@ bar-volume-fill-font = 2
 bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
-
 
 [module/alsa]
 type = internal/alsa
@@ -432,6 +394,41 @@ bar-volume-fill = ─
 bar-volume-empty = ─
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP1
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+
+format-discharging = <ramp-capacity> <label-discharging>
+
+format-full-prefix-font = 2
+format-full-prefix = " "
+
+ramp-capacity-font = 2
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+animation-charging-font = 2
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 750
+
+animation-discharging-font = 2
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+animation-discharging-framerate = 750
 
 [module/temperature]
 type = internal/temperature
@@ -452,19 +449,10 @@ ramp-0 = 
 ramp-1 = 
 ramp-2 = 
 
-
 [module/notification-mattermost]
 type = custom/script
 exec = ~/.config/polybar/notification-mattermost.sh
 interval = 60
-
-
-[module/spotify]
-type = custom/script
-exec = ~/.config/polybar/spotify_status.py --playpause-font 2
-interval = 1
-format = <label>
-; format-underline = #1db954
 
 [module/vpn-openvpn-status]
 type = custom/script
@@ -472,16 +460,21 @@ exec = ~/.config/polybar/vpn-openvpn-status.sh
 interval = 5
 format = <label>
 label = %{A1:pvpnnl toggle:}%output%%{A}
-; format-underline = #1db954
+
+[module/spotify]
+type = custom/script
+exec = ~/.config/polybar/spotify_status.py --playpause-font 2
+interval = 1
+format = <label>
 
 [settings]
 screenchange-reload = true
-;compositing-background = xor
-;compositing-background = screen
-;compositing-foreground = source
-;compositing-border = over
-;pseudo-transparency = false
-
+compositing-background = over
+compositing-foreground = over
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
+pseudo-transparency = false
 
 [global/wm]
 margin-top = 5

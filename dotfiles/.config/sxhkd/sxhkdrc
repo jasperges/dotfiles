@@ -2,16 +2,17 @@
 super + Return
 	$TERMINAL
 super + d
-	rofi_launch
+	rofi_run
 super + space
-        rofi_launch
+        rofi_run
 super + c
         rofi_calc
 # super + r
 # 	$TERMINAL -e $FILE
 # super + e
 # 	$TERMINAL -e neomutt
-# super + m
+super + m; {m,u}
+        {dmenumount,dmenuumount}
 # 	$TERMINAL -e ncmpcpp
 # super + n
 # 	$TERMINAL -e newsboat
@@ -25,8 +26,8 @@ super + i
 # 	camtoggle
 # super + shift + e
 # 	tutorialvids
-super + o; {m,w}
-        {st -n neomutt -e neomutt,$BROWSER}
+super + o; {m,w,e,s}
+        {st -n neomutt -e neomutt,$BROWSER,emacs,emacs}
 # 	webby | xargs -r $BROWSER
 # super + shift + w
 # 	$BROWSER

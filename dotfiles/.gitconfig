@@ -33,3 +33,5 @@
     tool = vimdiff
 [diff]
     tool = vimdiff
+[gpg]
+    program = gpg2

@@ -1,6 +1,8 @@
 #!/bin/bash
 
 file="/sys/class/backlight/gmux_backlight/brightness"
+# Exit if the file doesn't exists.
+[[ ! -f "$file" ]] && exit 1
 read -r max < "/sys/class/backlight/gmux_backlight/max_brightness"
 ((step = max / 20))  # 5%
 
