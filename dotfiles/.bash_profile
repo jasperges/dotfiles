@@ -7,7 +7,7 @@ fi
 
 # User specific environment and startup programs
 
-PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.local/bin/launchers:$HOME/.local/bin/tools:$HOME/.local/bin/wm
+PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.local/bin/launchers:$HOME/.local/bin/tools:$HOME/.local/bin/wm:$HOME/.local/bin/polybar
 PATH=$PATH:$HOME/python_scripts:$HOME/bash_scripts
 
 # set PATH to include yarn installed binaries
