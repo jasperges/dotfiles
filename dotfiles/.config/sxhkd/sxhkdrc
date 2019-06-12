@@ -16,8 +16,9 @@ super + m; {m,u}
 # 	$TERMINAL -e ncmpcpp
 # super + n
 # 	$TERMINAL -e newsboat
-super + i
-	$TERMINAL -e htop
+super + i; {i,s}
+        {import_photos,top_run}
+# 	$TERMINAL -e htop
 # super + y
 # 	$TERMINAL -e calcurse
 # super + shift + a
@@ -26,9 +27,11 @@ super + i
 # 	camtoggle
 # super + shift + e
 # 	tutorialvids
-super + o; {m,w,e,s}
-        {st -n neomutt -e neomutt,$BROWSER,emacs,emacs}
+super + o; {m,w,e,s,p,o,j}
+        {$TERMINAL -n neomutt -e neomutt,$BROWSER,emacs,emacs,ncmpcpp_local,ncmpcpp_guybrush,dmenujobs}
 # 	webby | xargs -r $BROWSER
+super + g; {d}
+        {surf https://start.duckduckgo.com/}
 # super + shift + w
 # 	$BROWSER
 # super + shift + g
@@ -37,8 +40,8 @@ super + o; {m,w,e,s}
 # Et cetera...
 super + b
 	dmenuunicode
-super + v; {m,p,s}
-        {managevpn manage, managevpn proton, managevpn sub}
+super + v; {m,p,s,w}
+        {managevpn manage, managevpn proton, managevpn sub, managewifi}
 # super + Scroll_Lock
 # 	killall screenkey || screenkey
 # super + Insert

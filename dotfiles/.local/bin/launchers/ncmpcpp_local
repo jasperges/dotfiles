@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Launch new instance
+$TERMINAL -n ncmpcpp-local -e ncmpcpp
+
+echo "ncmpcpp connected to localhost..."

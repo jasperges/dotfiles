@@ -4,38 +4,34 @@
 # Drives mounted at /, /boot and /home will not be options to unmount.
 
 unmountusb() {
-	[ -z "$drives" ] && exit
-	chosen=$(echo "$drives" | dmenu -i -p "Unmount which drive?" | awk '{print $1}')
-	[ -z "$chosen" ] && exit
-	sudo -A umount "$chosen" && notify-send "💻 USB unmounting" "$chosen unmounted."
-	}
+    chosen=$(echo "$drives" | dmenu -i -p "Unmount which drive?" | awk '{print $1}')
+    [ -z "$chosen" ] && exit
+    sudo -A umount "$chosen" && notify-send "💻 USB unmounting" "$chosen unmounted." && exit || \
+        notify-send -u critical "💻 USB unmounting" "Unmounting of $chosen failed." && exit 1
+    }
 
-unmountandroid() { \
-	chosen=$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | dmenu -i -p "Unmount which device?")
-	[ -z "$chosen" ] && exit
-	sudo -A umount -l "$chosen" && notify-send "🤖 Android unmounting" "$chosen unmounted."
-	}
+unmountphone() {
+    chosen=$(echo "$devices" | dmenu -i -p "Unmount which device?")
+    [ -z "$chosen" ] && exit
+    sudo -A umount -l "$chosen" && notify-send " Phone unmounting" "$chosen unmounted." && exit || \
+        notify-send -u critical " Phone unmounting" "Unmounting of $chosen failed." && exit 1
+    }
 
-asktype() { \
-	case "$(printf "USB\\nAndroid" | dmenu -i -p "Unmount a USB drive or Android device?")" in
+asktype() {
+	case "$(printf "%s\n" ${choices[@]} | dmenu -i -p "What do you want to unmount?")" in
 		USB) unmountusb ;;
-		Android) unmountandroid ;;
+        Phone) unmountphone ;;
 	esac
 	}
 
 drives=$(lsblk -nrpo "name,type,size,mountpoint" | awk '$2=="part"&&$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "%s (%s)\n",$4,$3}')
+devices=$(awk '/ifuse|simple-mtpfs/ {print $2}' /etc/mtab)
+choices=()
+choices+=($([ "$drives" ] && echo "USB"))
+choices+=($([ "$devices" ] && echo "Phone"))
 
-if ! grep simple-mtpfs /etc/mtab; then
-	[ -z "$drives" ] && echo "No drives to unmount." &&  exit
-	echo "Unmountable USB drive detected."
-	unmountusb
-else
-	if [ -z "$drives" ]
-	then
-		echo "Unmountable Android device detected."
-	       	unmountandroid
-	else
-		echo "Unmountable USB drive(s) and Android device(s) detected."
-		asktype
-	fi
-fi
+[ ${#choices[@]} -gt 1 ] && asktype
+case ${choices[0]} in
+    USB) unmountusb ;;
+    Phone) unmountphone ;;
+esac

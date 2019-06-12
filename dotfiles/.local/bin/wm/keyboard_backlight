@@ -24,6 +24,8 @@ if ((val <   0)); then ((val =   0)); fi
 if ((val > max)); then ((val = max)); fi
 
 printf '%d' "$val" > "$file"
+# Use this to restore the last value when restarting X.
+printf '%d' "$val" > "$HOME/.last_keyboard_backlight"
 
 # printf 'Before: %3d\n' "$cur"
 # printf 'After : %3d\n' "$val"

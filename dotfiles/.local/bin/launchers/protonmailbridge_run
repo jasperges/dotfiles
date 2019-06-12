@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Terminate already running instances
+killall -q protonmail-bridge
+
+# Wait until the processes have been shut down
+while pgrep -u $UID -f protonmail-bridge >/dev/null; do sleep 1; done
+
+# Launch new instance
+protonmail-bridge --no-window &
+
+echo "ProtonMail Bridge launched..."

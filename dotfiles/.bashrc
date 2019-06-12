@@ -2,11 +2,21 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-        . /etc/bashrc
+	. /etc/bashrc
 fi
 
+if [ -f "$HOME/.config/user-dirs.dirs" ]; then
+        . "$HOME/.config/user-dirs.dirs"
+fi
+
+export XDG_CONFIG_HOME=$HOME/.config
+
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
+export SYSTEMD_PAGER=
+
+# GPG
+GPG_TTY=$(tty)
+export GPG_TTY
 
 # User specified aliases and functions
 
@@ -92,6 +102,8 @@ alias dmenu='rofi -dmenu'
 alias ccat='highlight -O ansi'
 
 # fuzzy finder
+alias se='$EDITOR $(find $HOME/.local/bin $HOME/.config -type f | fzf)'
+alias vf='$EDITOR $(fzf)'
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Auto cd into typed dir

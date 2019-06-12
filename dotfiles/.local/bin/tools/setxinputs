@@ -1,29 +1,11 @@
 #!/bin/bash
 
-# TODO: set device props in a more generic way. For example, find out what
-# property of which device is the 'natural scroll' and enable it.
-
-# List all pointer device id's
-# xinput list --short | sed -nEe 's/^.*id=([0-9]+).*slave[[:blank:]]+pointer.*$/\1/p'
-
-# But for now just some hard coded values for the different computers I use.
-
-if [ $(hostname) = 'fedorajappie' ]
-then
-    # Enable tapping, drag lock and natural scrolling
-    xinput set-prop 14 301 1
-    xinput set-prop 14 305 1
-    xinput set-prop 14 309 1
-elif [ $(hostname) = 'soeperjaps' ]
-then
-    # Enable natural scrolling
-    xinput set-prop 8 290 1
-elif [ $(hostname) = 'astudio09' ]
-then
-    # Enable natural scrolling and disable #^&$@! Wacom touch
-    xinput set-prop 9 288 1
-    xinput | grep Finger | awk -F '\t' '{print $2}' | awk -F '=' '{print $2}' | xargs -L 1 xinput disable
-else
-    # Nothing to do
-    exit 0
-fi
+# Try to enable tapping, drag lock and natural scrolling for every device that has this property.
+readarray -t pointerids < <(xinput list --short | sed -nEe "s/^.*id=([0-9]+).*\[slave[ \t]+pointer.*$/\1/p")
+for i in ${pointerids[@]}; do
+    xinput list-props $i | sed -E -n -e "s/.*(Tapping( Drag Lock)?|Natural Scrolling) Enabled +\(([0-9]+)\).*/\3/p" | xargs -I '{}' xinput set-prop $i '{}' 1
+done
+# Disable touch
+xinput | awk -F '\t' '/Finger/ {print $2}' | cut -d = -f 2 | xargs -rL 1 xinput disable
+# Disable buttons
+xinput | awk -F '\t' '/Pad pad/ {print $2}' | cut -d = -f 2 | xargs -r -L 1 -I "{}" xinput set-button-map "{}" 0 0 0 0 0 0 0 0 0 0 0 0 0

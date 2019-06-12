@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Launch new instance
+st -n ncmpcpp-guybrush -e ncmpcpp -h osmc-guybrush -p 5700
+
+# echo "ncmpcpp connected to osmc-guybrush..."

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+
+which gotop && $TERMINAL -e gotop && exit || which htop && $TERMINAL -e htop && exit || which top && $TERMINAL top && exit

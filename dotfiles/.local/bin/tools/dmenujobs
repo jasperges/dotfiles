@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ls $HOME/.local/bin/jobs | dmenu | xargs -L 1 -I "{}" sh "$HOME/.local/bin/jobs/{}"

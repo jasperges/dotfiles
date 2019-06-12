@@ -1,8 +1,60 @@
 #!/bin/bash
+
+# Settings
+declare -a LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING=(
+    "mpv"
+)
+declare -a LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING=(
+    "YouTube" "Netflix" "NPO Start"
+)
+
+# Find active window id
+get_active_id() {
+    xprop -root | awk '$1 ~ /_NET_ACTIVE_WINDOW/ { print $5 }'
+}
+
+# Find active window WM_CLASS
+get_wm_class() {
+    xprop -id $1 | awk -F '=' '$1 ~ /WM_CLASS\(STRING\)/ { print $2 }' | cut -d "," -f 2 | tr -d '[:space:]'
+}
+
+# Determine a window's title text by it's ID
+get_window_title() {
+    # For mplayer or vlc, we might need to check WM_CLASS(STRING), idk.
+    xprop -id $1 | awk -F '=' '$1 ~ /_NET_WM_NAME\(UTF8_STRING\)/ { print $2 }'
+}
+
+# Determine if a window is fullscreen based on it's ID
+is_fullscreen() {
+    xprop -id $1 | awk -F '=' '$1 ~ /_NET_WM_STATE\(ATOM\)/ { if ($2 ~ /STATE_FULLSCREEN/) exit 0; exit 1 }'
+    return $?
+}
+
+# Determine if the locker command should run based on which windows are fullscreened.
+should_lock() {
+    id=$(get_active_id)
+    wmclass=$(get_wm_class $id)
+    title=$(get_window_title $id)
+
+    if is_fullscreen $id; then
+        for i in "${LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING[@]}"; do
+            if [[ $wmclass =~ $i ]]; then
+                return 1
+            fi
+        done
+        for i in "${LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING[@]}"; do
+            if [[ $title =~ $i ]]; then
+                return 1
+            fi
+        done
+    fi
+}
+
 lock() {
-    image=$(find /home/jasperge/Pictures/backgrounds/lock -iname *.png -type f | shuf -n 1)
-    echo $image
-    i3lock --ignore-empty-password --show-failed-attempts --tiling --image $image
+    if should_lock; then
+        i3lock --ignore-empty-password --show-failed-attempts --tiling \
+            --image "$(find $HOME/[Pp]ictures/backgrounds/lock -iname *.png -type f | shuf -n 1)"
+    fi
 }
 
 case "$1" in

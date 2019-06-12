@@ -66,6 +66,3 @@ Xft.hintstyle:  hintfull
 URxvt.font:xft:Source Code Pro:style=Regular:size=12
 URxvt.urlLauncher:firefox
 URxvt.scrollBar:false
-
-/* *.font:xft:Source Code Pro:size=12 */
-/* *.alpha:0.5 */
