@@ -69,11 +69,10 @@ localize_modules() {
 
 localize_network() {
     # Find the correct ethernet and wlan devices to use
-    # TODO: how to pick the correct one when there are several devices?
-    #       On my laptop I also want ethernet enabled, but it's rarely plugged in.
-    #       My work computer has 2 ethernet adapters, but only 1 should be used.
     wlan=$(nmcli -g DEVICE,TYPE d | awk -F ":" '/wifi/ {printf $1}')
-    eth=$(nmcli -g DEVICE,TYPE d | awk -F ":" '/ethernet/ {printf $1}')
+    # It seems like connected devices are shown at the top. So for me it's safe
+    # to grab the first one in case there are several ethernet devices.
+    eth=$(nmcli -g DEVICE,TYPE d | awk -F ":" '/ethernet/ {print $1}' | head -n 1)
     sed -Ee "s/^(wlan =).*$/\1 $wlan/" -e "s/^(eth =).*$/\1 $eth/" -i $HOME/.config/polybar/config
 }
 
