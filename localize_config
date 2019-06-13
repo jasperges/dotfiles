@@ -28,7 +28,7 @@ localize_monitors() {
         -i $HOME/.local/bin/launchers/polybar_run
 
     # Use ramp-coreload for bigger and ramp-load for smaller monitors
-    ramp=$([[ $(xrandr | awk '/primary/ {printf 4}' | cut -d x -f 1) -gt 1920 ]] && echo "ramp-coreload" || echo "ramp-load")
+    ramp=$([[ $(xrandr | awk '/primary/ {printf $4}' | cut -d x -f 1) -gt 1920 ]] && echo "ramp-coreload" || echo "ramp-load")
     sed -E -e "s/^(cpu-format =.*)<ramp-[a-z]+>(.*)$/\1<$ramp>\2/" -i $HOME/.config/polybar/config
 }
 
