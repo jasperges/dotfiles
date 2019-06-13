@@ -68,10 +68,8 @@ localize_modules() {
 }
 
 localize_network() {
-    # Find the correct ethernet and wlan devices to use
-    wlan=$(nmcli -g DEVICE,TYPE d | awk -F ":" '/wifi/ {printf $1}')
-    # It seems like connected devices are shown at the top. So for me it's safe
-    # to grab the first one in case there are several ethernet devices.
+    # Find the correct ethernet and wlan devices to use. Only grab the first one.
+    wlan=$(nmcli -g DEVICE,TYPE d | awk -F ":" '/wifi/ {print $1}' | head -n 1)
     eth=$(nmcli -g DEVICE,TYPE d | awk -F ":" '/ethernet/ {print $1}' | head -n 1)
     sed -Ee "s/^(wlan =).*$/\1 $wlan/" -e "s/^(eth =).*$/\1 $eth/" -i $HOME/.config/polybar/config
 }
