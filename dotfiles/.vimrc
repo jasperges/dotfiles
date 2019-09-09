@@ -29,6 +29,9 @@ Plugin 'restore_view.vim'
 Plugin 'ervandew/supertab'
 Plugin 'AutoComplPop'
 
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
 " Plugin 'othree/html5.vim'
 " Plugin 'fatih/vim-go'
 " Plugin 'garbas/vim-snipmate'
@@ -59,6 +62,7 @@ Plugin 'mxw/vim-jsx'
 
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'suan/vim-instant-markdown', {'rtp': 'after'}
 Plugin 'sbdchd/neoformat'
 " Plugin 'HTML-AutoCloseTag'
 " Plugin 'jiangmiao/auto-pairs'
@@ -79,15 +83,21 @@ let g:powerline_symbols = 'fancy'
 " let g:jedi#force_py_version = 3
 
 " Japsers dingetjes
+nnoremap <Space> <Nop>
+" sunmap <Space>
+" map <Space> <Leader>
+" edit vimrc quickly
+let mapleader=" "
+map <leader>v :sp ~/.vimrc<cr>
+" reload vimrc when saved
+au BufWritePost .vimrc so ~/.vimrc
 set background=dark
 colorscheme solarized
 let g:python_recommended_style = 0
 set number
 set modeline
 set listchars=eol:¬,tab:>―,space:·
-" set tabstop=4
-" set softtabstop=4
-" set shiftwidth=4
+set conceallevel=2
 
 let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
@@ -138,7 +148,7 @@ let g:syntastic_loc_list_height = 10
 " let g:syntastic_python_pylint_args = '--extension-pkg-whitelist=PySide'
 " let g:syntastic_python_flake8_args = '--max-line-length=120'
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
-nnoremap <Leader>s <esc>:SyntasticCheck<CR>
+nnoremap <Leader>S <esc>:SyntasticCheck<CR>
 nnoremap <Leader>a <esc>:SyntasticReset<CR>
 
 " Show trailing whitespace
@@ -285,6 +295,7 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]
 
 " Autocomplete snippets
 " fun! GetSnipsInCurrentScope()
@@ -306,6 +317,10 @@ nmap <Leader>c <Plug>ToggleAutoCloseMappings
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_json_frontmatter = 1
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_no_extension_in_markdown = 1
+let g:vim_markdown_autowrite = 1
 
 " Neoformat
 let g:neoformat_run_all_formatters = 1
@@ -335,3 +350,19 @@ let g:user_emmet_settings = {
 
 " riv (restructured text)
 let g:riv_fold_auto_update=0
+
+" Nerdtree
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Instant Markdown
+" Uncomment to override defaults:
+let g:instant_markdown_slow = 1
+let g:instant_markdown_autostart = 0
+" let g:instant_markdown_open_to_the_world = 1
+" let g:instant_markdown_allow_unsafe_content = 1
+" let g:instant_markdown_allow_external_content = 0
+" let g:instant_markdown_mathjax = 1
+" let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+" let g:instant_markdown_autoscroll = 0
+" let g:instant_markdown_browser = "firefox --new-window"
