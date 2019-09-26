@@ -19,7 +19,7 @@
 [local]
 topbar-monitor =
 topbar-modules-left = i3 xwindow
-topbar-modules-center = date separator spotify mpd
+topbar-modules-center = date pomodoro spotify mpd mpd-guybrush
 topbar-modules-right = cpu memory wlan eth vpn-status battery temperature alsa mail
 topbar-secondary-monitor =
 topbar-secondary-modules-left = i3 xwindow
@@ -202,6 +202,10 @@ label-urgent-padding = ${module/bspwm.label-urgent-padding}
 [module/mpd]
 type = internal/mpd
 format-online = %{T2}<toggle>%{T-}%{A1:mpc toggle:}  <label-song>%{A}
+format-online-prefix = "|    "
+format-playing = ${self.format-online}
+format-paused = ${self.format-online}
+format-stopped = ${self.format-online}
 ; icon: next 怜; prev 玲; pause ; play 契; stop 栗
 icon-prev = 玲
 icon-stop = 栗
@@ -210,6 +214,24 @@ icon-play = 
 icon-next = 怜
 label-song-maxlen = 40
 label-song-ellipsis = true
+
+[module/mpd-guybrush]
+type = internal/mpd
+format-online = %{T2}<toggle>%{T-}%{A1:mpc toggle:}  <label-song>%{A}
+format-online-prefix = "|    "
+format-playing = ${self.format-online}
+format-paused = ${self.format-online}
+format-stopped = ${self.format-online}
+; icon: next 怜; prev 玲; pause ; play 契; stop 栗
+icon-prev = 玲
+icon-stop = 栗
+icon-pause = 
+icon-play = 
+icon-next = 怜
+label-song-maxlen = 40
+label-song-ellipsis = true
+host = guybrush.local
+port = 5700
 
 [module/xbacklight]
 type = internal/xbacklight
@@ -383,7 +405,7 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 type = internal/battery
 battery = BAT0
 adapter = ADP1
-full-at = 98
+full-at = 95
 format-charging = <animation-charging> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
 format-full-prefix-font = 2
@@ -450,6 +472,12 @@ initial = 1
 format = <output>
 click-left = "$TERMINAL" -n neomutt -e neomutt
 click-right = setsid mailsync 2>/dev/null 1>&2 &
+
+[module/pomodoro]
+type = custom/ipc
+hook-0 = pomodoro
+initial = 0
+format = <output>
 
 [settings]
 screenchange-reload = true

@@ -46,11 +46,12 @@ localize_modules() {
     # Check modules that are available on the current system
     spotify=$([[ -f $(which spotify 2>/dev/null) ]] && echo spotify)
     mpd=$([[ -f $(which mpd 2>/dev/null) ]] && echo mpd)
+    mpd_guybrush=$(mpc -h guybrush.local -p 5700 status 2>/dev/null 1>&2 && echo mpd-guybrush)
     wlan=$(nmcli --fields TYPE d | grep -q wifi && echo wlan)
     battery=$([[ -f /sys/class/power_supply/ADP1/online ]] && echo battery)
     alsa=$([[ -f $(which aserver 2>/dev/null) ]] && echo alsa)
     left=" i3 xwindow"
-    center=$(echo " date separator $spotify $mpd")
+    center=$(echo " date pomodoro $spotify $mpd $mpd_guybrush")
     right=$(echo " cpu memory $wlan eth vpn-status $battery temperature $alsa mail")
     sed -E \
         -e "s/^(topbar-modules-left =).*$/\1$left/" \
