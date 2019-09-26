@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
 # rofi -combi-modi "window,drun,run" -show combi -modi combi
-rofi -combi-modi "run,window" -show combi -modi combi
+[[ $1 == "drun" ]] && rofi -combi-modi "drun,window" -show combi -modi combi || \
+    rofi -combi-modi "run,window" -show combi -modi combi

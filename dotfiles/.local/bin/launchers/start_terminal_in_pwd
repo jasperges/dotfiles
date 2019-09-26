@@ -1,0 +1,18 @@
+#!/bin/bash
+
+WM_ID=$(xprop -root _NET_ACTIVE_WINDOW | cut -d " " -f 5)
+# Go to the current working directory if current window is also the terminal
+WM_CLASS=$(xprop -id $WM_ID WM_CLASS | cut -d "=" -f 2 | cut -d "," -f 1 | tr -d '"[:space:]')
+if [[ $WM_CLASS = $TERMINAL ]]; then
+    WM_NAME="$(xprop -id $WM_ID WM_NAME | awk -F " = " '{printf $2}' | tr -d '"')"
+    if [[ $(echo "$WM_NAME" | cut -d " " -f 5) -eq "VIM" ]]; then
+        # Running VIM
+        DIR="$(echo "$WM_NAME" | sed -Ee "s|^.*\((.*)\) - VIM$|\1|" -e "s|~|$HOME|")"
+    else
+        # Just running a shell?
+        DIR="$(echo "$WM_NAME" | awk -F ":" '{printf $NF}' | sed -e "s|~|$HOME|")"
+    fi
+    [[ -d $DIR ]] && cd "$DIR" || cd "$HOME"
+fi
+
+$TERMINAL &

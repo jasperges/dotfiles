@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# pomodoro status, this needs https://gitlab.com/jasperges/pomodoro
+
+[[ -f $HOME/.pomodoro_live ]] && cat $HOME/.pomodoro_live 2>/dev/null || echo ""

@@ -40,8 +40,7 @@ alias bf-blender='$HOME/bf-blender/blender'
 alias blender='bf-blender'
 alias bfb='bf-blender'
 alias bu='$HOME/bash_scripts/blenderUpdate.sh'
-alias downloadbbb27='blender_buildbot_download.py --extract'
-alias downloadbbb='blender_buildbot_download.py --extract --blender-version 2.80'
+alias downloadbbb='blender_buildbot_download --extract'
 alias bfm='$HOME/blender_fracture_modifier/blender'
 
 # cd aliasses

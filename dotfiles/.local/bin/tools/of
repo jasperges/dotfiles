@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ $1 ]]; then
+    searchdir="$1"
+else
+    searchdir="$PWD"
+fi
+
+findfiles=$(find "$searchdir" -maxdepth 2 -type f)
+file=$(echo "$findfiles" | fzf)
+[[ -f $file ]] && xdg-open $file

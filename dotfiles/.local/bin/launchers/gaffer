@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export GAFFERCYCLES=/opt/gafferCycles
+export GAFFER_EXTENSION_PATHS=$GAFFERCYCLES:$GAFFER_EXTENSION_PATHS
+/opt/gaffer/bin/gaffer

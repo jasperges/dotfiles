@@ -24,7 +24,7 @@ xmodmap -e 'keycode 94 = grave asciitilde grave asciitilde dead_grave dead_horn 
 xcape -e 'Super_L=Escape' &
 
 # Turn on autolock
-autolock 10 &
+autolock 9 &
 
 # Start mpd
 mpd &

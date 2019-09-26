@@ -1,130 +1,138 @@
 # Basic binds
+XF86Eject
+        eject
 super + Return
-	$TERMINAL
+        start_terminal_in_pwd
+# super + shift + Return
+#         $TERMINAL
 super + d
-	rofi_run
+        rofi_run drun
 super + space
         rofi_run
 super + c
         rofi_calc
 # super + r
-# 	$TERMINAL -e $FILE
+#       $TERMINAL -e $FILE
 # super + e
-# 	$TERMINAL -e neomutt
+#       $TERMINAL -e neomutt
 super + m; {m,u}
         {dmenumount,dmenuumount}
-# 	$TERMINAL -e ncmpcpp
+#       $TERMINAL -e ncmpcpp
 # super + n
-# 	$TERMINAL -e newsboat
+#       $TERMINAL -e newsboat
 super + i; {i,s}
         {import_photos,top_run}
-# 	$TERMINAL -e htop
+#       $TERMINAL -e htop
 # super + y
-# 	$TERMINAL -e calcurse
+#       $TERMINAL -e calcurse
 # super + shift + a
-# 	$TERMINAL -e pulsemixer; pkill -RTMIN+10 i3blocks
+#       $TERMINAL -e pulsemixer; pkill -RTMIN+10 i3blocks
 # super + shift + c
-# 	camtoggle
+#       camtoggle
 # super + shift + e
-# 	tutorialvids
-super + o; {m,w,e,s,p,o,j}
-        {$TERMINAL -n neomutt -e neomutt,$BROWSER,emacs,emacs,ncmpcpp_local,ncmpcpp_guybrush,dmenujobs}
-# 	webby | xargs -r $BROWSER
+#       tutorialvids
+super + o; {m,w,e,s,p,o,j,r,t}
+        {$TERMINAL -n neomutt -e neomutt,$BROWSER,emacs,emacs,ncmpcpp_local,ncmpcpp_guybrush,dmenujobs,play_radio,play_radio_guybrush}
+#       webby | xargs -r $BROWSER
+super + equal
+        i3-msg -q "[class=St instance=scratchpad]" scratchpad show
+super + s; {m,n,t,e,b}
+        {i3-msg -q "[class=St instance=ncmpcpp-local] scratchpad show",i3-msg -q "[class=St instance=ncmpcpp-guybrush] scratchpad show",i3-msg -q "[class=St instance=scratchpad] scratchpad show",i3-msg -q "[class=St instance=neomutt] scratchpad show",i3-msg -q "[class=St instance=blender*] scratchpad show"}
 super + g; {d}
         {surf https://start.duckduckgo.com/}
 # super + shift + w
-# 	$BROWSER
+#       $BROWSER
 # super + shift + g
-# 	gimp
+#       gimp
 
 # Et cetera...
 super + b
-	dmenuunicode
+        dmenuunicode
 super + v; {m,p,s,w}
         {managevpn manage, managevpn proton, managevpn sub, managewifi}
 # super + Scroll_Lock
-# 	killall screenkey || screenkey
+#       killall screenkey || screenkey
 # super + Insert
-# 	showclip
+#       showclip
 # super + shift + x
-# 	prompt "Shutdown computer?" "sudo -A shutdown -h now"
+#       prompt "Shutdown computer?" "sudo -A shutdown -h now"
 # super + shift + BackSpace
-# 	prompt "Reboot computer?" "sudo -A shutdown -r now"
+#       prompt "Reboot computer?" "sudo -A shutdown -r now"
 # super + x
-# 	mpc pause; pauseallmpv; i3lock -e -f -c 1d2021; xset dpms force off
+#       mpc pause; pauseallmpv; i3lock -e -f -c 1d2021; xset dpms force off
 # XF86Launch1
-# 	xset dpms force off
+#       xset dpms force off
 
 # Recording
 # Take screenshot
 # Print
-# 	maim pic-full-$(date '+%y%m%d-%H%M-%S').png
+#       maim pic-full-$(date '+%y%m%d-%H%M-%S').png
 # Pick screenshot type
 # shift + Print
-# 	maimpick
+#       maimpick
 # Record audio or video
 # super + Print
-# 	dmenurecord
+#       dmenurecord
 # kill active recording
 # super + Delete
-# 	dmenurecord kill
+#       dmenurecord kill
 
 # Pause audio
 # super + {_,shift +} p
-# 	lmc {toggle,pause}
+#       lmc {toggle,pause}
 # Changes to next/previous tracks
 # super + {comma,period}
-# 	lmc {prev,next}
+#       lmc {prev,next}
 # Restart track
 # super + shift + less
-# 	lmc replay
+#       lmc replay
 # Increase volume
 # super + {equal,plus}
-# 	lmc up {5,15}
+#       lmc up {5,15}
 # Decrease volume
 # super {_,shift +} + minus
-# 	lmc down {5,15}
+#       lmc down {5,15}
 # Seek foward in song
 # super + {_,shift +} bracketright
-# 	lmc forward {10,120}
+#       lmc forward {10,120}
 # Seek backward in song
 # super + {_,shift +} bracketleft
-# 	lmc back {10,120}
+#       lmc back {10,120}
 
 # Function keys
 # Show readme
 # super + F1
-# 	groff -mom $HOME/.local/share/larbs/readme.mom -Tpdf | zathura -
+#       groff -mom $HOME/.local/share/larbs/readme.mom -Tpdf | zathura -
 # F2 is restart in i3 right now.
 # Change display
 # super + F3
-# 	displayselect
+#       displayselect
 # Hibernate
 # super + F4
-# 	prompt 'Hibernate computer?' 'sudo systemctl suspend'
+#       prompt 'Hibernate computer?' 'sudo systemctl suspend'
 # Restart/rescan wifi/eth networks
 # super + F5
-# 	sudo -A systemctl restart NetworkManager
+#       sudo -A systemctl restart NetworkManager
 # Start torrent daemon/open interface
 # super + F6
-# 	torwrap
+#       torwrap
 # toggle torrent daemon
 # super + F7
-# 	td-togggle
+#       td-togggle
 # sync email
 # super + F8
-# 	mailsync
+#       mailsync
 # Mount a USB drive or Android device
 # super + F9
-# 	dmenumount
+#       dmenumount
 # Unmount a USB drive or Android device
 # super + F10
-# 	dmenuumount
+#       dmenuumount
 # Search with Duckduckgo
 # super + F11
-# 	ducksearch
+#       ducksearch
 # Network Manager interface
 # super + F12
-# 	$TERMINAL -e sudo -A nmtui
+#       $TERMINAL -e sudo -A nmtui
 
 
