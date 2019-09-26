@@ -224,7 +224,37 @@ exec --no-startup-id feh --bg-fill '/usr/share/backgrounds/elementary/Ryan Schro
 
 # Terminal for scratchpad
 exec --no-startup-id st -n scratchpad
-for_window [class="St" instance="scratchpad"] move scratchpad; [class="St" instance="scratchpad"] scratchpad show; resize set 1000px 600px; move position center; move scratchpad
+for_window [class="St" instance="scratchpad"] move scratchpad; [class="St" instance="scratchpad"] scratchpad show; resize set 1400px 800px; move position center; move scratchpad
+
+# Move music player and mail to scratchpad
+for_window [class="St" instance="ncmpcpp*"] move scratchpad; [class="St" instance="ncmpcpp*"] scratchpad show; resize set 1400px 900px; move position center
+for_window [class="St" instance="neomutt"] move scratchpad; [class="St" instance="neomutt"] scratchpad show; resize set 1400px 900px; move position center
+
+# Move blender terminal to scratchpad
+for_window [class="St" instance="blender*"] move scratchpad; [class="St" instance="blender*"] scratchpad show; resize set 1200px 800px; move position center; move scratchpad
+
+# Make pinentry terminal floating
+for_window [class="St" instance="pinentry"] floating enable
+
+# Make Avalon apps floating
+for_window [title="Submarine Launcher"] floating enable; [title="Submarine Launcher"] border normal 4
+for_window [title="Context Manager*"] floating enable;[title="Context Manager*"] border normal 4
+for_window [title="Instance Creator"] floating enable;[title="Instance Creator"] border normal 4
+for_window [title="Asset Loader*"] floating enable;[title="Asset Loader*"] border normal 4
+for_window [title="Pyblish*"] floating enable;[title="Pyblish*"] border normal 4
+for_window [title="Scene Inventory*"] floating enable;[title="Scene Inventory*"] border normal 4
+for_window [title="Work Files"] floating enable;[title="Work Files"] border normal 4
+
+# Make Blender user preferences floating
+# Blender 2.7x
+for_window [class="Blender" title="Blender User Preferences"] floating enable;[class="Blender" title="Blender User Preferences"] border normal 4
+# Blender 2.8
+for_window [class="Blender" title="Blender Preferences"] floating enable;[class="Blender" title="Blender Preferences"] border normal 4;[class="Blender" title="Blender Preferences"] resize set 1200px 800px; move position center
+# Also make Blender Render windows floating
+for_window [class="Blender" title="Blender Render"] floating enable
+
+# Make vm floating
+for_window [class="VirtualBox Machine"] floating enable; [class="VirtualBox Machine"] border normal 4
 
 # Logout, suspend, shutdown etc.
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
