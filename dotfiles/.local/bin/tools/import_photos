@@ -3,15 +3,37 @@
 # Import photos from photo camera or iphone
 
 createdatedir() {
-    if [ ! -d "$1/$2" ]; then
-        mkdir "$1/$2"
+    [[ ! -d $1 ]] && mkdir -p "$1"
+}
+
+getdatearray() {
+    if [[ -z $(xdg-mime query filetype "$1" | grep "^image/") ]]; then
+        # Assume it's a movie
+        echo $(mediainfo "$1" | awk '/Recorded date/{print $4}' | awk -F "-" '{print $1" "$2" "$3}')
+    else
+        # The file is an image
+        echo $(exiv2 "$1" | awk '/Image timestamp/{print $4}' | awk -F ":" '{print $1" "$2" "$3}')
     fi
 }
 
+printdate() {
+    datearray=($(getdatearray "$1"))
+    year=${datearray[0]}
+    month=${datearray[1]}
+    day=${datearray[2]}
+    echo $year-$month-$day
+}
+
  syncfile() {
-    date=$(stat -c "%y" "$1" | awk '{printf $1 "\n"}')
-    createdatedir "$2" "$date"
-    rsync -ptgoDvh "$1" "$2/$date/" &>/dev/null
+    # date=$(stat -c "%y" "$1" | awk '{printf $1 "\n"}')
+    datearray=($(getdatearray "$1"))
+    year=${datearray[0]}
+    month=${datearray[1]}
+    day=${datearray[2]}
+    destdir="$2/$year/$year-$month-$day"
+    echo $destdir
+    # createdatedir $destdir
+    # rsync -ptgoDvh "$1" $destdir &>/dev/null
 }
 
 convertmovie() {
@@ -32,7 +54,8 @@ syncphotos() {
     count=1
     for f in ${files[@]}; do
         {
-            date=$(stat -c "%y" "$f" | awk '{printf $1 "\n"}')
+            date=$(printdate "$f")
+            # date=$(stat -c "%y" "$f" | awk '{printf $1 "\n"}')
         } 2>/dev/null
         printf "Processing photo $count of $numfiles ($date)                \r"
         notify-send -a import_photos -h int:value:$(echo $count*100/$numfiles | bc) " Photo/Video import" "Importing photo's from photo camera..."
@@ -49,7 +72,8 @@ syncmovies() {
     count=1
     for f in ${files[@]}; do
         {
-            date=$(stat -c "%y" "$f" | awk '{printf $1 "\n"}')
+            date=$(printdate "$f")
+            # date=$(stat -c "%y" "$f" | awk '{printf $1 "\n"}')
         } 2>/dev/null
         printf "Processing movie $count of $numfiles ($date)                \r"
         notify-send -a import_photos -h int:value:$(echo $count*100/$numfiles | bc) " Photo/Video import" "Importing video's from photo camera..."
@@ -62,7 +86,7 @@ syncmovies() {
 }
 
 importcamera() {
-    importdir=$HOME/pictures/play_memories
+    importdir=$HOME/pictures/photocamera
     syncphotos
     syncmovies
     printf "Done!                                                               \n"
@@ -78,7 +102,8 @@ importiphone() {
     count=1
     for f in ${files[@]}; do
         {
-            date=$(stat -c "%y" "$f" | awk '{printf $1 "\n"}')
+            date=$(printdate "$f")
+            # date=$(stat -c "%y" "$f" | awk '{printf $1 "\n"}')
         } 2>/dev/null
         printf "Processing file $count of $numfiles ($date)                \r"
         notify-send -a import_photos -h int:value:$(echo $count*100/$numfiles | bc) " Photo/Video import" "Importing media from foonjappie..."
