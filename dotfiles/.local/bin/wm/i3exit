@@ -53,7 +53,7 @@ should_lock() {
 lock() {
     if should_lock; then
         i3lock --ignore-empty-password --show-failed-attempts --tiling \
-            --image "$(find -maxdepth 1 $HOME/[Pp]ictures/backgrounds/lock -iname *.png -type f | shuf -n 1)"
+            --image "$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname *.png -type f | shuf -n 1)"
     fi
 }
 
