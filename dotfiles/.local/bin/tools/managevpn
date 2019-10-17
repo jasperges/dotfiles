@@ -1,40 +1,36 @@
 #!/bin/bash
 
-# Get all vpn connection names and if they are activated.
-# List them with dmenu/rofi and show them in a different color when they are active.
-# Also include a 'disconnect all' option at the end.
-# All entries act like a toggle.
-
-# Using nmcli, because that also works at home, while openvpn itself doesn't.
+# NOTE: Using nmcli, because that also works at home, while openvpn itself doesn't.
 # TODO: auto select the first row with an active vpn in a cleaner way
 # TODO: sort by most used
 
-case $1 in
-    "proton")
-        pass show protonvpn | nmcli --ask c up "ProtonVPN" 2>/dev/null 1>&2
-        ;;
-    "sub")
-        nmcli c up "Submarine" 2/dev/null 1>&2
+# Get a list of available VPN connections
+readarray -t vpnlist < <(nmcli --terse --fields NAME,STATE,TYPE c show | grep "vpn$" | sort | uniq -u)
+
+# Connect to a given VPN service if it's provided and it exists
+for vpn in ${vpnlist[@]}; do
+    if [[ $1 == $(echo $vpn | cut -d : -f 1) ]]; then
+        nmcli connection up $1 passwd-file $HOME/.vpnrc && \
+            echo "hook:module/vpn-status1" >> /tmp/ipc-topbar && exit 0
+    fi
+done
+
+# If no VPN service was given or it doesn't exist, show available choices
+vpnidx="$(printf '%s\n' "${vpnlist[@]}" | \
+    sed -e 's/^\(.*\):activated:vpn/<span foreground="#1db954" font_weight="bold"><\/span> <span font_weight="bold">\1<\/span>/' \
+    -e 's/^\(.*\)::vpn/<span foreground="#bd2c40"> <\/span> \1/' | \
+    rofi -dmenu -lines 5 -p "Toggle VPN connection" -i -markup-rows \
+    -select "font_weight" -format i)"
+[[ "$vpnidx" ]] || exit
+vpn="${vpnlist[vpnidx]}"
+
+case $(echo "$vpn" | cut -d : -f 2) in
+    "activated")
+        nmcli connection down "$(echo "$vpn" | cut -d : -f 1)"
         ;;
     *)
-        readarray -t vpnlist < <(nmcli --terse --fields NAME,STATE,TYPE c show | grep "vpn$" | sort | uniq -u)
-        vpnidx="$(printf '%s\n' "${vpnlist[@]}" | \
-            sed -e 's/^\(.*\):activated:vpn/<span foreground="#1db954" font_weight="bold"><\/span> <span font_weight="bold">\1<\/span>/' \
-            -e 's/^\(.*\)::vpn/<span foreground="#bd2c40"> <\/span> \1/' | \
-            rofi -dmenu -lines 5 -p "Toggle VPN connection" -i -markup-rows \
-            -select "font_weight" -format i)"
-        [[ "$vpnidx" ]] || exit
-        vpn="${vpnlist[vpnidx]}"
-        case $(echo "$vpn" | awk -F : '{print $2}') in
-            "activated")
-                nmcli c down "$(echo "$vpn" | awk -F : '{print $1}')"
-                ;;
-            *)
-                [[ "$vpn" == *"ProtonVPN"* ]] && pass show protonvpn | \
-                    nmcli --ask c up "$(echo "$vpn" | awk -F : '{print $1}')" 2>/dev/null 1>&2 \
-                    || nmcli c up "$(echo "$vpn" | awk -F : '{print $1}')"
-                ;;
-        esac
+        nmcli connection up "$(echo "$vpn" | cut -d : -f 1)" passwd-file $HOME/.vpnrc
         ;;
 esac
+
 echo "hook:module/vpn-status1" >> /tmp/ipc-topbar
