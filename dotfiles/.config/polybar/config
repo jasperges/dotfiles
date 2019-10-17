@@ -205,7 +205,7 @@ format-online = %{T2}<toggle>%{T-}%{A1:mpc toggle:}  <label-song>%{A}
 format-online-prefix = "|    "
 format-playing = ${self.format-online}
 format-paused = ${self.format-online}
-format-stopped = ${self.format-online}
+format-stopped =
 ; icon: next 怜; prev 玲; pause ; play 契; stop 栗
 icon-prev = 玲
 icon-stop = 栗
@@ -221,7 +221,7 @@ format-online = %{T2}<toggle>%{T-}%{A1:mpc toggle:}  <label-song>%{A}
 format-online-prefix = "|    "
 format-playing = ${self.format-online}
 format-paused = ${self.format-online}
-format-stopped = ${self.format-online}
+format-stopped =
 ; icon: next 怜; prev 玲; pause ; play 契; stop 栗
 icon-prev = 玲
 icon-stop = 栗
