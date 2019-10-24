@@ -48,8 +48,8 @@ super + g; {d}
 # Et cetera...
 super + b
         dmenuunicode
-super + v; {m,p,s,w}
-        {managevpn manage, managevpn Proton-NL, managevpn Submarine, managewifi}
+super + v; {m,p,s,w,u,g}
+        {managevpn manage, managevpn Proton-NL, managevpn Submarine, managewifi,managevpn Proton-US,managevpn Proton-UK}
 # super + Scroll_Lock
 #       killall screenkey || screenkey
 # super + Insert

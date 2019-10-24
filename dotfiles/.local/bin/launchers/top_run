@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
 
+if [[ -z $(glxinfo | grep vendor | grep -i nvidia) ]]; then
+    # nouveau driver, use default terminal
+    gotop_term=$TERMINAL
+else
+    # nvidia driver, use sakura for correct font display
+    gotop_term=sakura
+fi
 
-which gotop && $TERMINAL -e gotop && exit || which htop && $TERMINAL -e htop && exit || which top && $TERMINAL top && exit
+which gotop && $gotop_term -e gotop && exit || which htop && $TERMINAL -e htop && exit || which top && $TERMINAL top && exit

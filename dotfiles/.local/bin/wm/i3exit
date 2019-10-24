@@ -5,7 +5,7 @@ declare -a LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING=(
     "mpv"
 )
 declare -a LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING=(
-    "YouTube" "Netflix" "NPO Start" "Prime Video"
+    "YouTube" "Netflix" "NPO Start" "Prime Video" "NPO"
 )
 
 # Find active window id
