@@ -1,15 +1,22 @@
 #!/bin/bash
 
-if [ $(hostname) = 'fedorajappie' ]
-then
-    # xrandr --output LVDS-1-1 --off
-    xrandr --output LVDS-1 --primary
-elif [ $(hostname) = 'soeperjaps' ]
-then
+if [[ $(hostname) = 'fedorajappie' ]]; then
+    # Always turn off this 'weird virtual' monitor
+    xrandr --output LVDS-1-1 --off
+    # Assume only 1 external monitor for now
+    external_monitor=$(xrandr | sed -nE "s/^((DP|HDMI)-[0-9]+) connected.*$/\1/p")
+    if [[ -z $external_monitor ]]; then
+        echo "Only internal monitor..."
+        xrandr --output LVDS-0 --primary
+    else
+        echo "External monitor..."
+        xrandr --output $external_monitor --primary
+        xrandr --output LVDS-0 --right-of $external_monitor
+    fi
+elif [[ $(hostname) = 'soeperjaps' ]]; then
     xrandr --output DP-0 --primary
     xrandr --output DP-2 --right-of DP-0
-elif [ $(hostname) = 'astudio09' ]
-then
+elif [[ $(hostname) = 'astudio09' ]]; then
     xrandr --output DP-0 --primary
     xrandr --output HDMI-0 --right-of DP-0
 else

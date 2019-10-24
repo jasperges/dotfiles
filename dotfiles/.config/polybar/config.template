@@ -19,7 +19,7 @@
 [local]
 topbar-monitor =
 topbar-modules-left = i3 xwindow
-topbar-modules-center = date pomodoro spotify mpd mpd-guybrush
+topbar-modules-center = pomodoro date mpd mpd-guybrush
 topbar-modules-right = cpu memory wlan eth vpn-status battery temperature alsa mail
 topbar-secondary-monitor =
 topbar-secondary-modules-left = i3 xwindow
@@ -34,7 +34,7 @@ background = #cc222222
 background-alt = #cc555866
 foreground = #dfdfdf
 foreground-alt = #777
-primary = #ccffb52a
+primary = #cc516a6c
 secondary = #cce60053
 alert = #ccbd2c40
 window = #29667b
@@ -70,6 +70,7 @@ font-1 = "Ubuntu Nerd Font:size=12;3"
 font-2 = fixed:pixelsize=10;1
 font-3 = "Ubuntu Nerd Font:size=16;3"
 font-4 = "Ubuntu Nerd Font:size=13;3"
+font-5 = "Noto Color Emoji:scale=12;0"
 
 modules-left = ${local.topbar-modules-left}
 modules-center = ${local.topbar-modules-center}
@@ -87,12 +88,6 @@ cursor-click = pointer
 cursor-scroll = ns-resize
 
 enable-ipc = true
-
-[module/separator]
-type = custom/text
-content-background = ${colors.background}
-content-foreground = ${colors.foreground}
-content = " | "
 
 [bar/topbar-secondary]
 monitor = ${local.topbar-secondary-monitor}
@@ -132,9 +127,12 @@ scroll-down = i3wm-wsprev
 cursor-click = pointer
 cursor-scroll = ns-resize
 
+enable-ipc = true
+
 [module/xwindow]
 type = internal/xwindow
-format-prefix = 
+; format-prefix = 
+format-prefix = 缾
 format-prefix-padding-right = 4
 label = %title:0:50:...%
 format-background = ${colors.window}
@@ -203,31 +201,31 @@ label-urgent-padding = ${module/bspwm.label-urgent-padding}
 type = internal/mpd
 format-online = %{T2}<toggle>%{T-}%{A1:mpc toggle:}  <label-song>%{A}
 format-online-prefix = "|    "
-format-playing = ${self.format-online}
+format-playing = %{T2}<toggle>%{T-}%{A1:mpc toggle:}  <label-song>%{A}   
 format-paused = ${self.format-online}
 format-stopped =
 ; icon: next 怜; prev 玲; pause ; play 契; stop 栗
 icon-prev = 玲
-icon-stop = 栗
-icon-pause = 
-icon-play = 
 icon-next = 怜
+icon-pause = 
+icon-play = 
+icon-stop = 栗
 label-song-maxlen = 40
 label-song-ellipsis = true
 
 [module/mpd-guybrush]
 type = internal/mpd
-format-online = %{T2}<toggle>%{T-}%{A1:mpc toggle:}  <label-song>%{A}
+format-online = %{T2}<toggle>%{T-}%{A1:mpc -h guybrush.local -p 5700 toggle:}  <label-song>%{A}
 format-online-prefix = "|    "
-format-playing = ${self.format-online}
+format-playing = %{T2}<toggle>%{T-}%{A1:mpc -h guybrush.local -p 5700 toggle:}  <label-song>%{A}   
 format-paused = ${self.format-online}
 format-stopped =
 ; icon: next 怜; prev 玲; pause ; play 契; stop 栗
 icon-prev = 玲
-icon-stop = 栗
-icon-pause = 
-icon-play = 
 icon-next = 怜
+icon-pause = 
+icon-play = 
+icon-stop = 栗
 label-song-maxlen = 40
 label-song-ellipsis = true
 host = guybrush.local
@@ -447,17 +445,13 @@ ramp-0 = 
 ramp-1 = 
 ramp-2 = 
 
-[module/notification-mattermost]
-type = custom/script
-exec = ~/.config/polybar/notification-mattermost.sh
-interval = 60
-
 [module/vpn-status]
-type = custom/ipc
-hook-0 = vpn_status
-initial = 1
-format = <output>
+type = custom/script
+exec = vpn_status
+label = %output%
+format = <label>
 click-left = managevpn
+interval = 5
 
 [module/spotify]
 type = custom/script

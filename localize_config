@@ -22,10 +22,11 @@ localize_monitors() {
         sed -E -e "s/^(topbar-secondary-monitor =).*$/\1/" -i $HOME/.config/polybar/config
 
     # Enable topbar-secondary when there are 2 screens
-    [[ $secondary ]] && sed -E \
-        -e "s/^# (polybar topbar-secondary &)/\1/" \
-        -e "s/^# (ln -s.*?ipc-topbar-secondary)$/\1/" \
-        -i $HOME/.local/bin/launchers/polybar_run
+    # This is already covered in polybar_run itself now
+    # [[ $secondary ]] && sed -E \
+    #     -e "s/^# (polybar topbar-secondary &)/\1/" \
+    #     -e "s/^# (ln -s.*?ipc-topbar-secondary)$/\1/" \
+    #     -i $HOME/.local/bin/launchers/polybar_run
 
     # Use ramp-coreload for bigger and ramp-load for smaller monitors
     ramp=$([[ $(xrandr | awk '/primary/ {printf $4}' | cut -d x -f 1) -gt 1920 ]] && echo "ramp-coreload" || echo "ramp-load")

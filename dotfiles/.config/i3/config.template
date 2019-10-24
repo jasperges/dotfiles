@@ -14,6 +14,7 @@ set $mod Mod4
 font pango:Ubuntu Mono Regular 12
 
 title_align center
+hide_edge_borders smart
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -210,6 +211,16 @@ exec_always --no-startup-id sxhkd_run &
 # Set xinput device properties
 exec_always --no-startup-id setxinputs
 
+# Theme colors
+# class                   border  backgr. text    indic.   child_border
+  # client.focused          #556064 #556064 #80FFF9 #FDF6E3
+  # client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
+  # client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
+  # client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
+  # client.placeholder      #000000 #0c0c0c #ffffff #000000 
+
+  # client.background       #2B2C2B
+
 bar {
   i3bar_command polybar_run
 }
@@ -237,13 +248,16 @@ for_window [class="St" instance="blender*"] move scratchpad; [class="St" instanc
 for_window [class="St" instance="pinentry"] floating enable
 
 # Make Avalon apps floating
-for_window [title="Submarine Launcher"] floating enable; [title="Submarine Launcher"] border normal 4
-for_window [title="Context Manager*"] floating enable;[title="Context Manager*"] border normal 4
-for_window [title="Instance Creator"] floating enable;[title="Instance Creator"] border normal 4
-for_window [title="Asset Loader*"] floating enable;[title="Asset Loader*"] border normal 4
-for_window [title="Pyblish*"] floating enable;[title="Pyblish*"] border normal 4
-for_window [title="Scene Inventory*"] floating enable;[title="Scene Inventory*"] border normal 4
-for_window [title="Work Files"] floating enable;[title="Work Files"] border normal 4
+for_window [class="__main__.py" title="Submarine Launcher"] floating enable; [class="__main__.py" title="Submarine Launcher"] border normal 4
+for_window [class="!:Firefox" title="Context Manager*"] floating enable;[title="Context Manager*"] border normal 4
+for_window [class="!:Firefox" title="Instance Creator"] floating enable;[title="Instance Creator"] border normal 4
+for_window [class="!:Firefox" title="Asset Loader*"] floating enable;[title="Asset Loader*"] border normal 4
+for_window [class="!:Firefox" title="Pyblish*"] floating enable;[title="Pyblish*"] border normal 4
+for_window [class="!:Firefox" title="Scene Inventory*"] floating enable; [title="Scene Inventory*"] border normal 4
+for_window [class="!:Firefox" title="Work Files"] floating enable;[title="Work Files"] border normal 4
+
+# Make Shotgun Desktop floating
+for_window [class="Shotgun"] floating enable
 
 # Make Blender user preferences floating
 # Blender 2.7x
@@ -254,7 +268,7 @@ for_window [class="Blender" title="Blender Preferences"] floating enable;[class=
 for_window [class="Blender" title="Blender Render"] floating enable
 
 # Make vm floating
-for_window [class="VirtualBox Machine"] floating enable; [class="VirtualBox Machine"] border normal 4
+# for_window [class="VirtualBox Machine"] floating enable; border normal 4; move position center
 
 # Logout, suspend, shutdown etc.
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
