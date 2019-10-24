@@ -83,7 +83,7 @@ fi
 sleep 5
 # Restart Dropbox and Protonmail Bridge to ensure their tray icons are
 # displayed correctly
-[[ pgrep -u $UID -f protonmail-bridge ]] && protonmailbridge_run
-[[ pgrep -u $UID -x dropbox ]] && dropbox_run
+[[ $(pgrep -u $UID -f protonmail-bridge) ]] && protonmailbridge_run
+[[ $(pgrep -u $UID -x dropbox) ]] && dropbox_run
 
 echo "Bar(s) launched..."
