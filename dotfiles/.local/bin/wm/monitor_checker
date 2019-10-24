@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# This script should be run at startup/login
+# It's a simple attempt to adjust my i3/polybar setup when plugin in/out
+# an extra monitor.
+# Ideas taken from here:
+# https://askubuntu.com/questions/630202/run-script-when-monitor-is-connected
+
+get_external_monitors () {
+    echo $(xrandr | sed -nE "s/^((DP|HDMI)-[0-9]+) connected.*$/\1/p")
+}
+
+# external_monitor=$(xrandr | sed -nE "s/^((DP|HDMI)-[0-9]+) connected.*$/\1/p")
+initial=$(get_external_monitors)
+
+while :
+do
+    if [[ ! $(get_external_monitors) = $initial]]; then
+        setxrandr &
+        update_i3_config &
+        i3 restart &
+        initial=$(get_external_monitors)
+    fi
+done
