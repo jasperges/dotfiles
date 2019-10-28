@@ -4,11 +4,10 @@ update_monitors() {
     # Replace the 'monitor' in the polybar config with the correct one for the current system.
     activemonitors=($(xrandr --listactivemonitors | awk '!/Monitor/ {print $4}'))
     primary="$(xrandr | awk '{if ($2 == "connected" && $3 == "primary") printf $1}')"
-    # The next line assumes there is only 1 extra monitor
-    extra="$(xrandr | awk '{if ($2 == "connected" && $3 != "primary") printf $1}')"
+    # Assume there is only 1 extra monitor
     for i in "${activemonitors[@]}"; do
-        if [[ $i == $extra ]]; then
-            secondary=$extra
+        if [[ $i != $primary ]]; then
+            secondary=$i
             break
         fi
     done
