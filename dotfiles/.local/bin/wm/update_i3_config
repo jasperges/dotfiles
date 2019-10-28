@@ -3,11 +3,10 @@
 update_monitors() {
     activemonitors=($(xrandr --listactivemonitors | awk '!/Monitor/ {print $4}'))
     primary="$(xrandr | awk '{if ($2 == "connected" && $3 == "primary") printf $1}')"
-    # The next line assumes there is only 1 extra monitor
-    extra="$(xrandr | awk '{if ($2 == "connected" && $3 != "primary") printf $1}')"
+    # Assume there is only 1 extra monitor
     for i in "${activemonitors[@]}"; do
-        if [[ $i == $extra ]]; then
-            secondary=$extra
+        if [[ $i != $primary ]]; then
+            secondary=$i
             break
         fi
     done
@@ -16,8 +15,14 @@ update_monitors() {
         sed -E \
             -e 's/^(workspace \$ws'"$i"' output )1$/\1'"$primary"'/' \
             -e 's/^(workspace \$ws'"$i"' output )2$/\1'"$secondary"'/' \
-            $HOME/.config/i3/config.template > $HOME/.config/i3/config
+            -i $HOME/.config/i3/config
     done
 }
+
+# Update the config file
+[[ -f $HOME/.config/i3/config.template ]] || exit 1
+[[ -f $HOME/.config/i3/config ]] && rm $HOME/.config/i3/config
+cp $HOME/.config/i3/config.template $HOME/.config/i3/config
+chmod 600 $HOME/.config/i3/config
 
 update_monitors
