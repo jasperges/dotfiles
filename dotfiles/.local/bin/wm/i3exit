@@ -54,21 +54,36 @@ lock() {
     if should_lock; then
         i3lock --ignore-empty-password --show-failed-attempts --tiling \
             --image "$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname *.png -type f | shuf -n 1)"
+        sleep 1
+    fi
+}
+
+blurlock() {
+    if should_lock; then
+        # take screenshot
+        import -window root /tmp/screenshot.png
+        # blur it
+        convert /tmp/screenshot.png -blur 0x10 /tmp/screenshotblur.png
+        rm /tmp/screenshot.png
+        # lock
+        i3lock --ignore-empty-password --show-failed-attempts --tiling \
+            --image /tmp/screenshotblur.png
+        sleep 1
     fi
 }
 
 case "$1" in
     lock)
-        lock
+        blurlock
         ;;
     logout)
-        i3-msg exit
+        i3 exit
         ;;
     suspend)
-        lock && sleep 1 && systemctl suspend
+        blurlock && systemctl suspend
         ;;
     hibernate)
-        lock && sleep 1 && systemctl hibernate
+        blurlock && systemctl hibernate
         ;;
     reboot)
         systemctl reboot
