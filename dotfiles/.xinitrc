@@ -6,7 +6,7 @@ xrdb ~/.Xresources
 [[ -f $HOME/.last_keyboard_backlight ]] && cat $HOME/.last_keyboard_backlight > "/sys/class/leds/smc::kbd_backlight/brightness"
 
 # Simple X Hot Key Daemon
-sxhkd &
+sxhkd_run &
 
 # Set up monitors
 setxrandr &
@@ -32,6 +32,7 @@ mpd &
 # Start X compositor and notification daemon
 compton_run &
 dunst_run &
+nmapplet_run &
 
 # Set locale as I want
 localectl set-locale LANG=en_US.UTF-8 LC_MONETARY=nl_NL.UTF-8 \
