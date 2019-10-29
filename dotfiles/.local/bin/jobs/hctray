@@ -1,3 +1,6 @@
 #!/bin/bash
 
-sudo hardcode-tray --theme Papirus-Dark --apply && dropbox_run &
+sudo hardcode-tray --theme Papirus-Dark --apply
+
+# Restart Dropbox so the tray icon is updated
+dropbox_run

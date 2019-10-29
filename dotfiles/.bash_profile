@@ -33,7 +33,5 @@ if [[ ! ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
     exec startx 2>/dev/null 1>&2
 fi
 
-managevpn proton 2>/dev/null 1>&2 &
-
 # Make directories and files completely private by default
 umask 0077

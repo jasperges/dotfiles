@@ -37,5 +37,5 @@ dunst_run &
 localectl set-locale LANG=en_US.UTF-8 LC_MONETARY=nl_NL.UTF-8 \
                           LC_PAPER=nl_NL.UTF-8 LC_MEASUREMENT=nl_NL.UTF-8 LC_TIME=en_US.UTF-8 \
                           LC_NUMERIC=en_US.UTF-8
-
+update_i3_config
 exec i3

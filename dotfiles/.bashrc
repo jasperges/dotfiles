@@ -84,7 +84,7 @@ alias dfn='dnf'
 alias qmake='/usr/bin/qmake-qt5'
 
 # ping
-alias ping='ping -c 3'
+alias ping='ping -c 1'
 
 # ssh
 [ -f ~/.sshrc ] && source ~/.sshrc
