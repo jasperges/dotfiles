@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# TODO: don't lock the screen when watching videos.
-
 # Terminate already running xautolock instances
 killall -q xautolock
 

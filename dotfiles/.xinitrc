@@ -32,6 +32,11 @@ mpd &
 # Start X compositor and notification daemon
 compton_run &
 dunst_run &
+
+# Start apps that show in tray area
+dropbox_run &
+protonmailbridge_run &
+syncthing-gtk --minimized &
 nmapplet_run &
 
 # Set locale as I want

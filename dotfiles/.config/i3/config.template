@@ -137,7 +137,6 @@ assign [class="Firefox"] → number $ws9
 # 10: chat/music
 assign [class="Mattermost"] → number $ws10
 assign [class="Telegram"] → number $ws10
-assign [class="Spotify"] → number $ws10
 for_window [class="Spotify"] move workspace $ws10
 assign [class="Rhythmbox"] → number $ws10
 assign [class="Franz"] → number $ws10
@@ -205,12 +204,6 @@ bindsym $mod+r mode "resize"
 
 default_border pixel 4
 
-# Simple X Hot Key Daemon
-exec_always --no-startup-id sxhkd_run &
-
-# Set xinput device properties
-exec_always --no-startup-id setxinputs
-
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
   # client.focused          #556064 #556064 #80FFF9 #FDF6E3
@@ -224,11 +217,6 @@ exec_always --no-startup-id setxinputs
 bar {
   i3bar_command polybar_run
 }
-
-# Applications to start at launch
-exec_always --no-startup-id dropbox_run
-exec --no-startup-id syncthing-gtk --minimized
-exec --no-startup-id protonmail-bridge --no-window
 
 # Background image
 exec --no-startup-id feh --bg-fill '/usr/share/backgrounds/elementary/Ryan Schroeder.jpg'
@@ -249,12 +237,12 @@ for_window [class="St" instance="pinentry"] floating enable
 
 # Make Avalon apps floating
 for_window [class="__main__.py" title="Submarine Launcher"] floating enable; [class="__main__.py" title="Submarine Launcher"] border normal 4
-for_window [class="!:Firefox" title="Context Manager*"] floating enable;[title="Context Manager*"] border normal 4
-for_window [class="!:Firefox" title="Instance Creator"] floating enable;[title="Instance Creator"] border normal 4
-for_window [class="!:Firefox" title="Asset Loader*"] floating enable;[title="Asset Loader*"] border normal 4
-for_window [class="!:Firefox" title="Pyblish*"] floating enable;[title="Pyblish*"] border normal 4
-for_window [class="!:Firefox" title="Scene Inventory*"] floating enable; [title="Scene Inventory*"] border normal 4
-for_window [class="!:Firefox" title="Work Files"] floating enable;[title="Work Files"] border normal 4
+for_window [class="(?im)^(?!firefox$)" title="Context Manager*"] floating enable;[title="Context Manager*"] border normal 4
+for_window [class="(?im)^(?!firefox$)" title="Instance Creator"] floating enable;[title="Instance Creator"] border normal 4
+for_window [class="(?im)^(?!firefox$)" title="Asset Loader*"] floating enable;[title="Asset Loader*"] border normal 4
+for_window [class="(?im)^(?!firefox$)" title="Pyblish*"] floating enable;[title="Pyblish*"] border normal 4
+for_window [class="(?im)^(?!firefox$)" title="Scene Inventory*"] floating enable; [title="Scene Inventory*"] border normal 4
+for_window [class="(?im)^(?!firefox$)" title="Work Files"] floating enable;[title="Work Files"] border normal 4
 
 # Make Shotgun Desktop floating
 for_window [class="Shotgun"] floating enable
@@ -269,6 +257,7 @@ for_window [class="Blender" title="Blender Render"] floating enable
 
 # Make vm floating
 # for_window [class="VirtualBox Machine"] floating enable; border normal 4; move position center
+for_window [class="VirtualBox Machine"] resize set 1100px 0px
 
 # Logout, suspend, shutdown etc.
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown

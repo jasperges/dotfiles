@@ -2,7 +2,7 @@
 
 # Settings
 declare -a LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING=(
-    "mpv"
+    "mpv" "Wine"
 )
 declare -a LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING=(
     "YouTube" "Netflix" "NPO Start" "Prime Video" "NPO"
@@ -60,8 +60,12 @@ lock() {
 
 blurlock() {
     if should_lock; then
+        # pause dunst
+        notify-send DUNST_COMMAND_PAUSE
         # take screenshot
-        import -window root /tmp/screenshot.png
+        # import -window root /tmp/screenshot.png
+        # scrot seems a lot faster; TODO: also test this on multi-monitor setup
+        scrot -m /tmp/screenshot.png
         # blur it
         convert /tmp/screenshot.png -blur 0x10 /tmp/screenshotblur.png
         rm /tmp/screenshot.png
@@ -69,6 +73,8 @@ blurlock() {
         i3lock --ignore-empty-password --show-failed-attempts --tiling \
             --image /tmp/screenshotblur.png
         sleep 1
+        # resume dunst
+        notify-send DUNST_COMMAND_RESUME
     fi
 }
 

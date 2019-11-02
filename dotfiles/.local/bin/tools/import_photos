@@ -7,17 +7,21 @@ createdatedir() {
 }
 
 getdatearray() {
-    if [[ -z $(xdg-mime query filetype "$1" | grep "^image/") ]]; then
+    if [[ -n $(xdg-mime query filetype "$1" | grep -E "^(video/|application/octet-stream)") ]]; then
         # Assume it's a movie
-        echo $(mediainfo "$1" | awk '/Recorded date/{print $4}' | awk -F "-" '{print $1" "$2" "$3}')
-    else
+        if [[ -n $2 && $2 == "foonjappie" ]]; then
+            echo $(mediainfo "$1" | awk '/Encoded date/{print $5}' | awk -F "-" '{print $1" "$2" "$3}')
+        else
+            echo $(mediainfo "$1" | awk '/Recorded date/{print $4}' | awk -F "-" '{print $1" "$2" "$3}')
+        fi
+    elif [[ -n $(xdg-mime query filetype "$1" | grep "^image/") ]]; then
         # The file is an image
         echo $(exiv2 "$1" | awk '/Image timestamp/{print $4}' | awk -F ":" '{print $1" "$2" "$3}')
     fi
 }
 
 printdate() {
-    datearray=($(getdatearray "$1"))
+    datearray=($(getdatearray "$1" "$2"))
     year=${datearray[0]}
     month=${datearray[1]}
     day=${datearray[2]}
@@ -26,14 +30,14 @@ printdate() {
 
  syncfile() {
     # date=$(stat -c "%y" "$1" | awk '{printf $1 "\n"}')
-    datearray=($(getdatearray "$1"))
+    datearray=($(getdatearray "$1" "$3"))
     year=${datearray[0]}
     month=${datearray[1]}
     day=${datearray[2]}
     destdir="$2/$year/$year-$month-$day"
-    echo $destdir
-    # createdatedir $destdir
-    # rsync -ptgoDvh "$1" $destdir &>/dev/null
+    # echo $destdir
+    createdatedir $destdir
+    rsync -ptgoDvh "$1" $destdir &>/dev/null
 }
 
 convertmovie() {
@@ -102,13 +106,14 @@ importiphone() {
     count=1
     for f in ${files[@]}; do
         {
-            date=$(printdate "$f")
+            date=$(printdate "$f" "foonjappie")
             # date=$(stat -c "%y" "$f" | awk '{printf $1 "\n"}')
         } 2>/dev/null
+        [[ $date == "--" ]] && continue
         printf "Processing file $count of $numfiles ($date)                \r"
         notify-send -a import_photos -h int:value:$(echo $count*100/$numfiles | bc) " Photo/Video import" "Importing media from foonjappie..."
 
-        syncfile "$f" "$importdir"
+        syncfile "$f" "$importdir" "foonjappie"
         count=$((count+1))
     done
     printf "Done!                                                               \n"
