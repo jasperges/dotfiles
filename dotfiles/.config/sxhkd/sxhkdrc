@@ -8,7 +8,7 @@ super + space
         rofi_run
 super + c
         rofi_calc
-super + w
+super + shift + w
         rename_workspace
 super + m; {m,u}
         {dmenumount,dmenuumount}
