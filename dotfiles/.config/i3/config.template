@@ -137,7 +137,7 @@ assign [class="Firefox"] → number $ws9
 # 10: chat/music
 assign [class="Mattermost"] → number $ws10
 assign [class="Telegram"] → number $ws10
-for_window [class="Spotify"] move workspace $ws10
+for_window [class="Spotify"] move to workspace $ws10
 assign [class="Rhythmbox"] → number $ws10
 assign [class="Franz"] → number $ws10
 
