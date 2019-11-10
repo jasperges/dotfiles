@@ -247,6 +247,9 @@ for_window [class="(?im)^(?!firefox$)" title="Work Files"] floating enable;[titl
 # Make Shotgun Desktop floating
 for_window [class="Shotgun"] floating enable
 
+# Make Thunar floating
+for_window [class="Thunar"] floating enable; [class="Thunar"] border normal 4
+
 # Make Blender user preferences floating
 # Blender 2.7x
 for_window [class="Blender" title="Blender User Preferences"] floating enable;[class="Blender" title="Blender User Preferences"] border normal 4
