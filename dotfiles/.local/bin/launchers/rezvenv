@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# readonly currentdir=$(pwd)
+# cd $HOME/src/rez/rez-venv
+# pipenv shell
+# # [[ -d $currentdir ]] && cd $currentdir
+# echo "cd-ing to previous dir"
+# cd $currentdir
+# bash "source $HOME/.local/share/virtualenvs/rez-venv-EJj29fqV/bin/activate"
+bash --init-file <(echo "export PS1='[\u@\h \W]\$ '; source $HOME/.local/share/virtualenvs/rez-venv-EJj29fqV/bin/activate")
