@@ -86,8 +86,8 @@ set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws9 "9: web"
+set $ws10 "10: chat"
 
 # Specify on which monitor workspaces go.
 workspace $ws1 output 1
@@ -96,8 +96,8 @@ workspace $ws3 output 1
 workspace $ws4 output 1
 workspace $ws5 output 1
 workspace $ws6 output 1
-workspace $ws7 output 2
-workspace $ws8 output 2
+workspace $ws7 output 1
+workspace $ws8 output 1
 workspace $ws9 output 1
 workspace $ws10 output 2
 
@@ -243,6 +243,9 @@ for_window [class="(?im)^(?!firefox$)" title="Asset Loader*"] floating enable;[t
 for_window [class="(?im)^(?!firefox$)" title="Pyblish*"] floating enable;[title="Pyblish*"] border normal 4
 for_window [class="(?im)^(?!firefox$)" title="Scene Inventory*"] floating enable; [title="Scene Inventory*"] border normal 4
 for_window [class="(?im)^(?!firefox$)" title="Work Files"] floating enable;[title="Work Files"] border normal 4
+
+# Make Allzpark floating
+for_window [class="cli.py" title="(?im)^.*|\s+allzpark\s+.*$"] floating enable
 
 # Make Shotgun Desktop floating
 for_window [class="Shotgun"] floating enable
