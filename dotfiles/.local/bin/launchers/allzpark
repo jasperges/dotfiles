@@ -2,5 +2,10 @@
 
 # bash --init-file <(echo "export PS1='[\u@\h \W]\$ '; source $HOME/.local/share/virtualenvs/allzpark-70d0NPiC/bin/activate")
 
-source $HOME/.local/share/virtualenvs/allzpark-70d0NPiC/bin/activate
+venv=$(cd $HOME/src/rez/allzpark && pipenv --venv)
+if [[ -z $venv ]]; then
+    echo "Could not find virtual env for Allzpark."
+    exit 1
+fi
+source $venv/bin/activate
 ALLZPARK_CONFIG_FILE=$HOME/.config/allzparkrc allzpark
