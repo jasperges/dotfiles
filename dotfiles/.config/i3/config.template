@@ -219,7 +219,7 @@ bar {
 }
 
 # Background image
-exec --no-startup-id feh --bg-fill '/usr/share/backgrounds/elementary/Ryan Schroeder.jpg'
+exec --no-startup-id feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper
 
 # Terminal for scratchpad
 exec --no-startup-id st -n scratchpad
