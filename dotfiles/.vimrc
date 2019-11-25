@@ -23,7 +23,9 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-eunuch'
-Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim'}
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'jlanzarotta/bufexplorer'
 Plugin 'taglist.vim'
 Plugin 'restore_view.vim'
 Plugin 'ervandew/supertab'
@@ -78,9 +80,11 @@ Plugin 'peterhoeg/vim-qml'
 call vundle#end()
 filetype plugin indent on
 
-let g:powerline_symbols = 'fancy'
-" let g:powerline_pycmd = 'py3'
-" let g:jedi#force_py_version = 3
+" airline
+let g:airline_powerline_fonts = 1
+" let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='solarized'
+let g:airline_solarized_bg='dark'
 
 " Japsers dingetjes
 nnoremap <Space> <Nop>

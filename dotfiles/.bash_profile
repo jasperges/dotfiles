@@ -15,7 +15,7 @@ export PATH
 export TERMINAL=st
 
 # Default editor
-export EDITOR='gvim -v'
+export EDITOR=vim
 
 # Default browser
 export BROWSER=firefox

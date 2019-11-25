@@ -38,6 +38,7 @@ dropbox_run &
 protonmailbridge_run &
 syncthing-gtk --minimized &
 nmapplet_run &
+bluemanapplet_run &
 
 # Set locale as I want
 localectl set-locale LANG=en_US.UTF-8 LC_MONETARY=nl_NL.UTF-8 \

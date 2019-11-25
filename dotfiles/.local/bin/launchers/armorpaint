@@ -1,0 +1,3 @@
+#!/bin/bash
+
+$HOME/src/armorpaint/armorpaint/Kromx/Deployment/Krom $HOME/src/armorpaint/armorpaint/build/krom

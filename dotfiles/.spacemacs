@@ -49,9 +49,9 @@ This function should only modify configuration layer settings."
           org-enable-hugo-support t
           org-enable-bootstrap-support t
           org-enable-reveal-js-support t
-          org-directory "~/Dropbox/org"
-          org-agenda-files '("~/Dropbox/org/gtd.org"
-                             "~/Dropbox/org/notes.org")
+          org-directory "~/syncthing/org"
+          org-agenda-files '("~/syncthing/org/gtd.org"
+                             "~/syncthing/org/notes.org")
           org-default-notes-file (concat org-directory "/notes.org")
           org-projectile-file (concat org-directory "/gtd.org")
           org-re-reveal-root "file:///home/jasperge/.config/yarn/global/node_modules/reveal.js"
@@ -537,10 +537,10 @@ before packages are loaded."
   (with-eval-after-load 'org-capture
     (setq org-capture-templates
           '(("t" "Todo" entry
-             (file+headline "~/Dropbox/org/inbox.org" "Inbox")
+             (file+headline "~/syncthing/org/inbox.org" "Inbox")
              (file "~/.emacs.d/private/org-templates/todo.orgcaptmpl"))
             ("l" "Linked Todo" entry
-             (file+headline "~/Dropbox/org/inbox.org" "Inbox")
+             (file+headline "~/syncthing/org/inbox.org" "Inbox")
              (file "~/.emacs.d/private/org-templates/todo-linked.orgcaptmpl"))
             ))
     (add-to-list 'org-capture-templates
@@ -555,11 +555,11 @@ before packages are loaded."
                   :capture-template (f-read-text "~/.emacs.d/private/org-templates/project-todo-linked.orgcaptmpl")) t)
     (add-to-list 'org-capture-templates
                  '("j" "Journal Entry" entry
-                   (file+olp+datetree "~/Dropbox/org/journal.org")
+                   (file+olp+datetree "~/syncthing/org/journal.org")
                    (file "~/.emacs.d/private/org-templates/journal.orgcaptmpl")) t)
     (add-to-list 'org-capture-templates
                  '("w" "Work Journal Entry" entry
-                   (file+olp+datetree "~/Dropbox/org/work-journal.org")
+                   (file+olp+datetree "~/syncthing/org/work-journal.org")
                    (file "~/.emacs.d/private/org-templates/work-journal.orgcaptmpl")) t)
     (add-to-list 'org-capture-templates
                  '("b" "Tidbit: quote, zinger, one-liner or textlet" entry

@@ -7,17 +7,19 @@ alias open='xdg-open'
 alias c='clear'
 
 # vim
-alias vim='gvim -v'
-alias vimpy2='vim --cmd "let py2 = 1"'
+# alias vim='gvim -v'
+# alias vimpy2='vim --cmd "let py2 = 1"'
+alias vim='nvim'
+alias vimdiff='nvim -d'
 
 # Blender
-alias b='$HOME/blender/blender'
 alias blender-buildbot='$HOME/blender-buildbot/blender'
 alias bbb=blender-buildbot
 alias b28='$HOME/blender-2.80/blender'
 alias bf-blender='$HOME/bf-blender/blender'
 # alias bfb='bf-blender --enable-new-depsgraph'
-alias blender='bf-blender'
+alias b='bf-blender'
+# alias blender='bf-blender'
 alias bfb='bf-blender'
 alias bu='$HOME/bash_scripts/blenderUpdate.sh'
 alias downloadbbb='blender_buildbot_download --extract'

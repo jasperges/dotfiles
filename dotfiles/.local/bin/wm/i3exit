@@ -67,7 +67,7 @@ blurlock() {
         # scrot seems a lot faster; TODO: also test this on multi-monitor setup
         scrot -m /tmp/screenshot.png
         # blur it
-        convert /tmp/screenshot.png -blur 0x10 /tmp/screenshotblur.png
+        convert /tmp/screenshot.png -blur 0x20 /tmp/screenshotblur.png
         rm /tmp/screenshot.png
         # lock
         i3lock --ignore-empty-password --show-failed-attempts --tiling \
