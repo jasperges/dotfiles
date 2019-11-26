@@ -7,6 +7,8 @@ alias open='xdg-open'
 alias c='clear'
 
 # vim
+# alias vim='gvim -v'
+# alias vimpy2='vim --cmd "let py2 = 1"'
 alias vim='nvim'
 alias vimdiff='nvim -d'
 
