@@ -15,7 +15,7 @@ export PATH
 export TERMINAL=st
 
 # Default editor
-export EDITOR=vim
+export EDITOR=nvim
 
 # Default browser
 export BROWSER=firefox
@@ -29,8 +29,13 @@ export SUDO_ASKPASS=$HOME/.local/bin/tools/dmenupass
 # export PINENTRY_BINARY="pinentry-curses --ttyname pinentry"
 
 # Auto start X on tty1
-if [[ ! ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
+if [[ -z ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
     exec startx 2>/dev/null 1>&2
+fi
+
+if [[ -n ${DISPLAY} ]]; then
+    # Add non-network connections to access control list
+    xhost + local:
 fi
 
 # Make directories and files completely private by default

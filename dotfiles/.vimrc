@@ -1,88 +1,87 @@
 set encoding=utf-8
 
-if exists('py2') && has('python')
-elseif has('python3')
+" Install Plug if needed
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Vundle
-filetype off
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
+" Plug
+call plug#begin('~/.vim/plugged')
+Plug 'VundleVim/Vundle.vim'
 
 " Python stuff
-Plugin 'davidhalter/jedi-vim'
-Plugin 'ctrlpvim/ctrlp.vim'
+Plug 'davidhalter/jedi-vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
 " Miscellaneous stuff
-Plugin 'vim-syntastic/syntastic'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-eunuch'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'taglist.vim'
-Plugin 'restore_view.vim'
-Plugin 'ervandew/supertab'
-Plugin 'AutoComplPop'
+Plug 'vim-syntastic/syntastic'
+Plug 'altercation/vim-colors-solarized'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-eunuch'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'vim-scripts/taglist.vim'
+Plug 'vim-scripts/restore_view.vim'
+Plug 'ervandew/supertab'
+Plug 'vim-scripts/AutoComplPop'
 
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
-" Plugin 'othree/html5.vim'
-" Plugin 'fatih/vim-go'
-" Plugin 'garbas/vim-snipmate'
+" Plug 'othree/html5.vim'
+" Plug 'fatih/vim-go'
+" Plug 'garbas/vim-snipmate'
 
-Plugin 'Sirver/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'greg-js/vim-react-es6-snippets'
+Plug 'Sirver/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'greg-js/vim-react-es6-snippets'
 
 " Indent guides
-Plugin 'nathanaelkane/vim-indent-guides'
+Plug 'nathanaelkane/vim-indent-guides'
 
 " Auto close brackets etc.
-Plugin 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 
 " Jinja
-Plugin 'HiPhish/jinja.vim'
+Plug 'HiPhish/jinja.vim'
 
 " Javascript plugins
-" Plugin 'pangloss/vim-javascript'
-" Plugin 'jelera/vim-javascript-syntax'
-" Plugin 'ternjs/tern_for_vim'
-Plugin 'othree/yajs'
-" Plugin 'othree/es.next.syntax'
-Plugin 'mxw/vim-jsx'
+" Plug 'pangloss/vim-javascript'
+" Plug 'jelera/vim-javascript-syntax'
+" Plug 'ternjs/tern_for_vim'
+Plug 'othree/yajs'
+" Plug 'othree/es.next.syntax'
+Plug 'mxw/vim-jsx'
 
-" Plugin 'Valloric/YouCompleteMe'
-" Plugin 'AutoClose'
+" Plug 'Valloric/YouCompleteMe'
+" Plug 'AutoClose'
 
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'suan/vim-instant-markdown', {'rtp': 'after'}
-Plugin 'sbdchd/neoformat'
-" Plugin 'HTML-AutoCloseTag'
-" Plugin 'jiangmiao/auto-pairs'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'suan/vim-instant-markdown', {'rtp': 'after'}
+Plug 'sbdchd/neoformat'
+" Plug 'HTML-AutoCloseTag'
+" Plug 'jiangmiao/auto-pairs'
 
-Plugin 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 
 " Restructured text
-Plugin 'Rykka/riv.vim'
-Plugin 'Rykka/InstantRst'
+Plug 'Rykka/riv.vim'
+Plug 'Rykka/InstantRst'
 
-Plugin 'peterhoeg/vim-qml'
+Plug 'peterhoeg/vim-qml'
 
-call vundle#end()
-filetype plugin indent on
+call plug#end()
 
 " airline
 let g:airline_powerline_fonts = 1
-" let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='solarized'
 let g:airline_solarized_bg='dark'
 
@@ -92,7 +91,7 @@ nnoremap <Space> <Nop>
 " map <Space> <Leader>
 " edit vimrc quickly
 let mapleader=" "
-map <leader>v :sp ~/.vimrc<cr>
+map <leader>v :sp ~/.vimrc<CR>
 " reload vimrc when saved
 au BufWritePost .vimrc so ~/.vimrc
 set background=dark
@@ -102,6 +101,8 @@ set number
 set modeline
 set listchars=eol:¬,tab:>―,space:·
 set conceallevel=2
+map <M-Right> :bn<CR>
+map <M-Left> :bp<CR>
 
 let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
