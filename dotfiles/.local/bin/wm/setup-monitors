@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# TODO: Make this more generic. Figure out if there are external and/or
+# internal monitors and do the 'right thing'. In case the 'right thing' is
+# unclear, ask the user.
+
+external_monitor=$(xrandr | sed -nE "s/^((DP|HDMI)-[0-9]+) connected.*$/\1/p")
+internal_monitor=$(xrandr | sed -nE "s/^(LVDS-[0-9]+) connected.*$/\1/p")
+
+if [[ -n $external_monitor ]]; then
+    xrandr --output $external_monitor --auto --primary
+    xrandr --output $internal_monitor --auto --right-of $external_monitor
+    # TODO: move the interal monitor based on the actual resolutions of the monitors
+    xrandr --output $internal_monitor --pos 2560x390
+else
+    xrandr --output $internal_monitor --auto --primary
+    xrandr --output $internal_monitor --pos 0x0
+    # TODO: get the resolution of the internal monitor
+    xrandr -s 1680x1050
+fi
+
+update_i3_config
+i3 restart
+feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper
+setxinputs 2>/dev/null
