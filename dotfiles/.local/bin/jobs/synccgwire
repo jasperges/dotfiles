@@ -14,4 +14,5 @@ done
 
 if [[ -z $quiet ]]; then
     echo "$(date) - CG Wire repo's synced" >> $HOME/.synccgwire
+    notify-send --app-name="CG Wire Sync" " CG Wire Sync" "Syncing of the CG Wire repositories done!"
 fi
