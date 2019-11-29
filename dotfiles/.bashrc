@@ -28,13 +28,13 @@ if [ -f "$HOME/.bash_functions" ]; then
     . "$HOME/.bash_functions"
 fi
 
-# fuzzy finder
-if [ -f "$HOME/.fzf.bash" ]; then
-    . "$HOME/.fzf.bash"
-fi
-
 # enable globstar
 shopt -s globstar
 
 # use a vi-style line editing interface
 set -o vi
+
+# fuzzy finder
+if [ -f "$HOME/.fzf.bash" ]; then
+    . "$HOME/.fzf.bash"
+fi
