@@ -332,6 +332,7 @@ let g:neoformat_run_all_formatters = 1
 let g:neoformat_enabled_python = ['yapf', 'isort']
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_html = ['htmlbeautify', 'tidy']
+let g:neoformat_enabled_yaml = ['prettier']
 " let g:neoformat_python_yapf = {
 "         \ 'exe': 'yapf',
 "         \ 'args': ['--style="{based_on_style: pep8, column_limit: 100, indent_dictionary_value: true, allow_split_before_dict_value: false, each_dict_entry_on_separate_line: false}"'],
