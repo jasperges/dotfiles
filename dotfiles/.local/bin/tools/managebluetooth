@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# TODO: determine if device is connected or disconnected
+
+# Get a list of available Bluetooth devices
+readarray -t btlist < <(echo -e "devices" | bluetoothctl | grep "^Device" | sort | uniq -u)
+
+# Connect to a given Bluetooth device if it's provided and it exists
+for device in ${btlist[@]}; do
+    if [[ $1 == $(echo $device | cut -d ' ' -f 2) ]]; then
+        echo "connect $1" | bluetoothctl && exit 0
+    fi
+done
+
+# If no Bluetooth device was given or it doesn't exist, show available choices
+# icons:       
+btidx="$(printf '%s\n' "${btlist[@]}" | \
+    sed -E 's|^Device [a-zA-Z0-9:]+ (.*)$|<span foreground="#bd2c40"></span> \1|' | \
+    rofi -dmenu -lines 5 -p "(Dis)connect Bluetooth device" -i -markup-rows \
+    -select "font_weight" -format i)"
+[[ "$btidx" ]] || exit
+echo $btidx
+bt="${btlist[btidx]}"
+
+# FIXME: only try to connect for now, not disconnect
+btmac=$(echo "$bt" | cut -d ' ' -f 2)
+echo "connect $btmac" | bluetoothctl
