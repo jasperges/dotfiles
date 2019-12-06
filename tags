@@ -1,0 +1,39 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+asktype	dotfiles/.local/bin/tools/dmenumount	/^asktype() { \\$/;"	f
+asktype	dotfiles/.local/bin/tools/dmenuumount	/^asktype() {$/;"	f
+convertmovie	dotfiles/.local/bin/tools/import_photos	/^convertmovie() {$/;"	f
+createdatedir	dotfiles/.local/bin/tools/import_photos	/^createdatedir() {$/;"	f
+get_active_id	dotfiles/.local/bin/wm/i3exit	/^get_active_id() {$/;"	f
+get_external_monitors	dotfiles/.local/bin/wm/monitor_checker	/^get_external_monitors () {$/;"	f
+get_window_title	dotfiles/.local/bin/wm/i3exit	/^get_window_title() {$/;"	f
+get_wm_class	dotfiles/.local/bin/wm/i3exit	/^get_wm_class() {$/;"	f
+getdatearray	dotfiles/.local/bin/tools/import_photos	/^getdatearray() {$/;"	f
+getmount	dotfiles/.local/bin/tools/dmenumount	/^getmount() { \\$/;"	f
+importcamera	dotfiles/.local/bin/tools/import_photos	/^importcamera() {$/;"	f
+importiphone	dotfiles/.local/bin/tools/import_photos	/^importiphone() {$/;"	f
+is_fullscreen	dotfiles/.local/bin/wm/i3exit	/^is_fullscreen() {$/;"	f
+localize_modules	localize_config	/^localize_modules() {$/;"	f
+localize_monitors	localize_config	/^localize_monitors() {$/;"	f
+localize_network	localize_config	/^localize_network() {$/;"	f
+lock	dotfiles/.local/bin/wm/i3exit	/^lock() {$/;"	f
+mountandroid	dotfiles/.local/bin/tools/dmenumount	/^mountandroid() { \\$/;"	f
+mountios	dotfiles/.local/bin/tools/dmenumount	/^mountios() { \\$/;"	f
+mountusb	dotfiles/.local/bin/tools/dmenumount	/^mountusb() { \\$/;"	f
+printdate	dotfiles/.local/bin/tools/import_photos	/^printdate() {$/;"	f
+should_lock	dotfiles/.local/bin/wm/i3exit	/^should_lock() {$/;"	f
+syncfile	dotfiles/.local/bin/tools/import_photos	/^ syncfile() {$/;"	f
+syncmovies	dotfiles/.local/bin/tools/import_photos	/^syncmovies() {$/;"	f
+syncphotos	dotfiles/.local/bin/tools/import_photos	/^syncphotos() {$/;"	f
+unmountphone	dotfiles/.local/bin/tools/dmenuumount	/^unmountphone() {$/;"	f
+unmountusb	dotfiles/.local/bin/tools/dmenuumount	/^unmountusb() {$/;"	f
+update_file	update_dotfiles	/^update_file() {$/;"	f
+update_files	update_dotfiles	/^update_files() {$/;"	f
+update_modules	dotfiles/.local/bin/launchers/polybar_run	/^update_modules() {$/;"	f
+update_monitors	dotfiles/.local/bin/launchers/polybar_run	/^update_monitors() {$/;"	f
+update_monitors	dotfiles/.local/bin/wm/update_i3_config	/^update_monitors() {$/;"	f
+update_network	dotfiles/.local/bin/launchers/polybar_run	/^update_network() {$/;"	f

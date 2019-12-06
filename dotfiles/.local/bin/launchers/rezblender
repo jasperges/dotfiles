@@ -12,4 +12,6 @@ if [[ ! -d $rezvenvdir ]]; then
     notify-send --app-name=rezblender " Failed to start Blender" $message
     echo "$message ($rezvenvdir)"
     exit 1
-cd $rezvenvdir && pipenv run rez-env blender -- blender
+fi
+cd $rezvenvdir
+st -n blender-show-rez pipenv run rez-env blender -- blender

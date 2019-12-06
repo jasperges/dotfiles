@@ -50,46 +50,54 @@ should_lock() {
     fi
 }
 
+# lock() {
+#     if should_lock; then
+#         i3lock --ignore-empty-password --show-failed-attempts --tiling \
+#             --image "$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname *.png -type f | shuf -n 1)"
+#         sleep 1
+#     fi
+# }
+
 lock() {
     if should_lock; then
-        i3lock --ignore-empty-password --show-failed-attempts --tiling \
-            --image "$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname *.png -type f | shuf -n 1)"
-        sleep 1
-    fi
-}
-
-blurlock() {
-    if should_lock; then
         # pause dunst
-        notify-send DUNST_COMMAND_PAUSE
-        # take screenshot
-        # import -window root /tmp/screenshot.png
-        # scrot seems a lot faster; TODO: also test this on multi-monitor setup
-        scrot -m /tmp/screenshot.png
-        # blur it
-        convert /tmp/screenshot.png -blur 0x20 /tmp/screenshotblur.png
-        rm /tmp/screenshot.png
-        # lock
-        i3lock --ignore-empty-password --show-failed-attempts --tiling \
-            --image /tmp/screenshotblur.png
+        # TODO: new attempt at getting this to work from the script
+        export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; notify-send DUNST_COMMAND_PAUSE
+        external_monitor=$(xrandr | sed -nE "s/^((DP|HDMI)-[0-9]+) connected.*$/\1/p")
+        # Only use blur lock if there is an external_monitor
+        # TODO: only use blur lock if more monitors are connected and their
+        #       resolutions differ
+        if [[ -n $external_monitor ]]; then
+            # take screenshot
+            scrot -m /tmp/screenshot.png
+            # blur it
+            convert /tmp/screenshot.png -blur 0x20 /tmp/screenshotblur.png
+            rm /tmp/screenshot.png
+            # lock
+            i3lock --ignore-empty-password --show-failed-attempts --tiling \
+                --image /tmp/screenshotblur.png
+        else
+            i3lock --ignore-empty-password --show-failed-attempts --tiling \
+                --image "$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname *.png -type f | shuf -n 1)"
+        fi
         sleep 1
         # resume dunst
-        notify-send DUNST_COMMAND_RESUME
+        export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; notify-send DUNST_COMMAND_RESUME
     fi
 }
 
 case "$1" in
     lock)
-        blurlock
+        lock
         ;;
     logout)
         i3 exit
         ;;
     suspend)
-        blurlock && systemctl suspend
+        lock && systemctl suspend
         ;;
     hibernate)
-        blurlock && systemctl hibernate
+        lock && systemctl hibernate
         ;;
     reboot)
         systemctl reboot

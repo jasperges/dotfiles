@@ -231,6 +231,7 @@ for_window [class="St" instance="neomutt"] move scratchpad; [class="St" instance
 
 # Move blender terminal to scratchpad
 for_window [class="St" instance="blender*"] move scratchpad; [class="St" instance="blender*"] scratchpad show; resize set 1200px 800px; move position center; move scratchpad
+for_window [class="St" instance="blender-show*"] move scratchpad; [class="St" instance="blender*"] scratchpad show; resize set 1200px 800px; move position center
 
 # Make pinentry terminal floating
 for_window [class="St" instance="pinentry"] floating enable

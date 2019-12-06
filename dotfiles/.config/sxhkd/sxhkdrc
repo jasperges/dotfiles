@@ -16,14 +16,17 @@ super + i; {i,s}
         {import_photos,top_run}
 super + o; {m,w,e,s,p,o,j,r,t}
         {$TERMINAL -n neomutt -e neomutt,$BROWSER,emacs,emacs,ncmpcpp_local,ncmpcpp_guybrush,dmenujobs,play_radio,play_radio_guybrush}
+super + p
+        passmenu
 super + equal
         i3-msg -q "[class=St instance=scratchpad]" scratchpad show
 super + s; {m,n,t,e,b}
         {i3-msg -q "[class=St instance=ncmpcpp-local] scratchpad show",i3-msg -q "[class=St instance=ncmpcpp-guybrush] scratchpad show",i3-msg -q "[class=St instance=scratchpad] scratchpad show",i3-msg -q "[class=St instance=neomutt] scratchpad show",i3-msg -q "[class=St instance=blender*] scratchpad show"}
 super + g; {d}
         {surf https://start.duckduckgo.com/}
-
-super + b
+super + e
         dmenuunicode
 super + v; {m,p,s,w,u,g}
         {managevpn manage, managevpn Proton-NL, managevpn Submarine, managewifi,managevpn Proton-US,managevpn Proton-UK}
+super + b; {b,q}
+        {rezblender,rezblenderqt}

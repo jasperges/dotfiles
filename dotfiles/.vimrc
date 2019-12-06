@@ -30,6 +30,8 @@ Plug 'vim-scripts/taglist.vim'
 Plug 'vim-scripts/restore_view.vim'
 Plug 'ervandew/supertab'
 Plug 'vim-scripts/AutoComplPop'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'mgedmin/python-imports.vim'
 
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -153,7 +155,8 @@ let g:syntastic_loc_list_height = 10
 " let g:syntastic_python_pylint_args = '--extension-pkg-whitelist=PySide'
 " let g:syntastic_python_flake8_args = '--max-line-length=120'
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
-nnoremap <Leader>S <esc>:SyntasticCheck<CR>
+nnoremap <Leader>ss <esc>:SyntasticCheck<CR>
+nnoremap <Leader>sm <esc>:SyntasticCheck mypy<CR>
 nnoremap <Leader>a <esc>:SyntasticReset<CR>
 
 " Show trailing whitespace
@@ -360,6 +363,7 @@ let g:riv_fold_auto_update=0
 " Nerdtree
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let NERDTreeIgnore=['\~$', '\.pyc$']
 
 " Instant Markdown
 " Uncomment to override defaults:
@@ -372,3 +376,14 @@ let g:instant_markdown_autostart = 0
 " let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
 " let g:instant_markdown_autoscroll = 0
 " let g:instant_markdown_browser = "firefox --new-window"
+
+" Append modeline after last line in buffer.
+" Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
+" files.
+function! AppendModeline()
+  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
+        \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
+  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+  call append(line("$"), l:modeline)
+endfunction
+nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
