@@ -20,8 +20,6 @@ export EDITOR=nvim
 # Default browser
 export BROWSER=firefox
 
-[ -f $HOME/.fzf.bash ] && . $HOME/.fzf.bash
-
 export SUDO_ASKPASS=$HOME/.local/bin/tools/dmenupass
 
 # Use pinentry-curses in it's own floating terminal
