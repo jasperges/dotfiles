@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# venv=$(cd $HOME/src/rez/rez-venv && pipenv --venv)
+# if [[ -z $venv ]]; then
+#     echo "Could not find virtual env for (Bleeding) Rez."
+#     exit 1
+# fi
+# bash --init-file <(echo "export PS1='[\u@\h \W]\$ '; source $venv/bin/activate; rez-env blender -- blender && exit")
+cd $HOME/src/rez/rez-venv
+st -n blender-show-rez pipenv run rez-env blender PyQt5 -- blender
