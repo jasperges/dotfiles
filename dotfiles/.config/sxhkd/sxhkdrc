@@ -36,7 +36,7 @@ XF86AudioRaiseVolume
     pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
 shift + XF86AudioRaiseVolume
     pactl set-sink-volume @DEFAULT_SINK@ +5%; playsound /usr/share/sounds/freedesktop/stereo/bell.oga
- XF86AudioLowerVolume
+XF86AudioLowerVolume
     pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
 shift + XF86AudioLowerVolume
     pactl set-sink-volume @DEFAULT_SINK@ -5%; playsound /usr/share/sounds/freedesktop/stereo/bell.oga
