@@ -1,32 +1,66 @@
 XF86Eject
-        eject
+    eject
 super + Return
-        start_terminal_in_pwd
+    start_terminal_in_pwd
 super + d
-        rofi_run drun
+    rofi_run drun
 super + space
-        rofi_run
+    rofi_run
 super + c
-        rofi_calc
+    rofi_calc
 super + shift + w
-        rename_workspace
+    rename_workspace
 super + m; {m,u}
-        {dmenumount,dmenuumount}
-super + i; {i,s}
-        {import_photos,top_run}
+    {dmenumount,dmenuumount}
+super + i; {p,s}
+    {import_photos,top_run}
 super + o; {m,w,e,s,p,o,j,r,t}
-        {$TERMINAL -n neomutt -e neomutt,$BROWSER,emacs,emacs,ncmpcpp_local,ncmpcpp_guybrush,dmenujobs,play_radio,play_radio_guybrush}
+    {$TERMINAL -n neomutt -e neomutt,$BROWSER,emacs,emacs,ncmpcpp_local,ncmpcpp_guybrush,dmenujobs,play_radio,play_radio_guybrush}
 super + p
-        passmenu
+    passmenu
 super + equal
-        i3-msg -q "[class=St instance=scratchpad]" scratchpad show
-super + s; {m,n,t,e,b}
-        {i3-msg -q "[class=St instance=ncmpcpp-local] scratchpad show",i3-msg -q "[class=St instance=ncmpcpp-guybrush] scratchpad show",i3-msg -q "[class=St instance=scratchpad] scratchpad show",i3-msg -q "[class=St instance=neomutt] scratchpad show",i3-msg -q "[class=St instance=blender*] scratchpad show"}
+    i3-msg -q "[class=St instance=scratchpad]" scratchpad show
+super + s; {t,b}
+    {i3-msg -q "[class=St instance=scratchpad] scratchpad show",i3-msg -q "[class=St instance=blender*] scratchpad show"}
 super + g; {d}
-        {surf https://start.duckduckgo.com/}
+    {surf https://start.duckduckgo.com/}
 super + e
-        dmenuunicode
+    dmenuunicode
 super + v; {m,p,s,w,u,g}
-        {managevpn manage, managevpn Proton-NL, managevpn Submarine, managewifi,managevpn Proton-US,managevpn Proton-UK}
+    {managevpn manage, managevpn Proton-NL, managevpn Submarine, managewifi,managevpn Proton-US,managevpn Proton-UK}
 super + b; {b,q}
-        {rezblender,rezblenderqt}
+    {rezblender,rezblenderqt}
+
+# Pulse Audio controls
+XF86AudioRaiseVolume
+    pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
+shift + XF86AudioRaiseVolume
+    pactl set-sink-volume @DEFAULT_SINK@ +5%; playsound /usr/share/sounds/freedesktop/stereo/bell.oga
+ XF86AudioLowerVolume
+    pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
+shift + XF86AudioLowerVolume
+    pactl set-sink-volume @DEFAULT_SINK@ -5%; playsound /usr/share/sounds/freedesktop/stereo/bell.oga
+XF86AudioMute
+    pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+
+# Sreen brightness controls
+XF86MonBrightnessUp
+    screen_backlight --increase
+XF86MonBrightnessDown
+    screen_backlight --decrease
+
+# Keyboard Backlight control
+XF86KbdBrightnessUp
+    keyboard_backlight --increase
+XF86KbdBrightnessDown
+    keyboard_backlight --decrease
+
+# Media player controls
+XF86AudioPlay
+    playerctl play-pause || mpc toggle
+XF86AudioNext
+    playerctl next || mpc next
+XF86AudioPrev
+    playerctl previous || mpc prev
+
+# vim: set ts=4 sw=4 tw=72 et:
