@@ -7,6 +7,8 @@ autoload -U colors && colors
 
 # Load aliases and shortcuts if existent.
 [ -f "$HOME/.aliasrc" ] && source "$HOME/.aliasrc"
+# Load functions if existent.
+[ -f "$HOME/.functionrc" ] && source "$HOME/.functionrc"
 
 setopt extendedglob
 unsetopt beep

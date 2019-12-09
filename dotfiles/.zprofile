@@ -2,20 +2,12 @@
 
 # Get the aliases and functions
 if [ -f ~/.zshrc ]; then
-	. ~/.zshrc
+    . ~/.zshrc
 fi
 
 # User specific environment and startup programs
 
-PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.local/bin/launchers:$HOME/.local/bin/tools:$HOME/.local/bin/wm:$HOME/.local/bin/polybar:$HOME/.local/bin/jobs:$HOME/.local/rez/bin:
-
-if [ -d /opt/Shotgun ]; then
-    PATH=$PATH:/opt/Shotgun
-fi
-
-if [ -d $HOME/.yarn/bin ]; then
-    PATH=$PATH:$HOME/.yarn/bin
-fi
+PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.local/bin/launchers:$HOME/.local/bin/tools:$HOME/.local/bin/wm:$HOME/.local/bin/polybar:$HOME/.local/bin/jobs
 
 export PATH
 

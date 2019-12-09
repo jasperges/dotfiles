@@ -2,7 +2,7 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+    . /etc/bashrc
 fi
 
 if [ -f "$HOME/.config/user-dirs.dirs" ]; then
@@ -18,15 +18,10 @@ export SYSTEMD_PAGER=
 GPG_TTY=$(tty)
 export GPG_TTY
 
-# User specified aliases and functions
-
-if [ -f "$HOME/.bash_aliases" ]; then
-    . "$HOME/.bash_aliases"
-fi
-
-if [ -f "$HOME/.bash_functions" ]; then
-    . "$HOME/.bash_functions"
-fi
+# Load aliases and shortcuts if existent.
+[ -f "$HOME/.aliasrc" ] && source "$HOME/.aliasrc"
+# Load functions if existent.
+[ -f "$HOME/.functionrc" ] && source "$HOME/.functionrc"
 
 # enable globstar
 shopt -s globstar
