@@ -15,7 +15,7 @@ super + m; {m,u}
 super + i; {p,s}
     {import_photos,top_run}
 super + o; {m,w,e,s,p,o,j,r,t}
-    {$TERMINAL -n neomutt -e neomutt,$BROWSER,emacs,emacs,ncmpcpp_local,ncmpcpp_guybrush,dmenujobs,play_radio,play_radio_guybrush}
+    {neomutt_run,$BROWSER,emacs,emacs,ncmpcpp_local,ncmpcpp_guybrush,dmenujobs,play_radio,play_radio_guybrush}
 super + p
     passmenu
 super + equal
