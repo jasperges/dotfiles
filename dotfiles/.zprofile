@@ -27,7 +27,7 @@ export EDITOR=nvim
 
 # Default browser
 # Temporary until the digital cert bug gets fixed
-export BROWSER=firefox_
+export BROWSER=firefox
 
 export SUDO_ASKPASS=$HOME/.local/bin/tools/dmenupass
 
