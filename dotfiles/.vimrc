@@ -1,6 +1,6 @@
 set encoding=utf-8
 
-" Install Plug if needed
+" Install Plug and plugins if needed
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -19,6 +19,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-fugitive'
+" Plug 'jreybert/vimagit'
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -78,6 +80,10 @@ Plug 'Rykka/riv.vim'
 Plug 'Rykka/InstantRst'
 
 Plug 'peterhoeg/vim-qml'
+Plug 'kovetskiy/sxhkd-vim'
+
+" Distraction free writing
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
@@ -95,7 +101,7 @@ nnoremap <Space> <Nop>
 let mapleader=" "
 map <leader>v :sp ~/.vimrc<CR>
 " reload vimrc when saved
-au BufWritePost .vimrc so ~/.vimrc
+au BufWritePost .vimrc source ~/.vimrc
 set background=dark
 colorscheme solarized
 let g:python_recommended_style = 0
@@ -114,7 +120,7 @@ set shiftround
 set expandtab
 set autoread    " reload file when changes happen in another editor
 " make yank copy to the global system clipboard
-set clipboard=unnamed
+set clipboard+=unnamedplus
 " Fast navigation between tabs
 " map <Leader>, <esc>:tabprevious<CR>
 " map <Leader>. <esc>:tabnext<CR>
@@ -124,8 +130,8 @@ vnoremap > >gv
 " Delete comment character when joining commented lines
 set formatoptions+=j
 " Use <C-L> to clear the highlighting of :set hlsearch.
-if maparg('<C-L>', 'n') ==# ''
-  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+if maparg('<C-s>', 's') ==# ''
+  nnoremap <silent> <C-s> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
 set laststatus=2
 " Map TagList toggle to <leader> t
@@ -392,3 +398,23 @@ nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
+
+" Splits open at the bottom and the right
+set splitbelow splitright
+
+" Shortcuts for window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+" Enable Goyo (distraction free writing) for writing email
+autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=80
+autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
+autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
+autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|x!<CR>
+
+"Run xrdb when Xdefaults or Xresources are updated
+autocmd BufWritePost *Xdefaults,*Xresources !xrdb %
+" Update binds when sxhkdrc is updated
+autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
