@@ -30,16 +30,15 @@ super + v; {m,p,s,w,u,g}
     {managevpn manage, managevpn Proton-NL, managevpn Submarine, managewifi,managevpn Proton-US,managevpn Proton-UK}
 super + b; {b,q}
     {rezblender,rezblenderqt}
+# make sxhkd reload its configuration files:
+super + Escape
+	pkill -USR1 -x sxhkd
 
 # Pulse Audio controls
-XF86AudioRaiseVolume
-    pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
-shift + XF86AudioRaiseVolume
-    pactl set-sink-volume @DEFAULT_SINK@ +5%; playsound /usr/share/sounds/freedesktop/stereo/bell.oga
-XF86AudioLowerVolume
-    pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
-shift + XF86AudioLowerVolume
-    pactl set-sink-volume @DEFAULT_SINK@ -5%; playsound /usr/share/sounds/freedesktop/stereo/bell.oga
+{_,shift} + XF86AudioRaiseVolume
+    pactl set-sink-volume @DEFAULT_SINK@ +5%{;,; playsound /usr/share/sounds/freedesktop/stereo/bell.oga}
+{_,shift} + XF86AudioLowerVolume
+    pactl set-sink-volume @DEFAULT_SINK@ -5%{;,; playsound /usr/share/sounds/freedesktop/stereo/bell.oga}
 XF86AudioMute
     pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
 
