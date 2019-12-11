@@ -2,9 +2,9 @@ set encoding=utf-8
 
 " Install Plug and plugins if needed
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 " Plug
@@ -131,7 +131,7 @@ vnoremap > >gv
 set formatoptions+=j
 " Use <C-L> to clear the highlighting of :set hlsearch.
 if maparg('<C-s>', 's') ==# ''
-  nnoremap <silent> <C-s> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+    nnoremap <silent> <C-s> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
 set laststatus=2
 " Map TagList toggle to <leader> t
@@ -178,14 +178,14 @@ set nocompatible
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-" set backup		" keep a backup file (restore to previous version)
+" set backup            " keep a backup file (restore to previous version)
 set nobackup
-set undofile		" keep an undo file (undo changes after closing)
-set history=700		" keep 700 lines of command line history
+set undofile            " keep an undo file (undo changes after closing)
+set history=700         " keep 700 lines of command line history
 set undolevels=700
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
+set ruler               " show the cursor position all the time
+set showcmd             " display incomplete commands
+set incsearch           " do incremental searching
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -204,11 +204,11 @@ set hlsearch
 
 " Awesome line number magic
 function! NumberToggle()
-  if(&relativenumber == 1)
-    set number
-  else
-    set relativenumber
-  endif
+    if(&relativenumber == 1)
+        set number
+    else
+        set relativenumber
+    endif
 endfunc
 
 nnoremap <Leader>l :call NumberToggle()<cr>
@@ -221,32 +221,32 @@ set relativenumber
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  " filetype plugin indent on
+    " Enable file type detection.
+    " Use the default filetype settings, so that mail gets 'tw' set to 72,
+    " 'cindent' is on in C files, etc.
+    " Also load indent files, to automatically do language-dependent indenting.
+    " filetype plugin indent on
 
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-  au!
+    " Put these in an autocmd group, so that we can delete them easily.
+    augroup vimrcEx
+        au!
 
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+        " For all text files set 'textwidth' to 78 characters.
+        autocmd FileType text setlocal textwidth=78
 
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-    \ if line("'\"") >= 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
+        " When editing a file, always jump to the last known cursor position.
+        " Don't do it when the position is invalid or when inside an event handler
+        " (happens when dropping a file on gvim).
+        autocmd BufReadPost *
+                    \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+                    \   exe "normal! g`\"" |
+                    \ endif
 
-  augroup END
+    augroup END
 
 else
 
-  set autoindent		" always set autoindenting on
+    set autoindent                " always set autoindenting on
 
 endif " has("autocmd")
 
@@ -254,15 +254,15 @@ endif " has("autocmd")
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
 if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
+    command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+                \ | wincmd p | diffthis
 endif
 
 if has('langmap') && exists('+langnoremap')
-  " Prevent that the langmap option applies to characters that result from a
-  " mapping.  If unset (default), this may break plugins (but it's backward
-  " compatible).
-  set langnoremap
+    " Prevent that the langmap option applies to characters that result from a
+    " mapping.  If unset (default), this may break plugins (but it's backward
+    " compatible).
+    set langnoremap
 endif
 
 " Color column at 80 and 120
@@ -387,10 +387,10 @@ let g:instant_markdown_autostart = 0
 " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
 " files.
 function! AppendModeline()
-  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
-        \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
-  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
-  call append(line("$"), l:modeline)
+    let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
+                \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
+    let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+    call append(line("$"), l:modeline)
 endfunction
 nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 
@@ -409,7 +409,7 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " Enable Goyo (distraction free writing) for writing email
-autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=120
+autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=100
 autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|x!<CR>
@@ -418,3 +418,5 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|x!<CR>
 autocmd BufWritePost *Xdefaults,*Xresources !xrdb %
 " Update binds when sxhkdrc is updated
 autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
+
+" vim: set ts=4 sw=4 tw=78 et :
