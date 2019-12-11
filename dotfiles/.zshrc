@@ -34,16 +34,15 @@ export KEYTIMEOUT=1
 
 # Change cursor shape for different vi modes.
 function zle-keymap-select {
-  if [[ ${KEYMAP} == vicmd ]] ||
-     [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
-
-  elif [[ ${KEYMAP} == main ]] ||
-       [[ ${KEYMAP} == viins ]] ||
-       [[ ${KEYMAP} = '' ]] ||
-       [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
-  fi
+    if [[ ${KEYMAP} == vicmd ]] ||
+        [[ $1 = 'block' ]]; then
+            echo -ne '\e[2 q'
+    elif [[ ${KEYMAP} == main ]] ||
+        [[ ${KEYMAP} == viins ]] ||
+        [[ ${KEYMAP} = '' ]] ||
+        [[ $1 = 'beam' ]]; then
+            echo -ne '\e[6 q'
+    fi
 }
 zle -N zle-keymap-select
 
@@ -76,13 +75,9 @@ lfcd () {
 bindkey -s '^o' 'lfcd\n'  # zsh
 
 # Source global definitions
-if [ -f /etc/zshrc ]; then
-	. /etc/zshrc
-fi
+[ -f /etc/zshrc ] && source /etc/zshrc
 
-if [ -f "$HOME/.config/user-dirs.dirs" ]; then
-        . "$HOME/.config/user-dirs.dirs"
-fi
+[ -f "$HOME/.config/user-dirs.dirs" ] && source "$HOME/.config/user-dirs.dirs"
 
 export XDG_CONFIG_HOME=$HOME/.config
 
@@ -105,3 +100,5 @@ PS1="%B%{$fg[blue]%}[%n@%m %{$fg[yellow]%}%~%{$fg[blue]%}]$ %{$reset_color%}"
 
 # Load zsh-syntax-highlighting; should be last.
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+
+#  vim: set ts=4 sw=4 tw=4 et :
