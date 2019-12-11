@@ -131,6 +131,7 @@ vnoremap > >gv
 set formatoptions+=j
 " Use <C-L> to clear the highlighting of :set hlsearch.
 if maparg('<C-s>', 's') ==# ''
+    " TODO: Change this 'dangerous' hotkey (is also terminal suspend)
     nnoremap <silent> <C-s> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
 set laststatus=2
@@ -170,6 +171,8 @@ nnoremap <Leader>a <esc>:SyntasticReset<CR>
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 au InsertLeave * match ExtraWhitespace /\s\+$/
 map <Leader>x :%s/\s\+$//<CR>
+" Automatically deletes all trailing whitespace on save.
+autocmd BufWritePre * %s/\s\+$//e    
 
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
