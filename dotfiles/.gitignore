@@ -18,3 +18,9 @@ ENV/
 
 # Windows
 Thumbs.db
+
+# mypy
+.mypy_cache/
+
+# ctags
+tags
