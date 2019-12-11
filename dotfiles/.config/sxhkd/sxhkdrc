@@ -32,9 +32,9 @@ super + b; {b,q}
     {rezblender,rezblenderqt}
 super + x
     clipmenu
-# make sxhkd reload its configuration files:
+# Reload sxhkd and polybar
 super + Escape
-	pkill -USR1 -x sxhkd
+	pkill -USR1 -x sxhkd && pkill -USR1 -x polybar
 
 # Pulse Audio controls
 {_,shift} + XF86AudioRaiseVolume
@@ -45,16 +45,12 @@ XF86AudioMute
     pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
 
 # Sreen brightness controls
-XF86MonBrightnessUp
-    screen_backlight --increase
-XF86MonBrightnessDown
-    screen_backlight --decrease
+XF86MonBrightness{Up,Down}
+    screen_backlight {--increase,--decrease}
 
 # Keyboard Backlight control
-XF86KbdBrightnessUp
-    keyboard_backlight --increase
-XF86KbdBrightnessDown
-    keyboard_backlight --decrease
+XF86KbdBrightness{Up,Down}
+    keyboard_backlight {--increase,--decrease}
 
 # Media player controls
 XF86AudioPlay
