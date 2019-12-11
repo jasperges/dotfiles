@@ -30,6 +30,8 @@ super + v; {m,p,s,w,u,g}
     {managevpn manage, managevpn Proton-NL, managevpn Submarine, managewifi,managevpn Proton-US,managevpn Proton-UK}
 super + b; {b,q}
     {rezblender,rezblenderqt}
+super + x
+    clipmenu
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
