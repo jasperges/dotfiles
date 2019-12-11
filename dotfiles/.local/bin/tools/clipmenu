@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+dmenu -p "Type some text to copy to the clipboard" -l 0 | xclip -selection clipboard
