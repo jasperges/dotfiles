@@ -172,7 +172,7 @@ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 au InsertLeave * match ExtraWhitespace /\s\+$/
 map <Leader>x :%s/\s\+$//<CR>
 " Automatically deletes all trailing whitespace on save.
-autocmd BufWritePre * %s/\s\+$//e    
+autocmd BufWritePre * %s/\s\+$//e
 
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
