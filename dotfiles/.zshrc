@@ -96,7 +96,8 @@ if [ -f "$HOME/.fzf.zsh" ]; then
 fi
 
 # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
-PS1="%B%{$fg[blue]%}[%n@%m %{$fg[yellow]%}%~%{$fg[blue]%}]$ %{$reset_color%}"
+# PS1="%B%{$fg[blue]%}[%n@%m %{$fg[yellow]%}%~%{$fg[blue]%}]$ %{$reset_color%}"
+PS1="%B[%{$fg[blue]%}%n%{$reset_color%}%B@%{$fg[yellow]%}%m %{$fg[green]%}%~%{$reset_color%}%B]$ %{$reset_color%}"
 
 # Load zsh-syntax-highlighting; should be last.
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
