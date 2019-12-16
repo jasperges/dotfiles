@@ -412,7 +412,7 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " Enable Goyo (distraction free writing) for writing email
-autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=100
+" autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=100
 autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|x!<CR>
