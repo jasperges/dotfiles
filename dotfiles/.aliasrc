@@ -1,7 +1,10 @@
 # User specified aliases and functions
 
 # open files
-alias open='xdg-open'
+# alias open='xdg-open'
+open() {
+    xdg-open $1 &;
+}
 
 # clear
 alias c='clear'
@@ -81,5 +84,15 @@ alias dmenu='rofi -dmenu'
 alias ccat='highlight -O ansi'
 
 # fuzzy finder
-alias se='$EDITOR $(find $HOME/.local/bin $HOME/.config -type f | fzf)'
-alias vf='$EDITOR $(fzf)'
+# alias se='$EDITOR $(find $HOME/.local/bin $HOME/.config -type f | fzf)'
+# alias vf='$EDITOR $(fzf)'
+se() {
+    files=$(find $HOME/.local/bin $HOME/.config -type f | fzf)
+    [[ -n $files ]] && $EDITOR $files
+}
+vf() {
+    files=$(find $PWD -maxdepth 3 -type f | fzf)
+    [[ -n $files ]] && $EDITOR $files
+}
+
+#  vim: set ts=4 sw=4 tw=0 et ft=sh:
