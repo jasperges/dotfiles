@@ -10,8 +10,8 @@ super + c
     rofi_calc
 super + shift + w
     rename_workspace
-super + m; {m,u}
-    {dmenumount,dmenuumount}
+super + m; {m,u,s}
+    {dmenumount,dmenuumount,dmenu-servermount}
 super + i; {p,s}
     {import_photos,top_run}
 super + o; {m,w,e,s,p,o,j,r,t}

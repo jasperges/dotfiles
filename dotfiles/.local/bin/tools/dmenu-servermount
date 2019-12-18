@@ -1,0 +1,8 @@
+#!/bin/sh
+# Gives a dmenu prompt to run custom mount scripts.
+# It expects these scripts to be in $HOME/.local/bin/tools and they should
+# start with 'mount-'.
+
+scriptdir=$HOME/.local/bin/tools
+choice=$(find $scriptdir -type f -executable -name "mount-*" -print0| xargs -0 -I {} basename {} | dmenu -p "Choose a mount script to run" -no-custom)
+[[ -n $choice ]] && $scriptdir/$choice
