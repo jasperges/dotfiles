@@ -185,7 +185,7 @@ default_border pixel 4
   # client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
   # client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
   # client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
-  # client.placeholder      #000000 #0c0c0c #ffffff #000000 
+  # client.placeholder      #000000 #0c0c0c #ffffff #000000
 
   # client.background       #2B2C2B
 
@@ -222,6 +222,7 @@ for_window [class="(?im)^(?!firefox$)" title="Work Files"] floating enable;[titl
 
 # Make Allzpark floating
 for_window [class="cli.py" title="(?im)^.*|\s+allzpark\s+.*$"] floating enable
+for_window [class="cli.py" title="(?im)^.*|\s+allzpark\s+.*$"] move scratchpad; [class="cli.py" title="(?im)^.*|\s+allzpark\s+.*$"] scratchpad show
 
 # Make Shotgun Desktop floating
 for_window [class="Shotgun"] floating enable
