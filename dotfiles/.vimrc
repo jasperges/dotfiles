@@ -9,8 +9,6 @@ endif
 
 " Plug
 call plug#begin('~/.vim/plugged')
-Plug 'VundleVim/Vundle.vim'
-
 " Python stuff
 Plug 'davidhalter/jedi-vim'
 Plug 'ctrlpvim/ctrlp.vim'
