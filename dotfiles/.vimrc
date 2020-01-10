@@ -83,6 +83,10 @@ Plug 'kovetskiy/sxhkd-vim'
 " Distraction free writing
 Plug 'junegunn/goyo.vim'
 
+" Better tables and to-do's
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'dhruvasagar/vim-dotoo'
+
 call plug#end()
 
 " airline
@@ -366,6 +370,9 @@ let g:user_emmet_settings = {
 
 " riv (restructured text)
 let g:riv_fold_auto_update=0
+
+" Fugitive
+nnoremap <Leader>gs <esc>:Gstatus<CR>
 
 " Nerdtree
 map <C-n> :NERDTreeToggle<CR>
