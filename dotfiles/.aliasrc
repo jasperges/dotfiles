@@ -3,7 +3,7 @@
 # open files
 # alias open='xdg-open'
 open() {
-    xdg-open $1 &;
+    xdg-open $1 &
 }
 
 # clear
