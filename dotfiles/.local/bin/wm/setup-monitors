@@ -23,3 +23,10 @@ update_i3_config
 i3 restart
 feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper
 setxinputs 2>/dev/null
+
+# TODO: now you end up in workspace 10, remember the current workspace and switch back to it
+for wsnum in $(sed -nE "s/^set \\\$ws[0-9]+ \"([0-9]+)(: [a-z]+)?\"$/\1/p" $HOME/.config/i3/config); do
+    i3 "workspace number $wsnum"
+    wsoutput=$(sed -nE "s/^workspace \\\$ws$wsnum (output [A-Z]+-[0-9]+)$/\1/p" $HOME/.config/i3/config)
+    i3 "move workspace to $wsoutput"
+done
