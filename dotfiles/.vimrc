@@ -131,11 +131,8 @@ vnoremap < <gv
 vnoremap > >gv
 " Delete comment character when joining commented lines
 set formatoptions+=j
-" Use <C-L> to clear the highlighting of :set hlsearch.
-if maparg('<C-s>', 's') ==# ''
-    " TODO: Change this 'dangerous' hotkey (is also terminal suspend)
-    nnoremap <silent> <C-s> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-endif
+" Use '<Leader>hl' to toggle hlsearch.
+nnoremap <silent> <Leader>hl <esc>:set invhlsearch<CR>
 set laststatus=2
 " Map TagList toggle to <leader> t
 nnoremap <Leader>t <esc>:Tlist<CR>
@@ -166,7 +163,7 @@ let g:syntastic_loc_list_height = 10
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
 nnoremap <Leader>ss <esc>:SyntasticCheck<CR>
 nnoremap <Leader>sm <esc>:SyntasticCheck mypy<CR>
-nnoremap <Leader>a <esc>:SyntasticReset<CR>
+nnoremap <Leader>sa <esc>:SyntasticReset<CR>
 
 " Show trailing whitespace
 " =========================
