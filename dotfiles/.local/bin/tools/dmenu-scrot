@@ -1,0 +1,7 @@
+#!/bin/bash
+
+choice=$(echo "Selection" | dmenu -p "Choose how to take a screenshot" -no-custom -i)
+case $choice in
+    "Selection" )
+        scrot-selection ;;
+esac
