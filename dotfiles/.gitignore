@@ -24,3 +24,5 @@ Thumbs.db
 
 # ctags
 tags
+tags.lock
+tags.temp

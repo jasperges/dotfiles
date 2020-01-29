@@ -95,6 +95,11 @@ if [ -f "$HOME/.fzf.zsh" ]; then
     . "$HOME/.fzf.zsh"
 fi
 
+# rez
+if [ -f /opt/rez/completion/complete.zsh ]; then
+    . /opt/rez/completion/complete.zsh
+fi
+
 # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 # PS1="%B%{$fg[blue]%}[%n@%m %{$fg[yellow]%}%~%{$fg[blue]%}]$ %{$reset_color%}"
 PS1="%B[%{$fg[blue]%}%n%{$reset_color%}%B@%{$fg[yellow]%}%m %{$fg[green]%}%~%{$reset_color%}%B]$ %{$reset_color%}"

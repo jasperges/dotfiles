@@ -150,6 +150,8 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 " let g:syntastic_python_checkers = ['python', 'flake8', 'pep8', 'pylint', 'pyflakes']
 let g:syntastic_python_checkers = ['pylint']
+" Append flake8 as checker if a '.flake8' config can be found
+autocmd FileType python let b:syntastic_checkers = findfile('.flake8', '.;') != '' ? g:syntastic_python_checkers + ['flake8'] : g:syntastic_python_checkers
 let g:syntastic_python_python_exec = 'python3'
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_json_checkers = ['jsonlint']
@@ -161,9 +163,9 @@ let g:syntastic_loc_list_height = 10
 " let g:syntastic_python_pylint_args = '--extension-pkg-whitelist=PySide'
 " let g:syntastic_python_flake8_args = '--max-line-length=120'
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
-nnoremap <Leader>ss <esc>:SyntasticCheck<CR>
+nnoremap <Leader>sc <esc>:SyntasticCheck<CR>
 nnoremap <Leader>sm <esc>:SyntasticCheck mypy<CR>
-nnoremap <Leader>sa <esc>:SyntasticReset<CR>
+nnoremap <Leader>sr <esc>:SyntasticReset<CR>
 
 " Show trailing whitespace
 " =========================
