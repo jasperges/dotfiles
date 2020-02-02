@@ -138,7 +138,7 @@ assign [class="Rhythmbox"] → number $ws10
 assign [class="Franz"] → number $ws10
 
 # Some 'favorite' apps...
-bindsym $mod+Mod1+m exec st -n neomutt -e neomutt
+bindsym $mod+Mod1+m exec alacritty -t neomutt -e neomutt
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -197,19 +197,19 @@ bar {
 exec --no-startup-id feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper
 
 # Terminal for scratchpad
-exec --no-startup-id st -n scratchpad
-for_window [class="St" instance="scratchpad"] move scratchpad; [class="St" instance="scratchpad"] scratchpad show; resize set 1400px 800px; move position center; move scratchpad
+exec --no-startup-id alacritty -t scratchpad
+for_window [class="alacritty" instance="scratchpad"] move scratchpad; [class="alacritty" instance="scratchpad"] scratchpad show; resize set 1400px 800px; move position center; move scratchpad
 
 # Move music player and mail to scratchpad
-for_window [class="St" instance="ncmpcpp*"] move scratchpad; [class="St" instance="ncmpcpp*"] scratchpad show; resize set 1400px 900px; move position center
-for_window [class="St" instance="neomutt"] move scratchpad; [class="St" instance="neomutt"] scratchpad show; resize set 1400px 900px; move position center
+for_window [class="alacritty" instance="ncmpcpp*"] move scratchpad; [class="alacritty" instance="ncmpcpp*"] scratchpad show; resize set 1400px 900px; move position center
+for_window [class="alacritty" instance="neomutt"] move scratchpad; [class="alacritty" instance="neomutt"] scratchpad show; resize set 1400px 900px; move position center
 
 # Move blender terminal to scratchpad
-for_window [class="St" instance="blender*"] move scratchpad; [class="St" instance="blender*"] scratchpad show; resize set 1200px 800px; move position center; move scratchpad
-for_window [class="St" instance="blender-show*"] move scratchpad; [class="St" instance="blender*"] scratchpad show; resize set 1200px 800px; move position center
+for_window [class="alacritty" instance="blender*"] move scratchpad; [class="alacritty" instance="blender*"] scratchpad show; resize set 1200px 800px; move position center; move scratchpad
+for_window [class="alacritty" instance="blender-show*"] move scratchpad; [class="alacritty" instance="blender*"] scratchpad show; resize set 1200px 800px; move position center
 
 # Make pinentry terminal floating
-for_window [class="St" instance="pinentry"] floating enable
+for_window [class="alacritty" instance="pinentry"] floating enable
 
 # Make Avalon apps floating
 for_window [class="__main__.py" title="Submarine Launcher"] floating enable; [class="__main__.py" title="Submarine Launcher"] border normal 4

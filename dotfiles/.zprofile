@@ -12,13 +12,12 @@ PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.local/bin/launchers:$HOME/.local/bi
 export PATH
 
 # Default Terminal
-export TERMINAL=st
+export TERMINAL=alacritty
 
 # Default editor
 export EDITOR=nvim
 
 # Default browser
-# Temporary until the digital cert bug gets fixed
 export BROWSER=firefox
 
 export SUDO_ASKPASS=$HOME/.local/bin/tools/dmenupass
@@ -36,6 +35,9 @@ if [[ -n ${DISPLAY} ]]; then
     # Add non-network connections to access control list
     xhost + local:
 fi
+
+export REZ_CONFIG_FILE=$HOME/.config/rezrc
+export ALLZPARK_CONFIG_FILE=$HOME/.config/allzparkrc
 
 # Make directories and files completely private by default
 umask 0077
