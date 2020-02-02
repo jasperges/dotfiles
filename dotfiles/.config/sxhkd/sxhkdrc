@@ -19,10 +19,10 @@ super + o; {m,w,e,s,p,o,j,r,t}
 super + p
     passmenu
 super + equal
-    i3-msg -q "[class=St instance=scratchpad]" scratchpad show
+    i3-msg -q "[class=alacritty title=scratchpad]" scratchpad show
 super + s; {t,b,a}
-    {i3-msg -q "[class=St instance=scratchpad] scratchpad show", \
-        i3-msg -q "[class=St instance=blender*] scratchpad show", \
+    {i3-msg -q "[class=alacritty title=scratchpad] scratchpad show", \
+        i3-msg -q "[class=alacritty title=blender*] scratchpad show", \
         i3-msg -q "[class=cli.py title=(?im)^.*|\s+allzpark\s+.*$] scratchpad show"}
 super + g; {s,d}
     {surf https://start.duckduckgo.com/,dmenu-googledrive}
