@@ -2,7 +2,7 @@
 
 # Check if an instance is already running. If yes, show it and quit. Else run new instance.
 if [[ -n $(pgrep -a -U $UID $TERMINAL | grep -E "^[0-9]+ $TERMINAL -t ncmpcpp-local.*$") ]]; then
-    i3-msg -q "[class=St instance=ncmpcpp-local] scratchpad show"
+    i3-msg -q "[class=$TERMINAL title=ncmpcpp-local] scratchpad show"
 else
     # Launch new instance
     $TERMINAL -t ncmpcpp-local -e ncmpcpp $1 &
