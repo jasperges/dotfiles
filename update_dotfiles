@@ -19,7 +19,7 @@ update_file() {
         read answer
         case $answer in
             n|N) return 1 ;;
-            *) rsync -a $file $HOME/$file; return 1 ;;
+            *) mkdir -p $(dirname $HOME/$file) && rsync -a $file $HOME/$file; return 0 ;;
         esac
     fi
     # Skip it if the files are the same
