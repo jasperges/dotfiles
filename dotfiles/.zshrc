@@ -74,6 +74,12 @@ lfcd () {
 
 bindkey -s '^o' 'lfcd\n'  # zsh
 
+case $TERM in
+  xterm*)
+    precmd () {print -Pn "\e]0;%~\a"}
+    ;;
+esac
+
 # Source global definitions
 [ -f /etc/zshrc ] && source /etc/zshrc
 
