@@ -12,7 +12,7 @@ PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.local/bin/launchers:$HOME/.local/bi
 export PATH
 
 # Default Terminal
-export TERMINAL=st
+export TERMINAL=alacritty
 
 # Default editor
 export EDITOR=nvim
