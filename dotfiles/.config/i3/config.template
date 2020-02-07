@@ -205,8 +205,8 @@ for_window [class="alacritty" title="ncmpcpp*"] move scratchpad; [class="alacrit
 for_window [class="alacritty" title="neomutt"] move scratchpad; [class="alacritty" title="neomutt"] scratchpad show; resize set 1400px 900px; move position center
 
 # Move blender terminal to scratchpad
-for_window [class="alacritty" title="blender*"] move scratchpad; [class="alacritty" title="blender*"] scratchpad show; resize set 1200px 800px; move position center; move scratchpad
-for_window [class="alacritty" title="blender-show*"] move scratchpad; [class="alacritty" title="blender*"] scratchpad show; resize set 1200px 800px; move position center
+for_window [class="alacritty" title="^blender$"] move scratchpad; [class="alacritty" title="blender*"] scratchpad show; resize set 1200px 800px; move position center; move scratchpad
+for_window [class="alacritty" title="^blender-show$"] move scratchpad; [class="alacritty" title="blender*"] scratchpad show; resize set 1200px 800px; move position center
 
 # Make pinentry terminal floating
 for_window [class="alacritty" title="pinentry"] floating enable

@@ -101,14 +101,39 @@ if [ -f "$HOME/.fzf.zsh" ]; then
     . "$HOME/.fzf.zsh"
 fi
 
+# virtualenvwrapper
+if [ -f $HOME/.local/bin/virtualenvwrapper.sh ]; then
+    source $HOME/.local/bin/virtualenvwrapper.sh
+fi
+
 # rez
 if [ -f /opt/rez/completion/complete.zsh ]; then
     . /opt/rez/completion/complete.zsh
 fi
 
+# broot
+if [ -f $HOME/.config/broot/launcher/bash/br ]; then
+    . $HOME/.config/broot/launcher/bash/br
+fi
+
+# dir colors
+if [ -f $HOME/.dircolors ]; then
+    eval $(dircolors $HOME/.dircolors)
+fi
+
 # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 # PS1="%B%{$fg[blue]%}[%n@%m %{$fg[yellow]%}%~%{$fg[blue]%}]$ %{$reset_color%}"
 PS1="%B[%{$fg[blue]%}%n%{$reset_color%}%B@%{$fg[yellow]%}%m %{$fg[green]%}%~%{$reset_color%}%B]$ %{$reset_color%}"
+
+# Pure prompt
+fpath+=("$HOME/src/pure-prompt")
+autoload -U promptinit; promptinit
+PURE_PROMPT_SYMBOL='>>'
+PURE_PROMPT_VICMD_SYMBOL='<<'
+# PURE_PROMPT_SYMBOL='♫'
+prompt pure
+prompt_newline='%666v'
+PROMPT=" $PROMPT"
 
 # Load zsh-syntax-highlighting; should be last.
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null

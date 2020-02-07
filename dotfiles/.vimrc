@@ -104,8 +104,6 @@ let mapleader=" "
 map <leader>v :sp ~/.vimrc<CR>
 " reload vimrc when saved
 au BufWritePost .vimrc source ~/.vimrc
-set background=dark
-colorscheme solarized
 let g:python_recommended_style = 0
 set number
 set modeline
@@ -425,5 +423,9 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|x!<CR>
 autocmd BufWritePost *Xdefaults,*Xresources !xrdb %
 " Update binds when sxhkdrc is updated
 autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
+
+set background=dark
+let g:solarized_termtrans = 1
+colorscheme solarized
 
 " vim: set ts=4 sw=4 tw=78 et :
