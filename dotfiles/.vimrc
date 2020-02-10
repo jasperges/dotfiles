@@ -96,6 +96,7 @@ let g:airline_theme='solarized'
 let g:airline_solarized_bg='dark'
 
 " Japsers dingetjes
+map <leader>fs :w<CR>
 nnoremap <Space> <Nop>
 " sunmap <Space>
 " map <Space> <Leader>
@@ -149,7 +150,7 @@ let g:syntastic_check_on_wq = 0
 " let g:syntastic_python_checkers = ['python', 'flake8', 'pep8', 'pylint', 'pyflakes']
 let g:syntastic_python_checkers = ['pylint']
 " Append flake8 as checker if a '.flake8' config can be found
-autocmd FileType python let b:syntastic_checkers = findfile('.flake8', '.;') != '' ? g:syntastic_python_checkers + ['flake8'] : g:syntastic_python_checkers
+autocmd FileType python let b:syntastic_checkers = findfile('.flake8', '.;') != '' ? ['flake8'] : g:syntastic_python_checkers
 let g:syntastic_python_python_exec = 'python3'
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_json_checkers = ['jsonlint']
@@ -418,6 +419,10 @@ map <C-l> <C-w>l
 autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|x!<CR>
+autocmd BufRead,BufNewFile *.py :let g:goyo_width=120
+autocmd BufRead,BufNewFile *.py :let g:goyo_linenr=2
+nnoremap <silent> <Leader>gy :Goyo<CR>
+
 
 "Run xrdb when Xdefaults or Xresources are updated
 autocmd BufWritePost *Xdefaults,*Xresources !xrdb %

@@ -7,4 +7,4 @@
 # fi
 # bash --init-file <(echo "export PS1='[\u@\h \W]\$ '; source $venv/bin/activate; rez-env blender -- blender && exit")
 cd $HOME/src/rez/rez-venv
-$TERMINAL -t blender-show-rez -e pipenv run rez-env blender PyQt5 -- blender
+$TERMINAL -t blender-show -e pipenv run rez-env blender PyQt5 -- blender

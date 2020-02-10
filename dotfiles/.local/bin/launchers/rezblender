@@ -14,4 +14,4 @@ if [[ ! -d $rezvenvdir ]]; then
     exit 1
 fi
 cd $rezvenvdir
-$TERMINAL -t blender-show-rez -e pipenv run rez-env blender $@ -- blender
+$TERMINAL -t blender-show -e pipenv run rez-env blender $@ -- blender

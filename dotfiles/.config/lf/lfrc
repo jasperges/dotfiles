@@ -53,14 +53,21 @@ cmd bulkrename ${{
     vidir $fx
 }}
 
+cmd copyclipboard ${{
+        set -f
+        echo $f | xclip -selection clipboard
+	notify-send "📋 File path copied to clipboard."
+}}
+
 # Bindings
-map c $lf -remote "send $id cd $(cut -d'	' -f2 ~/.config/directories | fzf)"
+# map c $lf -remote "send $id cd $(cut -d'	' -f2 ~/.config/directories | fzf)"
 map <c-f> $lf -remote "send $id select '$(fzf)'"
 map J $lf -remote "send $id cd $(cut -d'	' -f2 ~/.config/directories | fzf)"
 map gh
 map g top
 map D delete
 map C copyto
+map c copyclipboard
 map M moveto
 map a push %mkdir<space>
 map r push :rename<space>

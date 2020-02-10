@@ -80,8 +80,11 @@ alias pip3userupdate='pip3 list --user --outdated --format=freeze | grep -v "^\-
 # Use Rofi instead of dmenu
 alias dmenu='rofi -dmenu'
 
-# colorful cat
-alias ccat='highlight -O ansi'
+# cat/bat
+# alias ccat='highlight -O ansi'
+alias cat='bat'
+alias catp='bat -p'
+alias catpp='bat -pp'
 
 # fuzzy finder
 # alias se='$EDITOR $(find $HOME/.local/bin $HOME/.config -type f | fzf)'

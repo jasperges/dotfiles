@@ -2,7 +2,7 @@
 
 if [[ $(hostname) = 'fedorajappie' ]]; then
     # Always turn off this 'weird virtual' monitor
-    xrandr --output LVDS-1-1 --off
+    # xrandr --output LVDS-1-1 --off
     # Assume only 1 external monitor for now
     external_monitor=$(xrandr | sed -nE "s/^((DP|HDMI)-[0-9]+) connected.*$/\1/p")
     if [[ -z $external_monitor ]]; then
