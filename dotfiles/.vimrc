@@ -87,6 +87,9 @@ Plug 'junegunn/goyo.vim'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'dhruvasagar/vim-dotoo'
 
+" Black
+Plug 'psf/black'
+
 call plug#end()
 
 " airline
