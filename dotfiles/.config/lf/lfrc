@@ -25,7 +25,7 @@ cmd open ${{
 
 cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
 
-cmd delete ${{
+cmd newdelete ${{
 	set -f
 	printf "%s\n\t" "$fx"
 	printf "delete?[y/N]"

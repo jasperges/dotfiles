@@ -19,7 +19,7 @@ done
 vpnidx="$(printf '%s\n' "${vpnlist[@]}" | \
     sed -e 's/^\(.*\):activated:vpn/<span foreground="#1db954" font_weight="bold"><\/span> <span font_weight="bold">\1<\/span>/' \
     -e 's/^\(.*\)::vpn/<span foreground="#bd2c40"> <\/span> \1/' | \
-    rofi -dmenu -lines 5 -p "Toggle VPN connection" -i -markup-rows \
+    rofi -dmenu -lines 7 -p "Toggle VPN connection" -i -markup-rows \
     -select "font_weight" -format i)"
 [[ "$vpnidx" ]] || exit
 vpn="${vpnlist[vpnidx]}"
