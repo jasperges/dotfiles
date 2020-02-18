@@ -87,8 +87,6 @@ Plug 'junegunn/goyo.vim'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'dhruvasagar/vim-dotoo'
 
-" Black
-Plug 'psf/black'
 
 call plug#end()
 
@@ -107,7 +105,7 @@ nnoremap <Space> <Nop>
 let mapleader=" "
 map <leader>v :sp ~/.vimrc<CR>
 " reload vimrc when saved
-au BufWritePost .vimrc source ~/.vimrc
+autocmd BufWritePost .vimrc source ~/.vimrc
 let g:python_recommended_style = 0
 set number
 set modeline
@@ -435,5 +433,9 @@ autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
 set background=dark
 let g:solarized_termtrans = 1
 colorscheme solarized
+
+" Enable per project .nvimrc files
+set exrc
+set secure
 
 " vim: set ts=4 sw=4 tw=78 et :
