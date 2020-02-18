@@ -96,7 +96,7 @@ let g:airline_theme='solarized'
 let g:airline_solarized_bg='dark'
 
 " Japsers dingetjes
-" map <leader>fs :w<CR>
+map <leader>fs :w<CR>
 nnoremap <Space> <Nop>
 " sunmap <Space>
 " map <Space> <Leader>
@@ -282,8 +282,10 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
 
 " Search and replace mappings
-nnoremap <Leader>f :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
-nnoremap <Leader>F :,$s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+" fa for find and replace **a**ll
+" ff for find and replace **f**orward
+nnoremap <Leader>fa :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+nnoremap <Leader>ff :,$s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 
 " CtrlP options
 nnoremap <leader>. :CtrlPTag<CR>
