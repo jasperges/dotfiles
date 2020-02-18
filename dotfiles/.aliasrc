@@ -82,9 +82,9 @@ alias dmenu='rofi -dmenu'
 
 # cat/bat
 # alias ccat='highlight -O ansi'
-alias cat='bat'
-alias catp='bat -p'
-alias catpp='bat -pp'
+# alias cat='bat'
+alias batp='bat -p'
+alias batpp='bat -pp'
 
 # fuzzy finder
 # alias se='$EDITOR $(find $HOME/.local/bin $HOME/.config -type f | fzf)'
