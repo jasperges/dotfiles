@@ -87,7 +87,6 @@ Plug 'junegunn/goyo.vim'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'dhruvasagar/vim-dotoo'
 
-
 call plug#end()
 
 " airline
@@ -97,7 +96,7 @@ let g:airline_theme='solarized'
 let g:airline_solarized_bg='dark'
 
 " Japsers dingetjes
-map <leader>fs :w<CR>
+" map <leader>fs :w<CR>
 nnoremap <Space> <Nop>
 " sunmap <Space>
 " map <Space> <Leader>
