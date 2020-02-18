@@ -78,7 +78,7 @@ lock() {
                 --image /tmp/screenshotblur.png
         else
             i3lock --ignore-empty-password --show-failed-attempts --tiling \
-                --image "$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname *.png -type f | shuf -n 1)"
+                --image "$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname '*.png' -type f | shuf -n 1)"
         fi
         sleep 1
         # resume dunst
