@@ -66,7 +66,7 @@ Plug 'mxw/vim-jsx'
 
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
-Plug 'suan/vim-instant-markdown', {'rtp': 'after'}
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 Plug 'sbdchd/neoformat'
 " Plug 'HTML-AutoCloseTag'
 " Plug 'jiangmiao/auto-pairs'
@@ -92,17 +92,16 @@ call plug#end()
 " airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='solarized'
-let g:airline_solarized_bg='dark'
+let g:airline_theme='bubblegum'
 
 " Japsers dingetjes
-map <leader>fs :w<CR>
+nnoremap <leader>fs :w<CR>
 nnoremap <Space> <Nop>
 " sunmap <Space>
 " map <Space> <Leader>
 " edit vimrc quickly
 let mapleader=" "
-map <leader>v :sp ~/.vimrc<CR>
+noremap <leader>v :sp ~/.vimrc<CR>
 " reload vimrc when saved
 autocmd BufWritePost .vimrc source ~/.vimrc
 let g:python_recommended_style = 0
@@ -290,6 +289,7 @@ nnoremap <Leader>ff :,$s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 " CtrlP options
 nnoremap <leader>. :CtrlPTag<CR>
 let g:ctrlp_custom_ignore = '\v[\/]node_modules'
+let g:ctrlp_dont_split = 'nerdtree'
 
 " tags
 set tags+=tags;/,.git/tags;/
@@ -316,17 +316,6 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]
 
-" Autocomplete snippets
-" fun! GetSnipsInCurrentScope()
-"     let snips = {}
-"     for scope in [bufnr('%')] + split(&ft, '\.') + ['_']
-"         call extend(snips, get(s:snippets, scope, {}), 'keep')
-"         call extend(snips, get(s:multi_snips, scope, {}), 'keep')
-"     endfor
-"     return snips
-" endf
-" let g:acp_behaviorSnipmateLength = 1
-
 set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
 set cursorline
 set cursorcolumn
@@ -347,11 +336,6 @@ let g:neoformat_enabled_python = ['yapf', 'isort']
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_html = ['htmlbeautify', 'tidy']
 let g:neoformat_enabled_yaml = ['prettier']
-" let g:neoformat_python_yapf = {
-"         \ 'exe': 'yapf',
-"         \ 'args': ['--style="{based_on_style: pep8, column_limit: 100, indent_dictionary_value: true, allow_split_before_dict_value: false, each_dict_entry_on_separate_line: false}"'],
-"         \ 'stdin': 1,
-"         \ }
 nnoremap <Leader>m <esc>:Neoformat<CR>
 
 " delimitMate
