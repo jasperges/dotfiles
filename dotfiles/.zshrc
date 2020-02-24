@@ -10,6 +10,9 @@ autoload -U colors && colors
 # Load functions if existent.
 [ -f "$HOME/.functionrc" ] && source "$HOME/.functionrc"
 
+# Completion
+fpath+=("$HOME/.zsh/completion")
+
 setopt extendedglob
 unsetopt beep
 
