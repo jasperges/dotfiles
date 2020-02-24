@@ -9,5 +9,6 @@ if [[ -z $venv || ! -d $venv ]]; then
 fi
 # source $venv/bin/activate
 # ALLZPARK_CONFIG_FILE=$HOME/.config/allzparkrc allzpark
-xhost + local:
-cd $HOME/src/rez/rez-venv && pipenv run allzpark
+# xhost + local:
+# cd $HOME/src/rez/rez-venv && pipenv run allzpark
+rez env allzpark -- allzpark
