@@ -87,6 +87,9 @@ Plug 'junegunn/goyo.vim'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'dhruvasagar/vim-dotoo'
 
+" Dev icons, let's see if I like it
+Plug 'ryanoasis/vim-devicons'
+
 call plug#end()
 
 " airline
