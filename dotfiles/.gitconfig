@@ -23,7 +23,7 @@
 [alias]
     co = checkout
     st = status
-    br = branch
+    b = branch
     ci = commit
     st = status
     slog = log --abbrev-commit --pretty=oneline
