@@ -90,6 +90,9 @@ Plug 'dhruvasagar/vim-dotoo'
 " Dev icons, let's see if I like it
 Plug 'ryanoasis/vim-devicons'
 
+" Vim syntax for TOML
+Plug 'cespare/vim-toml'
+
 call plug#end()
 
 " airline
