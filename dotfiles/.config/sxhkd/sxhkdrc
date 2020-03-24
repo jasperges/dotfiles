@@ -32,8 +32,8 @@ super + v; {m,p,s,w,u,g}
     {managevpn manage, managevpn Proton-NL, managevpn Submarine, managewifi,managevpn Proton-US,managevpn Proton-UK}
 super + b; {b,q}
     {rezblender,rezblenderqt}
-super + w; {b,p}
-    {i3-msg -q "border toggle 4",start_pomodoro}
+super + w; {b,p,m,i}
+    {i3-msg -q "border toggle 4",start_pomodoro,setup-monitors,setxinputs}
 super + x; {x, s}
     {clipmenu, dmenu-scrot}
 # Reload sxhkd and polybar
