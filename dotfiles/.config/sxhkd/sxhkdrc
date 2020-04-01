@@ -2,43 +2,46 @@ XF86Eject
     eject
 super + Return
     start_terminal_in_pwd
-super + d
-    rofi_run drun
 super + space
     rofi_run
+super + Escape
+	pkill -USR1 -x sxhkd && pkill -USR1 -x polybar
+super + equal
+    i3-msg -q "[class=alacritty title=scratchpad]" scratchpad show
+
+super + b; {b,q}
+    {rezblender,rezblenderqt}
 super + c
     rofi_calc
-super + shift + w
-    rename_workspace
-super + m; {m,u,s,d}
-    {dmenumount,dmenuumount,dmenu-servermount,dmenu-serverumount}
+super + d
+    rofi_run drun
+super + e
+    dmenuunicode
+super + g; {s,d}
+    {surf https://start.duckduckgo.com/,dmenu-googledrive}
 super + i; {p,s}
     {import_photos,top_run}
+super + m; {m,u,s,d}
+    {dmenumount,dmenuumount,dmenu-servermount,dmenu-serverumount}
 super + o; {m,w,e,s,p,o,j,r,t}
     {neomutt_run,$BROWSER,emacs,emacs,ncmpcpp_local,ncmpcpp_guybrush,dmenujobs,play_radio,play_radio_guybrush}
 super + p
     passmenu
-super + equal
-    i3-msg -q "[class=alacritty title=scratchpad]" scratchpad show
+super + r; {c}
+    {dmenu-rez-config}
 super + s; {t,b,a}
     {i3-msg -q "[class=alacritty title=scratchpad] scratchpad show", \
         i3-msg -q "[class=alacritty title=blender*] scratchpad show", \
         i3-msg -q "[class=cli.py title=(?im)^.*|\s+allzpark\s+.*$] scratchpad show"}
-super + g; {s,d}
-    {surf https://start.duckduckgo.com/,dmenu-googledrive}
-super + e
-    dmenuunicode
 super + v; {m,p,s,w,u,g}
     {managevpn manage, managevpn Proton-NL, managevpn Submarine, managewifi,managevpn Proton-US,managevpn Proton-UK}
-super + b; {b,q}
-    {rezblender,rezblenderqt}
-super + w; {b,p,m,i}
-    {i3-msg -q "border toggle 4",start_pomodoro,setup-monitors,setxinputs}
+super + w; {b,p,m,i,s}
+    {i3-msg -q "border toggle 4",start_pomodoro,setup-monitors,setxinputs,polybar_run}
+super + shift + w
+    rename_workspace
 super + x; {x, s}
     {clipmenu, dmenu-scrot}
 # Reload sxhkd and polybar
-super + Escape
-	pkill -USR1 -x sxhkd && pkill -USR1 -x polybar
 
 # Pulse Audio controls
 {_,shift} + XF86AudioRaiseVolume
