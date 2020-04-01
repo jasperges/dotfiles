@@ -294,7 +294,7 @@ nnoremap <Leader>ff :,$s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 
 " CtrlP options
 nnoremap <leader>. :CtrlPTag<CR>
-let g:ctrlp_custom_ignore = '\v[\/]node_modules'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|build)'
 let g:ctrlp_dont_split = 'nerdtree'
 
 " tags
@@ -338,7 +338,7 @@ let g:vim_markdown_autowrite = 1
 
 " Neoformat
 let g:neoformat_run_all_formatters = 1
-let g:neoformat_enabled_python = ['yapf', 'isort']
+let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_html = ['htmlbeautify', 'tidy']
 let g:neoformat_enabled_yaml = ['prettier']
