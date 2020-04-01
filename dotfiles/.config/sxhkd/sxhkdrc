@@ -11,8 +11,8 @@ super + equal
 
 super + b; {b,q}
     {rezblender,rezblenderqt}
-super + c
-    rofi_calc
+super + c; {c,r}
+    {rofi_calc,dmenu-rez-config}
 super + d
     rofi_run drun
 super + e
@@ -27,8 +27,6 @@ super + o; {m,w,e,s,p,o,j,r,t}
     {neomutt_run,$BROWSER,emacs,emacs,ncmpcpp_local,ncmpcpp_guybrush,dmenujobs,play_radio,play_radio_guybrush}
 super + p
     passmenu
-super + r; {c}
-    {dmenu-rez-config}
 super + s; {t,b,a}
     {i3-msg -q "[class=alacritty title=scratchpad] scratchpad show", \
         i3-msg -q "[class=alacritty title=blender*] scratchpad show", \
