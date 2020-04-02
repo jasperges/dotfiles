@@ -31,8 +31,8 @@ super + s; {t,b,a}
     {i3-msg -q "[class=alacritty title=scratchpad] scratchpad show", \
         i3-msg -q "[class=alacritty title=blender*] scratchpad show", \
         i3-msg -q "[class=cli.py title=(?im)^.*|\s+allzpark\s+.*$] scratchpad show"}
-super + v; {m,p,s,w,u,g}
-    {managevpn manage, managevpn Proton-NL, managevpn Submarine, managewifi,managevpn Proton-US,managevpn Proton-UK}
+super + v; {m,p,s,w,u,g,e,j}
+    {managevpn manage,managevpn Proton-NL,managevpn Submarine,managewifi,managevpn Proton-US,managevpn Proton-UK,wifi-off,wifi-on}
 super + w; {b,p,m,i,s}
     {i3-msg -q "border toggle 4",start_pomodoro,setup-monitors,setxinputs,polybar_run}
 super + shift + w
