@@ -2,11 +2,13 @@
 
 # Settings
 declare -a LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING=(
-    "mpv" "Wine" "vlc"
+    "mpv" "Wine" "vlc" "Pinentry-gtk-2"
 )
 declare -a LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING=(
-    "YouTube" "Netflix" "NPO Start" "Prime Video" "NPO"
+    "NPO" "YouTube" "Netflix" "Prime Video"
 )
+
+declare -a LOCK_IMAGES
 
 # Find active window id
 get_active_id() {
@@ -48,6 +50,44 @@ should_lock() {
             fi
         done
     fi
+    if [[ $wmclass =~ "Pinentry-gtk-2"  ]]; then
+        return 1
+    fi
+}
+
+# Create one big image spanning all monitors
+create_monitor_spanning_image() {
+    lock_image="$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname '*.png' -type f | shuf -n 1)"
+    monitors_size_pos=$(xrandr --listactivemonitors | awk -F ' ' '/^\s[[:digit:]]:\s/ {print $3}' | \
+        sed -nE "s|^([[:digit:]]+)/[[:digit:]]+x([[:digit:]]+)/[[:digit:]]+\+([[:digit:]]+)\+([[:digit:]]+)|\1x\2+\3+\4|p")
+    while IFS= read -r line; do
+        x=$(echo $line | cut -dx -f1)
+        y=$(echo $line | cut -dx -f2 | cut -d+ -f1)
+        offset_x=$(echo $line | cut -d+ -f2)
+        offset_y=$(echo $line | cut -d+ -f3)
+        random_string=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 8)
+        image="/tmp/lock_image_$random_string-$offset_x-$offset_y.png"
+        convert -geometry $x"x" $lock_image $image
+        LOCK_IMAGES+=($image)
+    done <<< "$monitors_size_pos"
+
+    # Construct the convert command
+    convert_command="convert"
+    for image in ${LOCK_IMAGES[@]}; do
+        filename=$(basename -- "$image")
+        filename=${filename%.*}
+        offset=$(echo $filename | awk -F '-' '{print "+"$2"+"$3}')
+        convert_command="$convert_command -page $offset $image"
+    done
+
+    convert_command="$convert_command -background gray10 -layers merge /tmp/lock.png"
+
+    # Run the convert command
+    eval $convert_command
+
+    # Delete the individual images
+    # rm ${LOCK_IMAGES[@]}
+
 }
 
 # lock() {
@@ -61,24 +101,28 @@ should_lock() {
 lock() {
     if should_lock; then
         # pause dunst
-        # TODO: new attempt at getting this to work from the script
+        # TODO: check if this new attempt at pausing dunst actually works
         export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; notify-send DUNST_COMMAND_PAUSE
-        external_monitor=$(xrandr | sed -nE "s/^((DP|HDMI)-[0-9]+) connected.*$/\1/p")
-        # Only use blur lock if there is an external_monitor
-        # TODO: only use blur lock if more monitors are connected and their
-        #       resolutions differ
-        if [[ -n $external_monitor ]]; then
-            # take screenshot
-            scrot -m /tmp/screenshot.png
-            # blur it
-            convert /tmp/screenshot.png -blur 0x20 /tmp/screenshotblur.png
-            rm /tmp/screenshot.png
-            # lock
+
+        # Check for multi-monitor setup
+        # TODO: Only create 1 image if resolutions of monitors differ
+        # external_monitor=$(xrandr | sed -nE "s/^((DP|HDMI)-[0-9]+) connected.*$/\1/p")
+        if [[ $(xrandr --listactivemonitors | wc -l) -gt 2 ]]; then
+            create_monitor_spanning_image
             i3lock --ignore-empty-password --show-failed-attempts --tiling \
-                --image /tmp/screenshotblur.png
+                --image /tmp/lock.png
+            # # take screenshot
+            # scrot -m /tmp/screenshot.png
+            # # blur it
+            # convert /tmp/screenshot.png -blur 0x20 /tmp/lockblur.png
+            # rm /tmp/screenshot.png
+            # # lock
+            # i3lock --ignore-empty-password --show-failed-attempts --tiling \
+            #     --image /tmp/screenshotblur.png
         else
+            lock_image="$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname '*.png' -type f | shuf -n 1)"
             i3lock --ignore-empty-password --show-failed-attempts --tiling \
-                --image "$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname '*.png' -type f | shuf -n 1)"
+                --image "$lock_image"
         fi
         sleep 1
         # resume dunst
