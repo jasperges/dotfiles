@@ -2,9 +2,12 @@
 
 # Settings
 declare -a LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING=(
+    "Pinentry-gtk-2" "Jitsi Meet"
+)
+declare -a LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING_FULLSCREEN=(
     "mpv" "Wine" "vlc" "Pinentry-gtk-2"
 )
-declare -a LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING=(
+declare -a LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING_FULLSCREEN=(
     "NPO" "YouTube" "Netflix" "Prime Video"
 )
 
@@ -39,20 +42,22 @@ should_lock() {
     title=$(get_window_title $id)
 
     if is_fullscreen $id; then
-        for i in "${LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING[@]}"; do
+ N       for i in "${LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING_FULLSCREEN[@]}"; do
             if [[ $wmclass =~ $i ]]; then
                 return 1
             fi
         done
-        for i in "${LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING[@]}"; do
+        for i in "${LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING_FULLSCREEN[@]}"; do
             if [[ $title =~ $i ]]; then
                 return 1
             fi
         done
     fi
-    if [[ $wmclass =~ "Pinentry-gtk-2"  ]]; then
-        return 1
-    fi
+    for i in "${LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING[@]}"; do
+        if [[ $wmclass =~ $i ]]; then
+            return 1
+        fi
+    done
 }
 
 # Create one big image spanning all monitors

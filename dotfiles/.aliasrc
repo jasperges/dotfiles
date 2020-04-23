@@ -90,7 +90,7 @@ alias batpp='bat -pp'
 # alias se='$EDITOR $(find $HOME/.local/bin $HOME/.config -type f | fzf)'
 # alias vf='$EDITOR $(fzf)'
 se() {
-    files=$(find $HOME/.local/bin $HOME/.config -type f | fzf)
+    files=$(find $HOME/.local/bin/jobs $HOME/.local/bin/launchers $HOME/.local/bin/polybar $HOME/.local/bin/tools  $HOME/.config -type f | fzf)
     [[ -n $files ]] && $EDITOR $files
 }
 vf() {

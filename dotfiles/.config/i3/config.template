@@ -239,9 +239,18 @@ for_window [class="Blender" title="Blender Preferences"] floating enable;[class=
 # Also make Blender Render windows floating
 for_window [class="Blender" title="Blender Render"] floating enable
 
+# Make Maya JJM Playblast windows floating
+for_window [class="Maya-2020" title="JJM Playblast Window"] floating enable
+
+# Bluetooth manager floating
+for_window [class="Blueman-manager"] floating enable
+
 # Make vm floating
 # for_window [class="VirtualBox Machine"] floating enable; border normal 4; move position center
 for_window [class="VirtualBox Machine"] resize set 1100px 0px
+
+# Make Steam floating
+for_window [class="Steam"] floating enable
 
 # Logout, suspend, shutdown etc.
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown

@@ -129,7 +129,7 @@ fi
 PS1="%B[%{$fg[blue]%}%n%{$reset_color%}%B@%{$fg[yellow]%}%m %{$fg[green]%}%~%{$reset_color%}%B]$ %{$reset_color%}"
 
 # Pure prompt
-fpath+=("$HOME/src/pure-prompt")
+fpath+=("$HOME/.zsh/pure")
 autoload -U promptinit; promptinit
 PURE_PROMPT_SYMBOL='>>'
 PURE_PROMPT_VICMD_SYMBOL='<<'

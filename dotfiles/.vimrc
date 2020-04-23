@@ -59,7 +59,9 @@ Plug 'HiPhish/jinja.vim'
 " Plug 'ternjs/tern_for_vim'
 Plug 'othree/yajs'
 " Plug 'othree/es.next.syntax'
-Plug 'mxw/vim-jsx'
+" Plug 'mxw/vim-jsx'
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
 
 " Plug 'Valloric/YouCompleteMe'
 " Plug 'AutoClose'
@@ -92,6 +94,13 @@ Plug 'ryanoasis/vim-devicons'
 
 " Vim syntax for TOML
 Plug 'cespare/vim-toml'
+
+" Powershell
+Plug 'PProvost/vim-ps1'
+
+" Arduino
+Plug 'sudar/vim-arduino-syntax'
+Plug 'stevearc/vim-arduino'
 
 call plug#end()
 
@@ -367,7 +376,7 @@ nnoremap <Leader>gs <esc>:Gstatus<CR>
 " Nerdtree
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let NERDTreeIgnore=['\~$', '\.pyc$']
+let NERDTreeIgnore=['\~$', '\.pyc[[file]]$', 'build$[[dir]]', '__pycache__$[[dir]]', '\.mypy_cache$[[dir]]']
 
 " Instant Markdown
 " Uncomment to override defaults:
@@ -415,6 +424,15 @@ autocmd BufRead,BufNewFile *.py :let g:goyo_width=120
 autocmd BufRead,BufNewFile *.py :let g:goyo_linenr=2
 nnoremap <silent> <Leader>gy :Goyo<CR>
 
+" Arduino
+let g:arduino_cmd = '/opt/arduino/arduino'
+let g:arduino_build_path = '{project_dir}/build'
+let g:arduino_board = 'arduino:avr:uno'
+nnoremap <silent> <leader>am :ArduinoVerify<CR>
+nnoremap <silent> <leader>au :ArduinoUpload<CR>
+nnoremap <buffer> <leader>ad :ArduinoUploadAndSerial<CR>
+nnoremap <buffer> <leader>ab :ArduinoChooseBoard<CR>
+nnoremap <buffer> <leader>ap :ArduinoChooseProgrammer<CR>
 
 "Run xrdb when Xdefaults or Xresources are updated
 autocmd BufWritePost *Xdefaults,*Xresources !xrdb %
