@@ -30,7 +30,20 @@ update_modules() {
     wlan=$(nmcli --fields TYPE d | grep -q wifi && echo wlan)
     battery=$([[ -f /sys/class/power_supply/ADP1/online ]] && echo battery)
     alsa=$([[ -f $(which aserver 2>/dev/null) ]] && echo alsa)
-    left=" i3 xwindow"
+
+    # Get proper module for workspaces
+    if (pgrep i3); then
+        workspaces=i3
+        overrride_redirect=false
+    elif (pgrep bspwm); then
+        workspaces=bspwm
+        overrride_redirect=false
+    else
+        workspaces=ewmh
+        overrride_redirect=true
+    fi
+
+    left=" $workspaces xwindow"
     center=$(echo " pomodoro date $mpd $mpd_guybrush")
     right=$(echo " cpu memory $wlan eth vpn-status $battery temperature $alsa mail")
     sed -E \
@@ -38,13 +51,14 @@ update_modules() {
         -e "s/^(topbar-modules-center =).*$/\1$center/" \
         -e "s/^(topbar-modules-right =).*$/\1$right/" \
         -i $HOME/.config/polybar/config
-    secleft=" i3 xwindow"
+    secleft=" $workspaces xwindow"
     seccenter=""
     secright=""
     sed -E \
         -e "s/^(topbar-secondary-modules-left =).*$/\1$secleft/" \
         -e "s/^(topbar-secondary-modules-center =).*$/\1$seccenter/" \
         -e "s/^(topbar-secondary-modules-right =).*$/\1$secright/" \
+        -e "s/^(overrride-redirect =).*$/\1$overrride_redirect/" \
         -i $HOME/.config/polybar/config
 }
 
