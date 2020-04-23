@@ -33,6 +33,23 @@ export ALLZPARK_CONFIG_FILE=$HOME/.config/allzparkrc
 
 # Auto start X on tty1
 if [[ -z ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
+    while true; do
+        echo "Choose the Window Manager you want to use"
+        echo "    1. i3"
+        echo "    2  spectrwm"
+        echo "    3. bspwm"
+        echo "    4. dwm"
+        echo
+        echo "Please make your choice (1-4)."
+        read wm
+        case $wm in
+            "1" ) sed -i "s|^exec .*$|exec i3|" $HOME/.xinitrc && break;;
+            "2" ) sed -i "s|^exec .*$|exec spectrwm|" $HOME/.xinitrc && break;;
+            "3" ) sed -i "s|^exec .*$|exec bspwm|" $HOME/.xinitrc && break;;
+            "4" ) sed -i "s|^exec .*$|exec dwm|" $HOME/.xinitrc && break;;
+            * ) echo "Please choose 1,2, 3 or 4.";;
+        esac
+    done
     exec startx 2>/dev/null 1>&2
 fi
 

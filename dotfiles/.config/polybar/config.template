@@ -51,6 +51,8 @@ width = 100%
 height = ${custom.bar-height}
 fixed-center = false
 
+override-redirect = true
+
 background = ${colors.background}
 foreground = ${colors.foreground}
 
@@ -94,6 +96,8 @@ monitor = ${local.topbar-secondary-monitor}
 width = 100%
 height = ${custom.bar-height}
 fixed-center = true
+
+override-redirect = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}

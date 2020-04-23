@@ -13,10 +13,8 @@ super + b; {b,q}
     {rezblender,rezblenderqt}
 super + c; {c,r}
     {rofi_calc,dmenu-rez-config}
-super + d
-    rofi_run drun
-super + e
-    dmenuunicode
+super + d; {d,e}
+    {rofi_run drun,dmenuunicode}
 super + g; {s,d}
     {surf https://start.duckduckgo.com/,dmenu-googledrive}
 super + i; {p,s}
