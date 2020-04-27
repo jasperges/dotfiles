@@ -7,7 +7,7 @@ fi
 
 # User specific environment and startup programs
 
-PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.local/bin/launchers:$HOME/.local/bin/tools:$HOME/.local/bin/wm:$HOME/.local/bin/polybar:$HOME/.local/bin/jobs:$HOME/.poetry/bin
+PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.local/bin/launchers:$HOME/.local/bin/tools:$HOME/.local/bin/wm:$HOME/.local/bin/statusbar:$HOME/.local/bin/jobs:$HOME/.config/yarn/global/node_modules/.bin:$HOME/.poetry/bin:$HOME/.yarn/bin:/opt/Shotgun:/usr/local/DJV2/bin:/opt/rez/bin/rez:/opt/firefox:$PATH
 
 export PATH
 
@@ -35,22 +35,23 @@ export ALLZPARK_CONFIG_FILE=$HOME/.config/allzparkrc
 if [[ -z ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
     while true; do
         echo "Choose the Window Manager you want to use"
-        echo "    1. i3"
-        echo "    2  spectrwm"
-        echo "    3. bspwm"
-        echo "    4. dwm"
+        echo "    1  spectrwm"
+        echo "    2. dwm"
+        echo "    3. i3"
+        echo "    4. bspwm"
         echo
-        echo "Please make your choice (1-4)."
+        echo "Please make your choice (1-4) [1]:"
         read wm
         case $wm in
-            "1" ) sed -i "s|^exec .*$|exec i3|" $HOME/.xinitrc && break;;
-            "2" ) sed -i "s|^exec .*$|exec spectrwm|" $HOME/.xinitrc && break;;
-            "3" ) sed -i "s|^exec .*$|exec bspwm|" $HOME/.xinitrc && break;;
-            "4" ) sed -i "s|^exec .*$|exec dwm|" $HOME/.xinitrc && break;;
-            * ) echo "Please choose 1,2, 3 or 4.";;
+            "2" ) sed -i "s/^\(start_[a-z]*\)$/start_dwm/" $HOME/.xinitrc && break;;
+            "3" ) sed -i "s/^\(start_[a-z]*\)$/start_i3/" $HOME/.xinitrc && break;;
+            "4" ) sed -i "s/^\(start_[a-z]*\)$/start_bspwm/" $HOME/.xinitrc && break;;
+            * ) sed -i "s/^\(start_[a-z]*\)$/start_spectrwm/" $HOME/.xinitrc && break;;
         esac
     done
+
     exec startx 2>/dev/null 1>&2
+    # exec startx 2>$HOME/startx.log 1>&2
 fi
 
 if [[ -n ${DISPLAY} ]]; then

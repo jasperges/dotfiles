@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Get a list of the known bluetooth devices
+readarray -t bluetoothdevices < <(bluetoothctl devices | sort | uniq -u)
+
+idx=0
+for device in "${bluetoothdevices[@]}"; do
+    connected=$(bluetoothctl info $(echo $device | cut -d " " -f 2) | awk '/Connected/ {printf $2}')
+    bluetoothdevices[$idx]="$device $connected"
+    idx=$(($idx + 1))
+done
+
+# Add extra option for launch blueman-manager
+bluetoothdevices+=("x x ----------")  # separator
+bluetoothdevices+=("App xxx blueman-manager")
+
+# Show available choices (icons: 📱 🎧  📟)
+deviceidx="$(printf '%s\n' "${bluetoothdevices[@]}" | \
+    awk '{
+    if($4=="yes")
+        {print "<span foreground=\"#1db954\" font_weight=\"bold\">"$3"</span>";}
+    else
+        { print $3;}
+    }' | \
+    sed -r -e 's#((foon|phone).*)$#📱 \1#' \
+        -e 's#((kop|head).*)$#🎧 \1#' \
+        -e 's#(.*manager)$#📟 \1#' \
+        -e 's#(----.*)$#   \1#' | \
+    rofi -dmenu -lines 7 -p "Connect to Bluetooth Device" -i -markup-rows \
+    -select "kop" -format i)"
+[[ "$deviceidx" ]] || exit
+device="${bluetoothdevices[deviceidx]}"
+
+case $device in
+    "App xxx blueman-manager" ) blueman-manager;;
+    "x x ----------" ) exit;;
+    * )
+        command=$([ $(echo $device | cut -d " " -f 4) = "yes" ] && echo "disconnect" || echo "connect")
+        bluetoothctl $command $(echo $device | cut -d " " -f 2);;
+esac

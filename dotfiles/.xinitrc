@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Load xresources
 xrdb ~/.Xresources
 
@@ -29,20 +31,41 @@ autolock 9 &
 # Start mpd
 mpd &
 
-# Start X compositor and notification daemon
+# Start X compositor, notification and set wallpaper
 compton_run &
 dunst_run &
+feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper
 
 # Start apps that show in tray area
 dropbox_run &
 protonmailbridge_run &
 syncthing-gtk --minimized &
-nmapplet_run &
+# nmapplet_run &
 bluemanapplet_run &
 
 # Set locale as I want
 localectl set-locale LANG=en_US.UTF-8 LC_MONETARY=nl_NL.UTF-8 \
                           LC_PAPER=nl_NL.UTF-8 LC_MEASUREMENT=nl_NL.UTF-8 LC_TIME=en_US.UTF-8 \
                           LC_NUMERIC=en_US.UTF-8
-update_i3_config
-exec i3
+
+start_spectrwm() {
+    exec spectrwm
+}
+
+start_dwm() {
+    baraction.sh &
+    exec dwm
+}
+
+start_i3() {
+    update_i3_config
+    exec i3
+}
+
+start_bspwm() {
+    exec bspwm
+}
+
+start_dwm
+
+# vim: set ts=4 sw=4 tw=0 et ft=sh:
