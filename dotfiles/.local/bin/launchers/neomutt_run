@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Check if an instance is already running. If yes, show it and quit. Else run new instance.
-if [[ -n $(pgrep -a -U $UID $TERMINAL | grep -E "^[0-9]+ $TERMINAL -t neomutt.*$") ]]; then
-    i3-msg -q "[class=$TERMINAL title=neomutt] scratchpad show"
-else
-    # Launch new instance
-    $TERMINAL -t neomutt -e neomutt $1 &
-fi
+# Check if an instance is already running. If yes, kill it, if not start a new one.
+# This effectively makes it a toggle on/off.
+pkill -U $UID -f ".*$TERMINAL -t neomutt -e neomutt$" || $TERMINAL -t neomutt -e neomutt $@ &
