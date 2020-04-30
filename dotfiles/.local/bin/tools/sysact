@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# A dmenu wrapper script for system functions.
+
+cmds="\
+   Lock Screen	i3exit lock
+   Leave dwm	kill -TERM $(pidof -s dwm)
+   Refresh dwm	kill -HUP $(pidof -s dwm)
+⭘   Reboot		reboot
+   Shutdown	shutdown -h now"
+
+choice="$(echo "$cmds" | cut -d'	' -f 1 | dmenu -i -l 5 --no-custom -p "Choose a system action")" || exit 1
+
+`echo "$cmds" | grep "^$choice	" | cut -d '	' -f2-`

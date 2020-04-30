@@ -2,6 +2,8 @@
 
 XF86Eject
     eject
+super + ctrl + BackSpace
+    sysact
 super + Return
     start_terminal_in_pwd
 super + space
@@ -12,8 +14,8 @@ super + Escape
 # super + equal
 #     i3-msg -q "[class=alacritty title=scratchpad]" scratchpad show
 
-# super + b; {b,q}
-#     {rezblender, rezblenderqt}
+super + b; {b,q}
+    {rezblender, rezblenderqt}
 super + c; {c,r}
     {rofi_calc, dmenu-rez-config}
 super + d; {b, d, e, g, f, i, m, p, x, s}
@@ -50,12 +52,12 @@ super + o; {b, m, w, e, s, p, o, j, t}
     }
 super + p
     passmenu
-super + s; {t,b,a,p}
+super + s; {a, b, p}
     { \
-        i3-msg -q "[class=alacritty title=scratchpad] scratchpad show", \
-        i3-msg -q "[class=alacritty title=blender*] scratchpad show", \
         i3-msg -q "[class=cli.py title=(?im)^.*|\s+allzpark\s+.*$] scratchpad show", \
+        i3-msg -q "[class=alacritty title=blender*] scratchpad show", \
         pulsemixer_show \
+        # i3-msg -q "[class=alacritty title=scratchpad] scratchpad show", \
     }
 super + v; {m, p, j, s, u, g, w, e, h, b}
     { \
