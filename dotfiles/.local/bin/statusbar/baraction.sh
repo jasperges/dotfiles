@@ -124,7 +124,7 @@ mem() {
 mpd() {
     # icons:    栗
     status=$(mpc status | sed -n 's#^.*\(playing\|paused\|stopped\).*$#\1#p')
-    current=$(mpc --format "%artist% - %title%" current)
+    current=$(mpc --format "%artist% - %title%" current | sed 's/^\(.\{30\}\).*/\1.../')
     case $status in
         "playing" ) printf "+@fn=1;+@fn=0; %s   |   " "$current" ;;
         "paused" ) printf "+@fn=1;+@fn=0; %s   |   " "$current" ;;
