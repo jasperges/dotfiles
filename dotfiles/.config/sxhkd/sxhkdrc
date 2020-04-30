@@ -56,7 +56,7 @@ super + s; {a, b, p}
     { \
         i3-msg -q "[class=cli.py title=(?im)^.*|\s+allzpark\s+.*$] scratchpad show", \
         i3-msg -q "[class=alacritty title=blender*] scratchpad show", \
-        pulsemixer_show \
+        toggle-pulsemixer \
         # i3-msg -q "[class=alacritty title=scratchpad] scratchpad show", \
     }
 super + v; {m, p, j, s, u, g, w, e, h, b}
