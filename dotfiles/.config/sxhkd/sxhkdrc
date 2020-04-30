@@ -20,7 +20,7 @@ super + d; {b, d, e, g, f, i, m, p, x, s}
     { \
         i3-msg -q "border toggle 4", \
         rofi_run drun, \
-        dmenuunicode, \
+        dmenu-unicode, \
         dmenu-googledrive, \
         feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper, \
         setxinputs, \
@@ -42,7 +42,7 @@ super + shift + w: Escape
 super + i; {p,s}
     {import_photos,top_run}
 super + shift + m; {m,u,s,d}
-    {dmenumount,dmenuumount,dmenu-servermount,dmenu-serverumount}
+    {dmenu-mount,dmenu-umount,dmenu-servermount,dmenu-serverumount}
 super + o; {b, m, w, e, s, p, o, j, t}
     { \
         toggle-bashtop, neomutt_run, $BROWSER, emacs, emacs, \
