@@ -35,8 +35,11 @@ super + i; {p,s}
     {import_photos,top_run}
 super + shift + m; {m,u,s,d}
     {dmenumount,dmenuumount,dmenu-servermount,dmenu-serverumount}
-super + o; {m,w,e,s,p,o,j,r,t}
-    {neomutt_run,$BROWSER,emacs,emacs,ncmpcpp_local,ncmpcpp_guybrush,dmenujobs,play_radio,play_radio_guybrush}
+super + o; {b, m, w, e, s, p, o, j, t}
+    { \
+        toggle-bashtop, neomutt_run, $BROWSER, emacs, emacs, \
+        ncmpcpp_local, ncmpcpp_guybrush, dmenu-jobs, toggle-trayer \
+    }
 super + p
     passmenu
 super + s; {t,b,a,p}
