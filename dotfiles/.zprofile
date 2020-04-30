@@ -7,7 +7,11 @@ fi
 
 # User specific environment and startup programs
 
-PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.local/bin/launchers:$HOME/.local/bin/tools:$HOME/.local/bin/wm:$HOME/.local/bin/statusbar:$HOME/.local/bin/jobs:$HOME/.config/yarn/global/node_modules/.bin:$HOME/.poetry/bin:$HOME/.yarn/bin:/opt/Shotgun:/usr/local/DJV2/bin:/opt/rez/bin/rez:/opt/firefox:$PATH
+PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.local/bin/launchers\
+:$HOME/.local/bin/tools:$HOME/.local/bin/wm:$HOME/.local/bin/statusbar\
+:$HOME/.local/bin/jobs:$HOME/.config/yarn/global/node_modules/.bin\
+:$HOME/.poetry/bin:$HOME/.yarn/bin:/opt/Shotgun:/usr/local/DJV2/bin\
+:/opt/rez/bin/rez:/opt/firefox:$PATH"
 
 export PATH
 
@@ -20,7 +24,7 @@ export EDITOR=nvim
 # Default browser
 export BROWSER=firefox
 
-export SUDO_ASKPASS=$HOME/.local/bin/tools/dmenupass
+export SUDO_ASKPASS=$HOME/.local/bin/tools/dmenu-pass
 
 export WORKON_HOME=$HOME/.local/share/virtualenvs
 
@@ -35,18 +39,18 @@ export ALLZPARK_CONFIG_FILE=$HOME/.config/allzparkrc
 if [[ -z ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
     while true; do
         echo "Choose the Window Manager you want to use"
-        echo "    1  spectrwm"
-        echo "    2. dwm"
+        echo "    1. dwm"
+        echo "    2  spectrwm"
         echo "    3. i3"
         echo "    4. bspwm"
         echo
         echo "Please make your choice (1-4) [1]:"
         read wm
         case $wm in
-            "2" ) sed -i "s/^\(start_[a-z]*\)$/start_dwm/" $HOME/.xinitrc && break;;
+            "2" ) sed -i "s/^\(start_[a-z]*\)$/start_spectrwm/" $HOME/.xinitrc && break;;
             "3" ) sed -i "s/^\(start_[a-z]*\)$/start_i3/" $HOME/.xinitrc && break;;
             "4" ) sed -i "s/^\(start_[a-z]*\)$/start_bspwm/" $HOME/.xinitrc && break;;
-            * ) sed -i "s/^\(start_[a-z]*\)$/start_spectrwm/" $HOME/.xinitrc && break;;
+            * ) sed -i "s/^\(start_[a-z]*\)$/start_dwm/" $HOME/.xinitrc && break;;
         esac
     done
 
