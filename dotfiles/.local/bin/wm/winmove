@@ -1,0 +1,6 @@
+#!/bin/sh
+
+[[ ! -f "$HOME/.storedwinid" ]] && echo $(pfw) > "$HOME/.storedwinid"
+WINID=$(cat "$HOME/.storedwinid")
+
+wmv $1 $2 $WINID

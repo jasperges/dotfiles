@@ -1,0 +1,11 @@
+#!/bin/sh
+
+[[ ! -f "$HOME/.storedwinid" ]] && echo $(pfw) > "$HOME/.storedwinid"
+WINID=$(cat "$HOME/.storedwinid")
+
+if [[ $3 = "centered" ]]; then
+    wrs $1 $2 $WINID
+    wmv $((-$1 / 2)) $((-$2 / 2)) $WINID
+else
+    wrs $1 $2 $WINID
+fi

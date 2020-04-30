@@ -31,6 +31,14 @@ super + d; {b, d, e, g, f, i, m, p, x, s}
     }
 # super + w; {b,p,m,i,s}
 #     {i3-msg -q "border toggle 4",start_pomodoro,setup-monitors,setxinputs,polybar_run}
+super + w: {h, j, k, l}
+    notify-send -h "string:bgcolor:#93653e" "move mode" && winmove {-50 0, 0 50, 0 -50, 50 0}
+super + w: Escape
+    rm $HOME/.storedwinid 2>/dev/null; pkill -ALRM sxhkd
+super + shift + w: {h, j, k, l}
+    notify-send -h "string:bgcolor:#93653e" "resize mode" && winresize {-100 0, 0 100, 0 -100, 100 0} centered
+super + shift + w: Escape
+    rm $HOME/.storedwinid 2>/dev/null; pkill -ALRM sxhkd
 super + i; {p,s}
     {import_photos,top_run}
 super + shift + m; {m,u,s,d}
