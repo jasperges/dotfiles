@@ -55,11 +55,11 @@ battery() {
         icon="+@fn=1;+@fn=0;"
     fi
 
-	printf "%s%s%% " "$icon" "$capacity"
+	printf "%s%d%% " "$icon" "$capacity"
 }
 
 clock() {
-    echo "$(date '+%a %d %b - %H:%M')"
+    date '+%a %d %b - %H:%M'
 }
 
 cpu() {
@@ -69,21 +69,19 @@ cpu() {
   read cpu a b c idle rest < /proc/stat
   total=$((a+b+c+idle))
   cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
-  printf "%s%%" "$cpu"
+  printf "%d%%" "$cpu"
 }
 
 gpu() {
-    gpumem=$(nvidia-smi --query --display=memory | \
+    nvidia-smi --query --display=memory | \
         awk -F ":" '\
-            match($1, /^.*(FB|BAR1) Memory.*$/, c) {t=c[1]} \
-            /Total|Used/ && t=="FB" && match($2, /([0-9]+ MiB)/, m) {a[++i]=m[1]} \
-            END {printf a[2]"/"a[1]}')
-    echo -e "$gpumem"
+        match($1, /^.*(FB|BAR1) Memory.*$/, c) {t=c[1]} \
+        /Total|Used/ && t=="FB" && match($2, /([0-9]+ MiB)/, m) {a[++i]=m[1]} \
+        END {printf a[2]"/"a[1]}'
 }
 
 hdd() {
-  hdd="$(df -h | awk '/fedora00-home/{print $3"/"$2}')"
-  printf "%s" "$hdd"
+  df -h | awk '/fedora00-home/{print $3"/"$2}'
 }
 
 internet() {
@@ -107,24 +105,20 @@ internet() {
     # Ethernet
     etherneticon="+@fn=1;$(sed 's/up//;s/down//' /sys/class/net/e*/operstate)+@fn=0;"
 
-    echo "$wifiicon · $etherneticon"
+    printf "%s · %s" "$wifiicon" "$etherneticon"
 }
 
 pomodoro() {
-    # TODO: need to fix the output of .pomodoro_live it's now specifially made for polybar
-    [ -f $HOME/.pomodoro_live ] && cat $HOME/.pomodoro_live 2>/dev/null || echo ""
+    [ -f $HOME/.pomodoro_live ] && cat $HOME/.pomodoro_live 2>/dev/null | awk '{printf $1" "$2"   |   "}'
 }
 
 mail() {
-    echo $(find ~/.local/share/mail/*/INBOX/new -type f 2>/dev/null \
-        | echo $(sed -n '$=' \
-        | sed -Ee "s/^(0)$/+@fn=1;+@fn=0; \1/" -e "s/^([0-9]+)$/+@fn=1;+@fn=0;  \1/") \
-        | sed -Ee "s/^$/+@fn=1;+@fn=0;  0/")
+    find ~/.local/share/mail/*/INBOX/new -type f 2>/dev/null | wc -l \
+        | awk '{if ($1 > 0) {printf "+@fn=1;+@fn=0; " $1} else {printf "+@fn=1;+@fn=0; " $1}}'
 }
 
 mem() {
-  mem=$(free | awk '/Mem/ {printf "%d MiB/%d MiB\n", $3 / 1024.0, $2 / 1024.0 }')
-  echo -e "$mem"
+  free | awk '/Mem/ {printf "%d MiB/%d MiB\n", $3 / 1024.0, $2 / 1024.0 }'
 }
 
 mpd() {
@@ -132,9 +126,9 @@ mpd() {
     status=$(mpc status | sed -n 's#^.*\(playing\|paused\|stopped\).*$#\1#p')
     current=$(mpc --format "%artist% - %title%" current)
     case $status in
-        "playing" ) echo "+@fn=1;+@fn=0; $current   |   ";;
-        "paused" ) echo "+@fn=1;+@fn=0; $current   |   ";;
-        'stopped' ) echo "+@fn=1;栗+@fn=0;   |   ";;
+        "playing" ) printf "+@fn=1;+@fn=0; %s   |   " "$current" ;;
+        "paused" ) printf "+@fn=1;+@fn=0; %s   |   " "$current" ;;
+        'stopped' ) printf "+@fn=1;栗+@fn=0;   |   " ;;
     esac
 }
 
@@ -158,23 +152,23 @@ vol() {
     else
         icon="墳"
     fi
-    echo "+@fn=1;$icon$extra_icon+@fn=0;   $vol%"
+    printf "+@fn=1;$icon$extra_icon+@fn=0;   %d%%" "$vol"
 }
 
 vpn() {
-    vpn="$(nmcli --terse --fields NAME,TYPE c show --active | sed -Ene 's/^(.*):vpn$/\1/p' | head -n 1)"
-    [[ -n "$vpn" ]] && printf "+@fn=1;+@fn=0;  $vpn" || printf "+@fn=1;+@fn=0;  No VPN"
+    nmcli --terse --fields NAME,TYPE c show --active | head -n 1 \
+        | awk -F ':' '{if ($2=="vpn") {printf "+@fn=1;+@fn=0;  " $1} else {printf "+@fn=1;+@fn=0;  No VPN"}}'
 }
 
 sep() {
-    # [[  "$(wmctrl -m | awk '/Name/ {printf $2}')" = "spectrwm" ]] && printf "   |   " || printf " | "
+    # Using 3 spaces make the separation more distinct
     printf "   |   "
 }
 
 SLEEP_SEC=5
 #loops forever outputting a line every SLEEP_SEC secs
 while true; do
-    bartext="+@fn=0;$(clock)$(sep)$(mpd)+@fn=1;+@fn=0; $(cpu)$(sep)\
+    bartext="+@fn=0;$(clock)$(sep)$(pomodoro)$(mpd)+@fn=1;+@fn=0; $(cpu)$(sep)\
 +@fn=1;+@fn=0; $(mem)$(sep)+@fn=1;+@fn=0; $(gpu)$(sep)+@fn=1;+@fn=0; $(hdd)\
 $(sep)$(vol)$(sep)$(internet)$(sep)$(vpn)$(sep)$(mail)$(sep)$(battery)"
 
