@@ -11,7 +11,9 @@ readarray -t vpnlist < <(nmcli --terse --fields NAME,STATE,TYPE c show | grep "v
 for vpn in ${vpnlist[@]}; do
     if [[ $1 == $(echo $vpn | cut -d : -f 1) ]]; then
         nmcli connection up $1 passwd-file $HOME/.vpnrc && \
-            echo "hook:module/vpn-status1" >> /tmp/ipc-topbar && exit 0
+            pgrep -u $UID -x polybar && echo "hook:module/vpn-status1" >> /tmp/ipc-topbar; \
+            pkill -RTMIN+5 dwmblocks; \
+            exit 0
     fi
 done
 
@@ -33,4 +35,5 @@ case $(echo "$vpn" | cut -d : -f 2) in
         ;;
 esac
 
-echo "hook:module/vpn-status1" >> /tmp/ipc-topbar
+pgrep -u $UID -x polybar && echo "hook:module/vpn-status1" >> /tmp/ipc-topbar
+pkill -RTMIN+5 dwmblocks

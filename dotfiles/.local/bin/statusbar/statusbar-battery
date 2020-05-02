@@ -1,0 +1,60 @@
+#!/bin/sh
+
+battery() {
+    # discharging:           (100, 90, 80, 70, 60, 50, 40, 30, 20, 10)
+    # charging:        (20, 30, 40, 60, 80, 90, 100)
+    # unknown: 
+    # full: 
+    # Use `acpi`, because simply getting the capacity from
+    # /sys/class/power_supply/BAT* does not take lowered capacity (due to age)
+    # into account.
+    capacity=$(acpi | cut -f2 -d ',' | tr -cd '[:digit:]')
+    status=$(acpi | cut -f2 -d ':' | cut -f 1 -d ',' | tr -d '[:space:]')
+    if [[ $status = "Full" ]]; then
+        icon=""
+    elif [[ $status = "Charging" ]]; then
+        if [[ $capacity -lt 20 ]]; then
+            icon=""
+        elif [[ $capacity -lt 30 ]]; then
+            icon=""
+        elif [[ $capacity -lt 40 ]]; then
+            icon=""
+        elif [[ $capacity -lt 60 ]]; then
+            icon=""
+        elif [[ $capacity -lt 80 ]]; then
+            icon=""
+        elif [[ $capacity -lt 90 ]]; then
+            icon=""
+        else
+            icon=""
+        fi
+    elif [[ $status = "Discharging" ]]; then
+        if [[ $capacity -lt 10 ]]; then
+            icon=""
+        elif [[ $capacity -lt 20 ]]; then
+            icon=""
+        elif [[ $capacity -lt 30 ]]; then
+            icon=""
+        elif [[ $capacity -lt 40 ]]; then
+            icon=""
+        elif [[ $capacity -lt 50 ]]; then
+            icon=""
+        elif [[ $capacity -lt 60 ]]; then
+            icon=""
+        elif [[ $capacity -lt 70 ]]; then
+            icon=""
+        elif [[ $capacity -lt 80 ]]; then
+            icon=""
+        elif [[ $capacity -lt 90 ]]; then
+            icon=""
+        else
+            icon=""
+        fi
+    else
+        icon=""
+    fi
+
+	printf "  %s %d%%  " "$icon" "$capacity"
+}
+
+battery

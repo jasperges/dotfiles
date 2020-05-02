@@ -1,0 +1,26 @@
+#!/bin/sh
+
+vol() {
+    # vol=$(amixer get Master | awk -F'[][]' 'END{ print $4":"$2 }')
+    # icons: 婢奄奔墳
+    if [[ "$(systemctl status bluetooth | awk '/Active/ {printf $2'})" = "active" \
+        && "$(bluetoothctl info 00:0A:45:0E:91:6E | awk '/Connected/ {print $2}')" = "yes" ]]; then
+        extra_icon=" ()"
+    else
+        extra_icon=""
+    fi
+    vol=$(pulsemixer --get-volume | cut -d ' ' -f 1)
+    mute=$(pulsemixer --get-mute)
+    if [ $mute -gt 0 ]; then
+        icon="婢"
+    elif (( $vol < 33 )); then
+        icon="奄"
+    elif (( $vol < 66 )); then
+        icon="奔"
+    else
+        icon="墳"
+    fi
+    printf "  $icon$extra_icon %d%%   " "$vol"
+}
+
+vol

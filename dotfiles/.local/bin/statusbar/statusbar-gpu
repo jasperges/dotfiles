@@ -1,0 +1,11 @@
+#!/bin/sh
+
+gpu() {
+    nvidia-smi --query --display=memory | \
+        awk -F ":" '\
+        match($1, /^.*(FB|BAR1) Memory.*$/, c) {t=c[1]} \
+        /Total|Used/ && t=="FB" && match($2, /([0-9]+ MiB)/, m) {a[++i]=m[1]} \
+        END {printf "   %s/%s   ", a[2], a[1]}'
+}
+
+gpu

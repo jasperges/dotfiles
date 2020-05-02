@@ -1,0 +1,8 @@
+#!/bin/sh
+
+vpn() {
+    nmcli --terse --fields NAME,TYPE c show --active | head -n 1 \
+        | awk -F ':' '{if ($2=="vpn") {printf "    %s   ", $1} else {printf "    No VPN   "}}'
+}
+
+vpn

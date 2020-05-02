@@ -1,0 +1,7 @@
+#!/bin/sh
+
+hdd() {
+  df -h | awk '/fedora00-home/ {printf "   %s/%s   ", $3, $2}'
+}
+
+hdd

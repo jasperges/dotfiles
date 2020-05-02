@@ -1,0 +1,14 @@
+#!/bin/sh
+
+mpd() {
+    # icons:    栗
+    status=$(mpc status | sed -n 's#^.*\(playing\|paused\|stopped\).*$#\1#p')
+    current=$(mpc --format "%artist% - %title%" current | sed 's/^\(.\{30\}\).*/\1.../')
+    case $status in
+        "playing" ) printf "   %s   " "$current" ;;
+        "paused" ) printf "   %s   " "$current" ;;
+        * ) printf "  栗   " ;;
+    esac
+}
+
+mpd

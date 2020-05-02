@@ -45,9 +45,9 @@ super + i; {p,s}
     {import_photos,top_run}
 super + shift + m; {m,u,s,d}
     {dmenu-mount,dmenu-umount,dmenu-servermount,dmenu-serverumount}
-super + o; {b, m, w, e, s, p, o, j, t}
+super + o; {b, h, m, w, e, s, p, o, j, t}
     { \
-        toggle-bashtop, neomutt_run, $BROWSER, emacs, emacs, \
+        toggle-bashtop, toggle-htop, neomutt_run, $BROWSER, emacs, emacs, \
         ncmpcpp_local, ncmpcpp_guybrush, dmenu-jobs, toggle-trayer \
     }
 super + p
@@ -73,11 +73,13 @@ super + v; {m, p, j, s, u, g, w, e, h, b}
 
 # Pulse Audio controls
 {_,shift} + XF86AudioRaiseVolume
-    pactl set-sink-volume @DEFAULT_SINK@ +5%{;,; playsound /usr/share/sounds/freedesktop/stereo/bell.oga}
+    pactl set-sink-volume @DEFAULT_SINK@ +5%{;pkill -RTMIN+3 dwmblocks;, \
+        ;playsound /usr/share/sounds/freedesktop/stereo/bell.oga; pkill -RTMIN+3 dwmblocks}
 {_,shift} + XF86AudioLowerVolume
-    pactl set-sink-volume @DEFAULT_SINK@ -5%{;,; playsound /usr/share/sounds/freedesktop/stereo/bell.oga}
+    pactl set-sink-volume @DEFAULT_SINK@ -5%{;pkill -RTMIN+3 dwmblocks;, \
+        ;playsound /usr/share/sounds/freedesktop/stereo/bell.oga; pkill -RTMIN+3 dwmblocks}
 XF86AudioMute
-    pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+    pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+3 dwmblocks
 
 # Sreen brightness controls
 XF86MonBrightness{Up,Down}
@@ -89,10 +91,10 @@ XF86KbdBrightness{Up,Down}
 
 # Media player controls
 XF86AudioPlay
-    playerctl play-pause || mpc toggle
+    playerctl play-pause || mpc toggle; pkill -RTMIN+2 dwmblocks
 XF86AudioNext
-    playerctl next || mpc next
+    playerctl next || mpc next; pkill -RTMIN+2 dwmblocks
 XF86AudioPrev
-    playerctl previous || mpc prev
+    playerctl previous || mpc prev; pkill -RTMIN+2 dwmblocks
 
 # vim: set ts=4 sw=4 tw=72 et:
