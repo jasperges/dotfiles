@@ -45,10 +45,11 @@ super + i; {p,s}
     {import_photos,top_run}
 super + shift + m; {m,u,s,d}
     {dmenu-mount,dmenu-umount,dmenu-servermount,dmenu-serverumount}
-super + o; {b, h, m, w, e, s, p, o, j, t}
+super + o; {b, c, h, m, w, e, s, p, o, j, t}
     { \
-        toggle-bashtop, toggle-htop, neomutt_run, $BROWSER, emacs, emacs, \
-        ncmpcpp_local, ncmpcpp_guybrush, dmenu-jobs, toggle-trayer \
+        toggle-bashtop, dmenu-term-colors, toggle-htop, neomutt_run, $BROWSER, \
+        emacs, emacs, ncmpcpp_local, ncmpcpp_guybrush, dmenu-jobs, \
+        toggle-trayer
     }
 super + p
     passmenu
