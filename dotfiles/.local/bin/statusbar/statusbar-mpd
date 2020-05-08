@@ -2,8 +2,19 @@
 
 mpd() {
     # icons:    栗
+
+    # Limit the amount of characters for the current playing song based on the
+    # horizontal resolution
+    monitorwidth=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)
+    if [ $(expr $monitorwidth \>= 1920) = 1 ]; then
+        currentwidth=70
+    else
+        currentwidth=30
+    fi
+
     status=$(mpc status | sed -n 's#^.*\(playing\|paused\|stopped\).*$#\1#p')
-    current=$(mpc --format "%artist% - %title%" current | sed 's/^\(.\{30\}\).*/\1.../')
+    current=$(mpc --format "%artist% - %title%" current | sed "s/^\(.\{$currentwidth\}\).*/\1.../")
+
     case $status in
         "playing" ) printf "   %s   " "$current" ;;
         "paused" ) printf "   %s   " "$current" ;;

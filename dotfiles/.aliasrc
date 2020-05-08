@@ -43,6 +43,11 @@ alias lac='c; la'
 
 # Create parent dirs on demand
 alias mkdir='mkdir -pv'
+# Create dir and parents dir and cd into it
+mkcd() {
+    # Use normal mkdir not the alias
+    'mkdir' -p $1 && cd $1
+}
 
 # Extra commands
 alias path='echo -e ${PATH//:/\\n}'

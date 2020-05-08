@@ -1,7 +1,13 @@
 #!/bin/sh
 
 mem() {
-    free | awk '/Mem/ {printf "   %d MiB/%d MiB   ", $3 / 1024.0, $2 / 1024.0 }'
+    # Show the percentage of the used memory on smaller monitors
+    monitorwidth=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)
+    free | awk '/Mem/ \
+        {if ('$monitorwidth' >= 1920) \
+            {printf "   %d MiB/%d MiB   ", $3 / 1024.0, $2 / 1024.0 } \
+        else \
+            {printf "   %d%%   ", $3 / $2 * 100 }}'
 }
 
 mem

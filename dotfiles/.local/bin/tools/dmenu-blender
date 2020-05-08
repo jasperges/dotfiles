@@ -6,7 +6,7 @@ blender_choices["2. Run Blender Buildbot"]="blenderbb"
 blender_choices["3. Run Blender 2.79"]="blender27"
 blender_choices["4. Download Latest Version from Buildbot"]="blender_buildbot_download --extract"
 
-choice="$(printf '%s\n' "${!blender_choices[@]}" | sort | dmenu -p "Blender")"
+choice="$(printf '%s\n' "${!blender_choices[@]}" | sort | rofi -dmenu -p "Blender")"
 if [[ "$choice" ]]; then
     ${blender_choices["$choice"]}
 fi

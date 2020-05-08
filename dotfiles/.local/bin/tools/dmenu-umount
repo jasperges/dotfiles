@@ -1,24 +1,25 @@
-#!/bin/sh
+#!/bin/bash
+
 # A dmenu prompt to unmount drives.
 # Provides you with mounted partitions, select one to unmount.
 # Drives mounted at /, /boot and /home will not be options to unmount.
 
 unmountusb() {
-    chosen=$(echo "$drives" | dmenu -i -p "Unmount which drive?" | awk '{print $1}')
+    chosen=$(echo "$drives" | rofi -dmenu -l 5 -i -p "Unmount which drive?" | awk '{print $1}')
     [ -z "$chosen" ] && exit
     sudo -A umount -l "$chosen" && notify-send "💻 USB unmounting" "$chosen unmounted." && exit || \
         notify-send -u critical "💻 USB unmounting" "Unmounting of $chosen failed." && exit 1
     }
 
 unmountphone() {
-    chosen=$(echo "$devices" | dmenu -i -p "Unmount which device?")
+    chosen=$(echo "$devices" | rofi -dmenu -l 5 -i -p "Unmount which device?")
     [ -z "$chosen" ] && exit
     sudo -A umount -l "$chosen" && notify-send " Phone unmounting" "$chosen unmounted." && exit || \
         notify-send -u critical " Phone unmounting" "Unmounting of $chosen failed." && exit 1
     }
 
 asktype() {
-	case "$(printf "%s\n" ${choices[@]} | dmenu -i -p "What do you want to unmount?")" in
+	case "$(printf "%s\n" ${choices[@]} | rofi -dmenu -l 3 -i -p "What do you want to unmount?")" in
 		USB) unmountusb ;;
         Phone) unmountphone ;;
 	esac

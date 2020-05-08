@@ -44,8 +44,8 @@ if [[ -z ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
         echo "    3. i3"
         echo "    4. bspwm"
         echo
-        echo "Please make your choice (1-4) [1]:"
-        read wm
+        # echo "Please make your choice (1-4) [1]:"
+        read -t 2 "wm?Please make your choice (1-4) [1]: "
         case $wm in
             "2" ) sed -i "s/^\(start_[a-z]*\)$/start_spectrwm/" $HOME/.xinitrc && break;;
             "3" ) sed -i "s/^\(start_[a-z]*\)$/start_i3/" $HOME/.xinitrc && break;;

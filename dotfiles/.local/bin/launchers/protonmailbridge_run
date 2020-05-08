@@ -3,7 +3,7 @@
 # Terminate already running instances
 # This doesn't seem to work
 # killall -q protonmail-bridge
-kill $(pgrep -u $UID -f protonmail-bridge)
+pkill -u $UID -f protonmail-bridge
 
 # Wait until the processes have been shut down
 while pgrep -u $UID -f protonmail-bridge >/dev/null; do sleep 1; done

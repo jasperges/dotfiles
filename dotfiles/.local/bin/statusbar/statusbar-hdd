@@ -1,7 +1,13 @@
 #!/bin/sh
 
 hdd() {
-  df -h | awk '/fedora00-home/ {printf "   %s/%s   ", $3, $2}'
+    # Show the percentage of the used diskspace on smaller monitors
+    monitorwidth=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)
+    df -h | awk '/fedora00-home/ \
+        {if ('$monitorwidth' >= 1920) \
+            {printf "   %s/%s   ", $3, $2} \
+        else
+            {printf "   %d%%   ", $3 / $2 * 100}}'
 }
 
 hdd

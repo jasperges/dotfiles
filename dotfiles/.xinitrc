@@ -23,13 +23,13 @@ numlockx on &
 xmodmap -e 'keycode 94 = grave asciitilde grave asciitilde dead_grave dead_horn dead_grave' &
 
 # Use Super_L on it's own as Escape
-xcape -e 'Super_L=Escape' &
+killall -wq xcape; xcape -e 'Super_L=Escape' &
 
 # Turn on autolock
-autolock 9 &
+killall -wq autolock; autolock 9 &
 
 # Start mpd
-mpd &
+killall -wq mpd; mpd &
 
 # Start X compositor, notification and set wallpaper
 compton_run &
@@ -39,7 +39,8 @@ feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper
 # Start apps that show in tray area
 dropbox_run &
 protonmailbridge_run &
-syncthing-gtk --minimized &
+# syncthing-gtk --minimized &
+killall -wq syncthing; syncthing -no-browser &
 # nmapplet_run &
 bluemanapplet_run &
 
@@ -57,7 +58,7 @@ start_dwm() {
     # killall -qw baraction.sh
     # setsid baraction.sh &
     killall -qw dwmblocks
-    setsid dwmblocks &
+    dwmblocks &
     exec dwm
 }
 

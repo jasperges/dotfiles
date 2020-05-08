@@ -4,5 +4,6 @@
 # start with 'mount-'.
 
 scriptdir=$HOME/.local/bin/tools
-choice=$(find $scriptdir -type f -executable -name "umount-*" -print0| xargs -0 -I {} basename {} | dmenu -p "Choose an unmount script to run" -no-custom)
-[[ -n $choice ]] && $scriptdir/$choice
+choice=$(find $scriptdir -type f -executable -name "umount-*" -print0 \
+    | xargs -0 -I {} basename {} | rofi -dmenu -l 5 -p "Choose an unmount script to run" -no-custom)
+[ -n $choice ] && $scriptdir/$choice

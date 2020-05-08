@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Statusbar line, it works at least for dwm and spectrwm
 
 battery() {

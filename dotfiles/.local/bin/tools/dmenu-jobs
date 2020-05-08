@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ls $HOME/.local/bin/jobs | dmenu | xargs -L 1 -I "{}" sh "$HOME/.local/bin/jobs/{}"
+ls $HOME/.local/bin/jobs | dmenu -p "Choose job to run" -l 10 | xargs -L 1 -I "{}" sh "$HOME/.local/bin/jobs/{}"

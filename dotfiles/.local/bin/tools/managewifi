@@ -3,7 +3,7 @@
 # Get all known wifi connections and if they are activated.
 # Don't do a scan and list all available networks. I rarely need to connect to
 # a new network, so I prefer to add these manually.
-# List them with dmenu/rofi and show them in a different color when they are active.
+# List them with rofi and show them in a different color when they are active.
 
 # TODO: only list available networks. Compare the known ones to the ones
 #       retrieved with `nmcli d wifi list --rescan yes`?
@@ -16,6 +16,7 @@ wifiidx="$(printf '%s\n' "${wifilist[@]}" | \
     rofi -dmenu -lines 5 -p "Choose WiFi connection" -i -markup-rows \
     -select "font_weight" -format i)"
 [[ "$wifiidx" ]] || exit
+
 wifi="${wifilist[wifiidx]}"
 nmcli c up "$(echo "$wifi" | awk -F : '{print $1}')"
 # echo "hook:module/wifi-status1" >> /tmp/ipc-topbar

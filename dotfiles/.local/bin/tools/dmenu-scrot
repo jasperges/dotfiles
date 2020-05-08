@@ -1,6 +1,6 @@
 #!/bin/bash
 
-choice=$(echo -e "Selection\nSelection and View\nSelection + Edit in Gimp" | dmenu -p "Choose how to take a screenshot" -no-custom -i)
+choice=$(echo -e "Selection\nSelection and View\nSelection + Edit in Gimp" | rofi -dmenu -p "Choose how to take a screenshot" -l 5-no-custom -i)
 case $choice in
     "Selection" )
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -selection -e 'mv $f ~/pictures/screenshots/';;

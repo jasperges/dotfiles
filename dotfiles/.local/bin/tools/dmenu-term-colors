@@ -1,4 +1,5 @@
 #!/bin/sh
+
 # Shows a dmenu prompt to choose the color theme for the terminal.
 # At the moment only solarized light and dark are supported with Alacritty and
 # (Neo)Vim.
@@ -7,12 +8,12 @@
 # Because I'm still using .vimrc it only replaces things in .vimrc, not in
 # NeoVims init.vim.
 
-theme=$(echo -e "Solarized Light\nSolarized Dark" \
-    | dmenu -p "Which terminal color scheme would you like to use?" \
+theme=$(echo "Solarized Light\nSolarized Dark" \
+    | rofi -dmenu -p "Which terminal color scheme would you like to use?" \
         -no-custom -lines 2 -i -select "Solarized Dark" \
     | tr '[:upper:]' '[:lower:]')
 # If no theme in chosen, just exit
-[[ -z "$theme" ]] && exit 0
+[ -z "$theme" ] && exit 0
 
 scheme=$(echo "$theme" | cut -d ' ' -f1)
 variant=$(echo "$theme" | cut -d ' ' -f2)

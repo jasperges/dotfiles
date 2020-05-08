@@ -135,10 +135,10 @@ PURE_PROMPT_SYMBOL='>>'
 PURE_PROMPT_VICMD_SYMBOL='<<'
 # PURE_PROMPT_SYMBOL='♫'
 prompt pure
-prompt_newline='%666v'
+# prompt_newline='%666v'
 PROMPT=" $PROMPT"
 
-# Load zsh-syntax-highlighting; should be last.
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+# Load fast-syntax-highlighting; should be last.
+source /home/jasperge/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 
 #  vim: set ts=4 sw=4 tw=4 et :

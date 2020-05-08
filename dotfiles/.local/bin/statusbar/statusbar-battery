@@ -10,42 +10,42 @@ battery() {
     # into account.
     capacity=$(acpi | cut -f2 -d ',' | tr -cd '[:digit:]')
     status=$(acpi | cut -f2 -d ':' | cut -f 1 -d ',' | tr -d '[:space:]')
-    if [[ $status = "Full" ]]; then
+    if [ $status = "Full" ]; then
         icon=""
-    elif [[ $status = "Charging" ]]; then
-        if [[ $capacity -lt 20 ]]; then
+    elif [ $status = "Charging" ]; then
+        if [ $capacity -lt 20 ]; then
             icon=""
-        elif [[ $capacity -lt 30 ]]; then
+        elif [ $capacity -lt 30 ]; then
             icon=""
-        elif [[ $capacity -lt 40 ]]; then
+        elif [ $capacity -lt 40 ]; then
             icon=""
-        elif [[ $capacity -lt 60 ]]; then
+        elif [ $capacity -lt 60 ]; then
             icon=""
-        elif [[ $capacity -lt 80 ]]; then
+        elif [ $capacity -lt 80 ]; then
             icon=""
-        elif [[ $capacity -lt 90 ]]; then
+        elif [ $capacity -lt 90 ]; then
             icon=""
         else
             icon=""
         fi
-    elif [[ $status = "Discharging" ]]; then
-        if [[ $capacity -lt 10 ]]; then
+    elif [ $status = "Discharging" ]; then
+        if [ $capacity -lt 10 ]; then
             icon=""
-        elif [[ $capacity -lt 20 ]]; then
+        elif [ $capacity -lt 20 ]; then
             icon=""
-        elif [[ $capacity -lt 30 ]]; then
+        elif [ $capacity -lt 30 ]; then
             icon=""
-        elif [[ $capacity -lt 40 ]]; then
+        elif [ $capacity -lt 40 ]; then
             icon=""
-        elif [[ $capacity -lt 50 ]]; then
+        elif [ $capacity -lt 50 ]; then
             icon=""
-        elif [[ $capacity -lt 60 ]]; then
+        elif [ $capacity -lt 60 ]; then
             icon=""
-        elif [[ $capacity -lt 70 ]]; then
+        elif [ $capacity -lt 70 ]; then
             icon=""
-        elif [[ $capacity -lt 80 ]]; then
+        elif [ $capacity -lt 80 ]; then
             icon=""
-        elif [[ $capacity -lt 90 ]]; then
+        elif [ $capacity -lt 90 ]; then
             icon=""
         else
             icon=""

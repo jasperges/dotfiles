@@ -1,10 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
 wm=$(wmctrl -m | awk '/Name/ {printf $2}')
-
-# TODO: Make this more generic. Figure out if there are external and/or
-# internal monitors and do the 'right thing'. In case the 'right thing' is
-# unclear, ask the user.
 
 external_monitor=$(xrandr | sed -nE "s/^((DP|HDMI)-[0-9]+) connected.*$/\1/p")
 internal_monitor=$(xrandr | sed -nE "s/^(LVDS-[0-9]+) connected.*$/\1/p")
@@ -27,6 +23,7 @@ fi
 feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper
 setxinputs 2>/dev/null
 
+# Here you can execute specific things for the running window manager
 case $wm in
     i3 )
         currentws=$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).name' | cut -d "\"" -f2)
