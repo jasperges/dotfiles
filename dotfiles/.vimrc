@@ -444,11 +444,11 @@ nnoremap <buffer> <leader>ab :ArduinoChooseBoard<CR>
 nnoremap <buffer> <leader>ap :ArduinoChooseProgrammer<CR>
 
 "Run xrdb when Xdefaults or Xresources are updated
-autocmd BufWritePost *Xdefaults,*Xresources !xrdb %
+autocmd BufWritePost *Xdefaults,*Xresources :silent !xrdb %
 " Update binds when sxhkdrc is updated
-autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
+autocmd BufWritePost *sxhkdrc :silent !pkill -USR1 sxhkd
 " Restart compton when the config is update
-autocmd BufWritePost compton.conf !pkill -USR1 compton
+autocmd BufWritePost compton.conf :silent !pkill -USR1 compton
 
 set background=dark
 let g:solarized_termtrans = 1
