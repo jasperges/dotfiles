@@ -438,6 +438,8 @@ nnoremap <buffer> <leader>ap :ArduinoChooseProgrammer<CR>
 autocmd BufWritePost *Xdefaults,*Xresources !xrdb %
 " Update binds when sxhkdrc is updated
 autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
+" Restart compton when the config is update
+autocmd BufWritePost compton.conf !pkill -USR1 compton
 
 set background=dark
 let g:solarized_termtrans = 1
