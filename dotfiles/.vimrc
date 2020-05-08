@@ -85,9 +85,10 @@ Plug 'kovetskiy/sxhkd-vim'
 " Distraction free writing
 Plug 'junegunn/goyo.vim'
 
-" Better tables and to-do's
+" Tables, todo's and wiki
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'dhruvasagar/vim-dotoo'
+Plug 'vimwiki/vimwiki'
 
 " Dev icons, let's see if I like it
 Plug 'ryanoasis/vim-devicons'
@@ -423,6 +424,14 @@ autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile *.py :let g:goyo_width=120
 autocmd BufRead,BufNewFile *.py :let g:goyo_linenr=2
 nnoremap <silent> <Leader>gy :Goyo<CR>
+
+" VimWiki
+let werkwiki = {}
+let werkwiki.path = '~/documents/vimwiki/werk/'
+" let werkwiki.nested_syntaxes = {'python': 'python'}
+let privewiki = {}
+let privewiki.path = '~/documents/vimwiki/prive/'
+let g:vimwiki_list = [werkwiki, privewiki]
 
 " Arduino
 let g:arduino_cmd = '/opt/arduino/arduino'
