@@ -74,13 +74,13 @@ super + v; {m, p, j, s, u, g, w, e, h, b}
 
 # Pulse Audio controls
 {_,shift} + XF86AudioRaiseVolume
-    pactl set-sink-volume @DEFAULT_SINK@ +5%{;pkill -RTMIN+3 dwmblocks;, \
-        ;playsound /usr/share/sounds/freedesktop/stereo/bell.oga; pkill -RTMIN+3 dwmblocks}
+    pactl set-sink-volume @DEFAULT_SINK@ +5%{;pkill -RTMIN+8 dwmblocks;, \
+        ;playsound /usr/share/sounds/freedesktop/stereo/bell.oga; pkill -RTMIN+8 dwmblocks}
 {_,shift} + XF86AudioLowerVolume
-    pactl set-sink-volume @DEFAULT_SINK@ -5%{;pkill -RTMIN+3 dwmblocks;, \
-        ;playsound /usr/share/sounds/freedesktop/stereo/bell.oga; pkill -RTMIN+3 dwmblocks}
+    pactl set-sink-volume @DEFAULT_SINK@ -5%{;pkill -RTMIN+8 dwmblocks;, \
+        ;playsound /usr/share/sounds/freedesktop/stereo/bell.oga; pkill -RTMIN+8 dwmblocks}
 XF86AudioMute
-    pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+3 dwmblocks
+    pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+8 dwmblocks
 
 # Sreen brightness controls
 XF86MonBrightness{Up,Down}
@@ -92,10 +92,10 @@ XF86KbdBrightness{Up,Down}
 
 # Media player controls
 XF86AudioPlay
-    playerctl play-pause || mpc toggle; pkill -RTMIN+2 dwmblocks
+    playerctl play-pause || mpc toggle; pkill -RTMIN+3 dwmblocks
 XF86AudioNext
-    playerctl next || mpc next; pkill -RTMIN+2 dwmblocks
+    playerctl next || mpc next; pkill -RTMIN+3 dwmblocks
 XF86AudioPrev
-    playerctl previous || mpc prev; pkill -RTMIN+2 dwmblocks
+    playerctl previous || mpc prev; pkill -RTMIN+3 dwmblocks
 
 # vim: set ts=4 sw=4 tw=72 et:

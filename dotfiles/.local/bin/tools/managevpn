@@ -12,7 +12,7 @@ for vpn in ${vpnlist[@]}; do
     if [[ $1 == $(echo $vpn | cut -d : -f 1) ]]; then
         nmcli connection up $1 passwd-file $HOME/.vpnrc && \
             pgrep -u $UID -x polybar && echo "hook:module/vpn-status1" >> /tmp/ipc-topbar; \
-            pkill -RTMIN+5 dwmblocks; \
+            pkill -RTMIN+10 dwmblocks; \
             exit 0
     fi
 done
@@ -43,4 +43,4 @@ case "$vpnstatus" in
 esac
 
 pgrep -u $UID -x polybar && echo "hook:module/vpn-status1" >> /tmp/ipc-topbar
-pkill -RTMIN+5 dwmblocks
+pkill -RTMIN+10 dwmblocks

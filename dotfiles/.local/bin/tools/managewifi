@@ -19,5 +19,5 @@ wifiidx="$(printf '%s\n' "${wifilist[@]}" | \
 
 wifi="${wifilist[wifiidx]}"
 nmcli c up "$(echo "$wifi" | awk -F : '{print $1}')"
-# echo "hook:module/wifi-status1" >> /tmp/ipc-topbar
-pkill -RTMIN+4 dwmblocks
+pgrep -u $UID -x poloybar && echo "hook:module/wifi-status1" >> /tmp/ipc-topbar
+pkill -RTMIN+9 dwmblocks
