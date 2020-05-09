@@ -23,7 +23,7 @@ super + d; {b, d, e, g, f, i, m, p, x, s}
         i3-msg -q "border toggle 4", \
         rofi_run drun, \
         dmenu-unicode, \
-        dmenu-googledrive, \
+        dmenu-documents, \
         feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper, \
         setxinputs, \
         setup-monitors, \
