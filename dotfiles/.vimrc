@@ -400,7 +400,7 @@ function! AppendModeline()
     let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
     call append(line("$"), l:modeline)
 endfunction
-nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+nnoremap <silent> <leader>ml :call AppendModeline()<CR>
 
 " Set IBeam shape in insert mode, underline shape in replace mode and block shape in normal mode.
 let &t_SI = "\<Esc>[6 q"
