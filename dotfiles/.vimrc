@@ -115,11 +115,14 @@ nnoremap <leader>fs :w<CR>
 nnoremap <Space> <Nop>
 " sunmap <Space>
 " map <Space> <Leader>
-" edit vimrc quickly
 let mapleader=" "
+" edit vimrc quickly
 noremap <leader>v :sp ~/.vimrc<CR>
 " reload vimrc when saved
 autocmd BufWritePost .vimrc source ~/.vimrc
+" quickly source vimrc
+noremap <leader>vv :source ~/.vimrc<CR>
+
 let g:python_recommended_style = 0
 set number
 set modeline

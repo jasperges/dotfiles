@@ -54,9 +54,6 @@ start_spectrwm() {
 }
 
 start_dwm() {
-    # kill all baraction.sh processes and wait for them to die, just in case...
-    # killall -qw baraction.sh
-    # setsid baraction.sh &
     killall -qw dwmblocks
     dwmblocks &
     exec dwm

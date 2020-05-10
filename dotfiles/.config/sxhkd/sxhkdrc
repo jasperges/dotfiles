@@ -11,8 +11,6 @@ super + space
 # Reload sxhkd
 super + Escape
 	pkill -USR1 -x sxhkd
-# super + equal
-#     i3-msg -q "[class=alacritty title=scratchpad]" scratchpad show
 
 super + b; {b,q}
     {rezblender, rezblenderqt}
@@ -31,25 +29,14 @@ super + d; {b, d, e, g, f, i, m, p, x, s}
         clipmenu, \
         dmenu-scrot, \
     }
-# super + w; {b,p,m,i,s}
-#     {i3-msg -q "border toggle 4",start_pomodoro,setup-monitors,setxinputs,polybar_run}
-super + w: {h, j, k, l}
-    notify-send -h "string:bgcolor:#93653e" "move mode" && winmove {-50 0, 0 50, 0 -50, 50 0}
-super + w: Escape
-    rm $HOME/.storedwinid 2>/dev/null; pkill -ALRM sxhkd
-super + shift + w: {h, j, k, l}
-    notify-send -h "string:bgcolor:#93653e" "resize mode" && winresize {-100 0, 0 100, 0 -100, 100 0} centered
-super + shift + w: Escape
-    rm $HOME/.storedwinid 2>/dev/null; pkill -ALRM sxhkd
 super + i; {p,s}
     {import_photos,top_run}
 super + shift + m; {m,u,s,d}
     {dmenu-mount,dmenu-umount,dmenu-servermount,dmenu-serverumount}
-super + o; {b, c, h, m, w, e, s, p, o, j, t}
+super + o; {b, c, g, h, m, w, p, o, j, t}
     { \
         toggle-bashtop, dmenu-term-colors, toggle-htop, neomutt_run, $BROWSER, \
-        emacs, emacs, ncmpcpp_local, ncmpcpp_guybrush, dmenu-jobs, \
-        toggle-trayer
+        ncmpcpp_local, ncmpcpp_guybrush, dmenu-jobs, toggle-trayer
     }
 super + p
     passmenu
@@ -58,7 +45,6 @@ super + s; {a, b, p}
         i3-msg -q "[class=cli.py title=(?im)^.*|\s+allzpark\s+.*$] scratchpad show", \
         i3-msg -q "[class=alacritty title=blender*] scratchpad show", \
         toggle-pulsemixer \
-        # i3-msg -q "[class=alacritty title=scratchpad] scratchpad show", \
     }
 super + v; {m, p, j, s, u, g, w, e, h, b}
     { \
@@ -67,10 +53,14 @@ super + v; {m, p, j, s, u, g, w, e, h, b}
         managewifi, wifi-off, wifi-on, \
         dmenu-bluetooth \
     }
-# super + shift + w
-#     rename_workspace
-# super + x; {x, s}
-#     {clipmenu, dmenu-scrot}
+super + w: {h, j, k, l}
+    notify-send -h "string:bgcolor:#93653e" "move mode" && winmove {-50 0, 0 50, 0 -50, 50 0}
+super + w: Escape
+    rm $HOME/.storedwinid 2>/dev/null; pkill -ALRM sxhkd
+super + shift + w: {h, j, k, l}
+    notify-send -h "string:bgcolor:#93653e" "resize mode" && winresize {-100 0, 0 100, 0 -100, 100 0} centered
+super + shift + w: Escape
+    rm $HOME/.storedwinid 2>/dev/null; pkill -ALRM sxhkd
 
 # Pulse Audio controls
 {_,shift} + XF86AudioRaiseVolume
