@@ -1,15 +1,32 @@
 #!/bin/sh
 
+hostinfofile=$HOME/.local/share/mpd/hostinfo
+
+readhostinfo() {
+    hostinfo=$(cat "$hostinfofile" 2>/dev/null)
+    if [ -n "$hostinfo" ]; then
+        host=$(echo "$hostinfo" | cut -d "," -f 1)
+        port=$(echo "$hostinfo" | cut -d "," -f 2)
+    fi
+
+    export MPD_HOST="$host"
+    export MPD_PORT="$port"
+}
+
 mpd() {
     # icons:    栗
+
+    readhostinfo
 
     # Limit the amount of characters for the current playing song based on the
     # horizontal resolution
     monitorwidth=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)
     if [ $(expr $monitorwidth \>= 1920) = 1 ]; then
         currentwidth=70
-    else
+    elif [ $(expr $monitorwidth \>= 1680) = 1 ]; then
         currentwidth=30
+    else
+        currentwidth=20
     fi
 
     status=$(mpc status | sed -n 's#^.*\(playing\|paused\|stopped\).*$#\1#p')
@@ -22,4 +39,25 @@ mpd() {
     esac
 }
 
+mpdtoggle() {
+    readhostinfo
+    mpc toggle &>/dev/null
+    # Refresh output
+    pkill -RTMIN+3 dwmblocks
+}
+
+mpdswitch() {
+    choice=$(printf "local\nguybrush" | dmenu -p "Choose player" -l 2 -r -i)
+    [ -n "$choice" ] && mkdir -p "$(dirname $hostinfofile)"
+    case "$choice" in
+        local) echo "localhost,6600" > "$hostinfofile";;
+        guybrush) echo "guybrush.local,5700" > "$hostinfofile";;
+    esac
+}
+
 mpd
+
+case $BUTTON in
+    1) mpdtoggle;;
+    3) mpdswitch;;
+esac
