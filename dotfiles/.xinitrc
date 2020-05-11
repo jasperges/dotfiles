@@ -59,15 +59,6 @@ start_dwm() {
     exec dwm
 }
 
-start_i3() {
-    update_i3_config &
-    exec i3
-}
-
-start_bspwm() {
-    exec bspwm
-}
-
 start_dwm
 
 # vim: set ts=4 sw=4 tw=0 et ft=sh:
