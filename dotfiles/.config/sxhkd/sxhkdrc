@@ -14,8 +14,8 @@ super + Escape
 
 super + b; {b,q}
     {rezblender, rezblenderqt}
-super + c; {c,r}
-    {rofi_calc, dmenu-rez-config}
+super + c; {c, r, t}
+    {rofi_calc, dmenu-rez-config, dmenu-term-colors}
 super + d; {b, d, e, g, f, i, m, p, x, s}
     { \
         i3-msg -q "border toggle 4", \
@@ -35,7 +35,7 @@ super + shift + m; {m,u,s,d}
     {dmenu-mount,dmenu-umount,dmenu-servermount,dmenu-serverumount}
 super + o; {b, c, g, h, m, w, p, o, j, t}
     { \
-        toggle-bashtop, dmenu-term-colors, toggle-htop, neomutt_run, $BROWSER, \
+        toggle-bashtop, launch-chat-apps, toggle-gotop, toggle-htop, neomutt_run, $BROWSER, \
         ncmpcpp_local, ncmpcpp_guybrush, dmenu-jobs, toggle-trayer
     }
 super + p

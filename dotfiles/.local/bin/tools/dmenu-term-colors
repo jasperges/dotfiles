@@ -8,9 +8,9 @@
 # Because I'm still using .vimrc it only replaces things in .vimrc, not in
 # NeoVims init.vim.
 
-theme=$(echo "Solarized Light\nSolarized Dark" \
-    | rofi -dmenu -p "Which terminal color scheme would you like to use?" \
-        -no-custom -lines 2 -i -select "Solarized Dark" \
+theme=$(printf "Solarized Light\nSolarized Dark" \
+    | dmenu -p "Which terminal color scheme would you like to use?" \
+        -r -l 2 -i \
     | tr '[:upper:]' '[:lower:]')
 # If no theme in chosen, just exit
 [ -z "$theme" ] && exit 0
