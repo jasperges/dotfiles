@@ -1,5 +1,10 @@
 #!/bin/sh
 
+case $BUTTON in
+	1) notify-send "🧠 Memory hogs" "$(ps axch -o cmd:15,%mem --sort=-%mem | head)" ;;
+    3) toggle-gotop ;;
+esac
+
 mem() {
     # Show the percentage of the used memory on smaller monitors
     monitorwidth=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)

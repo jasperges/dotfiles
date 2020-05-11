@@ -1,5 +1,10 @@
 #!/bin/sh
 
+case $BUTTON in
+	1) notify-send "This Month" "$(cal --color=always \
+        | sed "s/..7m/<b><span color=\"yellow\">/;s/..27m/<\/span><\/b>/")" ;;
+esac
+
 clock() {
     date '+  %a %d %b - %H:%M   '
 }

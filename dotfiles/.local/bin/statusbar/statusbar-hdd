@@ -1,5 +1,9 @@
 #!/bin/sh
 
+case $BUTTON in
+	1) notify-send "💽 Disk space" "$(df -h --output=target,used,size)" ;;
+esac
+
 hdd() {
     # Show the percentage of the used diskspace on smaller monitors
     monitorwidth=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)

@@ -1,5 +1,10 @@
 #!/bin/sh
 
+case $BUTTON in
+    1) managewifi ;;
+	3) toggle-nmtui ;;
+esac
+
 internet() {
     # icons:
     #  - wifi up: 直

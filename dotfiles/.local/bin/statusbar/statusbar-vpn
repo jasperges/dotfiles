@@ -1,5 +1,10 @@
 #!/bin/sh
 
+case $BUTTON in
+    1) managevpn ;;
+    3) toggle-nmtui ;;
+esac
+
 vpn() {
     # Don't show the name of the active VPN service on smaller monitors
     monitorwidth=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)

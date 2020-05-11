@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# TODO: use a proper/better pomodoro timer that can be paused and reset. Then
+#       control it via clicking in the statusbar.
+# case $BUTTON in
+#     1) start/pause pomodoro ;;
+#     2) showwindow ;;
+#     3) resetpomodoro ;;
+# esac
+
 pomodoro() {
     [ -f $HOME/.pomodoro_live ] \
         && cat $HOME/.pomodoro_live 2>/dev/null | awk '{printf "  %s %s   ", $1, $2}' \

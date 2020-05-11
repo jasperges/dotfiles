@@ -1,6 +1,6 @@
 #!/bin/sh
 
-hostinfofile=$HOME/.local/share/mpd/hostinfo
+hostinfofile="${XDG_CACHE_HOME:-$HOME/.cache}/mpdhostinfo"
 
 readhostinfo() {
     hostinfo=$(cat "$hostinfofile" 2>/dev/null)
@@ -12,6 +12,24 @@ readhostinfo() {
     export MPD_HOST="$host"
     export MPD_PORT="$port"
 }
+
+mpdtoggle() {
+    readhostinfo
+    mpc toggle &>/dev/null
+}
+
+mpdswitch() {
+    choice=$(printf "local\nguybrush" | dmenu -p "Choose player" -l 2 -r -i)
+    case "$choice" in
+        local) echo "localhost,6600" > "$hostinfofile";;
+        guybrush) echo "guybrush.local,5700" > "$hostinfofile";;
+    esac
+}
+
+case $BUTTON in
+    1) mpdtoggle;;
+    3) mpdswitch;;
+esac
 
 mpd() {
     # icons:    栗
@@ -39,25 +57,4 @@ mpd() {
     esac
 }
 
-mpdtoggle() {
-    readhostinfo
-    mpc toggle &>/dev/null
-    # Refresh output
-    pkill -RTMIN+3 dwmblocks
-}
-
-mpdswitch() {
-    choice=$(printf "local\nguybrush" | dmenu -p "Choose player" -l 2 -r -i)
-    [ -n "$choice" ] && mkdir -p "$(dirname $hostinfofile)"
-    case "$choice" in
-        local) echo "localhost,6600" > "$hostinfofile";;
-        guybrush) echo "guybrush.local,5700" > "$hostinfofile";;
-    esac
-}
-
 mpd
-
-case $BUTTON in
-    1) mpdtoggle;;
-    3) mpdswitch;;
-esac

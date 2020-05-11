@@ -1,13 +1,22 @@
 #!/bin/sh
 
+case $BUTTON in
+    1) notify-send "🖥 CPU hogs" "$(ps axch -o cmd:15,%cpu --sort=-%cpu | head)\\n(100% per core)" ;;
+    3) toggle-gotop ;;
+esac
+
+cputotalfile="${XDG_CACHE_HOME:-$HOME/.cache}/cputotals"
+
 cpu() {
-  read cpu a b c previdle rest < /proc/stat
-  prevtotal=$((a+b+c+previdle))
-  sleep 1
-  read cpu a b c idle rest < /proc/stat
-  total=$((a+b+c+idle))
-  cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
-  printf "   %d%%   " "$cpu"
+    read cpu a b c idle rest < /proc/stat
+    total=$((a+b+c+idle))
+    prevtotal=$(cat $cputotalfile | cut -d "," -f 1)
+    previdle=$(cat $cputotalfile | cut -d "," -f 2)
+    cpu=$((100*( (total - prevtotal) - (idle - previdle) ) / (total - prevtotal) ))
+    printf "   %d%%   " "$cpu"
 }
 
 cpu
+
+# Log the current value for the next run
+echo "$total,$idle" > "$cputotalfile"

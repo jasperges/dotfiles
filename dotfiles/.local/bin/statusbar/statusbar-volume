@@ -1,5 +1,10 @@
 #!/bin/sh
 
+case $BUTTON in
+    1) pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
+    3) toggle-pulsemixer ;;
+esac
+
 vol() {
     # vol=$(amixer get Master | awk -F'[][]' 'END{ print $4":"$2 }')
     # icons: 婢奄奔墳
