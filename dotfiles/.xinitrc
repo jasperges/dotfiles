@@ -32,7 +32,7 @@ killall -wq autolock; autolock 9 &
 killall -wq mpd; mpd &
 
 # Start X compositor, notification and set wallpaper
-compton_run &
+launch-picom &
 dunst_run &
 feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper
 
