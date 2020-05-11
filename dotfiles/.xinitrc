@@ -8,7 +8,7 @@ xrdb ~/.Xresources
 [[ -f $HOME/.last_keyboard_backlight ]] && cat $HOME/.last_keyboard_backlight > "/sys/class/leds/smc::kbd_backlight/brightness"
 
 # Simple X Hot Key Daemon
-sxhkd_run &
+killall -wq sxhkd; sxhkd &
 
 # Set up monitors
 setxrandr &
