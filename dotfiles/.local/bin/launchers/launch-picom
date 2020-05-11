@@ -4,6 +4,6 @@
 killall -wq picom
 
 # Launch new instance
-picom &
+picom --experimental-backends &
 
 echo "Picom (X11 compositor) launched..."

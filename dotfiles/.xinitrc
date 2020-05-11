@@ -32,8 +32,8 @@ killall -wq autolock; autolock 9 &
 killall -wq mpd; mpd &
 
 # Start X compositor, notification and set wallpaper
-launch-picom &
 dunst_run &
+killall -wq picom; picom --experimental-backends &
 feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper
 
 # Start apps that show in tray area
