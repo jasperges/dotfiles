@@ -9,8 +9,9 @@ readhostinfo() {
         port=$(echo "$hostinfo" | cut -d "," -f 2)
     fi
 
-    export MPD_HOST="$host"
-    export MPD_PORT="$port"
+    # If not found, set to default host 'localhost' and port 6600
+    export MPD_HOST="${host:-localhost}"
+    export MPD_PORT="${port:-6600}"
 }
 
 mpdtoggle() {
@@ -27,8 +28,10 @@ mpdswitch() {
 }
 
 case $BUTTON in
-    1) mpdtoggle;;
-    3) mpdswitch;;
+    1) mpdtoggle ;;
+    2) readhostinfo && ${TERMINAL} --class OPAQUE -t ncmpcpp-centered \
+        -e ncmpcpp -h ${MPD_HOST:-localhost} -p ${MPD_PORT:-6600} ;;
+    3) mpdswitch ;;
 esac
 
 mpd() {
