@@ -43,7 +43,7 @@ mpd() {
     # horizontal resolution
     monitorwidth=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)
     if [ $(expr $monitorwidth \>= 1920) = 1 ]; then
-        currentwidth=70
+        currentwidth=36
     elif [ $(expr $monitorwidth \>= 1680) = 1 ]; then
         currentwidth=30
     else
