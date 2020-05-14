@@ -1,6 +1,9 @@
 #!/bin/sh
 
 battery() {
+    # Show power plug and exit if there is no battery
+    [ ! -d /sys/class/power_supply/BAT* ] && printf "     " && exit
+
     # discharging:           (100, 90, 80, 70, 60, 50, 40, 30, 20, 10)
     # charging:        (20, 30, 40, 60, 80, 90, 100)
     # unknown: 
