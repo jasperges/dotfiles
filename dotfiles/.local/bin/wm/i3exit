@@ -8,7 +8,7 @@ declare -a LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING_FULLSCREEN=(
     "mpv" "Wine" "vlc" "Pinentry-gtk-2"
 )
 declare -a LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING_FULLSCREEN=(
-    "NPO" "YouTube" "Netflix" "Prime Video"
+    "NPO" "YouTube" "Netflix" "Prime Video" "Jitsi Meet"
 )
 
 declare -a LOCK_IMAGES
