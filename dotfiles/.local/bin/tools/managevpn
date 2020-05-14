@@ -18,27 +18,35 @@ for vpn in ${vpnlist[@]}; do
 done
 
 # If no VPN service was given or it doesn't exist, show available choices
-vpnidx="$(printf '%s\n' "${vpnlist[@]}" | \
-    sed -e 's/^\(.*\):activated:vpn/<span foreground="#1db954" font_weight="bold"><\/span> <span font_weight="bold">\1<\/span>/' \
-    -e 's/^\(.*\):.*:vpn/<span foreground="#bd2c40"> <\/span> \1/' | \
-    rofi -dmenu -lines 7 -p "Toggle VPN connection" -i -markup-rows \
-    -select "font_weight" -format i)"
-[[ "$vpnidx" ]] || exit
 
-vpn="${vpnlist[vpnidx]}"
-vpnstatus=$(echo "$vpn" | cut -d : -f 2)
-vpnconnection=$(echo "$vpn" | cut -d : -f 1)
+## ROFI
+# vpnidx="$(printf '%s\n' "${vpnlist[@]}" | \
+#     sed -e 's/^\(.*\):activated:vpn/<span foreground="#1db954" font_weight="bold"><\/span> <span font_weight="bold">\1<\/span>/' \
+#     -e 's/^\(.*\):.*:vpn/<span foreground="#bd2c40"> <\/span> \1/' | \
+#     rofi -dmenu -lines 7 -p "Toggle VPN connection" -i -markup-rows \
+#     -select "font_weight" -format i)"
+# [[ "$vpnidx" ]] || exit
+
+# vpn="${vpnlist[vpnidx]}"
+# vpnstatus=$(echo "$vpn" | cut -d : -f 2)
+# vpnconnection=$(echo "$vpn" | cut -d : -f 1)
+
+vpn="$(printf "%s\n" "${vpnlist[@]}" \
+    | awk -F: '{if ($2 == "activated") {printf " %s\n", $1} else {printf " %s\n", $1}}' \
+    | sort | dmenu -p "Toggle VPN connection" -l ${#vpnlist[@]} -i -r | cut -d " " -f 2)"
+[[ -z "$vpn" ]] && exit
+vpnstatus="$(printf "%s\n" "${vpnlist[@]}" | awk -F ':' '/'"$vpn"'/ {printf $2}')"
 
 case "$vpnstatus" in
     "activated")
-        nmcli connection down "$vpnconnection" \
-            && notify-send "嬨 VPN Connection" "Disconnected $vpnconnection" \
-            || notify-send -u critical "嬨 VPN Connection" "Failed to disconnect $vpnconnection"
+        nmcli connection down "$vpn" \
+            && notify-send "嬨 VPN Connection" "Disconnected $vpn" \
+            || notify-send -u critical "嬨 VPN Connection" "Failed to disconnect $vpn"
         ;;
     *)
-        nmcli connection up "$vpnconnection" passwd-file $HOME/.vpnrc \
-            && notify-send "嬨 VPN Connection" "Connected to $vpnconnection" \
-            || notify-send -u critical "嬨 VPN Connection" "Failed to connect to $vpnconnection"
+        nmcli connection up "$vpn" passwd-file $HOME/.vpnrc \
+            && notify-send "嬨 VPN Connection" "Connected to $vpn" \
+            || notify-send -u critical "嬨 VPN Connection" "Failed to connect to $vpn"
         ;;
 esac
 

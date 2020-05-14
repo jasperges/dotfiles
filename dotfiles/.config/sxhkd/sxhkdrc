@@ -39,7 +39,9 @@ super + o; {b, c, g, h, m, w, p, o, j, t}
         ncmpcpp_local, ncmpcpp_guybrush, dmenu-jobs, toggle-trayer
     }
 super + p
-    passmenu
+    passmenu -r -i -l 10
+super + shift + p
+    passmenu --username -r -i -l 10
 super + s; {a, b, p}
     { \
         i3-msg -q "[class=cli.py title=(?im)^.*|\s+allzpark\s+.*$] scratchpad show", \
