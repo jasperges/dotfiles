@@ -1,0 +1,13 @@
+#!/bin/sh
+
+winid="$(pfw)"
+# It seems this always gets the geometry of the biggest display, but I don't
+# really care. I'm using this mainly on the main (biggest) monitor anyway...
+displayinfo="$(xdotool getdisplaygeometry)"
+displaywidth="$(echo $displayinfo | cut -d " " -f 1)"
+displayheight="$(echo $displayinfo | cut -d " " -f 2)"
+
+x="$(expr $displaywidth / 2)"
+y="$(expr $displayheight / 2)"
+
+wmv -a "$x" "$y" "$winid"

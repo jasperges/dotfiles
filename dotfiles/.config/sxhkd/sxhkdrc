@@ -61,6 +61,9 @@ super + shift + w: {h, j, k, l}
     notify-send -h "string:bgcolor:#93653e" "resize mode" && winresize {-100 0, 0 100, 0 -100, 100 0} centered
 super + shift + w: Escape
     rm $HOME/.storedwinid 2>/dev/null; pkill -ALRM sxhkd
+# Center active window (if it's floating)
+super + ctrl + w:
+    wincenter
 
 # Pulse Audio controls
 {_,shift} + XF86AudioRaiseVolume
