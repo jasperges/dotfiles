@@ -7,7 +7,7 @@ super + ctrl + BackSpace
 super + Return
     start_terminal_in_pwd
 super + space
-    rofi_run
+    dmenu_run -l 10 -i
 # Reload sxhkd
 super + Escape
 	pkill -USR1 -x sxhkd
