@@ -34,15 +34,14 @@ killall -wq mpd; mpd &
 # Start X compositor, notification and set wallpaper
 killall -wq picom; picom --experimental-backends &
 killall -wq dunst; dunst &
-feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper
+$HOME/.fehbg &
 
 # Start apps that show in tray area
-dropbox_run &
-protonmailbridge_run &
-# syncthing-gtk --minimized &
+killall -wq dropbox; dropbox start &
+killall -wq protonmail-bridge; protonmail-bridge --no-window &
 killall -wq syncthing; syncthing -no-browser &
-# nmapplet_run &
-bluemanapplet_run &
+# killall -wq nm-applet; nm-applet &
+killall blueman-applet -wq; blueman-applet &
 
 # Set locale as I want
 localectl set-locale LANG=en_US.UTF-8 LC_MONETARY=nl_NL.UTF-8 \
@@ -54,7 +53,7 @@ start_spectrwm() {
 }
 
 start_dwm() {
-    killall -qw dwmblocks
+    killall -wq dwmblocks
     dwmblocks &
     exec dwm
 }
