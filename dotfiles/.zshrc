@@ -109,7 +109,7 @@ if [ -f $HOME/.local/bin/virtualenvwrapper.sh ]; then
     source $HOME/.local/bin/virtualenvwrapper.sh
 fi
 
-#  rez
+# rez
 if [ -f /opt/rez/completion/complete.zsh ]; then
     . /opt/rez/completion/complete.zsh
 fi
