@@ -26,7 +26,7 @@ xmodmap -e 'keycode 94 = grave asciitilde grave asciitilde dead_grave dead_horn 
 killall -wq xcape; xcape -e 'Super_L=Escape' &
 
 # Turn on autolock
-killall -wq autolock; autolock 9 &
+killall -wq xautolock; xautolock -time 9 -locker $HOME/.local/bin/wm/jasperge-locker -secure -detectsleep &
 
 # Start mpd
 killall -wq mpd; mpd &

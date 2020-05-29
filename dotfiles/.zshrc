@@ -109,7 +109,7 @@ if [ -f $HOME/.local/bin/virtualenvwrapper.sh ]; then
     source $HOME/.local/bin/virtualenvwrapper.sh
 fi
 
-# rez
+#  rez
 if [ -f /opt/rez/completion/complete.zsh ]; then
     . /opt/rez/completion/complete.zsh
 fi
@@ -136,9 +136,10 @@ PURE_PROMPT_VICMD_SYMBOL='<<'
 # PURE_PROMPT_SYMBOL='♫'
 prompt pure
 # prompt_newline='%666v'
-PROMPT=" $PROMPT"
+# PROMPT=" $PROMPT"
+[[ -n $REZ_ENV_PROMPT ]] && PROMPT="$PROMPT$REZ_ENV_PROMPT "
 
 # Load fast-syntax-highlighting; should be last.
 source /home/jasperge/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 
-#  vim: set ts=4 sw=4 tw=4 et :
+#  vim: set ts=4 sw=4 tw=80 et :

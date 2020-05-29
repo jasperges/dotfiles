@@ -13,13 +13,17 @@ internet() {
     #  - ethernet down: 
 
     # WiFi
-    grep -q "up" /sys/class/net/w*/operstate && wifiicon="直" \
-        || wifiicon="睊"
+    if [ -f /sys/class/net/w*/operstate ]; then
+        grep -q "up" /sys/class/net/w*/operstate && wifiicon="直" \
+            || wifiicon="睊"
+    else
+        wifiicon=""
+    fi
     if [ "$wifiicon" = "直" ]; then
-        activewifi=$(nmcli --terse -fields NAME,TYPE c show --active | \
+        activewifi=$(nmcli --terse --fields NAME,TYPE c show --active | \
             awk -F ':' '/wireless/ {printf $1}')
         wifisignal=$(nmcli --terse --fields SSID,SIGNAL d wifi list --rescan no | \
-            awk -F ':' '/'"$activewifi"'/ {printf $2"%"}')
+            awk -F ':' '/'"$activewifi"'/ {print $2"%"}' | head -n1)
         wifiicon="$wifiicon $wifisignal"
     fi
 

@@ -1,11 +1,37 @@
 #!/bin/bash
 
-choice=$(echo -e "Selection\nSelection and View\nSelection + Edit in Gimp" | dmenu -p "Choose how to take a screenshot" -l 5 -r -i)
+choices=("Selection")
+choices+=("Selection + Delay")
+choices+=("Selection and View")
+choices+=("Selection and View + Delay")
+choices+=("Selection + Edit in Krita")
+choices+=("Selection + Delay + Edit in Krita")
+
+choice=$(printf "%s\n" "${choices[@]}" \
+    | dmenu -p "Choose how to take a screenshot" -l ${#choices[@]} -r -i)
 case $choice in
     "Selection" )
-        scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -selection -e 'mv $f ~/pictures/screenshots/';;
+        scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
+            --select --line style=dash,width=2,color="red" \
+            -e 'mv $f ~/pictures/screenshots/';;
+    "Selection + Delay")
+        scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
+            --select --line style=dash,width=2,color="red" \
+            --delay 5 -e 'mv $f ~/pictures/screenshots/';;
     "Selection and View" )
-        scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -selection -e 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f';;
-    "Selection + Edit in Gimp" )
-        scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -selection -e 'mv $f ~/pictures/screenshots/ && gimp ~/pictures/screenshots/$f';;
+        scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
+            -selection --line style=dash,width=2,color="red" \
+            -e 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f';;
+    "Selection and View + Delay")
+        scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
+            --select --line style=dash,width=2,color="red" \
+            --delay 5 -e 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f';;
+    "Selection + Edit in Krita" )
+        scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
+            --select --line style=dash,width=2,color="red" \
+            -e 'mv $f ~/pictures/screenshots/ && krita ~/pictures/screenshots/$f';;
+    "Selection + Delay + Edit in Krita")
+        scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
+            --select --line style=dash,width=2,color="red" \
+            --delay 5 -e 'mv $f ~/pictures/screenshots/ && krita ~/pictures/screenshots/$f';;
 esac

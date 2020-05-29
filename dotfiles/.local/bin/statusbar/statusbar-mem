@@ -16,3 +16,4 @@ mem() {
 }
 
 mem
+# echo -e "  \x04 warning \x01   "

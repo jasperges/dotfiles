@@ -103,6 +103,7 @@ Plug 'PProvost/vim-ps1'
 Plug 'sudar/vim-arduino-syntax'
 Plug 'stevearc/vim-arduino'
 
+Plug 'ap/vim-css-color'
 call plug#end()
 
 " airline
@@ -450,8 +451,9 @@ nnoremap <buffer> <leader>ap :ArduinoChooseProgrammer<CR>
 autocmd BufWritePost *Xdefaults,*Xresources :silent !xrdb %
 " Update binds when sxhkdrc is updated
 autocmd BufWritePost *sxhkdrc :silent !pkill -USR1 sxhkd
-" Restart compton when the config is update
+" Restart compton/picom when the config is update
 autocmd BufWritePost compton.conf :silent !pkill -USR1 compton
+autocmd BufWritePost picom.conf :silent !pkill -USR1 picom
 
 set background=dark
 let g:solarized_termtrans = 1

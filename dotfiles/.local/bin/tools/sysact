@@ -3,7 +3,7 @@
 # A dmenu wrapper script for system functions.
 
 cmds="\
-   Lock Screen	i3exit lock
+   Lock Screen	jasperge-locker
    Leave dwm	kill -TERM $(pidof -s dwm)
    Restart dwm	kill -HUP $(pidof -s dwm)
 ⭘   Reboot		reboot

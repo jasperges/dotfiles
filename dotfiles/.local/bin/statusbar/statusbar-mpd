@@ -51,7 +51,8 @@ mpd() {
     fi
 
     status=$(mpc status | sed -n 's#^.*\(playing\|paused\|stopped\).*$#\1#p')
-    current=$(mpc --format "%artist% - %title%" current | sed "s/^\(.\{$currentwidth\}\).*/\1.../")
+    current=$(mpc --format "%artist% - %title%" current \
+        | sed "s/^ - //" | sed "s/^\(.\{$currentwidth\}\).*/\1.../")
 
     case $status in
         "playing" ) printf "   %s   " "$current" ;;

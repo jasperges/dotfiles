@@ -8,14 +8,38 @@
 # Because I'm still using .vimrc it only replaces things in .vimrc, not in
 # NeoVims init.vim.
 
-theme=$(printf "Solarized Light\nSolarized Dark" \
-    | dmenu -p "Which terminal color scheme would you like to use?" \
-        -r -l 2 -i \
-    | tr '[:upper:]' '[:lower:]')
-# If no theme in chosen, just exit
-[ -z "$theme" ] && exit 0
+theme=
 
-scheme=$(echo "$theme" | cut -d ' ' -f1)
-variant=$(echo "$theme" | cut -d ' ' -f2)
-sed -i "s/^\(colors: \*\)[_a-z]\+$/\1$scheme\_$variant/" $HOME/.config/alacritty/alacritty.yml
-sed -i "s/^\(set background=\)[_a-z]\+$/\1$variant/;s/^\(colorscheme \)[_a-z]\+$/\1$scheme/" $HOME/.vimrc
+changetheme() {
+    scheme=$(echo "$theme" | cut -d ' ' -f1)
+    variant=$(echo "$theme" | cut -d ' ' -f2)
+    sed -i "s/^\(colors: \*\)[_a-z]\+$/\1$scheme\_$variant/" $HOME/.config/alacritty/alacritty.yml
+    sed -i "s/^\(set background=\)[_a-z]\+$/\1$variant/;s/^\(colorscheme \)[_a-z]\+$/\1$scheme/" $HOME/.vimrc
+}
+
+ask() {
+    theme=$(printf "Solarized Light\nSolarized Dark" \
+        | dmenu -p "Which terminal color scheme would you like to use?" \
+            -r -l 2 -i \
+        | tr '[:upper:]' '[:lower:]')
+    # If no theme in chosen, just exit
+    [ -z "$theme" ] && exit 0
+    changetheme
+}
+
+toggle() {
+    # Toggle between solarized dark and light
+    variant="$(awk -F_ '/colors: \*[_a-z]+/ {printf $2}' \
+        /home/jasperge/.config/alacritty/alacritty.yml)"
+    # Switch variant
+    [ "$variant" = "dark" ] && variant="light" || variant="dark"
+    theme="solarized $variant"
+    changetheme
+}
+
+case "$1" in
+    "dark") theme="solarized dark"; changetheme ;;
+    "light") theme="solarized light"; changetheme ;;
+    "toggle") toggle ;;
+    *) ask ;;
+esac
