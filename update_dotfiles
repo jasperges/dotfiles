@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # This updates files that are known in the repo. If files are present locally,
 # but they are not part of the repo, they will be ignored.
