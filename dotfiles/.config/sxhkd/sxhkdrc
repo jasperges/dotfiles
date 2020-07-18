@@ -46,10 +46,8 @@ super + p
     passmenu -r -i -l 10
 super + shift + p
     passmenu --username -r -i -l 10
-super + s; {p}
-    { \
-        toggle-pulsemixer \
-    }
+super + s; {p, a, s}
+    {toggle-pulsemixer, play-silence, stop-silence}
 super + v; {m, p, j, s, u, g, w, e, h, b}
     { \
         managevpn manage, managevpn Proton-NL, managevpn jjm-studio, \

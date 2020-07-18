@@ -8,4 +8,6 @@
 #     gotop_term=sakura
 # fi
 
-which gotop && $TERMINAL -e gotop && exit || which htop && $TERMINAL -e htop && exit || which top && $TERMINAL top && exit
+which gotop && toggle-gotop && exit \
+    || which htop && toggle-htop && exit \
+    || which top && toggle-top && exit

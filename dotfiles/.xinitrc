@@ -1,11 +1,22 @@
-#!/bin/sh
+#!/bin/bash
 
 # Load xresources
 xrdb ~/.Xresources
 
 # Restore last used backlight values
-[[ -f $HOME/.last_screen_backlight ]] && cat $HOME/.last_screen_backlight > "/sys/class/backlight/gmux_backlight/brightness"
-[[ -f $HOME/.last_keyboard_backlight ]] && cat $HOME/.last_keyboard_backlight > "/sys/class/leds/smc::kbd_backlight/brightness"
+if [[ -f $HOME/.last_screen_backlight ]]; then
+    backlight_screen=$(cat $HOME/.last_screen_backlight)
+    # Turn on the backlight slighty if it's (almost) off, else it might feel
+    # that the display doesn't work
+    (( backlight_screen < 5520 )) && backlight_screen=5520
+    echo $backlight_screen > "/sys/class/backlight/gmux_backlight/brightness"
+fi
+if [[ -f $HOME/.last_keyboard_backlight ]]; then
+    backlight_keyboard=$(cat $HOME/.last_keyboard_backlight)
+    # Turn on the backlight slighty if it's (almost) off.
+    (( backlight_keyboard < 12 )) && backlight_keyboard=12
+    echo $backlight_keyboard > "/sys/class/leds/smc::kbd_backlight/brightness"
+fi
 
 # Simple X Hot Key Daemon
 killall -wq sxhkd; sxhkd &
@@ -26,13 +37,14 @@ xmodmap -e 'keycode 94 = grave asciitilde grave asciitilde dead_grave dead_horn 
 killall -wq xcape; xcape -e 'Super_L=Escape' &
 
 # Turn on autolock
-killall -wq xautolock; xautolock -time 9 -locker $HOME/.local/bin/wm/jasperge-locker -secure -detectsleep &
+killall -wq xautolock; xautolock -time 9 \
+    -locker $HOME/.local/bin/wm/jasperge-locker -secure -detectsleep &
 
 # Start mpd
 killall -wq mpd; mpd &
 
 # Start X compositor, notification and set wallpaper
-killall -wq picom; picom --experimental-backends &
+killall -wq picom; picom --experimental-backends -b
 killall -wq dunst; dunst &
 $HOME/.fehbg &
 
@@ -45,8 +57,8 @@ killall blueman-applet -wq; blueman-applet &
 
 # Set locale as I want
 localectl set-locale LANG=en_US.UTF-8 LC_MONETARY=nl_NL.UTF-8 \
-                          LC_PAPER=nl_NL.UTF-8 LC_MEASUREMENT=nl_NL.UTF-8 LC_TIME=en_US.UTF-8 \
-                          LC_NUMERIC=en_US.UTF-8
+    LC_PAPER=nl_NL.UTF-8 LC_MEASUREMENT=nl_NL.UTF-8 LC_TIME=en_US.UTF-8 \
+    LC_NUMERIC=en_US.UTF-8
 
 start_spectrwm() {
     exec spectrwm

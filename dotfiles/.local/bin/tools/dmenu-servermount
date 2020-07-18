@@ -4,8 +4,9 @@
 # start with 'mount-'.
 
 scriptdir=$HOME/.local/bin/tools
-mounts=$(find $scriptdir -type f -executable -name "mount-*" -print0| xargs -0 -I {} basename {})
+mounts=$(find $scriptdir -type f -executable -name "mount-*" -print0 \
+    | xargs -0 -I {} basename {} | sort)
 choice=$(echo "$mounts" | dmenu -p "Choose a mount script to run" \
-    -l $(echo "$mounts" | wc -l) -it "productions" -r )
+    -l $(echo "$mounts" | wc -l) -r)
 # choice=$(find $scriptdir -type f -executable -name "mount-*" -print0| xargs -0 -I {} basename {} | dmenu -l 5 -p "Choose a mount script to run" -r)
 [ -n $choice ] && $scriptdir/$choice

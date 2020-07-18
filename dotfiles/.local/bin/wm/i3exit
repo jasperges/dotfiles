@@ -2,7 +2,7 @@
 
 # Settings
 declare -a LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING=(
-    "Pinentry-gtk-2" "Jitsi Meet"
+    "Pinentry-gtk-2" "Jitsi Meet" "zoom"
 )
 declare -a LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING_FULLSCREEN=(
     "mpv" "Wine" "vlc" "Pinentry-gtk-2"
@@ -103,6 +103,40 @@ create_monitor_spanning_image() {
 #     fi
 # }
 
+lock_cmd() {
+	insidecolor=00000000
+	ringcolor=ffffffff
+	keyhlcolor=d23c3dff
+	bshlcolor=d23c3dff
+	separatorcolor=00000000
+	insidevercolor=00000000
+	insidewrongcolor=d23c3dff
+	ringvercolor=ffffffff
+	ringwrongcolor=ffffffff
+	verifcolor=ffffffff
+	timecolor=ffffffff
+	datecolor=ffffffff
+	loginbox=00000066
+	font="sans-serif"
+	locktext=''
+	wallpaper_cmd='feh --bg-fill --no-fehbg'
+    i3lock \
+        -t -i "$1" \
+        --timepos='x+110:h-70' \
+        --datepos='x+43:h-45' \
+        --clock --date-align 1 --datestr "$locktext" \
+        --insidecolor=$insidecolor --ringcolor=$ringcolor --line-uses-inside \
+        --keyhlcolor=$keyhlcolor --bshlcolor=$bshlcolor --separatorcolor=$separatorcolor \
+        --insidevercolor=$insidevercolor --insidewrongcolor=$insidewrongcolor \
+        --ringvercolor=$ringvercolor --ringwrongcolor=$ringwrongcolor --indpos='x+280:h-70' \
+        --radius=20 --ring-width=4 --veriftext='' --wrongtext='' \
+        --verifcolor="$verifcolor" --timecolor="$timecolor" --datecolor="$datecolor" \
+        --time-font="$font" --date-font="$font" --layout-font="$font" --verif-font="$font" --wrong-font="$font" \
+        --noinputtext='' --force-clock --pass-media-keys --pass-screen-keys \
+        --ignore-empty-password --show-failed-attempts
+
+}
+
 lock() {
     if should_lock; then
         # pause dunst
@@ -116,6 +150,7 @@ lock() {
             create_monitor_spanning_image
             i3lock --ignore-empty-password --show-failed-attempts --tiling \
                 --image /tmp/lock.png
+            # lock_cmd /tmp/lock.png
             # # take screenshot
             # scrot -m /tmp/screenshot.png
             # # blur it
@@ -128,6 +163,7 @@ lock() {
             lock_image="$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname '*.png' -type f | shuf -n 1)"
             i3lock --ignore-empty-password --show-failed-attempts --tiling \
                 --image "$lock_image"
+            # lock_cmd "$lock_image"
         fi
         sleep 1
         # resume dunst

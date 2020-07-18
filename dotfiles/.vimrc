@@ -112,7 +112,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='bubblegum'
 
 " Japsers dingetjes
-nnoremap <leader>fs :w<CR>
 nnoremap <Space> <Nop>
 " sunmap <Space>
 " map <Space> <Leader>
@@ -149,11 +148,11 @@ vnoremap < <gv
 vnoremap > >gv
 " Delete comment character when joining commented lines
 set formatoptions+=j
-" Use '<Leader>hl' to toggle hlsearch.
-nnoremap <silent> <Leader>hl <esc>:set invhlsearch<CR>
+" Use '<Leader>hl' to stop highlighting until the next search command
+nnoremap <silent> <Leader>hl :nohlsearch<CR>
 set laststatus=2
 " Map TagList toggle to <leader> t
-nnoremap <Leader>t <esc>:Tlist<CR>
+nnoremap <Leader>t :Tlist<CR>
 let g:Tlist_Inc_Winwidth = 1
 let g:Tlist_WinWidth = 56
 

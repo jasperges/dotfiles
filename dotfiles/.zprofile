@@ -34,6 +34,7 @@ export WORKON_HOME=$HOME/.local/share/virtualenvs
 
 export REZ_CONFIG_FILE=$HOME/.config/rezconfig.py
 export ALLZPARK_CONFIG_FILE=$HOME/.config/allzparkconfig.py
+export TORPEDO_CONFIG_FILE=$HOME/.config/torpedoconfig.py
 
 # Auto start X on tty1
 if [[ -z ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then

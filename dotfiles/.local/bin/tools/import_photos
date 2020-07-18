@@ -124,7 +124,7 @@ choices=()
 choices+=($([ -d /media/foonjappie/DCIM ] && echo "foonjappie"))
 choices+=("$([ -d /media/photocamera/DCIM ] && echo 'Photo Camera')")
 
-case "$(printf "%s\n" "${choices[@]}" | dmenu -i -p "Import photo's from which device?")" in
+case "$(printf "%s\n" "${choices[@]}" | dmenu -i -l ${#choices[@]} -p "Import photo's from which device?")" in
     "foonjappie") importiphone ;;
     "Photo Camera") importcamera ;;
 esac
