@@ -32,8 +32,8 @@ super + d; {b, c, d, e, g, f, i, m, r, t, w, x, s}
         clipmenu, \
         dmenu-scrot, \
     }
-super + i; {p,s}
-    {import_photos,top_run}
+super + i; {p}
+    {import_photos}
 super + shift + m; {m,u,s,d}
     {dmenu-mount,dmenu-umount,dmenu-servermount,dmenu-serverumount}
 super + o; {b, c, g, h, m, w, p, o, j, t}

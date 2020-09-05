@@ -102,14 +102,14 @@ window:
 # Font configuration
 font:
   # Normal (roman) font face
-  #normal:
+  # normal:
     # Font family
     #
     # Default:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    #family: monospace
+    # family: monospace
 
     # The `style` can be specified to pick a specific face.
     #style: Regular
@@ -292,7 +292,7 @@ selection:
   save_to_clipboard: true
 
 # Allow terminal applications to change Alacritty's window title.
-dynamic_title: true
+window.dynamic_title: true
 
 #cursor:
   # Cursor style

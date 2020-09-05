@@ -51,7 +51,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Raimondi/delimitMate'
 
 " Jinja
-Plug 'HiPhish/jinja.vim'
+Plug 'Glench/Vim-Jinja2-Syntax'
 
 " Javascript plugins
 " Plug 'pangloss/vim-javascript'
