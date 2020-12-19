@@ -9,9 +9,15 @@ if [[ -z $external_monitor ]]; then
 fi
 
 xrandr --output $internal_monitor --auto --primary
-xrandr --output $external_monitor --mode 1280x720 --left-of $internal_monitor
+xrandr --output $external_monitor --mode 1280x720 --right-of $internal_monitor
 
+# Disable lock screen
 pkill xautolock
+# Disable screen blanking and dpms (display power management signaling)
+xset s off -dpms
+# Set background to black
 feh --bg-scale $HOME/pictures/backgrounds/black.png --no-fehbg
+# (Re-)set input settings
 setxinputs 2>/dev/null
+# Play silence to prevent popping when starting playback of music/sound
 play-silence &

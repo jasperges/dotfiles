@@ -14,17 +14,17 @@ alias vim='nvim'
 alias vimdiff='nvim -d'
 
 # Blender
-alias blender-buildbot='$HOME/blender-buildbot/blender'
-alias bbb=blender-buildbot
-alias b28='$HOME/blender-2.80/blender'
-alias bf-blender='$HOME/bf-blender/blender'
+alias blender-buildbot='$HOME/blender-buildbot/blender $@'
+alias bbb='blender-buildbot $@'
+alias b28='$HOME/blender-2.80/blender $@'
+alias bf-blender='$HOME/bf-blender/blender $@'
 # alias bfb='bf-blender --enable-new-depsgraph'
-alias b='bf-blender'
+alias b='bf-blender $@'
 # alias blender='bf-blender'
-alias bfb='bf-blender'
+alias bfb='bf-blender $@'
 alias bu='$HOME/bash_scripts/blenderUpdate.sh'
 alias downloadbbb='blender_buildbot_download --extract'
-alias bfm='$HOME/blender_fracture_modifier/blender'
+alias bfm='$HOME/blender_fracture_modifier/blender $@'
 
 # cd aliasses
 alias cd..='cd ..'
@@ -87,6 +87,9 @@ alias pip3userupdate='pip3 list --user --outdated --format=freeze | grep -v "^\-
 # alias cat='bat'
 alias batp='bat -p'
 alias batpp='bat -pp'
+
+# detox
+alias detox='detox -f $HOME/.config/detox/detoxrc'
 
 # fuzzy finder
 # alias se='$EDITOR $(find $HOME/.local/bin $HOME/.config -type f | fzf)'

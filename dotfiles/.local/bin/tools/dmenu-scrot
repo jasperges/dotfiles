@@ -17,7 +17,7 @@ case $choice in
     "Selection + Delay")
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
-            --delay 5 --pointer --exec 'mv $f ~/pictures/screenshots/';;
+            --delay 3 --pointer --exec 'mv $f ~/pictures/screenshots/';;
     "Selection and View" )
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             -selection --line style=dash,width=2,color="red" \
@@ -25,7 +25,7 @@ case $choice in
     "Selection and View + Delay")
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
-            --delay 5 --pointer --exec 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f';;
+            --delay 3 --pointer --exec 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f';;
     "Selection + Edit in Gimp" )
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
@@ -33,5 +33,5 @@ case $choice in
     "Selection + Delay + Edit in Gimp")
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
-            --delay 5 --pointer --exec 'mv $f ~/pictures/screenshots/ && gimp ~/pictures/screenshots/$f';;
+            --delay 3 --pointer --exec 'mv $f ~/pictures/screenshots/ && gimp ~/pictures/screenshots/$f';;
 esac

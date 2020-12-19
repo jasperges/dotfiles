@@ -39,20 +39,23 @@ is_fullscreen() {
 should_lock() {
     id=$(get_active_id)
     wmclass=$(get_wm_class $id)
-    title=$(get_window_title $id)
+    # title=$(get_window_title $id)
 
+    # Never lock if a window is fullscreen
     if is_fullscreen $id; then
-        for i in "${LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING_FULLSCREEN[@]}"; do
-            if [[ $wmclass =~ $i ]]; then
-                return 1
-            fi
-        done
-        for i in "${LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING_FULLSCREEN[@]}"; do
-            if [[ $title =~ $i ]]; then
-                return 1
-            fi
-        done
+        return 1
     fi
+        # for i in "${LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING_FULLSCREEN[@]}"; do
+        #     if [[ $wmclass =~ $i ]]; then
+        #         return 1
+        #     fi
+        # done
+        # for i in "${LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING_FULLSCREEN[@]}"; do
+        #     if [[ $title =~ $i ]]; then
+        #         return 1
+        #     fi
+        # done
+    # fi
     for i in "${LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING[@]}"; do
         if [[ $wmclass =~ $i ]]; then
             return 1

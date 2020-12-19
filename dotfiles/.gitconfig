@@ -5,6 +5,8 @@
 # Set default so that only current branch will be pushed ('simple')
 [push]
     default = simple
+[pull]
+    rebase = false
 # Set default so that you avoid unnecessary commits
 [branch]
     autosetuprebase = always

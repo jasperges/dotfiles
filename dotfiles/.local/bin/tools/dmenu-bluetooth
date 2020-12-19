@@ -11,7 +11,7 @@ for device in "${bluetoothdevices[@]}"; do
 done
 
 # Add extra option for launch blueman-manager
-bluetoothdevices+=("x x ----------")  # separator
+# bluetoothdevices+=("x x ----------")  # separator
 bluetoothdevices+=("App xxx blueman-manager")
 
 # Show available choices (icons: 📱 🎧  📟)

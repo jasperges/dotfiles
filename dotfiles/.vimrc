@@ -23,6 +23,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-repeat'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jlanzarotta/bufexplorer'
@@ -43,9 +44,6 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Sirver/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'greg-js/vim-react-es6-snippets'
-
-" Indent guides
-Plug 'nathanaelkane/vim-indent-guides'
 
 " Auto close brackets etc.
 Plug 'Raimondi/delimitMate'
@@ -100,10 +98,12 @@ Plug 'cespare/vim-toml'
 Plug 'PProvost/vim-ps1'
 
 " Arduino
-Plug 'sudar/vim-arduino-syntax'
-Plug 'stevearc/vim-arduino'
+" Plug 'sudar/vim-arduino-syntax'
+" Plug 'stevearc/vim-arduino'
 
 Plug 'ap/vim-css-color'
+
+Plug 'Yggdroot/indentLine'
 call plug#end()
 
 " airline
@@ -112,6 +112,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='bubblegum'
 
 " Japsers dingetjes
+set maxmempattern=2000
 nnoremap <Space> <Nop>
 " sunmap <Space>
 " map <Space> <Leader>
@@ -128,6 +129,7 @@ set number
 set modeline
 set listchars=eol:¬,tab:>―,space:·
 set conceallevel=2
+set scrolloff=10
 map <M-Right> :bn<CR>
 map <M-Left> :bp<CR>
 
@@ -152,7 +154,7 @@ set formatoptions+=j
 nnoremap <silent> <Leader>hl :nohlsearch<CR>
 set laststatus=2
 " Map TagList toggle to <leader> t
-nnoremap <Leader>t :Tlist<CR>
+nnoremap <Leader>t <esc>:Tlist<CR>
 let g:Tlist_Inc_Winwidth = 1
 let g:Tlist_WinWidth = 56
 
@@ -182,6 +184,7 @@ let g:syntastic_loc_list_height = 10
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
 nnoremap <Leader>sc <esc>:SyntasticCheck<CR>
 nnoremap <Leader>sm <esc>:SyntasticCheck mypy<CR>
+nnoremap <Leader>sp <esc>:SyntasticCheck pylint<CR>
 nnoremap <Leader>sr <esc>:SyntasticReset<CR>
 
 " Show trailing whitespace
@@ -405,6 +408,14 @@ function! AppendModeline()
 endfunction
 nnoremap <silent> <leader>ml :call AppendModeline()<CR>
 
+" Indent lines
+nnoremap <silent> <leader>lt <esc>:IndentLinesToggle<CR>
+nnoremap <silent> <leader>ls <esc>:LeadingSpaceToggle<CR>
+nnoremap <Leader>sc <esc>:SyntasticCheck<CR>
+let g:indentLine_fileTypeExclude = ['json', 'wiki']
+let g:indentLine_bufTypeExclude = ['help', 'terminal']
+let g:indentLine_concealcursor = 'nc'
+
 " Set IBeam shape in insert mode, underline shape in replace mode and block shape in normal mode.
 let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
@@ -428,13 +439,55 @@ autocmd BufRead,BufNewFile *.py :let g:goyo_width=120
 autocmd BufRead,BufNewFile *.py :let g:goyo_linenr=2
 nnoremap <silent> <Leader>gy :Goyo<CR>
 
+function! s:goyo_enter()
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+endfunction
+
+function! s:goyo_leave()
+  " Quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+endfunction
+
+autocmd! User GoyoEnter call <SID>goyo_enter()
+autocmd! User GoyoLeave call <SID>goyo_leave()
+
 " VimWiki
-let werkwiki = {}
-let werkwiki.path = '~/documents/vimwiki/werk/'
-" let werkwiki.nested_syntaxes = {'python': 'python'}
-let privewiki = {}
-let privewiki.path = '~/documents/vimwiki/prive/'
-let g:vimwiki_list = [werkwiki, privewiki]
+let vimwiki_path = '~/documents/vimwiki/'
+let vimwiki_export_path = '~/documents/vimwiki/export/'
+let automatic_nested_syntaxes = 1
+let wiki_settings = {
+\ 'template_path': vimwiki_export_path.'vimwiki-assets/',
+\ 'template_default': 'default',
+\ 'template_ext': '.html',
+\ 'auto_export': 0,
+\ }
+let wikis = ['werk', 'prive']
+let g:vimwiki_list = []
+for wiki_name in wikis
+    let wiki = copy(wiki_settings)
+    let wiki.path = vimwiki_path.wiki_name.'/'
+    let wiki.path_html = vimwiki_export_path.wiki_name.'/'
+    let wiki.diary_index = 'index'
+    let wiki.diary_rel_path = 'diary/'
+    call add(g:vimwiki_list, wiki)
+endfor
+" let werkwiki = {}
+" let werkwiki.path = vimwiki_path.'werk/'
+" let werkwiki.template_path = vimwiki_export_path.'vimwiki-assets/'
+" let werkwiki
+" " let werkwiki.nested_syntaxes = {'python': 'python', 'shell': 'sh'}
+" let privewiki = {}
+" let privewiki.path = vimwiki_path.'prive/'
+" let g:vimwiki_list = [werkwiki, privewiki]
 
 " Arduino
 let g:arduino_cmd = '/opt/arduino/arduino'
