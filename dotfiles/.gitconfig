@@ -17,7 +17,7 @@
     ui = auto
 # Set the default editor
 [core]
-    editor = vim
+    editor = nvim
     excludesfile = ~/.gitignore
     deltaBaseCacheLimit = 1G
     autocrlf = input
@@ -32,8 +32,8 @@
 [init]
     templatedir = ~/.git_template
 [merge]
-    tool = vimdiff
+    tool = nvim -d
 [diff]
-    tool = vimdiff
+    tool = nvim -d
 [gpg]
     program = gpg2
