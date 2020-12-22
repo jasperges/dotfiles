@@ -1,0 +1,16 @@
+{
+  "pairs.enableCharacters": ["(", "[", "{", "'", "\"", "`"],
+  "suggest.noselect": false,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "graphql",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "typescript",
+    "typescript.tsx",
+    "typescriptreact"
+  ],
+  "pyright.disableOrganizeImports": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.mypyEnabled": false
+}
