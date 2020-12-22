@@ -33,8 +33,10 @@ export WORKON_HOME=$HOME/.local/share/virtualenvs
 # export PINENTRY_BINARY="pinentry-curses --ttyname pinentry"
 
 export REZ_CONFIG_FILE=$HOME/.config/rezconfig.py
-export ALLZPARK_CONFIG_FILE=$HOME/.config/allzparkconfig.py
-export TORPEDO_CONFIG_FILE=$HOME/.config/torpedoconfig.py
+
+# These should be set by the relevant rez packages themselves.
+# export ALLZPARK_CONFIG_FILE=$HOME/.config/allzparkconfig.py
+# export TORPEDO_CONFIG_FILE=$HOME/.config/torpedoconfig.py
 
 # Auto start X on tty1
 if [[ -z ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
