@@ -7,6 +7,8 @@ choices+=("Selection and View + Delay")
 choices+=("Selection + Edit in Gimp")
 choices+=("Selection + Delay + Edit in Gimp")
 
+delay=2
+
 choice=$(printf "%s\n" "${choices[@]}" \
     | dmenu -p "Choose how to take a screenshot" -l ${#choices[@]} -r -i)
 case $choice in
@@ -17,7 +19,7 @@ case $choice in
     "Selection + Delay")
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
-            --delay 3 --pointer --exec 'mv $f ~/pictures/screenshots/';;
+            --delay $delay --pointer --exec 'mv $f ~/pictures/screenshots/';;
     "Selection and View" )
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             -selection --line style=dash,width=2,color="red" \
@@ -25,7 +27,7 @@ case $choice in
     "Selection and View + Delay")
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
-            --delay 3 --pointer --exec 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f';;
+            --delay $delay --pointer --exec 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f';;
     "Selection + Edit in Gimp" )
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
@@ -33,5 +35,5 @@ case $choice in
     "Selection + Delay + Edit in Gimp")
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
-            --delay 3 --pointer --exec 'mv $f ~/pictures/screenshots/ && gimp ~/pictures/screenshots/$f';;
+            --delay $delay --pointer --exec 'mv $f ~/pictures/screenshots/ && gimp ~/pictures/screenshots/$f';;
 esac
