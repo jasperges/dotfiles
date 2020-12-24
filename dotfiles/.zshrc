@@ -137,6 +137,6 @@ prompt pure
 [[ -n $REZ_ENV_PROMPT ]] && PROMPT="$PROMPT$REZ_ENV_PROMPT "
 
 # Load fast-syntax-highlighting; should be last.
-source $HOME/.config/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source $HOME/.config/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 
 #  vim: set ts=4 sw=4 tw=80 et :
