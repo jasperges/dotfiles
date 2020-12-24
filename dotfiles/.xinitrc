@@ -65,6 +65,7 @@ start_spectrwm() {
 }
 
 start_dwm() {
+    setup-monitor &
     killall -wq dwmblocks
     dwmblocks &
     exec dwm
