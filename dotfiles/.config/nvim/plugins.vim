@@ -48,6 +48,8 @@ Plug 'jlanzarotta/bufexplorer'
 Plug 'ludovicchabant/vim-gutentags'
 " Neoformat
 Plug 'sbdchd/neoformat'
+" Restore view
+Plug 'vim-scripts/restore_view.vim'
 " UltiSnip Snippets, can be used by coc-snippets
 Plug 'honza/vim-snippets'
 " CoC
