@@ -46,8 +46,10 @@ Plug 'Yggdroot/indentLine'
 Plug 'jlanzarotta/bufexplorer'
 " Tags
 Plug 'ludovicchabant/vim-gutentags'
-" CoC
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Neoformat
 Plug 'sbdchd/neoformat'
+" UltiSnip Snippets, can be used by coc-snippets
+Plug 'honza/vim-snippets'
+" CoC
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()

@@ -8,6 +8,6 @@ if !exists('g:vscode')
     exec 'source ' . stdpath("config") . '/plugconfig/goyo.vim'
     exec 'source ' . stdpath("config") . '/plugconfig/vimwiki.vim'
     exec 'source ' . stdpath("config") . '/plugconfig/indent-line.vim'
-    exec 'source ' . stdpath("config") . '/plugconfig/coc.vim'
     exec 'source ' . stdpath("config") . '/plugconfig/neoformat.vim'
+    exec 'source ' . stdpath("config") . '/plugconfig/coc.vim'
 endif
