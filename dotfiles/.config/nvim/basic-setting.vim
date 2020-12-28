@@ -5,6 +5,9 @@ set nobackup
 " Keep an undo file (undo changes after closing)
 set undofile
 
+" Hide buffer when it is abandoned
+set hidden
+
 " Make yank copy to the global system clipboard
 set clipboard+=unnamedplus
 
