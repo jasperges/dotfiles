@@ -12,6 +12,7 @@ ENV/
 *.swp
 *~
 *.*~
+.nvimlog
 
 # macOS
 .DS_Store

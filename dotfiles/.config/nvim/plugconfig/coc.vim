@@ -1,11 +1,14 @@
 " prettier command for coc
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 let g:coc_global_extensions = [
+    \ 'coc-css',
+    \ 'coc-html',
     \ 'coc-json',
     \ 'coc-pairs',
     \ 'coc-prettier',
     \ 'coc-pyright',
     \ 'coc-snippets',
+    \ 'coc-yaml',
     \ ]
 
 " Some servers have issues with backup files, see #649

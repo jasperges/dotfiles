@@ -40,13 +40,13 @@ vpnstatus="$(printf "%s\n" "${vpnlist[@]}" | awk -F ':' '/'"$vpn"'/ {printf $2}'
 case "$vpnstatus" in
     "activated")
         nmcli connection down "$vpn" \
-            && notify-send "嬨 VPN Connection" "Disconnected $vpn" \
-            || notify-send -u critical "嬨 VPN Connection" "Failed to disconnect $vpn"
+            && notify-send " VPN Connection" "Disconnected $vpn" \
+            || notify-send -u critical " VPN Connection" "Failed to disconnect $vpn"
         ;;
     *)
         nmcli connection up "$vpn" passwd-file $HOME/.vpnrc \
-            && notify-send "嬨 VPN Connection" "Connected to $vpn" \
-            || notify-send -u critical "嬨 VPN Connection" "Failed to connect to $vpn"
+            && notify-send " VPN Connection" "Connected to $vpn" \
+            || notify-send -u critical " VPN Connection" "Failed to connect to $vpn"
         ;;
 esac
 

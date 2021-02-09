@@ -2,7 +2,9 @@
 
 # Basic vars
 set shell zsh
-set previewer ~/.config/lf/scope
+# set previewer ~/.config/lf/scope
+set previewer ~/.config/lf/previewer
+set cleaner ~/.config/lf/clear_img
 set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
