@@ -28,6 +28,7 @@
     b = branch
     ci = commit
     st = status
+    sw = switch
     slog = log --abbrev-commit --pretty=oneline
 [init]
     templatedir = ~/.git_template
