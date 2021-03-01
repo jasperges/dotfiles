@@ -1,0 +1,6 @@
+# Starship prompt configuration
+
+[character]
+success_symbol = "[>>](5)"
+error_symbol = "[>>](bold red)"
+vicmd_symbol = "<<"

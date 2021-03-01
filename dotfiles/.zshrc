@@ -129,11 +129,16 @@ fi
 PS1="%B[%{$fg[blue]%}%n%{$reset_color%}%B@%{$fg[yellow]%}%m %{$fg[green]%}%~%{$reset_color%}%B]$ %{$reset_color%}"
 
 # Pure prompt
-fpath+=("$HOME/.config/zsh/pure")
-autoload -U promptinit; promptinit
-PURE_PROMPT_SYMBOL='>>'
-PURE_PROMPT_VICMD_SYMBOL='<<'
-prompt pure
+# fpath+=("$HOME/.config/zsh/pure")
+# autoload -U promptinit; promptinit
+# PURE_PROMPT_SYMBOL='>>'
+# PURE_PROMPT_VICMD_SYMBOL='<<'
+# prompt pure
+
+# Starship prompt
+eval $(starship init zsh)
+
+# Change prompt when in Rez resolved environment
 [[ -n $REZ_ENV_PROMPT ]] && PROMPT="$PROMPT$REZ_ENV_PROMPT "
 
 # Load fast-syntax-highlighting; should be last.
