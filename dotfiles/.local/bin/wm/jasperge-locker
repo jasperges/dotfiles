@@ -96,13 +96,12 @@ create_monitor_spanning_image() {
 }
 
 lock_cmd() {
-    i3lock --ignore-empty-password --show-failed-attempts --tiling --image "$1"
+    i3lock --ignore-empty-password --show-failed-attempts --tiling --nofork --image "$1"
 }
 
 lock() {
     if should_lock; then
         # pause dunst
-        # TODO: check if this new attempt at pausing dunst actually works
         export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; notify-send DUNST_COMMAND_PAUSE
 
         lock_image="$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname '*.png' -type f | shuf -n 1)"
