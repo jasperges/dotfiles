@@ -32,7 +32,6 @@ get_window_title() {
 # Determine if a window is fullscreen based on it's ID
 is_fullscreen() {
     xprop -id $1 | awk -F '=' '$1 ~ /_NET_WM_STATE\(ATOM\)/ { if ($2 ~ /STATE_FULLSCREEN/) exit 0; exit 1 }'
-    return $?
 }
 
 # Determine if the locker command should run based on which windows are fullscreened.
