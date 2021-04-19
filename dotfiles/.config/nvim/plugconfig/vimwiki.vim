@@ -22,3 +22,12 @@ for wiki_name in wikis
     let wiki.diary_rel_path = 'diary/'
     call add(g:vimwiki_list, wiki)
 endfor
+
+nnoremap <M-Down> :m .+1<CR>==
+nnoremap <M-Up> :m .-2<CR>==
+
+inoremap <M-Down> <Esc>:m .+1<CR>==gi
+inoremap <M-Up> <Esc>:m .-2<CR>==gi
+
+ vnoremap <M-Down> :m '>+1<CR>gv=gv
+ vnoremap <M-Up> :m '<-2<CR>gv=gv
