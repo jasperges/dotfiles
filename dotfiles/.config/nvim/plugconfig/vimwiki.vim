@@ -6,7 +6,11 @@ let wiki_settings = {
 \ 'template_path': vimwiki_export_path.'vimwiki-assets/',
 \ 'template_default': 'default',
 \ 'template_ext': '.html',
+\ 'custom_wiki2html': 'vimwiki_markdown',
+\ 'html_filename_parameterization': 1,
 \ 'auto_export': 0,
+\ 'syntax': 'markdown',
+\ 'ext': '.md',
 \ }
 let wikis = ['werk', 'prive']
 let g:vimwiki_list = []
