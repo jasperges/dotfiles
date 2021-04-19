@@ -1,3 +1,4 @@
+let g:vimwiki_global_ext = 0
 let g:vimwiki_folding = 'custom'
 let vimwiki_path = '~/documents/vimwiki/'
 let vimwiki_export_path = '~/documents/vimwiki/export/'
