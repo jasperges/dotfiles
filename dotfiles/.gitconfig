@@ -34,6 +34,7 @@
     slog = log --abbrev-commit --pretty=oneline
 [init]
     templatedir = ~/.git_template
+    defaultBranch = main
 [merge]
     tool = nvim -d
 [diff]
