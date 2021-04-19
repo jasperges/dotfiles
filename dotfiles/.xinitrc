@@ -39,6 +39,8 @@ killall -wq xcape; xcape -e 'Super_L=Escape' &
 # Turn on autolock
 killall -wq xautolock; xautolock -time 9 \
     -locker $HOME/.local/bin/wm/jasperge-locker -secure -detectsleep &
+# Lock screen on suspend etc.
+killall -wq xss-lock; xss-lock -- $HOME/.local/bin/wm/jasperge-locker &
 
 # Start mpd
 killall -wq mpd; mpd &
