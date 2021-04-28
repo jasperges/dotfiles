@@ -10,8 +10,7 @@ open() {
 alias c='clear'
 
 # vim
-alias vim='nvim'
-alias vimdiff='nvim -d'
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
 
 # Blender
 alias blender-buildbot='$HOME/blender-buildbot/blender $@'
@@ -65,7 +64,7 @@ alias wget='wget -c'
 # alias du='du -ch'
 
 # rsync
-alias rsync='rsync --exclude-from="$HOME/.rsync_exclude"'
+[ -f $HOME/.rsync_exclude ] && alias rsync='rsync --exclude-from="$HOME/.rsync_exclude"'
 
 # for typos
 alias gti='git'
@@ -79,6 +78,9 @@ alias ping='ping -c 1'
 
 # ssh
 [ -f ~/.sshrc ] && source ~/.sshrc
+
+# shortcuts
+[ -f ~/.config/shell/shortcutrc ] && source ~/.config/shell/shortcutrc
 
 
 # python/pip
