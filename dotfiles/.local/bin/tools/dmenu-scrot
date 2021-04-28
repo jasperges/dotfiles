@@ -7,7 +7,7 @@ choices+=("Selection and View + Delay")
 choices+=("Selection + Edit in Gimp")
 choices+=("Selection + Delay + Edit in Gimp")
 
-delay=2
+delay=5
 
 choice=$(printf "%s\n" "${choices[@]}" \
     | dmenu -p "Choose how to take a screenshot" -l ${#choices[@]} -r -i)
