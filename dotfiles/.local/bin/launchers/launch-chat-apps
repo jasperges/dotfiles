@@ -4,4 +4,4 @@ mattermost-desktop.AppImage &
 telegram-desktop &
 sleep 3  # give mattermost the chance to launch before rambox and signal
 rambox &
-signal-desktop &
+# signal-desktop &
