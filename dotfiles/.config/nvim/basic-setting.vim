@@ -6,7 +6,7 @@ set nobackup
 set undofile
 
 " Hide buffer when it is abandoned
-set hidden
+" set hidden
 
 " Make yank copy to the global system clipboard
 set clipboard+=unnamedplus
