@@ -1,4 +1,4 @@
-# Luke's lf settings
+# Jasper's lf settings
 
 # Basic vars
 set shell zsh
@@ -8,8 +8,9 @@ set cleaner ~/.config/lf/clear_img
 set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
-set color256
+# set color256
 set icons		# Enable icons. Requires nerd fonts and LF_ICONS variable.
+set drawbox
 
 # cmds/functions
 cmd open ${{
