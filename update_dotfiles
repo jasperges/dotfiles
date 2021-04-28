@@ -44,6 +44,9 @@ update_files() {
         for file in $1/**; do
             update_file $file
         done
+        for file in $1/zsh/.*; do
+            update_file $file
+        done
     fi
 }
 
