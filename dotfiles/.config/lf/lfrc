@@ -62,10 +62,21 @@ cmd copyclipboard ${{
 	notify-send "📋 File path copied to clipboard."
 }}
 
+cmd fzf_jump ${{
+    res="$(cut -d'	' -f2 ${XDG_CONFIG_HOME:-$HOME/config}/shell/bookmarkrc | fzf --header='Jump to location')"
+    if [ -d "$res" ]; then
+        cmd="cd"
+    else
+        cmd="select"
+    fi
+    lf -remote "send $id $cmd \"$res\""
+}}
+
 # Bindings
 # map c $lf -remote "send $id cd $(cut -d'	' -f2 ~/.config/directories | fzf)"
 map <c-f> $lf -remote "send $id select '$(fzf)'"
-map J $lf -remote "send $id cd $(cut -d'	' -f2 ~/.config/directories | fzf)"
+# map J $lf -remote "send $id cd $(cut -d'	' -f2 ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)"
+map J fzf_jump
 map gh
 map g top
 map D delete
