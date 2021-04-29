@@ -5,6 +5,9 @@ D	${XDG_DOWNLOAD_DIR:-$HOME/downloads}
 d	${XDG_DOCUMENTS_DIR:-$HOME/documents}
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
 h	$HOME
+jj  $HOME/syncthing/linesofjasper
+ja  $HOME/syncthing/linesofjasper/administratie
+jf  $HOME/syncthing/linesofjasper/administratie/facturen/2021
 m	${XDG_MUSIC_DIR:-$HOME/music}
 mn	/mnt
 me	/media
