@@ -82,6 +82,10 @@ vnoremap <Space> zf
 nnoremap <Leader>fa :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 nnoremap <Leader>ff :,$s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 
+" open/close location list
+nnoremap <Leader>lo :lopen<CR>
+nnoremap <Leader>lc :lclose<CR>
+
 " Move to next or previous buffer with Alt + → and Alt + ←
 map <M-Right> :bn<CR>
 map <M-Left> :bp<CR>
