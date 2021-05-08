@@ -22,7 +22,7 @@ readarray -t wifilist < <(nmcli --terse --fields NAME,STATE,TYPE c show | grep "
 # wifi="${wifilist[wifiidx]}"
 
 wifi="$(printf "%s\n" "${wifilist[@]}" \
-    | awk -F: '{if ($2 == "activated") {printf "直 %s\n", $1} else {printf "睊 %s\n", $1}}' \
+    | awk -F: '{if ($2 == "activated") {printf " %s\n", $1} else {printf "  %s\n", $1}}' \
     | sort | dmenu -p "Toggle WiFi connection" -l ${#wifilist[@]} -i -r | cut -d " " -f 2-)"
 [[ -z "$wifi" ]] && exit
 wifistatus="$(printf "%s\n" "${wifilist[@]}" | awk -F ':' '/'"$wifi"'/ {printf $2}')"
@@ -32,12 +32,12 @@ case "$wifistatus" in
     "activated")
         nmcli connection down "$wifi" \
             && notify-send " wifi Connection" "Disconnected $wifi" \
-            || notify-send -u critical "嬨 wifi Connection" "Failed to disconnect $wifi"
+            || notify-send -u critical "X wifi Connection" "Failed to disconnect $wifi"
         ;;
     *)
         nmcli connection up "$wifi" \
             && notify-send " wifi Connection" "Connected to $wifi" \
-            || notify-send -u critical "嬨 wifi Connection" "Failed to connect to $wifi"
+            || notify-send -u critical "X wifi Connection" "Failed to connect to $wifi"
         ;;
 esac
 
