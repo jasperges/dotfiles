@@ -57,6 +57,8 @@ should_lock() {
             return 1
         fi
     done
+
+    return 0
 }
 
 # Create one big image spanning all monitors
