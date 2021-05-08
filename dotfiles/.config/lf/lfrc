@@ -39,7 +39,7 @@ cmd newdelete ${{
 cmd moveto ${{
 	set -f
 	clear; echo "Move to where?"
-	dest="$(cut -d'	' -f2- ~/.config/directories | fzf)" &&
+	dest="$(cut -d'	' -f2- ~/.config/shell/bm-dirs | fzf)" &&
 	eval mv -iv $fx $dest &&
 	notify-send "🚚 File(s) moved." "File(s) moved to $dest."
 }}
@@ -47,7 +47,7 @@ cmd moveto ${{
 cmd copyto ${{
 	set -f
 	clear; echo "Copy to where?"
-	dest="$(cut -d'	' -f2- ~/.config/directories | fzf)" &&
+	dest="$(cut -d'	' -f2- ~/.config/shell/bm-dirs | fzf)" &&
 	eval cp -ivr $fx $dest &&
 	notify-send "📋 File(s) copied." "File(s) copies to $dest."
 }}
