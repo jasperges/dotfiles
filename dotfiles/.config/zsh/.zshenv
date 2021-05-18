@@ -3,9 +3,9 @@
 PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.local/bin/launchers\
 :$HOME/.local/bin/tools:$HOME/.local/bin/wm:$HOME/.local/bin/statusbar\
 :$HOME/.local/bin/jobs:$HOME/.local/bin/go:$HOME/.local/bin/cargo/bin\
-:$HOME/.config/yarn/global/node_modules/.bin:$HOME/.poetry/bin\
-:$HOME/.yarn/bin:/opt/Shotgun:/usr/local/DJV2/bin:/opt/rez/bin/rez\
-:/opt/firefox:$PATH"
+:$HOME/.local/share/cargo/bin:$HOME/.config/yarn/global/node_modules/.bin\
+:$HOME/.poetry/bin:$HOME/.yarn/bin:/opt/Shotgun:/usr/local/DJV2/bin\
+:/opt/rez/bin/rez:/opt/firefox:$PATH"
 
 export PATH
 
