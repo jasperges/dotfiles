@@ -10,7 +10,7 @@
 
 pomodoro() {
     [ -f $HOME/.pomodoro_live ] \
-        && cat $HOME/.pomodoro_live 2>/dev/null | awk '{printf "  %s %s   ", $1, $2}' \
+        && awk '{printf "  %s %s   ", $1, $2}' < $HOME/.pomodoro_live \
         || printf "     "
 }
 
