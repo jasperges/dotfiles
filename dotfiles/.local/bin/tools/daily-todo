@@ -1,0 +1,4 @@
+#!/bin/sh
+
+d="${@:-now}"
+printf "# %s\n\n## Todo's\n\n- [ ] " $(LC_TIME=nl_NL.utf8 date "+%Y-%m-%d" -d "$d")
