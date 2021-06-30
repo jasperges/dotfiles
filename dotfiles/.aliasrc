@@ -113,9 +113,8 @@ vf() {
 # vim - enable system clipboard; this needs to be a function so we can set
 # $EDITOR to it
 vim() {
-    gvim -v
+    gvim -v "$@"
 }
-
 
 # tools
 alias ns='new-script'
