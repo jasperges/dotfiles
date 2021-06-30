@@ -299,6 +299,10 @@ let g:neoformat_enabled_yaml = ['prettier']
 nnoremap <Leader>m <esc>:Neoformat<CR>
 
 " coc
+
+" coc settings
+let g:coc_config_home = '~/.config/coc'
+
 " prettier command for coc
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 let g:coc_global_extensions = [
