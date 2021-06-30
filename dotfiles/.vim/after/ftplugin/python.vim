@@ -5,3 +5,6 @@ setlocal softtabstop=4
 
 " Set column to 88 to follow Black formatter
 setlocal colorcolumn=88
+
+nnoremap <silent> <leader>rr :!rez-release<CR>
+nnoremap <silent> <leader>rrn :!rez-release --no-latest<CR>
