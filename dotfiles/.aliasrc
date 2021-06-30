@@ -9,6 +9,9 @@ open() {
 # clear
 alias c='clear'
 
+# vim - enable system clipboard
+alias vim='gvim -v'
+
 # Blender
 alias blender-buildbot='$HOME/blender-buildbot/blender $@'
 alias bbb='blender-buildbot $@'
