@@ -15,7 +15,7 @@ export PATH
 export TERMINAL=alacritty
 
 # Default editor
-export EDITOR=nvim
+export EDITOR=vim
 
 # Default browser
 export BROWSER=firefox

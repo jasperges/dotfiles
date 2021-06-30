@@ -15,11 +15,10 @@ export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 export TERMINAL=alacritty
 
 # Default editor
-export EDITOR=nvim
+export EDITOR=vim
 
 # Default browser
 export BROWSER=firefox
-# export BROWSER=badwolf
 
 # Notmuch config file
 export NOTMUCH_CONFIG=$HOME/.config/notmuch/notmuch-config

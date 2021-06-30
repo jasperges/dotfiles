@@ -9,9 +9,6 @@ open() {
 # clear
 alias c='clear'
 
-# vim - enable system clipboard
-alias vim='gvim -v'
-
 # Blender
 alias blender-buildbot='$HOME/blender-buildbot/blender $@'
 alias bbb='blender-buildbot $@'
@@ -112,6 +109,13 @@ vf() {
     files=$(find $PWD -maxdepth 3 -type f | fzf)
     [[ -n $files ]] && $EDITOR $files
 }
+
+# vim - enable system clipboard; this needs to be a function so we can set
+# $EDITOR to it
+vim() {
+    gvim -v
+}
+
 
 # tools
 alias ns='new-script'
