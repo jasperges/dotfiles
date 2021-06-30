@@ -1,5 +1,9 @@
-" Add date in specified format at cursor position in table in vimwiki
+" Add date in specified format at cursor position in a table in vimwiki
 nnoremap <silent> <leader>pd mc:read !LC_TIME=nl_NL.utf8 date "+\%Y-\%m-\%d \%a"<CR>"dd$dd`ch"dpa<Tab><ESC>F\|2l
+nnoremap <silent> <leader>cd :.-read !LC_TIME=nl_NL.utf8 date "+\%Y-\%m-\%d"<CR>I# <ESC>jo
+nnoremap <silent> <leader>dt :.-read !daily-todo<CR>GddA
+nnoremap <silent> <leader>pm :! daily-todo-to-mattermost --post %:p<CR>
+nnoremap <silent> <leader>em :! daily-todo-to-mattermost --edit %:p<CR>
 
 function! TableFold()
     let line = getline(v:foldstart)
@@ -9,4 +13,9 @@ function! TableFold()
     return ' └▶' . line_text
 endfunction
 
-set foldtext=TableFold()
+setlocal foldtext=TableFold()
+setlocal concealcursor=
+
+" Set column width to 120
+set textwidth=120
+set colorcolumn=120
