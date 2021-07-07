@@ -17,6 +17,9 @@ export TERMINAL=alacritty
 # Default editor
 export EDITOR=vim
 
+# Default directory for custom scripts
+export SCRIPTS=~/.local/bin/tools
+
 # Default browser
 export BROWSER=firefox
 
