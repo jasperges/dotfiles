@@ -136,6 +136,7 @@ fi
 # prompt pure
 
 # Starship prompt
+# next command runs: source <("/usr/local/bin/starship" init zsh --print-full-init)
 eval $(starship init zsh)
 
 # Change prompt when in Rez resolved environment
