@@ -1,1 +1,1 @@
-nnoremap <Leader>gs <esc>:Gstatus<CR>
+nnoremap <Leader>gs <esc>:Git<CR>
