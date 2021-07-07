@@ -177,6 +177,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Use '<Leader>hl' to stop highlighting until the next search command
+set hlsearch
 nnoremap <silent> <Leader>hl :nohlsearch<CR>
 
 " Show trailing whitespace
