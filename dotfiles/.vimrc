@@ -88,7 +88,10 @@ let &t_EI = "\e[2 q"
 " set hidden
 
 " Make yank copy to the global system clipboard
-set clipboard+=unnamedplus
+set clipboard^=unnamed
+if has('unnamedplus')
+    set clipboard^=unnamedplus
+endif
 
 " Set line numbers
 set number relativenumber
