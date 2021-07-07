@@ -114,6 +114,9 @@ set expandtab
 " Enable mouse support
 set mouse=a
 
+" Allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
 " Enable syntax highlighting
 syntax on
 
