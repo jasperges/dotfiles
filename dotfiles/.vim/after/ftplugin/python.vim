@@ -18,5 +18,6 @@ augroup filetype_python
      autocmd BufWritePre *.py Neoformat
 augroup END
 
+" Binding for `rez-release`
 nnoremap <silent> <leader>rr :!rez-release<CR>
 nnoremap <silent> <leader>rrn :!rez-release --no-latest<CR>
