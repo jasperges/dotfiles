@@ -19,7 +19,7 @@
     defaultRemote = origin
 # Set the default editor
 [core]
-    editor = nvim
+    editor = vim
     excludesfile = ~/.gitignore
     deltaBaseCacheLimit = 1G
     autocrlf = input
@@ -36,8 +36,8 @@
     templatedir = ~/.git_template
     defaultBranch = main
 [merge]
-    tool = nvim -d
+    tool = vimdiff
 [diff]
-    tool = nvim -d
+    tool = vimdiff
 [gpg]
     program = gpg2
