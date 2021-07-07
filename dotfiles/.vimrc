@@ -226,7 +226,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let NERDTreeIgnore=['\~$', '\.pyc$[[file]]', 'build$[[dir]]', '__pycache__$[[dir]]', '\.mypy_cache$[[dir]]']
 
 " vim-fugitive
-nnoremap <Leader>gs <esc>:Gstatus<CR>
+nnoremap <Leader>gs <esc>:Git<CR>
 
 " fzf
 nnoremap <C-p> :Files<CR>
