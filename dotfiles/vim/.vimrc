@@ -62,8 +62,8 @@ Plug 'vim-scripts/restore_view.vim'
 " UltiSnip Snippets, can be used by coc-snippets
 Plug 'honza/vim-snippets'
 " Restructured text
-Plug 'gu-fan/riv.vim'
-Plug 'gu-fan/InstantRst'
+" Plug 'gu-fan/riv.vim'
+" Plug 'gu-fan/InstantRst'
 " CoC
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
