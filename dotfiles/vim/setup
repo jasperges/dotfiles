@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if test -z "$(which vim)" -o -z "$(which vimtutor)"; then
+  echo Need to install full vim.
+  exit 1
+fi
+
+ln -sf "$PWD/.vimrc" "$HOME/"
+mkdir "$HOME/.vim" 2>/dev/null
+ln -sf "$PWD/.vim/after" "$HOME/.vim/"
+ln -sf "$PWD/.vim/spell" "$HOME/.vim/"
