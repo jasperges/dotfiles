@@ -1,0 +1,21 @@
+#!/bin/sh
+
+winid="$(xdotool selectwindow)"
+[ -z $winid ] && exit
+choice="$(printf "1920x1080\n1280x720" | dmenu -p "Choose record resolution" -l 2 -i -r)"
+[ -z $choice ] && exit
+
+# Resize window
+width=$(echo $choice | cut -dx -f1)
+height=$(echo $choice | cut -dx -f2)
+xdotool windowsize $winid $width $height
+
+# Center window
+# It seems this always gets the geometry of the biggest display, but I don't
+# really care. I'm using this mainly on the main (biggest) monitor anyway...
+displayinfo="$(xdotool getdisplaygeometry)"
+displaywidth="$(echo $displayinfo | cut -d " " -f 1)"
+displayheight="$(echo $displayinfo | cut -d " " -f 2)"
+x="$(expr \( $displaywidth - $width \) / 2)"
+y="$(expr \( $displayheight - $height \) / 2)"
+xdotool windowmove $winid $x $y
