@@ -36,6 +36,8 @@ is_fullscreen() {
 
 # Determine if the locker command should run based on which windows are fullscreened.
 should_lock() {
+    # Don't lock if 'i3lock' is already running
+    pgrep i3lock && return 1
     id=$(get_active_id)
     wmclass=$(get_wm_class "$id")
     title=$(get_window_title "$id")
