@@ -293,14 +293,15 @@ for wiki_name in wikis
     call add(g:vimwiki_list, wiki)
 endfor
 
-nnoremap <M-Down> :m .+1<CR>==
-nnoremap <M-Up> :m .-2<CR>==
+" Move (selected) lines up and down
+nnoremap <M-Down> :m .+1<CR>
+nnoremap <M-Up> :m .-2<CR>
 
-inoremap <M-Down> <Esc>:m .+1<CR>==gi
-inoremap <M-Up> <Esc>:m .-2<CR>==gi
+inoremap <M-Down> <Esc>:m .+1<CR>gi
+inoremap <M-Up> <Esc>:m .-2<CR>gi
 
- vnoremap <M-Down> :m '>+1<CR>gv=gv
- vnoremap <M-Up> :m '<-2<CR>gv=gv
+" vnoremap <M-Down> :m '>+1<CR>gv
+" vnoremap <M-Up> :m '<-2<CR>gv
 
 " indent line
 nnoremap <silent> <leader>lt <esc>:IndentLinesToggle<CR>
