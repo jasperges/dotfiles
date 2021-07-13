@@ -1,0 +1,8 @@
+#!/bin/bash
+
+LC_TIME=nl_NL.utf8
+# Monday with weeknumber
+date "+|      |          |   %U | %Y-%m-%d %a |      |            |               |             |                |" -d "monday"
+for i in {1..4}; do
+    date "+|      |          |      | %Y-%m-%d %a |      |            |               |             |                |" -d "monday +$i day"
+done
