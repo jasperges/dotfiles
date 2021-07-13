@@ -20,27 +20,27 @@ get_active_id() {
 
 # Find active window WM_CLASS
 get_wm_class() {
-    xprop -id $1 | awk -F '=' '$1 ~ /WM_CLASS\(STRING\)/ { print $2 }' | cut -d "," -f 2 | tr -d '[:space:]'
+    xprop -id "$1" | awk -F '=' '$1 ~ /WM_CLASS\(STRING\)/ { print $2 }' | cut -d "," -f 2 | tr -d '[:space:]'
 }
 
 # Determine a window's title text by it's ID
 get_window_title() {
     # For mplayer or vlc, we might need to check WM_CLASS(STRING), idk.
-    xprop -id $1 | awk -F '=' '$1 ~ /_NET_WM_NAME\(UTF8_STRING\)/ { print $2 }'
+    xprop -id "$1" | awk -F '=' '$1 ~ /_NET_WM_NAME\(UTF8_STRING\)/ { print $2 }'
 }
 
 # Determine if a window is fullscreen based on it's ID
 is_fullscreen() {
-    xprop -id $1 | awk -F '=' '$1 ~ /_NET_WM_STATE\(ATOM\)/ { if ($2 ~ /STATE_FULLSCREEN/) exit 0; exit 1 }'
+    xprop -id "$1" | awk -F '=' '$1 ~ /_NET_WM_STATE\(ATOM\)/ { if ($2 ~ /STATE_FULLSCREEN/) exit 0; exit 1 }'
 }
 
 # Determine if the locker command should run based on which windows are fullscreened.
 should_lock() {
     id=$(get_active_id)
-    wmclass=$(get_wm_class $id)
-    title=$(get_window_title $id)
+    wmclass=$(get_wm_class "$id")
+    title=$(get_window_title "$id")
 
-    if is_fullscreen $id; then
+    if is_fullscreen "$id"; then
         for i in "${LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING_FULLSCREEN[@]}"; do
             if [[ $wmclass =~ $i ]]; then
                 return 1
@@ -67,31 +67,31 @@ create_monitor_spanning_image() {
     monitors_size_pos=$(xrandr --listactivemonitors | awk -F ' ' '/^\s[[:digit:]]:\s/ {print $3}' | \
         sed -nE "s|^([[:digit:]]+)/[[:digit:]]+x([[:digit:]]+)/[[:digit:]]+\+([[:digit:]]+)\+([[:digit:]]+)|\1x\2+\3+\4|p")
     while IFS= read -r line; do
-        x=$(echo $line | cut -dx -f1)
-        y=$(echo $line | cut -dx -f2 | cut -d+ -f1)
-        offset_x=$(echo $line | cut -d+ -f2)
-        offset_y=$(echo $line | cut -d+ -f3)
+        x=$(echo "$line" | cut -dx -f1)
+        # y=$(echo "$line" | cut -dx -f2 | cut -d+ -f1)
+        offset_x=$(echo "$line" | cut -d+ -f2)
+        offset_y=$(echo "$line" | cut -d+ -f3)
         random_string=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 8)
         image="/tmp/lock_image_$random_string-$offset_x-$offset_y.png"
-        convert -geometry $x"x" $lock_image $image
-        LOCK_IMAGES+=($image)
+        convert -geometry "${x}x" "$lock_image" "$image"
+        LOCK_IMAGES+=("$image")
     done <<< "$monitors_size_pos"
 
     # Construct the convert command
     convert_command="convert"
-    for image in ${LOCK_IMAGES[@]}; do
+    for image in "${LOCK_IMAGES[@]}"; do
         filename="${image%.png}"
-        offset=$(echo $filename | awk -F '-' '{print "+"$2"+"$3}')
+        offset=$(echo "$filename" | awk -F '-' '{print "+"$2"+"$3}')
         convert_command="$convert_command -page $offset $image"
     done
 
     convert_command="$convert_command -background gray10 -layers merge \"$2\""
 
     # Run the convert command
-    eval $convert_command
+    eval "$convert_command"
 
     # Remove temporary images
-    for image in ${LOCK_IMAGES[@]}; do
+    for image in "${LOCK_IMAGES[@]}"; do
         rm "$image"
     done
 }
@@ -103,7 +103,7 @@ lock_cmd() {
 turn_off_keyboardbacklight() {
     [[ ! -f "/sys/class/leds/smc::kbd_backlight/brightness" ]] && return
     # Use this to restore the last value when the screen is unlocked again
-    cp /sys/class/leds/smc::kbd_backlight/brightness $HOME/.last_keyboard_backlight
+    cp /sys/class/leds/smc::kbd_backlight/brightness "$HOME/.last_keyboard_backlight"
     # Turn off keyboard backlight
     echo 0 > "/sys/class/leds/smc::kbd_backlight/brightness"
 }
@@ -112,7 +112,7 @@ turn_on_keyboardbacklight() {
     [[ ! -f "/sys/class/leds/smc::kbd_backlight/brightness" ]] && return
     [[ ! -f "$HOME/.last_keyboard_backlight" ]] && return
     # Restore last used backlight values
-    backlight_keyboard=$(< $HOME/.last_keyboard_backlight)
+    backlight_keyboard=$(< "$HOME/.last_keyboard_backlight")
     # Turn on the backlight slighty if it's (almost) off.
     (( backlight_keyboard < 12 )) && backlight_keyboard=12
     echo $backlight_keyboard > "/sys/class/leds/smc::kbd_backlight/brightness"
@@ -125,13 +125,13 @@ lock() {
         # pause dunst
         export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; notify-send DUNST_COMMAND_PAUSE
 
-        lock_image="$(find $HOME/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname '*.png' -type f | shuf -n 1)"
+        lock_image="$(find "$HOME"/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname '*.png' -type f | shuf -n 1)"
         # Check for multi-monitor setup
         # TODO: Only create 1 image if resolutions of monitors differ
         # external_monitor=$(xrandr | sed -nE "s/^((DP|HDMI)-[0-9]+) connected.*$/\1/p")
         if [[ $(xrandr --listactivemonitors | wc -l) -gt 2 ]]; then
             cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/jasperge-locker"
-            lock_image_basename="$(sha256sum -b $lock_image | awk '{printf $1}')"
+            lock_image_basename="$(sha256sum -b "$lock_image" | awk '{printf $1}')"
             [[ ! -d "$cache_dir" ]] && mkdir -p "$cache_dir"
             desktop_lock_image="$cache_dir/$lock_image_basename-$(xdpyinfo | awk '/dimensions/ {printf $2}').png"
             # Check if cached image already exists
