@@ -1,0 +1,70 @@
+#!/bin/sh
+
+# TODO: transform an existing heading.
+
+# From the sphinx documentation:
+# Normally, there are no heading levels assigned to certain characters as the
+# structure is determined from the succession of headings. However, this
+# convention is used in Python’s Style Guide for documenting which you may
+# follow:
+#
+#    - '#' with overline, for parts
+#    - '*' with overline, for chapters
+#    - '=', for sections
+#    - '-', for subsections
+#    - '^', for subsubsections
+#    - '"', for paragraphs
+#
+# Of course, you are free to use your own marker characters (see the reST
+# documentation), and use a deeper nesting level, but keep in mind that most
+# target formats (HTML, LaTeX) have a limited supported nesting depth.
+
+rst() {
+    line="$*"
+    # if 'line' is empty, read from standard input
+    test -z "$line" && read -r line
+    linelen="${#line}"
+    case "$level" in
+        1) char="#";;
+        2) char="*";;
+        3) char="=";;
+        4) char="-";;
+        5) char="^";;
+        6) char="\"";;
+    esac
+
+    underline=$(printf "%0.s$char" $(seq 1 "$linelen"))
+    case "${char}" in
+        "#"|"*") printf "%s\n%s\n%s" "$underline" "$line" "$underline";;
+        "="|"-"|"^"|"\"") printf "%s\n%s" "$line" "$underline";;
+        *) printf "%s" "$line";;
+    esac
+}
+
+markdown() {
+    line="$*"
+    # if 'line' is empty, read from standard input
+    test -z "$line" && read -r line
+    header=$(printf "%0.s#" $(seq 1 "$level"))
+    printf "%s %s" "$header" "$line"
+}
+
+
+USAGE="usage: headings [-h] [-t filetype] [-l level] file [file ...]\n\n\t-h this message\n\t-t the filetype for which to create the heading\n\t-l the level number of the heading"
+
+test -z "$1" && echo "$USAGE" && exit 1
+while getopts t:l:h f
+do
+    case "$f" in
+        t) filetype="$OPTARG";;
+        l) level="$OPTARG";;
+        h) echo "$USAGE"; exit 0;;
+        *) echo "$USAGE"; exit 1;;
+    esac
+done
+shift "$(($OPTIND - 1))"
+
+case "$filetype" in
+    rst) rst "$@";;
+    md)  markdown "$@";;
+esac
