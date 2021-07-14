@@ -1,0 +1,45 @@
+#!/bin/bash
+
+shopt -s globstar
+shopt -u failglob
+
+latest() {
+    i=1
+    basename=$1
+    extension=$2
+    checkfile=${basename}_$(printf %03d $i).${extension}
+    while [ -f ${checkfile} ]; do
+        ((i++))
+        checkfile=${basename}_$(printf %03d $i).${extension}
+    done
+    echo $i
+}
+
+rename_photo() {
+    photo=$1
+    extension=${photo##*.}
+    time=$(exiv2 -g DateTimeOriginal ${photo})
+    read X X X year month day hour minute second <<<${time//:/ }
+    basename=$(dirname ${photo})/${year}${month}${day}_${hour}${minute}${second}
+    num=$(printf %03d $(latest ${basename} ${extension}))
+    if [ -f ${photo}.xmp ]; then
+        renamed_xmp=${basename}_${num}.${extension}.xmp
+        if [ -f ${renamed_xmp} ]; then
+            echo "File already exists: ${renamed_xmp}"
+        else
+            mv ${photo}.xmp ${renamed_xmp}
+            echo "Moved ${photo}.xmp -> ${renamed_xmp}"
+        fi
+    fi
+    exiv2 -vtr "%Y%m%d_%H%M%S_${num}" rename $photo
+}
+
+for photo in ./**/DSC*.ARW; do
+    [[ ! -f $photo ]] && continue
+    rename_photo $photo
+done
+
+for photo in ./**/DSC*.JPG; do
+    [[ ! -f $photo ]] && continue
+    rename_photo $photo
+done
