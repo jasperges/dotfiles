@@ -300,8 +300,8 @@ nnoremap <M-Up> :m .-2<CR>
 inoremap <M-Down> <Esc>:m .+1<CR>gi
 inoremap <M-Up> <Esc>:m .-2<CR>gi
 
-" vnoremap <M-Down> :m '>+1<CR>gv
-" vnoremap <M-Up> :m '<-2<CR>gv
+vnoremap <M-Down> :m '>+1<CR>gv
+vnoremap <M-Up> :m '<-2<CR>gv
 
 " indent line
 nnoremap <silent> <leader>lt <esc>:IndentLinesToggle<CR>
