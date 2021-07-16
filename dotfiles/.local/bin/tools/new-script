@@ -14,5 +14,5 @@ if test -e "${path}"; then
 fi
 
 printf "#!/bin/sh\n\n\n" > "${path}"
-chmod 655 "${path}"
+chmod 755 "${path}"
 exec $EDITOR +3 "${path}"
