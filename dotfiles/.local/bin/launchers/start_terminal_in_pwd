@@ -5,22 +5,11 @@ WM_ID=$(xprop -root _NET_ACTIVE_WINDOW | cut -d " " -f 5)
 WM_CLASS=$(xprop -id $WM_ID WM_CLASS | cut -d "=" -f 2 | cut -d "," -f 1 | tr -d '"[:space:]')
 if [ "$WM_CLASS" = $TERMINAL ]; then
     WM_NAME="$(xprop -id "$WM_ID" WM_NAME | awk -F " = " '{printf $2}' | tr -d '"')"
-    if [ $(echo "$WM_NAME" | cut -d " " -f 2) = "nvim" ]; then
-        # Running VIM
-        # DIR="$(echo "$WM_NAME" | sed -Ee "s|^.*\((.*)\) - VIM$|\1|" -e "s|~|$HOME|")"
-        DIR="$(dirname $(echo "$WM_NAME" | cut -d " " -f 3 | sed -Ee "s|~|$HOME|"))"
-        echo "vim: $DIR"
-    else
-        # Just running a shell?
-        # DIR="$(echo "$WM_NAME" | awk -F ":" '{printf $NF}' | sed -e "s|~|$HOME|")"
-        DIR="$(echo "$WM_NAME" | sed -Ee "s|~|$HOME|")"
-        echo "dir: $DIR"
-    fi
-    # [[ -d $DIR ]] && cd "$DIR" || cd "$HOME"
+    DIR=$(echo "$WM_NAME" | sed -E "s|^.* \((.*)\) - VIM$|\1|;s|~|$HOME|")
 fi
 
 if [ -d "$DIR" ]; then
-    $TERMINAL --working-directory "$DIR" &
+    $TERMINAL --working-directory "$DIR" "$@" &
 else
-    $TERMINAL &
+    $TERMINAL "$@" &
 fi
