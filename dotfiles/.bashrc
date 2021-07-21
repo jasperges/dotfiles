@@ -31,7 +31,7 @@ set -o vi
 
 # fuzzy finder
 if [ -f "$HOME/.fzf.bash" ]; then
-    . "$HOME/.fzf.bash"
+    source "$HOME/.fzf.bash"
 fi
 
 source $HOME/.config/broot/launcher/bash/br
