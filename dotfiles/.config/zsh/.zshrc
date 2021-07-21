@@ -101,7 +101,7 @@ export GPG_TTY
 
 # fuzzy finder
 if [ -f "$HOME/.fzf.zsh" ]; then
-    . "$HOME/.fzf.zsh"
+    source "$HOME/.fzf.zsh"
 fi
 
 # virtualenvwrapper
@@ -111,13 +111,22 @@ fi
 
 # rez
 if [ -f /opt/rez/completion/complete.zsh ]; then
-    . /opt/rez/completion/complete.zsh
+    source /opt/rez/completion/complete.zsh
 fi
 
 # broot
 if [ -f $HOME/.config/broot/launcher/bash/br ]; then
-    . $HOME/.config/broot/launcher/bash/br
+    source $HOME/.config/broot/launcher/bash/br
 fi
+
+# pager
+export LESS_TERMCAP_mb="[35m" # magenta
+export LESS_TERMCAP_md="[33m" # yellow
+export LESS_TERMCAP_me="" # "0m"
+export LESS_TERMCAP_se="" # "0m"
+export LESS_TERMCAP_so="[34m" # blue
+export LESS_TERMCAP_ue="" # "0m"
+export LESS_TERMCAP_us="[4m"  # underline
 
 # dir colors
 if [ -f $HOME/.dircolors ]; then
