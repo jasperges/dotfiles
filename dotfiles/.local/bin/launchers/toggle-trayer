@@ -2,9 +2,9 @@
 
 # 'Toggle' trayer (kill it when it's running, run it otherwise)
 [ $(pgrep -x trayer) ] \
-    && pkill -x trayer \
-    || setsid trayer --edge left --align center --distancefrom left \
-        --distance 6 --widthtype request --padding 6 --iconspacing 12 \
+    && killall -wq trayer \
+    || setsid trayer --edge top --align center --distancefrom top \
+        --distance 35 --widthtype request --padding 6 --iconspacing 12 \
         --transparent true --alpha 33 --tint 0xFF444444 &
 
  # -h  -- print this help and exit
