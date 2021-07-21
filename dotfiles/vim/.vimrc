@@ -39,16 +39,18 @@ Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-gitgutter'
 " CSS colors
 Plug 'ap/vim-css-color'
+" Collection of language packs
+Plug 'sheerun/vim-polyglot'
 " Support for sxhkd config file
-Plug 'kovetskiy/sxhkd-vim'
+" Plug 'kovetskiy/sxhkd-vim'
 " Distraction free writing
 Plug 'junegunn/goyo.vim'
 "VimWiki
 Plug 'vimwiki/vimwiki'
 " Vim syntax for TOML
-Plug 'cespare/vim-toml'
+" Plug 'cespare/vim-toml'
 " Powershell
-Plug 'PProvost/vim-ps1'
+" Plug 'PProvost/vim-ps1'
 " Indentline
 Plug 'Yggdroot/indentLine'
 " Buffer explorer
