@@ -1,15 +1,16 @@
-#!/bin/sh
+#!/bin/bash
+
+# Try to figure out the current working directory based on the 'WM_NAME' of the
+# current application and start the terminal in that directory. If the current
+# working directory can't be found, simply start a new terminal.
 
 WM_ID=$(xprop -root _NET_ACTIVE_WINDOW | cut -d " " -f 5)
-# Go to the current working directory if current window is also the terminal
-WM_CLASS=$(xprop -id $WM_ID WM_CLASS | cut -d "=" -f 2 | cut -d "," -f 1 | tr -d '"[:space:]')
-if [ "$WM_CLASS" = $TERMINAL ]; then
-    WM_NAME="$(xprop -id "$WM_ID" WM_NAME | awk -F " = " '{printf $2}' | tr -d '"')"
-    DIR=$(echo "$WM_NAME" | sed -E "s|^.* \((.*)\) - VIM$|\1|;s|~|$HOME|")
-fi
-
-if [ -d "$DIR" ]; then
-    $TERMINAL --working-directory "$DIR" "$@" &
+WM_NAME="$(xprop -id "$WM_ID" WM_NAME | awk -F " = " '{printf $2}' | tr -d '"')"
+DIR=$(echo "$WM_NAME" | sed -E "s|^.* \((.*)\) - VIM$|\1|;s|~|$HOME|")
+if [[ -d $DIR ]]; then
+    exec $TERMINAL --working-directory "$DIR" "$@"
+elif [[ -f $DIR ]]; then
+    exec $TERMINAL --working-directory "${DIR%/*}" "$@"
 else
-    $TERMINAL "$@" &
+    exec $TERMINAL "$@"
 fi
