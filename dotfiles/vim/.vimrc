@@ -163,8 +163,8 @@ vnoremap <Space> zf
 " Search and replace mappings
 " fa for find and replace **a**ll
 " ff for find and replace **f**orward
-nnoremap <Leader>fa :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
-nnoremap <Leader>ff :,$s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+nnoremap <Leader>fa mf:%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+nnoremap <Leader>ff mf:,$s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 
 " open/close location list
 nnoremap <Leader>lo :lopen<CR>
