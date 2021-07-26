@@ -34,7 +34,7 @@ super + d; {b, c, d, e, g, f, i, m, r, t, w, x, s}
     }
 super + i; {p}
     {import_photos}
-super + shift + m; {m,u,s,d}
+super + shift + m; {m, u, s, d}
     {dmenu-mount,dmenu-umount,dmenu-servermount,dmenu-serverumount}
 super + o; {b, c, g, h, m, w, p, o, j, t, y}
     { \
@@ -48,6 +48,13 @@ super + shift + p
     passmenu --username -r -i -l 10
 super + s; {p, a, s}
     {toggle-pulsemixer, play-silence, stop-silence}
+super + shift + t; {c, i, r, s}
+    { \
+        tt-control, \
+        tt-control start issue, \
+        tt-control start recent, \
+        tt-control stop \
+    }
 super + v; {m, p, j, s, u, g, w, e, h, b}
     { \
         managevpn manage, managevpn Proton-NL, managevpn jjm-studio, \
