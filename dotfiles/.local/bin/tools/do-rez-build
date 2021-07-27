@@ -5,10 +5,12 @@ set -euo pipefail
 # --------------------------------- functions --------------------------------
 
 build() {
+    local build_dir
+    local default_release_path
     local package
     local package_dir
-    local default_release_path
     local release_path
+
     package="$1"; shift
     package_dir="${package%/*}"
     default_release_path=$(rez-config release_packages_path 2>/dev/null)
@@ -18,8 +20,12 @@ build() {
     cd "$package_dir"
     full_release_path="${default_release_path%/*}/$release_path"
     echo "$@"
-    rez-build -cip "${default_release_path%/*}/$release_path" "$@"
-    rm -rfi "$package_dir/build"
+    rez-build -cip "$full_release_path" "$@"
+    build_dir="$package_dir/build"
+    read -p "Remove '$build_dir'? " -r answer
+    case "$answer" in
+        y|yes|Y|YES) rm -rf "$build_dir";;
+    esac
 }
 
 showerror() {
@@ -58,4 +64,3 @@ case "$1" in
     help) usage;;
     *) error_usage;;
 esac
-
