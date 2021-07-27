@@ -1,0 +1,14 @@
+#!/bin/bash
+
+shopt -s nullglob globstar
+
+field="$1"
+passfile="$2"
+
+[[ -n $passfile ]] || exit
+if [[ $field = pass ]]; then
+	pass show "$passfile" | { IFS= read -r pass; printf %s "$pass"; }
+    exit
+fi
+
+pass show "$passfile" | awk '/^'"$field"':/ {print $2}'
