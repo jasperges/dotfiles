@@ -103,11 +103,11 @@ se() {
         $HOME/.local/bin/tools \
         $HOME/.local/bin/wm \
         $HOME/.config -type f -not -name ".*" | fzf)
-    [[ -n $files ]] && exec $EDITOR $files
+    [[ -n $files ]] && $EDITOR $files
 }
 vf() {
     files=$(find $PWD -maxdepth 3 -type f | fzf)
-    [[ -n $files ]] && exec $EDITOR $files
+    [[ -n $files ]] && $EDITOR $files
 }
 
 # tools
