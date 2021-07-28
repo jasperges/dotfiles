@@ -9,6 +9,4 @@ pkill -u $UID -f protonmail-bridge
 while pgrep -u $UID -f protonmail-bridge >/dev/null; do sleep 1; done
 
 # Launch new instance
-protonmail-bridge --no-window &
-
-echo "ProtonMail Bridge launched..."
+exec protonmail-bridge --no-window

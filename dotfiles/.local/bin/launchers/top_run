@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # if [[ -z $(glxinfo | grep vendor | grep -i nvidia) ]]; then
 #     # nouveau driver, use default terminal
@@ -8,6 +8,6 @@
 #     gotop_term=sakura
 # fi
 
-which gotop && toggle-gotop && exit \
-    || which htop && toggle-htop && exit \
-    || which top && toggle-top && exit
+which gotop && exec toggle-gotop \
+    || which htop && exec toggle-htop \
+    || which top && exec toggle-top

@@ -7,6 +7,4 @@ killall -q blueman-applet
 while pgrep -u $UID -x blueman-applet >/dev/null; do sleep 1; done
 
 # Launch new instance
-blueman-applet &
-
-echo "Bluetooth applet for the system tray launched..."
+exec blueman-applet

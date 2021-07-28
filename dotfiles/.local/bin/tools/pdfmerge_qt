@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/bin/python3
 # Script: pdfmerge_qt.py
 # Version: 0.6 (now for Python 3, using PyPDF2)
 # Author: Jasper van Nieuwenhuizen

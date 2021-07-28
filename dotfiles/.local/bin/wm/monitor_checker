@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # This script should be run at startup/login
 # It's a simple attempt to adjust my i3/polybar setup when plugin in/out

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Terminate already running xautolock instances
 killall -q xautolock

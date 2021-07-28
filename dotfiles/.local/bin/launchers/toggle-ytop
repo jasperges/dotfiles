@@ -2,4 +2,4 @@
 
 # Check if an instance is already running. If yes, kill it, if not start a new one.
 # This effectively makes it a toggle on/off.
-pkill -U $UID -f ".*$TERMINAL -t ytop-centered ytop$" || $TERMINAL -t ytop-centered -e ytop &
+pkill -U $UID -f ".*$TERMINAL -t ytop-centered ytop$" || exec $TERMINAL -t ytop-centered -e ytop

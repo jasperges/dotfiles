@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Launch the rofi calculator and copy the result to the clipboard.
 
-rofi -modi calc -show calc -no-show-match -no-sort -terse -lines 5 \
+exec rofi -modi calc -show calc -no-show-match -no-sort -terse -lines 5 \
     -calc-command "printf '{result}' | xclip -selection clipboard"
