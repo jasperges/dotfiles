@@ -19,6 +19,7 @@ augroup filetype_python
 augroup END
 
 " Binding for `rez-release`
-nnoremap <silent> <leader>rr :!rez-release && rm -rfi build<CR>
-nnoremap <silent> <leader>rrn :!rez-release --no-latest && rm -rfi build<CR>
+nnoremap <silent> <leader>rr :!do-rez-build release %:p<CR>
+nnoremap <silent> <leader>rrn :!do-rez-build release %:p --no-latest<CR>
 nnoremap <silent> <leader>rb :!do-rez-build build %:p<CR>
+nnoremap <silent> <leader>rbo :!do-rez-build build %:p -- overwrite<CR>

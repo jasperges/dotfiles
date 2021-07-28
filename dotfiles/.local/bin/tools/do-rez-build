@@ -19,8 +19,24 @@ build() {
 
     cd "$package_dir"
     full_release_path="${default_release_path%/*}/$release_path"
-    echo "$@"
     rez-build -cip "$full_release_path" "$@"
+    build_dir="$package_dir/build"
+    read -p "Remove '$build_dir'? " -r answer
+    case "$answer" in
+        y|yes|Y|YES) rm -rf "$build_dir";;
+    esac
+}
+
+release() {
+    local build_dir
+    local package
+    local package_dir
+
+    package="$1"; shift
+    package_dir="${package%/*}"
+
+    cd "$package_dir"
+    rez-release "$@"
     build_dir="$package_dir/build"
     read -p "Remove '$build_dir'? " -r answer
     case "$answer" in
@@ -38,6 +54,7 @@ usage() {
     echo
     echo "These are the commands you can use:"
     echo
+    echo "    release Release the package from package.py"
     echo "    build   Builds the package from package.py"
     echo "    help    Show this help message"
     exit
@@ -54,6 +71,13 @@ error_usage() {
 # check if any arguments were passed
 [[ -z $* ]] && error_usage
 case "$1" in
+    release)
+        shift
+        [[ -z $* ]] && error_usage
+        package="$1"; shift
+        [[ -f $package ]] || showerror "$package"
+        release "$package" "$@"
+        ;;
     build)
         shift
         [[ -z $* ]] && error_usage
