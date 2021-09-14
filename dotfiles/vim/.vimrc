@@ -2,6 +2,13 @@ set encoding=utf-8
 
 set nocompatible
 
+" Disable gui elements if Vim is running with a GUI
+if has("gui_running")
+    set guioptions-=m  " menu bar
+    set guioptions-=T  " toolbar
+    set guioptions-=r  " scrollbar
+endif
+
 " Install Plug and plugins if needed
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
