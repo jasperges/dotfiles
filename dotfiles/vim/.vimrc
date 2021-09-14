@@ -52,8 +52,11 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'kovetskiy/sxhkd-vim'
 " Distraction free writing
 Plug 'junegunn/goyo.vim'
-"VimWiki
+" VimWiki
 Plug 'vimwiki/vimwiki'
+" Pandoc/markdown
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 " Vim syntax for TOML
 " Plug 'cespare/vim-toml'
 " Powershell
