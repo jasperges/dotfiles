@@ -125,7 +125,7 @@ lock() {
         # Turn off keyboard backlight
         turn_off_keyboardbacklight
         # pause dunst
-        export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; notify-send DUNST_COMMAND_PAUSE
+        dunstctl set-paused true
 
         lock_image="$(find "$HOME"/[Pp]ictures/backgrounds/lock -maxdepth 1 -iname '*.png' -type f | shuf -n 1)"
         # Check for multi-monitor setup
@@ -145,7 +145,7 @@ lock() {
         lock_cmd "$lock_image"
         sleep 1
         # resume dunst
-        export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; notify-send DUNST_COMMAND_RESUME
+        dunstctl set-paused false
         # Turn on keyboard backlight
         turn_on_keyboardbacklight
     fi
