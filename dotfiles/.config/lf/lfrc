@@ -58,7 +58,7 @@ cmd bulkrename ${{
 
 cmd copyclipboard ${{
         set -f
-        echo $f | xclip -selection clipboard
+        echo $f | xclip -r -selection clipboard
 	notify-send "📋 File path copied to clipboard."
 }}
 
