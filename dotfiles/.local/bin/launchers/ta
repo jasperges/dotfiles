@@ -1,4 +1,4 @@
 #!/bin/bash
 
-[[ $(pgrep tmux) ]] && exec tmux attach
+[[ $(tmux list-sessions) ]] && exec tmux attach
 exec tmux
