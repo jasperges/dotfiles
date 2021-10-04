@@ -14,6 +14,12 @@ if [[ $1 == "--username" ]]; then
     shift
 fi
 
+otp=0
+if [[ $1 == "--otp" ]]; then
+    otp=1
+    shift
+fi
+
 prefix=${PASSWORD_STORE_DIR-~/.password-store}
 password_files=( "$prefix"/**/*.gpg )
 password_files=( "${password_files[@]#"$prefix"/}" )
@@ -26,12 +32,26 @@ password=$(printf '%s\n' "${password_files[@]}" | dmenu "$@")
 [[ -n $password ]] || exit
 
 if [[ $typeit -eq 0 ]]; then
-    if [[ $username -eq 0 ]]; then
-        pass show -c "$password" 2>/dev/null
+    if [[ $username -eq 1 ]]; then
+        pass show "$password" | awk -F ":" '/username/ {printf $2}' \
+            | tr -d "[:blank:]" | xsel -i -b -t 45000
+    elif [[ $otp -eq 1 ]]; then
+        pass otp show -c "$password" 2>/dev/null
     else
-        pass show "$password" | awk -F ":" '/username/ {printf $2}' | tr -d "[:blank:]" | xsel -i -b -t 45000
+        pass show -c "$password" 2>/dev/null
     fi
 else
-	pass show "$password" | { IFS= read -r pass; printf %s "$pass"; } |
-		xdotool type --clearmodifiers --file -
+    if [[ $username -eq 1 ]]; then
+        pass show "$password" \
+            | awk -F ":" '/username/ {printf $2}' | tr -d "[:blank:]" \
+            | { IFS= read -r pass; printf %s "$pass"; } \
+            | xdotool type --clearmodifiers --file -
+
+    elif [[ $otp -eq 1 ]]; then
+        pass otp show -c "$password" | { IFS= read -r pass; printf %s "$pass"; } \
+            | xdotool type --clearmodifiers --file -
+    else
+        pass show "$password" | { IFS= read -r pass; printf %s "$pass"; } \
+            | xdotool type --clearmodifiers --file -
+    fi
 fi

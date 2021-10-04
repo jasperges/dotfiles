@@ -46,6 +46,8 @@ super + p
     passmenu -r -i -l 10
 super + shift + p
     passmenu --username -r -i -l 10
+super + ctrl + shift + p
+    passmenu --otp -r -i -l 10
 super + s; {p, a, s}
     {toggle-pulsemixer, play-silence, stop-silence}
 super + shift + t; {c, i, r, s}
