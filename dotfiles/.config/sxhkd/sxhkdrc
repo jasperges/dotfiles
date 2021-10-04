@@ -50,10 +50,11 @@ super + ctrl + shift + p
     passmenu --otp -r -i -l 10
 super + s; {p, a, s}
     {toggle-pulsemixer, play-silence, stop-silence}
-super + shift + t; {c, i, r, s}
+super + shift + t; {c, i, a, r, s}
     { \
         tt-control, \
         tt-control start issue, \
+        tt-control start issue-all, \
         tt-control start recent, \
         tt-control stop \
     }
