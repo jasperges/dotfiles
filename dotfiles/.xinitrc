@@ -53,7 +53,6 @@ $HOME/.fehbg &
 # Start apps that show in tray area
 killall -wq dropbox; dropbox start &
 killall -wq protonmail-bridge; protonmail-bridge --no-window &
-killall -wq syncthing; syncthing -no-browser &
 # killall -wq nm-applet; nm-applet &
 killall blueman-applet -wq; blueman-applet &
 
