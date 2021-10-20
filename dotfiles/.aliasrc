@@ -30,6 +30,10 @@ alias ....='cd ../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../../'
 
+# cp/mv
+alias cp='cp -v'  # make it verbose by default
+alias mv='mv -v'  # make it verbose by default
+
 # ls
 alias ls='ls --color=auto'
 alias ll='ls -l'
