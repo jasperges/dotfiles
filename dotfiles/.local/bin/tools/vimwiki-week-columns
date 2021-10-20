@@ -1,5 +1,8 @@
 #!/bin/bash
 
+target=last
+[[ $1 == "next" ]] && target=next
+
 for i in {1..5}; do
     if [[ $i -eq 1 ]]; then
         # Add weeknumber on Mondays
@@ -7,5 +10,5 @@ for i in {1..5}; do
     else
         week="  "
     fi
-    LC_TIME=nl_NL.utf8 date "+|      |           |   $week | %Y-%m-%d %a |      |            |               |             |          |" -d "last sunday +$i day"
+    LC_TIME=nl_NL.utf8 date "+|      |           |   $week | %Y-%m-%d %a |      |            |               |             |          |" -d "$target sunday +$i day"
 done
