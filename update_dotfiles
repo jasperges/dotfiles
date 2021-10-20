@@ -30,7 +30,7 @@ update_file() {
     read answer
     case $answer in
         n|N) ;;
-        *) nvim -d $file $HOME/$file ;;
+        *) vim -d $file $HOME/$file ;;
     esac
 
 }
