@@ -34,4 +34,8 @@ if [ -f "$HOME/.fzf.bash" ]; then
     source "$HOME/.fzf.bash"
 fi
 
-source $HOME/.config/broot/launcher/bash/br
+# zsh like tab completion
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
+bind '"\e[~]":menu-complete-backward'
+
