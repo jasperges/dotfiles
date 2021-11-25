@@ -1,45 +1,59 @@
 #!/bin/bash
 
+set -euo pipefail
+
 shopt -s globstar
 shopt -u failglob
 
 latest() {
+    local basename
+    local checkfile
+    local extension
+    local i
+
     i=1
-    basename=$1
-    extension=$2
-    checkfile=${basename}_$(printf %03d $i).${extension}
-    while [ -f ${checkfile} ]; do
+    basename="$1"
+    extension="$2"
+    checkfile="${basename}_$(printf %03d "$i").${extension}"
+    while [ -f "${checkfile}" ]; do
         ((i++))
-        checkfile=${basename}_$(printf %03d $i).${extension}
+        checkfile="${basename}_$(printf %03d "$i").${extension}"
     done
-    echo $i
+    echo "$i"
 }
 
 rename_photo() {
-    photo=$1
-    extension=${photo##*.}
-    time=$(exiv2 -g DateTimeOriginal ${photo})
-    read X X X year month day hour minute second <<<${time//:/ }
-    basename=$(dirname ${photo})/${year}${month}${day}_${hour}${minute}${second}
-    num=$(printf %03d $(latest ${basename} ${extension}))
-    if [ -f ${photo}.xmp ]; then
+    local basename
+    local extension
+    local num
+    local photo
+    local renamed_xmp
+    local time
+
+    photo="$1"
+    extension="${photo##*.}"
+    datestring=$(exiv2 -g DateTimeOriginal "${photo}" | awk '{print $4" "$5}')
+    read year month day hour minute second <<<"${time//:/ }"
+    basename=${photo%/*}/${year}${month}${day}_${hour}${minute}${second}
+    num=$(printf %03d "$(latest "${basename}" "${extension}")")
+    if [[ -f ${photo}.xmp ]]; then
         renamed_xmp=${basename}_${num}.${extension}.xmp
-        if [ -f ${renamed_xmp} ]; then
+        if [[ -f ${renamed_xmp} ]]; then
             echo "File already exists: ${renamed_xmp}"
         else
-            mv ${photo}.xmp ${renamed_xmp}
+            mv "${photo}.xmp" "${renamed_xmp}"
             echo "Moved ${photo}.xmp -> ${renamed_xmp}"
         fi
     fi
-    exiv2 -vtr "%Y%m%d_%H%M%S_${num}" rename $photo
+    exiv2 -vtr "%Y%m%d_%H%M%S_${num}" rename "$photo"
 }
 
 for photo in ./**/DSC*.ARW; do
     [[ ! -f $photo ]] && continue
-    rename_photo $photo
+    rename_photo "$photo"
 done
 
 for photo in ./**/DSC*.JPG; do
     [[ ! -f $photo ]] && continue
-    rename_photo $photo
+    rename_photo "$photo"
 done
