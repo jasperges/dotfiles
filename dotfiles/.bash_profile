@@ -18,11 +18,21 @@ export EDITOR=vim
 # Default browser
 export BROWSER=firefox
 
+# Notmuch config file
+export NOTMUCH_CONFIG=$HOME/.config/notmuch/notmuch-config
+
 export SUDO_ASKPASS=$HOME/.local/bin/tools/dmenupass
+
+export WORKON_HOME=$HOME/.local/share/virtualenvs
+
+# Textwidth for htitle
+export HRULEWIDTH=80
 
 # Use pinentry-curses in it's own floating terminal
 # export PINENTRY_BINARY='st -n pinentry -e "pinentry-curses $@"'
 # export PINENTRY_BINARY="pinentry-curses --ttyname pinentry"
+
+export REZ_CONFIG_FILE=$HOME/.config/rezconfig.py
 
 # ----------------------------------- path -----------------------------------
 
@@ -94,6 +104,10 @@ export CARGO_HOME=$HOME/.local/share/cargo
 export CARGO_INSTALL_ROOT=$HOME/.local/bin/cargo
 export RUSTUP_HOME=$HOME/.local/share/rustup
 
+# Add shortcuts file if it doesn't exist yet.
+if [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ]; then
+    shortcuts &>/dev/null &
+fi
 
 # Auto start X on tty1
 if [[ -z ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
