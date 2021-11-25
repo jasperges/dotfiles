@@ -1,5 +1,7 @@
 # Starship prompt configuration
 
+command_timeout = 1000
+
 [character]
 success_symbol = "[>>](5)"
 error_symbol = "[>>](bold red)"
