@@ -77,6 +77,10 @@ super + shift + w: Escape
 super + ctrl + w:
     wincenter
 
+# Dunst notifications
+super + shift + d; {a, c, h, x}
+    {dunstctl close-all, dunstctl close, dunstctl history-pop dunstctl context}
+
 # Pulse Audio controls
 {_,shift} + XF86AudioRaiseVolume
     pactl set-sink-volume @DEFAULT_SINK@ +5%{;pkill -RTMIN+8 dwmblocks;, \
