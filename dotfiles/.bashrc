@@ -37,4 +37,4 @@ fi
 # zsh like tab completion
 bind 'set show-all-if-ambiguous on'
 
-eval "$(starship init bash)"
+[[ -z $REZ_SHELL_INTERACTIVE ]] && [[ -x $(command -v starship) ]] && eval "$(starship init bash)"
