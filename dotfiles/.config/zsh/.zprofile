@@ -19,5 +19,5 @@ fi
 
 # Connect to tmux when logging in via ssh
 if [[ -z $TMUX ]] && [[ -n $SSH_TTY ]]; then
-            exec tmux new-session -A -s jasperge-session
+    exec tmux new-session -A -s jasperge-session
 fi
