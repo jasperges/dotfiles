@@ -44,6 +44,8 @@ killall -wq xss-lock; xss-lock -- $HOME/.local/bin/wm/jasperge-locker &
 
 # Start mpd
 killall -wq mpd; mpd &
+# Start spotifyd
+killall -wq spotifyd; spotifyd &
 
 # Start X compositor, notification and set wallpaper
 killall -wq picom; picom --experimental-backends -b
@@ -51,7 +53,7 @@ killall -wq dunst; dunst &
 $HOME/.fehbg &
 
 # Start apps that show in tray area
-killall -wq dropbox; dropbox start &
+# killall -wq dropbox; dropbox start &
 killall -wq protonmail-bridge; protonmail-bridge --no-window &
 # killall -wq nm-applet; nm-applet &
 killall blueman-applet -wq; blueman-applet &
