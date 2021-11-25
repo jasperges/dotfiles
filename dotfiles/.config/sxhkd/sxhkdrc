@@ -101,10 +101,10 @@ XF86KbdBrightness{Up,Down}
 
 # Media player controls
 XF86AudioPlay
-    playerctl play-pause || mpc toggle; pkill -RTMIN+3 dwmblocks
+    playerctl -a play-pause || mpc toggle; pkill -RTMIN+3 dwmblocks
 XF86AudioNext
-    playerctl next || mpc next; pkill -RTMIN+3 dwmblocks
+    playerctl -a next || mpc next; pkill -RTMIN+3 dwmblocks
 XF86AudioPrev
-    playerctl previous || mpc prev; pkill -RTMIN+3 dwmblocks
+    playerctl -a previous || mpc prev; pkill -RTMIN+3 dwmblocks
 
 # vim: set ts=4 sw=4 tw=72 et:
