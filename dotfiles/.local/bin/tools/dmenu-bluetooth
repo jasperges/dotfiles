@@ -42,7 +42,7 @@ deviceidx="$(printf '%s\n' "${bluetoothdevices[@]}" | \
         -e 's#(.*toggle-bluetooth.*)$# \1#' \
         -e 's#(.*manager)$#📟 \1#' \
         -e 's#(----.*)$#   \1#' | \
-    rofi -dmenu -lines 7 -p "Connect to Bluetooth Device" -i -markup-rows \
+        rofi -dmenu -lines "${#bluetoothdevices[@]}" -p "Connect to Bluetooth Device" -i -markup-rows \
     -select "kop" -format i)"
 [[ "$deviceidx" ]] || exit
 device="${bluetoothdevices[deviceidx]}"
