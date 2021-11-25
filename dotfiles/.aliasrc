@@ -121,4 +121,7 @@ alias '?'=duck
 alias '??'='blender-stackexchange'
 alias bs='blender-stackexchange'
 
+# start vnc server
+alias startvnc='x11vnc -noxdamage -display :0 -forever -usepw -xkb -noxrecord -noxfixes -shared'
+
 #  vim: set ts=4 sw=4 tw=0 et ft=sh:

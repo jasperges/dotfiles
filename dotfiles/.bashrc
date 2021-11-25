@@ -39,3 +39,4 @@ bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
 bind '"\e[~]":menu-complete-backward'
 
+eval "$(starship init bash)"
