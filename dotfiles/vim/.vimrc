@@ -328,6 +328,7 @@ let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_html = ['htmlbeautify', 'tidy']
 let g:neoformat_enabled_yaml = ['prettier']
+let g:shfmt_opt = '-bn -ci -sr'
 nnoremap <Leader>m <esc>:Neoformat<CR>
 
 " coc
