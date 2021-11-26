@@ -340,6 +340,7 @@ let g:coc_config_home = '~/.config/coc'
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 let g:coc_global_extensions = [
     \ 'coc-css',
+    \ 'coc-diagnostic',
     \ 'coc-go',
     \ 'coc-html',
     \ 'coc-json',
