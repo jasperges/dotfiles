@@ -28,5 +28,8 @@
       "filetypes": ["dockerfile"],
       "args": ["--stdio"]
     }
+  },
+  "diagnostic-languageserver.filetypes": {
+    "sh": "shellcheck"
   }
 }
