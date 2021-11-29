@@ -2,6 +2,7 @@
 [user]
     name = Jasper van Nieuwenhuizen
     email = jaspervannieuwenhuizen@gmail.com
+    signingkey = 057EB354FE16FFAEF6DBD7DC36EF9B57D8C7AAEC
 # Set default so that only current branch will be pushed ('simple')
 [push]
     default = simple
@@ -40,4 +41,6 @@
 [diff]
     tool = vimdiff
 [gpg]
-    program = gpg2
+    program = gpg
+[commit]
+	gpgsign = true
