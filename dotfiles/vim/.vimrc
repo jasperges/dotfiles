@@ -332,7 +332,11 @@ let g:neoformat_enabled_yaml = ['prettier']
 let g:shfmt_opt = '-bn -ci -sr'
 nnoremap <Leader>m <esc>:Neoformat<CR>
 
-" coc
+" ------------------------------ spelling errors -----------------------------
+
+hi SpellBad ctermfg=red cterm=underline
+
+" ------------------------------------ CoC -----------------------------------
 
 " coc settings
 let g:coc_config_home = '~/.config/coc'
