@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load xresources
-xrdb ~/.Xresources
+xrdb -merge ~/.Xresources
 
 # Restore last used backlight values
 if [[ -f $HOME/.last_screen_backlight ]]; then
