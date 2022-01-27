@@ -21,7 +21,7 @@
 # Set the default editor
 [core]
     editor = vim
-    excludesfile = ~/.gitignore
+    excludesfile = ~/.config/git/gitignore
     deltaBaseCacheLimit = 1G
     autocrlf = input
 # [credential]
@@ -34,7 +34,7 @@
     sw = switch
     slog = log --abbrev-commit --pretty=oneline
 [init]
-    templatedir = ~/.git_template
+    templatedir = ~/.config/git/templates
     defaultBranch = main
 [merge]
     tool = vimdiff
@@ -44,3 +44,4 @@
     program = gpg
 [commit]
 	gpgsign = true
+    template = ~/.config/git/commit-template
