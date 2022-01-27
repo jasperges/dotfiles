@@ -13,6 +13,6 @@ if test -e "${path}"; then
   exit 0
 fi
 
-printf "#!/bin/sh\n\n\n" > "${path}"
+printf "#!/bin/bash\n\n\n" > "${path}"
 chmod 755 "${path}"
 exec $EDITOR +3 "${path}"
