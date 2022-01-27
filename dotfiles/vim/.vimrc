@@ -335,12 +335,17 @@ let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_html = ['htmlbeautify', 'tidy']
 let g:neoformat_enabled_yaml = ['prettier']
+let g:neoformat_enabled_xml = ['tidy']
 let g:shfmt_opt = '-bn -ci -sr'
 nnoremap <Leader>m <esc>:Neoformat<CR>
 
+" ---------------------------------- pandoc ----------------------------------
+
+let g:pandoc#formatting#mode = 'h'  " hard wrap
+
 " ------------------------------ spelling errors -----------------------------
 
-hi SpellBad ctermfg=red cterm=underline
+hi SpellBad ctermfg=red cterm=bold,underline
 
 " ------------------------------------ CoC -----------------------------------
 
