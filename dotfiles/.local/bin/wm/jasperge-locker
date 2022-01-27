@@ -103,11 +103,11 @@ lock_cmd() {
 }
 
 turn_off_keyboardbacklight() {
-    [[ ! -f "/sys/class/leds/smc::kbd_backlight/brightness" ]] && return
+    [[ ! -f /sys/class/leds/smc::kbd_backlight/brightness ]] && return
     # Use this to restore the last value when the screen is unlocked again
     cp /sys/class/leds/smc::kbd_backlight/brightness "$HOME/.last_keyboard_backlight"
     # Turn off keyboard backlight
-    echo 0 > "/sys/class/leds/smc::kbd_backlight/brightness"
+    echo 0 > /sys/class/leds/smc::kbd_backlight/brightness
 }
 
 turn_on_keyboardbacklight() {
@@ -117,7 +117,7 @@ turn_on_keyboardbacklight() {
     backlight_keyboard=$(< "$HOME/.last_keyboard_backlight")
     # Turn on the backlight slighty if it's (almost) off.
     (( backlight_keyboard < 12 )) && backlight_keyboard=12
-    echo $backlight_keyboard > "/sys/class/leds/smc::kbd_backlight/brightness"
+    echo $backlight_keyboard > /sys/class/leds/smc::kbd_backlight/brightness
 }
 
 lock() {
