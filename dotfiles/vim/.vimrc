@@ -324,6 +324,10 @@ let g:indentLine_fileTypeExclude=['json', 'markdown', 'pandoc', 'vimwiki']
 
 let g:indentLine_bufTypeExclude=['help', 'terminal']
 
+" --------------------------------- gutentags --------------------------------
+
+let g:gutentags_ctags_tagfile='.tags'
+
 " --------------------------------- neoformat --------------------------------
 
 let g:neoformat_run_all_formatters = 1
