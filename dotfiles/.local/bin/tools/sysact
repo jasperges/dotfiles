@@ -6,7 +6,7 @@ cmds="\
    Lock Screen	jasperge-locker
    Leave dwm	kill -TERM $(pidof -s dwm)
    Restart dwm	kill -HUP $(pidof -s dwm)
-⭘   Reboot		reboot
+⭘   Reboot		shutdown -r now
    Shutdown	shutdown -h now"
 
 choice="$(echo "$cmds" | cut -d'	' -f 1 | dmenu -i -r -l 5 -p "Choose a system action")" || exit 1
