@@ -279,7 +279,7 @@ endfunction
 autocmd! User GoyoEnter call <SID>goyo_enter()
 autocmd! User GoyoLeave call <SID>goyo_leave()
 
-" vim wiki
+" ---------------------------------- vimwiki ---------------------------------
 let g:vimwiki_global_ext = 0
 let g:vimwiki_folding = 'custom'
 let vimwiki_path = '~/documents/vimwiki/'
@@ -316,14 +316,16 @@ inoremap <M-Up> <Esc>:m .-2<CR>gi
 vnoremap <M-Down> :m '>+1<CR>gv
 vnoremap <M-Up> :m '<-2<CR>gv
 
-" indent line
+" -------------------------------- indent line -------------------------------
+
 nnoremap <silent> <leader>lt <esc>:IndentLinesToggle<CR>
 nnoremap <silent> <leader>ls <esc>:LeadingSpaceToggle<CR>
 let g:indentLine_fileTypeExclude=['json', 'markdown', 'pandoc', 'vimwiki']
 
 let g:indentLine_bufTypeExclude=['help', 'terminal']
 
-" neoformat
+" --------------------------------- neoformat --------------------------------
+
 let g:neoformat_run_all_formatters = 1
 let g:neoformat_enabled_python = ['black', 'isort']
 let g:neoformat_enabled_javascript = ['prettier']
