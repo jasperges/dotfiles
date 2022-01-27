@@ -1,7 +1,8 @@
 #!/bin/sh
 
-mattermost-desktop.AppImage &
+mattermost &
+sleep 5
 telegram-desktop &
-sleep 3  # give mattermost the chance to launch before rambox and signal
-rambox &
+sleep 5
+exec rambox
 # signal-desktop &
