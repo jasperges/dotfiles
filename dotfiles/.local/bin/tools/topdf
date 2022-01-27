@@ -1,0 +1,4 @@
+#!/bin/bash
+
+[[ -z $1 ]] && exit 1
+libreoffice --convert-to pdf "$1"
