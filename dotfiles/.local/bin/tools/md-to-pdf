@@ -1,0 +1,80 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# --------------------------------- functions --------------------------------
+
+convert() {
+    local basename
+    local dirname
+    local inputfile
+    local outputfile
+    local intermediatebasename
+    local intermediatefile
+
+    inputfile="$1"
+    dirname="${inputfile%/*}"
+    basename="${inputfile%.*}"
+    intermediatebasename="${basename}-temp-$(uuidgen)"
+    outputfile="${basename}.pdf"
+
+    cd "$dirname" || exit $?
+
+    if grep -q '```mermaid' "$inputfile"; then
+        intermediatefile="${intermediatebasename}.md"
+        # default, forest, dark or neutral
+        mmdc -q -c "$HOME/.config/mermaid/config.json" -i "$inputfile" -o "$intermediatefile"
+        md-mermaid-label < "$intermediatefile" > "${intermediatefile}.temp"
+        pandocconvert "${intermediatefile}.temp" "$outputfile"
+        # Clean up intermediate files
+        rm "$intermediatebasename"*
+    else
+        pandocconvert "$inputfile" "$outputfile"
+
+    fi
+}
+
+pandocconvert() {
+    local inputfile
+    local outputfile
+
+    inputfile="$1"
+    outputfile="$2"
+    pandoc "$inputfile" -f markdown -o "$outputfile" --template eisvogel \
+        --filter pandoc-latex-environment
+}
+
+showerror() {
+    echo "No file or the file doesn't exist: $1"
+    exit 1
+}
+
+usage() {
+    echo "usage: md-to-pdf [markdownfile.md]"
+    echo
+    echo "It will convert to markdown file to a pdf file with the same "
+    echo "basename. If mermaid graphs are detected, they are made into .svg "
+    echo "images and will be included in the pdf. The temporary files will "
+    echo "be deleted at the end."
+    exit
+}
+
+error_usage() {
+    echo "usage: md-to-pdf [markdownfile.md]"
+    exit 1
+}
+
+# -------------------------------- delegation --------------------------------
+
+# check if any arguments were passed
+[[ -z $* ]] && error_usage
+case "$1" in
+    help) usage ;;
+    *)
+        if [[ -f "$1" ]]; then
+            convert "$1" && exit
+        else
+            showerror "$1"
+        fi
+        ;;
+esac
