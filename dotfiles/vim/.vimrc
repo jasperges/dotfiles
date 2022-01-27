@@ -254,8 +254,9 @@ autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|x!<CR>
 autocmd BufRead,BufNewFile *.py :let g:goyo_width=120
-autocmd BufRead,BufNewFile *.py :let g:goyo_linenr=2
+autocmd BufRead,BufNewFile *.py :let g:goyo_linenr=1
 autocmd BufRead,BufNewFile *.md :let g:goyo_width=121
+autocmd BufRead,BufNewFile *.md :let g:goyo_linenr=1
 nnoremap <silent> <Leader>gy :Goyo<CR>
 
 function! s:goyo_enter()
