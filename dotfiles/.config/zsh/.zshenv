@@ -84,7 +84,6 @@ pathprepend \
 
 pathappend \
     $HOME/.config/yarn/global/node_modules/.bin \
-    $HOME/.poetry/bin \
     $HOME/.yarn/bin \
     /opt/Shotgun \
     /usr/local/DJV2/bin \
