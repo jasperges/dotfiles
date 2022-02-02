@@ -9,3 +9,10 @@ done
 xinput | awk -F '\t' '/Finger/ {print $2}' | cut -d = -f 2 | xargs -rL 1 xinput disable
 # Disable buttons
 xinput | awk -F '\t' '/Pad pad/ {print $2}' | cut -d = -f 2 | xargs -r -L 1 -I "{}" xinput set-button-map "{}" 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+# Map wacom to main monitor
+primary_monitor=$(xrandr --listactivemonitors | awk '/[0-9]: \+\*/ {print $4}')
+readarray -t wacomids < <(xinput list --short | sed -nEe "s/^.*Wacom.*id=([0-9]+).*\[slave[ \t]+pointer.*$/\1/p")
+for i in "${wacomids[@]}"; do
+    xinput map-to-output "$i" "$primary_monitor"
+done
