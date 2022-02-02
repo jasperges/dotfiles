@@ -41,7 +41,7 @@ pandocconvert() {
     inputfile="$1"
     outputfile="$2"
     pandoc "$inputfile" -f markdown -o "$outputfile" --template eisvogel \
-        --filter pandoc-latex-environment
+        --filter pandoc-latex-environment --pdf-engine xelatex
 }
 
 showerror() {
