@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# This filters the input stream to only show the link URL for markdown links.
+
+while IFS= read -r line; do
+    if [[ "$line" =~ \[.*\]\((.*)\) ]]; then
+        printf "%s" "${BASH_REMATCH[1]}.md"
+    fi
+done
