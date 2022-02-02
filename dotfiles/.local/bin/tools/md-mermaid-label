@@ -19,6 +19,7 @@ for ((i = 0; i < ${#lines[@]}; i++)); do
             remove=1
             echo "![${label}](${imagepath})"
         fi
+        echo "${lines[$i]}"
     else
         echo "${lines[$i]}"
     fi
