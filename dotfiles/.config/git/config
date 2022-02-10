@@ -26,13 +26,14 @@
     autocrlf = input
 # [credential]
 [alias]
-    co = checkout
-    st = status
     b = branch
     ci = commit
+    co = checkout
+    mr = !sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -
+    slog = log --abbrev-commit --pretty=oneline
+    st = status
     st = status
     sw = switch
-    slog = log --abbrev-commit --pretty=oneline
 [init]
     templatedir = ~/.config/git/templates
     defaultBranch = main
@@ -45,3 +46,5 @@
 [commit]
 	gpgsign = true
     template = ~/.config/git/commit-template
+[fetch]
+	prune = true
