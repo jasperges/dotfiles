@@ -18,8 +18,9 @@ for ((i = 0; i < ${#lines[@]}; i++)); do
             label="${BASH_REMATCH[1]}"
             remove=1
             echo "![${label}](${imagepath})"
+        else
+            echo "${lines[$i]}"
         fi
-        echo "${lines[$i]}"
     else
         echo "${lines[$i]}"
     fi
