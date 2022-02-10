@@ -36,11 +36,11 @@ super + i; {p}
     {import_photos}
 super + shift + m; {m, u, s, d}
     {dmenu-mount,dmenu-umount,dmenu-servermount,dmenu-serverumount}
-super + o; {b, c, g, h, m, w, p, o, j, t, y}
+super + o; {b, c, g, h, m, w, p, o, j, t, y, n}
     { \
-        toggle-bashtop, launch-chat-apps, toggle-gotop, toggle-htop, neomutt_run, $BROWSER, \
+        toggle-btop, launch-chat-apps, toggle-gotop, toggle-htop, neomutt_run, $BROWSER, \
         ncmpcpp_local, ncmpcpp_guybrush, dmenu-jobs, \
-        toggle-trayer, toggle-ytop \
+        toggle-trayer, toggle-ytop, toggle-nethogs \
     }
 super + p
     passmenu -r -i -l 10
