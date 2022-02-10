@@ -16,3 +16,5 @@ endfunction
 command! FollowLink call FollowLink()
 nnoremap <silent> <CR> :FollowLink<CR>
 nnoremap <script> <BS> :e#<CR>
+nnoremap <silent> <leader>dd :%!date-to-today<CR>
+nnoremap <silent> <leader>pp :terminal ++hidden md-to-pdf %:p<CR>
