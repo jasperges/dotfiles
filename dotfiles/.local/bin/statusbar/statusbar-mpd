@@ -23,7 +23,7 @@ mpdswitch() {
     choice=$(printf "local\nguybrush" | dmenu -p "Choose player" -l 2 -r -i)
     case "$choice" in
         local) echo "localhost,6600" > "$hostinfofile";;
-        guybrush) echo "guybrush.local,5700" > "$hostinfofile";;
+        guybrush) echo "guy,5700" > "$hostinfofile";;
     esac
 }
 
