@@ -4,6 +4,7 @@
 
 while IFS= read -r line; do
     if [[ "$line" =~ \[.*\]\((.*)\) ]]; then
-        printf "%s" "${BASH_REMATCH[1]}"
+        link="${BASH_REMATCH[1]}"
+        printf "%s" "$link"
     fi
 done
