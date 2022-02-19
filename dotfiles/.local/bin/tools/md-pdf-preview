@@ -10,7 +10,7 @@ checkdeps() {
     local prog
 
     has_error=0
-    for prog in mmdc md-mermaid-label pandoc; do
+    for prog in entr md-to-pdf zathura; do
         if ! command -v "$prog" &> /dev/null; then
             echo "'$prog' not found, can't run without it."
             has_error=1
@@ -20,42 +20,47 @@ checkdeps() {
     return 0
 }
 
-convert() {
+
+preview() {
     local basename
     local directory
+    local entrpid
     local inputfile
     local outputfile
-    local intermediatebasename
-    local intermediatefile
+    local timeout
+    local timepassed
     local version
 
+    timeout=60
     inputfile="$1"
     version=$(getversion "$inputfile")
     directory=$(absdir "$inputfile")
     basename="${inputfile%.*}"
     filebase="${basename##*/}"
-    intermediatebasename="${basename}-temp-$(uuidgen)"
     [[ -d $directory/_versions ]] && basename="${directory}/_versions/${filebase}"
     if [[ -n $version ]]; then
         outputfile="${basename}-${version}.pdf"
     else
         outputfile="${basename}.pdf"
     fi
-
-    cd "$directory" || exit $?
-
-    if grep -q '```mermaid' "$inputfile"; then
-        intermediatefile="${intermediatebasename}.md"
-        # default, forest, dark or neutral
-        mmdc -q -c "$HOME/.config/mermaid/config.json" -i "$inputfile" -o "$intermediatefile"
-        md-mermaid-label < "$intermediatefile" > "${intermediatefile}.temp"
-        pandocconvert "${intermediatefile}.temp" "$outputfile"
-        # Clean up intermediate files
-        rm "$intermediatebasename"*
+    if [[ -f $outputfile ]]; then
+        entr -np md-to-pdf /_ <<< "$inputfile" &
     else
-        pandocconvert "$inputfile" "$outputfile"
-
+        entr -n md-to-pdf /_ <<< "$inputfile" &
     fi
+    entrpid="$!"
+
+    timepassed=0
+    while [[ ! -f $outputfile && $timepassed -lt $timeout ]]; do
+        sleep 2
+        timepassed=$((timepassed + 2))
+    done
+    if [[ $timepassed -ge $timeout ]]; then
+        echo "Timeout while waiting for pdf file..."
+        exit 1
+    fi
+    zathura "$outputfile"
+    kill "$entrpid"
 }
 
 getversion() {
@@ -68,28 +73,18 @@ getversion() {
     fi
 }
 
-pandocconvert() {
-    local inputfile
-    local outputfile
-
-    inputfile="$1"
-    outputfile="$2"
-    pandoc "$inputfile" -f markdown -o "$outputfile" --template eisvogel \
-        --filter pandoc-latex-environment --pdf-engine xelatex
-}
-
 showerror() {
     echo "No file or the file doesn't exist: $1"
     exit 1
 }
 
 usage() {
-    echo "usage: md-to-pdf [markdownfile.md]"
+    echo "usage: md-pdf-preview [markdownfile.md]"
     echo
-    echo "It will convert to markdown file to a pdf file with the same "
-    echo "basename. If mermaid graphs are detected, they are made into .svg "
-    echo "images and will be included in the pdf. The temporary files will "
-    echo "be deleted at the end."
+    echo "This will invoke 'entr' to watch for changes in the markdown file."
+    echo "At first run and also when changes are detected the document is"
+    echo "converted to pdf with 'md-to-pdf'. The generated pdf file is opened"
+    echo "in the default pdf viewer."
     exit
 }
 
@@ -106,7 +101,7 @@ case "$1" in
     help) usage ;;
     *)
         if [[ -f "$1" ]]; then
-            checkdeps && convert "$1" && exit
+            checkdeps && preview "$1" && exit
         else
             showerror "$1"
         fi
