@@ -344,6 +344,8 @@ nnoremap <Leader>m <esc>:Neoformat<CR>
 " ---------------------------------- pandoc ----------------------------------
 
 let g:pandoc#formatting#mode = 'h'  " hard wrap
+let g:pandoc#formatting#textwidth = 99
+let g:pandoc#folding#fold_yaml = 1
 
 " ------------------------------ spelling errors -----------------------------
 
