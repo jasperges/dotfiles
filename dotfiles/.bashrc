@@ -6,7 +6,7 @@
 [[ -f $HOME/.config/user-dirs.dirs ]] && source "$HOME/.config/user-dirs.dirs"
 
 # Use beam shape cursor on startup.
-echo -ne '\e[5 q'
+[[ $- == *i* ]] && echo -ne '\e[5 q'
 
 export XDG_CONFIG_HOME=$HOME/.config
 
