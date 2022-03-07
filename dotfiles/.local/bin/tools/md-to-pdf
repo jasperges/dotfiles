@@ -10,7 +10,7 @@ checkdeps() {
     local prog
 
     has_error=0
-    for prog in mmdc md-mermaid-label pandoc; do
+    for prog in absdir mmdc md-mermaid-label pandoc; do
         if ! command -v "$prog" &> /dev/null; then
             echo "'$prog' not found, can't run without it."
             has_error=1
