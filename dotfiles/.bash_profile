@@ -32,6 +32,9 @@ export HRULEWIDTH=80
 
 export REZ_CONFIG_FILE=$HOME/.config/rezconfig.py
 
+# Use a dark theme in Calibre
+export CALIBRE_USE_DARK_PALETTE=1
+
 # ----------------------------------- path -----------------------------------
 
 pathappend() {
