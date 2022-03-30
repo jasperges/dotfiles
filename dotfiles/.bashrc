@@ -36,7 +36,8 @@ bind 'set vi-ins-mode-string "\1\e[6 q\2"'
 [[ -f $HOME/.fzf.bash ]] && source "$HOME/.fzf.bash"
 
 # virtualenvwrapper
-[[ -f $HOME/.local/bin/virtualenvwrapper.sh ]] && source "$HOME/.local/bin/virtualenvwrapper.sh"
+[[ -z $REZ_SHELL_INTERACTIVE ]] && [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]] \
+    && source "$HOME/.local/bin/virtualenvwrapper.sh"
 
 # rez
 [[ -f /opt/rez/completion/complete.sh ]] && source /opt/rez/completion/complete.sh
