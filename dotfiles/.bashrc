@@ -43,7 +43,7 @@ bind 'set vi-ins-mode-string "\1\e[6 q\2"'
 [[ -f /opt/rez/completion/complete.sh ]] && source /opt/rez/completion/complete.sh
 
 # dir colors
-[[ -f $HOME/.dircolors ]] && eval $(dircolors "$HOME/.dircolors")
+[[ -f $HOME/.dircolors ]] && eval "$(dircolors "$HOME/.dircolors")"
 
 # zsh like tab completion
 bind 'set show-all-if-ambiguous on'
