@@ -16,3 +16,6 @@ readarray -t wacomids < <(xinput list --short | sed -nEe "s/^.*Wacom.*id=([0-9]+
 for i in "${wacomids[@]}"; do
     xinput map-to-output "$i" "$primary_monitor"
 done
+
+# Tilde next to z key, also on laptop. This disables the section/plusminus key which I never use.
+xmodmap -e 'keycode 94 = grave asciitilde grave asciitilde dead_grave dead_horn dead_grave' &
