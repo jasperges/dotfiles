@@ -80,10 +80,16 @@ Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
+" Keep backup while overwriting file
+set writebackup
 " Don't keep a backup file
 set nobackup
 " Keep an undo file (undo changes after closing)
 set undofile
+" Change backup, swap and undo files directories
+set backupdir=~/vim/tmp/backup//,~/tmp//,/tmp//,/var/tmp//
+set directory=~/.vim/tmp/swap//,~/tmp//,/tmp//,/var/tmp//
+set undodir=~/.vim/tmp/undo//,~/tmp//,/tmp//,/var/tmp//
 
 " Change cursor shape to bar in insert mode
 " Ps = 0  -> blinking block.
@@ -371,9 +377,6 @@ let g:coc_global_extensions = [
     \ 'coc-snippets',
     \ 'coc-yaml',
     \ ]
-
-" Some servers have issues with backup files, see #649
-set nowritebackup
 
 " Give more space for displaying messages.
 set cmdheight=2
