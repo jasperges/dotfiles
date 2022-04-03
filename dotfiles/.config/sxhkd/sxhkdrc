@@ -18,7 +18,7 @@ super + c; {c, r, t}
     {rofi_calc, dmenu-rez-config, dmenu-term-colors toggle}
 super + d; {b, c, d, e, g, f, i, m, r, t, w, x, s}
     { \
-        setup-beamer, \
+        setup-beamer 1280x720, \
         colorpicker --one-shot --short --preview | tr -d '[:space:]' | xclip -selection clipboard, \
         rofi_run drun, \
         dmenu-unicode, \
