@@ -18,6 +18,9 @@ augroup filetype_python
      autocmd BufWritePre *.py Neoformat
 augroup END
 
+" Execute the python file with the default Python interpreter
+nnoremap <silent> <leader>pp :!python %:p<CR>
+
 " Binding for `rez-release`
 nnoremap <silent> <leader>rr :!do-rez-build release %:p<CR>
 nnoremap <silent> <leader>rrn :!do-rez-build release %:p --no-latest<CR>
