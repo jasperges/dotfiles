@@ -15,7 +15,7 @@ let g:neoformat_enabled_python = ['black', 'isort']
 augroup filetype_python
     autocmd!
     " Format file with isort and black on save
-     autocmd BufWritePre *.py Neoformat
+    autocmd BufWritePre *.py Neoformat
 augroup END
 
 " Execute the python file with the default Python interpreter
