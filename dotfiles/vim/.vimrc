@@ -357,6 +357,10 @@ let g:pandoc#folding#fold_yaml = 1
 
 hi SpellBad ctermfg=red cterm=bold,underline
 
+" ---------------------------------- htitle ----------------------------------
+
+nnoremap <silent> <leader>ht <esc>:.!htitle<CR>
+
 " ------------------------------------ CoC -----------------------------------
 
 " coc settings
