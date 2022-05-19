@@ -33,3 +33,6 @@ tags.temp
 
 # Temporarily disable `typings` until I've made a proper setup
 typings
+# Don't track 'test.py' files in the root of a repository. They are most likely
+# for my own testing purposes.
+/test.py
