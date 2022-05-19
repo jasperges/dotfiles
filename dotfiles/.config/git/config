@@ -38,9 +38,9 @@
     templatedir = ~/.config/git/templates
     defaultBranch = main
 [merge]
-    tool = vimdiff
+    tool = vim -d
 [diff]
-    tool = vimdiff
+    tool = vim -d
 [gpg]
     program = gpg
 [commit]
