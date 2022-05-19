@@ -87,9 +87,18 @@ set nobackup
 " Keep an undo file (undo changes after closing)
 set undofile
 " Change backup, swap and undo files directories
-set backupdir=~/vim/tmp/backup//,~/tmp//,/tmp//,/var/tmp//
-set directory=~/.vim/tmp/swap//,~/tmp//,/tmp//,/var/tmp//
-set undodir=~/.vim/tmp/undo//,~/tmp//,/tmp//,/var/tmp//
+" For performance reasons I sometimes like to use NeoVim as well. The backup
+" and undo files are not compatible between Vim and NeoVim so they will be
+" configured separately.
+if !has('nvim')
+    set backupdir=~/vim/tmp/backup//,~/tmp//,/tmp//,/var/tmp//
+    set directory=~/.vim/tmp/swap//,~/tmp//,/tmp//,/var/tmp//
+    set undodir=~/.vim/tmp/undo//,~/tmp//,/tmp//,/var/tmp//
+else
+    set backupdir=~/.local/share/nvim/backup// " default minus current directory
+    set directory=~/.local/share/nvim/swap//   " default
+    set undodir=~/.local/share/nvim/undo//     " default
+endif
 
 " Change cursor shape to bar in insert mode
 " Ps = 0  -> blinking block.
