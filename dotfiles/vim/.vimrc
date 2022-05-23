@@ -67,10 +67,15 @@ Plug 'sbdchd/neoformat'
 Plug 'vim-scripts/restore_view.vim'
 " UltiSnip Snippets, can be used by coc-snippets
 Plug 'honza/vim-snippets'
-" Debugging
-Plug 'puremourning/vimspector'
-" CoC
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+if !empty($USE_FULL_BLOWN_VIM)
+    " Only use these plug-ins on a workstation. On (simple home) servers these
+    " are overkill and can easily kill performance. This can be toggled by
+    " setting the environment variable 'USE_FULL_BLOWN_VIM'
+    " Debugging
+    Plug 'puremourning/vimspector'
+    " CoC
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 call plug#end()
 
 " Keep backup while overwriting file
@@ -362,6 +367,10 @@ hi SpellBad ctermfg=red cterm=bold,underline
 " ---------------------------------- htitle ----------------------------------
 
 nnoremap <silent> <leader>ht <esc>:.!htitle<CR>
+
+if empty($USE_FULL_BLOWN_VIM)
+    finish
+endif
 
 " -------------------------------- Vimspector --------------------------------
 
