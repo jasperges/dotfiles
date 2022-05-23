@@ -48,8 +48,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 " Collection of language packs
 Plug 'sheerun/vim-polyglot'
-" Support for sxhkd config file
-" Plug 'kovetskiy/sxhkd-vim'
 " Distraction free writing
 Plug 'junegunn/goyo.vim'
 " VimWiki
@@ -57,10 +55,6 @@ Plug 'vimwiki/vimwiki'
 " Pandoc/markdown
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-" Vim syntax for TOML
-" Plug 'cespare/vim-toml'
-" Powershell
-" Plug 'PProvost/vim-ps1'
 " Indentline
 Plug 'Yggdroot/indentLine'
 " Buffer explorer
@@ -73,9 +67,6 @@ Plug 'sbdchd/neoformat'
 Plug 'vim-scripts/restore_view.vim'
 " UltiSnip Snippets, can be used by coc-snippets
 Plug 'honza/vim-snippets'
-" Restructured text
-" Plug 'gu-fan/riv.vim'
-" Plug 'gu-fan/InstantRst'
 " Debugging
 Plug 'puremourning/vimspector'
 " CoC
