@@ -48,7 +48,7 @@ pathappend() {
         PATH=${PATH/#${arg}:/}
         # Remove the path if it's at the end of PATH
         PATH=${PATH/%:${arg}/}
-        # Add the path to the beginning of PATH
+        # Add the path to the end of PATH
         export PATH="${PATH:+"${PATH}:"}${arg}"
     done
 }
@@ -64,7 +64,7 @@ pathprepend() {
         PATH=${PATH/#${arg}:/}
         # Remove the path if it's at the end of PATH
         PATH=${PATH/%:${arg}/}
-        # Add the path to the end of PATH
+        # Add the path to the beginning of PATH
         export PATH="${arg}${PATH:+":${PATH}"}"
     done
 }
@@ -82,8 +82,8 @@ pathprepend \
     $HOME/.local/bin/launchers \
     $HOME/.local/bin/statusbar \
     $HOME/.local/bin/wm \
-    $SCRIPTS
-
+    $SCRIPTS \
+    /opt/go/go/bin
 
 pathappend \
     $HOME/.config/yarn/global/node_modules/.bin \
@@ -107,17 +107,17 @@ export RUSTUP_HOME=$HOME/.local/share/rustup
 
 # Add shortcuts file if it doesn't exist yet.
 if [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ]; then
-    shortcuts &>/dev/null &
+    shortcuts &> /dev/null &
 fi
 
 # Auto start X on tty1
 if [[ -z ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
-    exec startx &>/dev/null
+    exec startx &> /dev/null
 fi
 
 if [[ -n ${DISPLAY} ]]; then
     # Add non-network connections to access control list
-    xhost + local: &>/dev/null
+    xhost + local: &> /dev/null
 fi
 
 # Connect to tmux when logging in via ssh
