@@ -20,7 +20,6 @@ checkdeps() {
     return 0
 }
 
-
 preview() {
     local basename
     local directory
@@ -66,8 +65,8 @@ preview() {
 getversion() {
     local versionline
 
-    versionline=$(grep -oE "^version:\s+(&[A-Z]+)?\s+v?[0-9]+(\.[0-9]+)?(\.[0-9]+)?" "$1")
-    if [[ $versionline =~ version:[[:space:]]+(&[A-Z]+)?[[:space:]]+(v?[0-9]+(\.[0-9]+)?(\.[0-9]+)?) ]]; then
+    versionline=$(grep -oE "^version:\s+(&[A-Z]+\s?)?v?[0-9]+(\.[0-9]+)?(\.[0-9]+)?" "$1")
+    if [[ $versionline =~ version:[[:space:]]+(&[A-Z]+[[:space:]]?)?(v?[0-9]+(\.[0-9]+)?(\.[0-9]+)?) ]]; then
         version="${BASH_REMATCH[2]}"
         echo "$version"
     fi

@@ -106,7 +106,7 @@ export CARGO_INSTALL_ROOT=$HOME/.local/bin/cargo
 export RUSTUP_HOME=$HOME/.local/share/rustup
 
 # Add shortcuts file if it doesn't exist yet.
-if [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ]; then
+if [[ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ]]; then
     shortcuts &> /dev/null &
 fi
 
@@ -122,7 +122,7 @@ fi
 
 # Connect to tmux when logging in via ssh
 if [[ -z $TMUX ]] && [[ -n $SSH_TTY ]]; then
-    exec tmux new-session -A -s jasperge-session
+    exec tmux new-session -A -s "$USER"
 fi
 
 # Make directories and files completely private by default

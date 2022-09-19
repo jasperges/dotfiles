@@ -5,10 +5,10 @@ declare -a LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING=(
     "Pinentry-gtk-2" "Jitsi Meet" "zoom"
 )
 declare -a LIST_OF_WM_CLASSES_THAT_PREVENT_LOCKING_FULLSCREEN=(
-    "mpv" "Wine" "vlc" "Pinentry-gtk-2" "Firefox"
+    "mpv" "Wine" "vlc" "Pinentry-gtk-2" "Firefox" "firefox" "Navigator" "Google-chrome"
 )
 declare -a LIST_OF_WINDOW_TITLES_THAT_PREVENT_LOCKING_FULLSCREEN=(
-    "NPO" "YouTube" "Netflix" "Prime Video" "Jitsi Meet"
+    "NPO" "YouTube" "Netflix" "Prime Video" "Jitsi Meet" "HBO Max"
 )
 
 declare -a LOCK_IMAGES
@@ -66,8 +66,8 @@ should_lock() {
 # Create one big image spanning all monitors
 create_monitor_spanning_image() {
     lock_image="$1"
-    monitors_size_pos=$(xrandr --listactivemonitors | awk -F ' ' '/^\s[[:digit:]]:\s/ {print $3}' | \
-        sed -nE "s|^([[:digit:]]+)/[[:digit:]]+x([[:digit:]]+)/[[:digit:]]+\+([[:digit:]]+)\+([[:digit:]]+)|\1x\2+\3+\4|p")
+    monitors_size_pos=$(xrandr --listactivemonitors | awk -F ' ' '/^\s[[:digit:]]:\s/ {print $3}' \
+        | sed -nE "s|^([[:digit:]]+)/[[:digit:]]+x([[:digit:]]+)/[[:digit:]]+\+([[:digit:]]+)\+([[:digit:]]+)|\1x\2+\3+\4|p")
     while IFS= read -r line; do
         x=$(echo "$line" | cut -dx -f1)
         # y=$(echo "$line" | cut -dx -f2 | cut -d+ -f1)
@@ -116,7 +116,7 @@ turn_on_keyboardbacklight() {
     # Restore last used backlight values
     backlight_keyboard=$(< "$HOME/.last_keyboard_backlight")
     # Turn on the backlight slighty if it's (almost) off.
-    (( backlight_keyboard < 12 )) && backlight_keyboard=12
+    ((backlight_keyboard < 12)) && backlight_keyboard=12
     echo $backlight_keyboard > /sys/class/leds/smc::kbd_backlight/brightness
 }
 
