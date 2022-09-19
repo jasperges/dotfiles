@@ -6,7 +6,8 @@ nnoremap <silent> <leader>pm :! daily-todo-to-mattermost post %:p<CR>
 nnoremap <silent> <leader>em :! daily-todo-to-mattermost edit %:p<CR>
 nnoremap <silent> <leader>wc :.-read !vimwiki-week-columns<CR>:VimwikiTableAlignW<CR>
 nnoremap <silent> <leader>wcn :.-read !vimwiki-week-columns next<CR>:VimwikiTableAlignW<CR>
-nnoremap <silent> <leader>il :.!get-issue-link<CR>
+nnoremap <silent> <leader>li :.!get-issue-link<CR>
+nnoremap <silent> <leader>lm :.!get-mr-link<CR>
 nnoremap <silent> <leader>dd :%!date-to-today<CR>
 nnoremap <silent> <leader>pp :terminal ++hidden md-to-pdf %:p<CR>
 
