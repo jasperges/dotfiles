@@ -4,6 +4,9 @@
 # dotenv
 .env
 
+# rope
+/.ropeproject/
+
 # virtualenv
 venv/
 .venv/
@@ -36,3 +39,6 @@ typings
 # Don't track 'test.py' files in the root of a repository. They are most likely
 # for my own testing purposes.
 /test.py
+# Gutentags settings
+/.gutctags
+/.notags
