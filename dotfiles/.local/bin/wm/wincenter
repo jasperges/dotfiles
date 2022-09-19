@@ -1,13 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
-winid="$(pfw)"
+winid="$(xdotool getactivewindow)"
 # It seems this always gets the geometry of the biggest display, but I don't
 # really care. I'm using this mainly on the main (biggest) monitor anyway...
-displayinfo="$(xdotool getdisplaygeometry)"
-displaywidth="$(echo $displayinfo | cut -d " " -f 1)"
-displayheight="$(echo $displayinfo | cut -d " " -f 2)"
+displayinfo=$(xdotool getdisplaygeometry)
+displaywidth=$(cut -d " " -f 1 <<< "$displayinfo")
+displayheight=$(cut -d " " -f 2 <<< "$displayinfo")
 
-x="$(expr $displaywidth / 2)"
-y="$(expr $displayheight / 2)"
+windowgeometry=$(xdotool getwindowgeometry --shell "$winid")
+windowwidth=$(grep "WIDTH=" <<< "$windowgeometry" | cut -d "=" -f 2)
+windowheight=$(grep "HEIGHT=" <<< "$windowgeometry" | cut -d "=" -f 2)
 
-wmv -a "$x" "$y" "$winid"
+x=$(((displaywidth - windowwidth) / 2))
+y=$(((displayheight - windowheight) / 2))
+
+xdotool windowmove "$winid" "$x" "$y"
+exec xdotool mousemove -w "$winid" $((windowwidth / 2)) $((windowheight / 2))

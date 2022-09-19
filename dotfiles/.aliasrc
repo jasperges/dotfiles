@@ -19,8 +19,8 @@ alias .4='cd ../../../../'
 alias .5='cd ../../../../../'
 
 # cp/mv
-alias cp='cp -v'  # make it verbose by default
-alias mv='mv -v'  # make it verbose by default
+alias cp='cp -v' # make it verbose by default
+alias mv='mv -v' # make it verbose by default
 
 # ls
 alias ls='ls --color=auto'
@@ -29,8 +29,11 @@ alias la='ls -lA'
 alias llc='c; ll'
 alias lac='c; la'
 
+# tmux session
+alias tm='tmux new-session -A -s "${USER}"'
+
 # lf
-alias lf='lfimg'  # lf with ueberzug
+alias lf='lfimg' # lf with ueberzug
 
 # Create parent dirs on demand
 alias mkdir='mkdir -pv'
@@ -72,7 +75,6 @@ alias ping='ping -c 1'
 # shortcuts
 # shellcheck disable=1090
 [[ -f ~/.config/shell/shortcutrc ]] && source ~/.config/shell/shortcutrc
-
 
 # python/pip
 alias pip2userupdate='pip2 list --user --outdated --format=freeze | grep -v "^\-e" | cut -d = -f 1  | xargs -n1 pip2 install --user --upgrade'

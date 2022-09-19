@@ -33,7 +33,7 @@ super + d; {b, c, d, e, g, f, i, m, r, t, w, x, s}
         dmenu-scrot, \
     }
 super + i; {p}
-    {import_photos}
+    {media-import}
 super + shift + m; {m, u, s, d}
     {dmenu-mount,dmenu-umount,dmenu-servermount,dmenu-serverumount}
 super + o; {b, c, g, h, m, w, p, o, j, t, y, n}
@@ -80,6 +80,10 @@ super + ctrl + w:
 # Dunst notifications
 super + shift + d; {a, c, h, x}
     {dunstctl close-all, dunstctl close, dunstctl history-pop, dunstctl context}
+
+# Kill windows
+super + shift + x
+    xkill
 
 # Pulse Audio controls
 {_,shift} + XF86AudioRaiseVolume

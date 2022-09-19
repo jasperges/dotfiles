@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 hostinfofile="${XDG_CACHE_HOME:-$HOME/.cache}/mpdhostinfo"
 
 readhostinfo() {
-    hostinfo=$(cat "$hostinfofile" 2>/dev/null)
+    hostinfo=$(cat "$hostinfofile" 2> /dev/null)
     if [ -n "$hostinfo" ]; then
         host=$(echo "$hostinfo" | cut -d "," -f 1)
         port=$(echo "$hostinfo" | cut -d "," -f 2)
@@ -16,21 +16,13 @@ readhostinfo() {
 
 mpdtoggle() {
     readhostinfo
-    mpc toggle &>/dev/null
-}
-
-mpdswitch() {
-    choice=$(printf "local\nguybrush" | dmenu -p "Choose player" -l 2 -r -i)
-    case "$choice" in
-        local) echo "localhost,6600" > "$hostinfofile";;
-        guybrush) echo "guy,5700" > "$hostinfofile";;
-    esac
+    mpc toggle &> /dev/null
 }
 
 case $BUTTON in
     1) mpdtoggle ;;
     2) readhostinfo && ${TERMINAL} --class OPAQUE -t ncmpcpp-centered \
-        -e ncmpcpp -h ${MPD_HOST:-localhost} -p ${MPD_PORT:-6600} ;;
+        -e ncmpcpp -h "${MPD_HOST:-localhost}" -p "${MPD_PORT:-6600}" ;;
     3) mpdswitch ;;
 esac
 
@@ -42,9 +34,9 @@ mpd() {
     # Limit the amount of characters for the current playing song based on the
     # horizontal resolution
     monitorwidth=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)
-    if [ $(expr $monitorwidth \>= 1920) = 1 ]; then
+    if [[ $monitorwidth -ge 1920 ]]; then
         currentwidth=35
-    elif [ $(expr $monitorwidth \>= 1680) = 1 ]; then
+    elif [[ $monitorwidth -ge 1680 ]]; then
         currentwidth=30
     else
         currentwidth=20
@@ -55,9 +47,9 @@ mpd() {
         | sed "s/^ - //" | sed "s/^\(.\{$currentwidth\}\).*/\1.../")
 
     case $status in
-        "playing" ) printf "   %s   " "$current" ;;
-        "paused" ) printf "   %s   " "$current" ;;
-        * ) printf "  栗   " ;;
+        "playing") printf "   %s   " "$current" ;;
+        "paused") printf "   %s   " "$current" ;;
+        *) printf "  栗   " ;;
     esac
 }
 
