@@ -23,5 +23,7 @@ command! FollowLink call FollowLink()
 nnoremap <silent> <CR> :FollowLink<CR>
 nnoremap <script> <BS> :e#<CR>
 nnoremap <silent> <leader>pdd :%!date-to-today<CR>
-nnoremap <silent> <leader>pmp :terminal ++hidden md-to-pdf %:p<CR>
-nnoremap <silent> <leader>ppp :terminal ++hidden setsid md-pdf-preview %:p<CR>
+" nnoremap <silent> <leader>pmp :terminal ++hidden md-to-pdf %:p<CR>
+nnoremap <silent> <leader>pmp :!md-to-pdf %:p &<CR>
+" nnoremap <silent> <leader>ppp :terminal ++hidden setsid md-pdf-preview %:p<CR>
+nnoremap <silent> <leader>ppp :!md-pdf-preview %:p &<CR>
