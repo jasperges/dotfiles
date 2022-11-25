@@ -5,14 +5,14 @@ xrdb -merge ~/.Xresources
 
 # Restore last used backlight values
 if [[ -f $HOME/.last_screen_backlight ]]; then
-    backlight_screen=$(cat $HOME/.last_screen_backlight)
+    backlight_screen=$(cat "${HOME}/.last_screen_backlight")
     # Turn on the backlight slighty if it's (almost) off, else it might feel
     # that the display doesn't work
     ((backlight_screen < 5520)) && backlight_screen=5520
     echo $backlight_screen > "/sys/class/backlight/gmux_backlight/brightness"
 fi
 if [[ -f $HOME/.last_keyboard_backlight ]]; then
-    backlight_keyboard=$(cat $HOME/.last_keyboard_backlight)
+    backlight_keyboard=$(cat "${HOME}/.last_keyboard_backlight")
     # Turn on the backlight slighty if it's (almost) off.
     ((backlight_keyboard < 12)) && backlight_keyboard=12
     echo $backlight_keyboard > "/sys/class/leds/smc::kbd_backlight/brightness"
@@ -41,10 +41,10 @@ xcape -e 'Super_L=Escape' &
 # Turn on autolock
 killall -wq xautolock
 xautolock -time 9 \
-    -locker $HOME/.local/bin/wm/jasperge-locker -secure -detectsleep &
+    -locker "${HOME}/.local/bin/wm/jasperge-locker" -secure -detectsleep &
 # Lock screen on suspend etc.
 killall -wq xss-lock
-xss-lock -- $HOME/.local/bin/wm/jasperge-locker &
+xss-lock -- "${HOME}/.local/bin/wm/jasperge-locker" &
 
 # Start mpd
 killall -wq mpd
@@ -58,7 +58,7 @@ killall -wq picom
 picom --daemon
 killall -wq dunst
 dunst &
-$HOME/.fehbg &
+"${HOME}/.fehbg" &
 
 # Start apps that show in tray area
 killall -wq protonmail-bridge
@@ -74,6 +74,7 @@ localectl set-locale LANG=en_US.UTF-8 LC_MONETARY=nl_NL.UTF-8 \
     LC_NUMERIC=en_US.UTF-8
 
 start_dwm() {
+    setup-monitor &
     killall -wq dwmblocks
     dwmblocks &
     exec dbus-launch --exit-with-session dwm

@@ -8,10 +8,10 @@ esac
 cputotalfile="${XDG_CACHE_HOME:-$HOME/.cache}/cputotals"
 
 cpu() {
-    read cpu a b c idle rest < /proc/stat
+    read -r cpu a b c idle rest < /proc/stat
     total=$((a + b + c + idle))
-    prevtotal=$(cut -d "," -f 1 < $cputotalfile)
-    previdle=$(cut -d "," -f 2 < $cputotalfile)
+    prevtotal=$(cut -d "," -f 1 < "${cputotalfile}")
+    previdle=$(cut -d "," -f 2 < "${cputotalfile}")
     cpu=$((100 * ((total - prevtotal) - (idle - previdle)) / (total - prevtotal)))
     printf "   %d%%   " "$cpu"
 }

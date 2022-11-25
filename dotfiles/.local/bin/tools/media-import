@@ -4,6 +4,13 @@ set -euo pipefail
 
 # Import photos from photo camera or iphone
 
+# --------------------------------- constants --------------------------------
+
+NOTIFY=0
+[[ -n $1 ]] && NOTIFY=1
+
+# --------------------------------- functions --------------------------------
+
 getdatearray() {
     local extension
     local filepath
@@ -21,7 +28,7 @@ getdatearray() {
                 | jq -cr '.media.track[] | select(."@type" == "General") | .Recorded_Date')
             LC_TIME=nl_NL.UTF-8 date "+%Y %m %d %H %M %S" -d "$datestring" | tr -d '\n'
             ;;
-        arw|jpg)
+        arw | jpg)
             datestring=$(exiv2 -g DateTimeOriginal "$filepath" | awk '{print $4" "$5}')
             printf "%s" "${datestring//:/ }"
             ;;
@@ -54,7 +61,7 @@ latest() {
     echo "${checkfile}"
 }
 
- syncfile() {
+syncfile() {
     local basename
     local day
     local destdir
@@ -122,12 +129,13 @@ syncphotos() {
     for f in "${files[@]}"; do
         {
             datestring=$(printdate "$f")
-        } 2>/dev/null
+        } 2> /dev/null
         printf "Processing photo %d of %d (%s)                \r" "$count" "$numfiles" "$datestring"
-        notify-send -a import_photos -h int:value:"$(echo "$count*100/$numfiles" | bc)" \
+        [[ ${NOTIFY} -eq 1 ]] && notify-send -a import_photos \
+            -h int:value:"$(echo "$count*100/$numfiles" | bc)" \
             " Photo/Video import" "Importing photo's from photo camera..."
         syncfile "$f" "$importdir"
-        count=$((count+1))
+        count=$((count + 1))
     done
 }
 
@@ -148,12 +156,13 @@ syncmovies() {
     for f in "${files[@]}"; do
         {
             datestring=$(printdate "$f")
-        } 2>/dev/null
+        } 2> /dev/null
         printf "Processing movie %d of %d (%s)                \r" "$count" "$numfiles" "$datestring"
-        notify-send -a import_photos -h int:value:"$(echo "$count*100/$numfiles" | bc)" \
+        [[ ${NOTIFY} -eq 1 ]] && notify-send -a import_photos \
+            -h int:value:"$(echo "$count*100/$numfiles" | bc)" \
             " Photo/Video import" "Importing video's from photo camera..."
         syncfile "$f" "$importdir"
-        count=$((count+1))
+        count=$((count + 1))
     done
 }
 
@@ -164,7 +173,8 @@ importcamera() {
     syncphotos "$importdir"
     syncmovies "$importdir"
     printf "Done!                                                               \n"
-    notify-send " Photo/Video import" "All media from photo camera is imported."
+    [[ ${NOTIFY} -eq 1 ]] && notify-send " Photo/Video import" \
+        "All media from photo camera is imported."
 }
 
 importiphone() {
@@ -183,18 +193,20 @@ importiphone() {
     for f in "${files[@]}"; do
         {
             datestring=$(printdate "$f")
-        } 2>/dev/null
+        } 2> /dev/null
         [[ $datestring == "--" ]] && continue
         printf "Processing file %d of %d (%s)                \r" "$count" "$numfiles" "$datestring"
         notify-send -a import_photos -h int:value:"$(echo "$count*100/$numfiles" | bc)" \
             " Photo/Video import" "Importing media from foonjappie..."
 
         syncfile "$f" "$importdir"
-        count=$((count+1))
+        count=$((count + 1))
     done
     printf "Done!                                                               \n"
     notify-send -a import_photos " Photo/Video import" "All media from foonjappie is imported."
 }
+
+# ----------------------------------- main -----------------------------------
 
 choices=()
 [[ -d /media/foonjappie/DCIM ]] && choices+=("foonjappie")
