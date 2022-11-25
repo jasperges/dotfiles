@@ -2,8 +2,6 @@
 nnoremap <silent> <leader>pd mc:read !LC_TIME=nl_NL.utf8 date "+\%Y-\%m-\%d \%a"<CR>"dd$dd`ch"dpa<Tab><ESC>F\|2l
 nnoremap <silent> <leader>cd :.-read !LC_TIME=nl_NL.utf8 date "+\%Y-\%m-\%d"<CR>I# <ESC>jo
 nnoremap <silent> <leader>dt :.-read !daily-todo<CR>GddA
-nnoremap <silent> <leader>pm :! daily-todo-to-mattermost post %:p<CR>
-nnoremap <silent> <leader>em :! daily-todo-to-mattermost edit %:p<CR>
 nnoremap <silent> <leader>wc :.-read !vimwiki-week-columns<CR>:VimwikiTableAlignW<CR>
 nnoremap <silent> <leader>wcn :.-read !vimwiki-week-columns next<CR>:VimwikiTableAlignW<CR>
 nnoremap <silent> <leader>li :.!get-issue-link<CR>
