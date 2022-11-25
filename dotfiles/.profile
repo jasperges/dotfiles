@@ -1,7 +1,6 @@
-# .bash_profile
-
-# Get the aliases and functions
-[[ -f $HOME/.bashrc ]] && source $HOME/.bashrc
+# .profile
+# Assume bash :)
+# shellcheck shell=bash
 
 # User specific environment and startup programs
 
@@ -17,23 +16,26 @@ export EDITOR=vim
 export BROWSER=firefox
 
 # Notmuch config file
-export NOTMUCH_CONFIG=$HOME/.config/notmuch/notmuch-config
+export NOTMUCH_CONFIG=${HOME}/.config/notmuch/notmuch-config
 
-export SUDO_ASKPASS=$HOME/.local/bin/tools/dmenupass
+export SUDO_ASKPASS=${HOME}/.local/bin/tools/dmenupass
 
-export WORKON_HOME=$HOME/.local/share/virtualenvs
+export WORKON_HOME=${HOME}/.local/share/virtualenvs
+
+# Pyenv
+export PYENV_ROOT="${HOME}/.local/pyenv"
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 # Textwidth for htitle
 export HRULEWIDTH=80
 
-# Use pinentry-curses in it's own floating terminal
-# export PINENTRY_BINARY='st -n pinentry -e "pinentry-curses $@"'
-# export PINENTRY_BINARY="pinentry-curses --ttyname pinentry"
+# Use my 'full' vim experience
+export USE_FULL_BLOWN_VIM=1
 
-export REZ_CONFIG_FILE=$HOME/.config/rezconfig.py
+# ---------------------------------- bashrc ----------------------------------
 
-# Use a dark theme in Calibre
-export CALIBRE_USE_DARK_PALETTE=1
+# Get the aliases and functions
+[[ -f ${HOME}/.bashrc ]] && source "${HOME}/.bashrc"
 
 # ----------------------------------- path -----------------------------------
 
@@ -74,39 +76,38 @@ export SCRIPTS=~/.local/bin/tools
 
 # Remember last arg will be first in path
 pathprepend \
-    $HOME/.local/share/cargo/bin \
-    $HOME/.local/bin/cargo/bin \
-    $HOME/.local/bin/go \
-    $HOME/.local/bin \
-    $HOME/.local/bin/jobs \
-    $HOME/.local/bin/launchers \
-    $HOME/.local/bin/statusbar \
-    $HOME/.local/bin/wm \
-    $SCRIPTS \
+    "${PYENV_ROOT}/bin" \
+    "${HOME}/.local/share/cargo/bin" \
+    "${HOME}/.local/bin/cargo/bin" \
+    "${HOME}/.local/bin/go" \
+    "${HOME}/.local/bin" \
+    "${HOME}/.local/bin/distrobox" \
+    "${HOME}/.local/bin/flatpak" \
+    "${HOME}/.local/bin/jobs" \
+    "${HOME}/.local/bin/launchers" \
+    "${HOME}/.local/bin/statusbar" \
+    "${HOME}/.local/bin/wm" \
+    "${SCRIPTS}" \
     /opt/go/go/bin
 
 pathappend \
-    $HOME/.config/yarn/global/node_modules/.bin \
-    $HOME/.poetry/bin \
-    $HOME/.yarn/bin \
-    /opt/Shotgun \
-    /usr/local/DJV2/bin \
-    /opt/rez/bin/rez \
-    /opt/firefox
+    "${HOME}/.config/yarn/global/node_modules/.bin" \
+    "${HOME}/.yarn/bin" \
+    "${HOME}/.local/distrobox/bin"
 
 # Paths for Go
-export GOPATH=$HOME/.local/share/go
+export GOPATH=${HOME}/.local/share/go
 # At least for now put binaries in a separate bin/go directory
-export GOBIN=$HOME/.local/bin/go
+export GOBIN=${HOME}/.local/bin/go
 
 # Paths for Rust
-export CARGO_HOME=$HOME/.local/share/cargo
+export CARGO_HOME=${HOME}/.local/share/cargo
 # This means the binaries will end up in $HOME/.local/bin/cargo/bin
-export CARGO_INSTALL_ROOT=$HOME/.local/bin/cargo
-export RUSTUP_HOME=$HOME/.local/share/rustup
+export CARGO_INSTALL_ROOT=${HOME}/.local/bin/cargo
+export RUSTUP_HOME=${HOME}/.local/share/rustup
 
 # Add shortcuts file if it doesn't exist yet.
-if [[ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ]]; then
+if [[ ! -f ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/shortcutrc ]]; then
     shortcuts &> /dev/null &
 fi
 
@@ -121,8 +122,8 @@ if [[ -n ${DISPLAY} ]]; then
 fi
 
 # Connect to tmux when logging in via ssh
-if [[ -z $TMUX ]] && [[ -n $SSH_TTY ]]; then
-    exec tmux new-session -A -s "$USER"
+if [[ -z ${TMUX} ]] && [[ -n ${SSH_TTY} ]]; then
+    exec tmux new-session -A -s "${USER}"
 fi
 
 # Make directories and files completely private by default
