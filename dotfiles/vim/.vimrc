@@ -2,6 +2,8 @@ set encoding=utf-8
 
 set nocompatible
 
+set termguicolors
+
 " Disable gui elements if Vim is running with a GUI
 if has("gui_running")
     set guioptions-=m  " menu bar
@@ -24,7 +26,9 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 " Plug
 call plug#begin('~/.vim/plugged')
 " Colors
-Plug 'altercation/vim-colors-solarized'
+" Plug 'altercation/vim-colors-solarized'
+" Plug 'danilo-augusto/vim-afterglow'
+Plug 'ghifarit53/tokyonight-vim'
 " Mandatory tpope plug-ins
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
@@ -239,15 +243,29 @@ nnoremap <silent> <leader>ml :call AppendModeline()<CR>
 
 " Colors
 set background=dark
-let g:solarized_termtrans=1
-colorscheme solarized
+" let g:solarized_termtrans = 1
+" available: night, storm; default: night
+let g:tokyonight_style = 'storm'
+" default: 0
+let g:tokyonight_transparent_background = 1
+" available: green, red, blue; default: green
+let g:tokyonight_menu_selection_background = 'green'
+" default: 0
+let g:tokyonight_disable_italic_comment = 0
+" default: 0
+let g:tokyonight_enable_italic = 1
+" available: auto, red, green, blue; default: auto
+let g:tokyonight_cursor = 'auto'
+" available: bold, underline, italic, grey background; default: grey background
+let g:tokyonight_current_word = 'grey background'
+colorscheme tokyonight
 
 " Plug-in configurations
 
 " airline
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
-let g:airline_theme='bubblegum'
+let g:airline_theme='tokyonight'
 
 " nerdtree
 map <C-n> :NERDTreeToggle<CR>
