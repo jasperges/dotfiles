@@ -14,8 +14,8 @@ let g:neoformat_enabled_python = ['black', 'isort']
 " autocmd is added every time we open or save a Python file.
 augroup filetype_python
     autocmd!
-    " Format file with isort and black on save
-    autocmd BufWritePre *.py Neoformat
+    " Organize imports with CoC on save
+    autocmd BufWritePre * call CocAction('runCommand', 'editor.action.organizeImport')
 augroup END
 
 " Execute the python file with the default Python interpreter
