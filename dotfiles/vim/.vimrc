@@ -75,6 +75,8 @@ if !empty($USE_FULL_BLOWN_VIM)
     " Only use these plug-ins on a workstation. On (simple home) servers these
     " are overkill and can easily kill performance. This can be toggled by
     " setting the environment variable 'USE_FULL_BLOWN_VIM'
+    " Refactoring
+    Plug 'python-rope/ropevim'
     " Debugging
     Plug 'puremourning/vimspector'
     " CoC
@@ -93,7 +95,7 @@ set undofile
 " and undo files are not compatible between Vim and NeoVim so they will be
 " configured separately.
 if !has('nvim')
-    set backupdir=~/vim/tmp/backup//,~/tmp//,/tmp//,/var/tmp//
+    set backupdir=~/.vim/tmp/backup//,~/tmp//,/tmp//,/var/tmp//
     set directory=~/.vim/tmp/swap//,~/tmp//,/tmp//,/var/tmp//
     set undodir=~/.vim/tmp/undo//,~/tmp//,/tmp//,/var/tmp//
 else
@@ -352,7 +354,13 @@ vnoremap <M-Up> :m '<-2<CR>gv
 
 nnoremap <silent> <leader>lt <esc>:IndentLinesToggle<CR>
 nnoremap <silent> <leader>ls <esc>:LeadingSpaceToggle<CR>
-let g:indentLine_fileTypeExclude=['json', 'markdown', 'pandoc', 'vimwiki']
+let g:indentLine_fileTypeExclude=[
+    \ 'json',
+    \ 'markdown',
+    \ 'pandoc',
+    \ 'vimwiki',
+    \ 'dockerfile'
+\]
 
 let g:indentLine_bufTypeExclude=['help', 'terminal']
 
@@ -369,7 +377,13 @@ let g:neoformat_enabled_html = ['htmlbeautify', 'tidy']
 let g:neoformat_enabled_json = ['prettier']
 let g:neoformat_enabled_yaml = ['prettier']
 let g:neoformat_enabled_xml = ['tidy']
+let g:neoformat_enabled_sql = ['pg_format']
 let g:shfmt_opt = '-bn -ci -sr'
+let g:neoformat_sql_pg_format = {
+    \ 'exe': 'pg_format',
+    \ 'args': ['-B', '-s 2', '-'],
+    \ 'stdin': 1,
+\}
 nnoremap <Leader>m <esc>:Neoformat<CR>
 
 " ---------------------------------- pandoc ----------------------------------
@@ -391,6 +405,8 @@ if empty($USE_FULL_BLOWN_VIM)
 endif
 
 " -------------------------------- Vimspector --------------------------------
+
+let g:vimspector_enable_mappings = 'HUMAN'
 
 nnoremap <Leader>dd :call vimspector#Launch()<CR>
 nnoremap <Leader>de :call vimspector#Reset()<CR>
@@ -417,11 +433,15 @@ let g:coc_global_extensions = [
     \ 'coc-go',
     \ 'coc-html',
     \ 'coc-json',
+    \ 'coc-markdownlint',
     \ 'coc-pairs',
     \ 'coc-prettier',
     \ 'coc-pyright',
-    \ 'coc-rls',
+    \ 'coc-rust-analyzer',
+    \ 'coc-sh',
     \ 'coc-snippets',
+    \ 'coc-sumneko-lua',
+    \ 'coc-tsserver',
     \ 'coc-yaml',
     \ ]
 
@@ -437,29 +457,35 @@ set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-set signcolumn=auto
+set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
