@@ -4,57 +4,63 @@
 # Otherwise, you'll be prompted to give a mountpoint from already existsing directories.
 # If you input a novel directory, it will prompt you to create that directory.
 
-getmount() { \
-	[ -z "$chosen" ] && exit 1
-	mp="$(find $1 2>/dev/null | dmenu -l 5 -i -p "Type in mount point.")"
-	[ "$mp" = "" ] && exit 1
-	if [ ! -d "$mp" ]; then
-		mkdiryn=$(printf "No\\nYes" | dmenu -l 5 -i -p "$mp does not exist. Create it?")
-		[ "$mkdiryn" = "Yes" ] && (mkdir -p "$mp" || sudo -A mkdir -p "$mp")
-	fi
-	}
+getmount() {
+    [ -z "$chosen" ] && exit 1
+    mp="$(find $1 2> /dev/null | dmenu -l 5 -i -p "Type in mount point.")"
+    [ "$mp" = "" ] && exit 1
+    if [ ! -d "$mp" ]; then
+        mkdiryn=$(printf "No\\nYes" | dmenu -l 5 -i -p "$mp does not exist. Create it?")
+        [ "$mkdiryn" = "Yes" ] && (mkdir -p "$mp" || sudo -A mkdir -p "$mp")
+    fi
+}
 
-mountusb() { \
-	chosen="$(echo "$usbdrives" | dmenu -l 5 -i -p "Mount which drive?" -r | awk '{print $1}')"
-	sudo -A mount "$chosen" 2>/dev/null && notify-send "💻 USB mounting" "$chosen mounted." && exit 0
-	alreadymounted=$(lsblk -nrpo "name,type,mountpoint" | awk '$2=="part"&&$3!~/\/boot|\/home$|SWAP/&&length($3)>1{printf "-not \\( -path \\"*%s\\" -prune \\) \\ \n",$3}')
-	# getmount "/mnt /media /mount /home -maxdepth 5 -type d $alreadymounted"
-	getmount "/media -maxdepth 5 -type d $alreadymounted"
-	partitiontype="$(lsblk -no "fstype" "$chosen")"
-	case "$partitiontype" in
-		"vfat") sudo -A mount -t vfat "$chosen" "$mp" -o rw,umask=0000;;
-        "exfat") sudo -A mount -t exfat "$chosen" "$mp" -o rw,umask=0000;;
-		*) sudo -A mount "$chosen" "$mp"; user="$(whoami)"; ug="$(groups | awk '{print $1}')"; sudo -A chown "$user":"$ug" "$mp";;
-	esac
+mountusb() {
+    chosen="$(echo "$usbdrives" | dmenu -l 5 -i -p "Mount which drive?" -r | awk '{print $1}')"
+    sudo -A mount "$chosen" 2> /dev/null && notify-send "💻 USB mounting" "$chosen mounted." && exit 0
+    alreadymounted=$(lsblk -nrpo "name,type,mountpoint" | awk '$2=="part"&&$3!~/\/boot|\/home$|SWAP/&&length($3)>1{printf "-not \\( -path \\"*%s\\" -prune \\) \\ \n",$3}')
+    # getmount "/mnt /media /mount /home -maxdepth 5 -type d $alreadymounted"
+    getmount "/media -maxdepth 5 -type d $alreadymounted"
+    partitiontype="$(lsblk -no "fstype" "$chosen")"
+    case "$partitiontype" in
+        "vfat") sudo -A mount -t vfat "$chosen" "$mp" -o rw,umask=0000 ;;
+        "exfat") sudo -A mount -t exfat "$chosen" "$mp" -o rw,umask=0000 ;;
+        *)
+            sudo -A mount "$chosen" "$mp"
+            user="$(whoami)"
+            ug="$(groups | awk '{print $1}')"
+            # Assume read only file system, so ignore errors
+            sudo -A chown "$user":"$ug" "$mp" || echo "Can't change ownership, read only file system?"
+            ;;
+    esac
     [ $? -eq 0 ] && notify-send "💻 USB mounting" "$chosen mounted to $mp." && exit
     notify-send -u critical "💻 USB mounting" "Failed to mount $chosen to $mp." && exit 1
-	}
+}
 
-mountandroid() { \
-	chosen=$(echo "$anddrives" | dmenu -l 5 -i -p "Which Android device?" -r | cut -d : -f 1)
-	getmount "/media -maxdepth 3 -type d"
-	simple-mtpfs --device "$chosen" "$mp" && notify-send " Android Mounting" "Android device mounted to $mp." && exit
+mountandroid() {
+    chosen=$(echo "$anddrives" | dmenu -l 5 -i -p "Which Android device?" -r | cut -d : -f 1)
+    getmount "/media -maxdepth 3 -type d"
+    simple-mtpfs --device "$chosen" "$mp" && notify-send " Android Mounting" "Android device mounted to $mp." && exit
     notify-send -u critical " Android Mounting" "Failed to mount Android device to $mp." && exit 1
-	}
+}
 
-mountios() { \
-	# chosen=$(echo "$iosdrives" | dmenu -l 5 -i -p "Which iOS device?" | cut -d : -f 1)
-	# getmount "/media -maxdepth 3 -type d -iname ip*"
+mountios() {
+    # chosen=$(echo "$iosdrives" | dmenu -l 5 -i -p "Which iOS device?" | cut -d : -f 1)
+    # getmount "/media -maxdepth 3 -type d -iname ip*"
     mp=/media/foonjappie
-	ifuse "$mp" && notify-send " iOS Mounting" "foonjappie mounted to $mp." && exit
+    ifuse "$mp" && notify-send " iOS Mounting" "foonjappie mounted to $mp." && exit
     notify-send -u critical " iOS Mounting" "Failed to mount foonjappie to $mp." && exit 1
 }
 
-asktype() { \
-	case "$(printf "%s\n" ${choices[@]} | dmenu -l 5 -i -p "Mount a USB drive iOS device?" -r)" in
-		USB) mountusb ;;
-		Android) mountandroid ;;
+asktype() {
+    case "$(printf "%s\n" ${choices[@]} | dmenu -l 5 -i -p "Mount a USB drive iOS device?" -r)" in
+        USB) mountusb ;;
+        Android) mountandroid ;;
         iOS) mountios ;;
-	esac
-	}
+    esac
+}
 
-anddrives=$(simple-mtpfs -l 2>/dev/null)
-iosdrives=$(idevicename 2>/dev/null)
+anddrives=$(simple-mtpfs -l 2> /dev/null)
+iosdrives=$(idevicename 2> /dev/null)
 usbdrives="$(lsblk -rpo "name,type,size,hotplug,mountpoint" | awk '$2=="part"&&$4=="1"&&$5==""{printf "%s (%s)\n",$1,$3}')"
 choices=()
 choices+=($([ "$usbdrives" ] && echo "USB"))
