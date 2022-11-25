@@ -1,19 +1,16 @@
 {
   "pairs.enableCharacters": ["(", "[", "{", "'", "\"", "`"],
   "suggest.noselect": false,
-  "coc.preferences.formatOnSaveFiletypes": [
-    "go",
-    "graphql",
-    "javascript",
-    "javascriptreact",
-    "json",
-    "typescript",
-    "typescript.tsx",
-    "typescriptreact"
-  ],
-  "pyright.disableOrganizeImports": true,
+  "[go][graphql][javascript][javascriptreact][json][python][typescript][typescript.tsx][typescriptreact]": {
+    "coc.preferences.formatOnSave": true
+  },
+  "pyright.disableOrganizeImports": false,
+  "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
-  "python.linting.mypyEnabled": false,
+  "python.linting.pylintEnabled": true,
+  "python.linting.mypyEnabled": true,
+  "python.formatting.provider": "black",
+  "python.linting.lintOnSave": true,
   "languageserver": {
     "cmake": {
       "command": "cmake-language-server",
@@ -29,7 +26,5 @@
       "args": ["--stdio"]
     }
   },
-  "diagnostic-languageserver.filetypes": {
-    "sh": "shellcheck"
-  }
+  "Lua.telemetry.enable": false
 }
