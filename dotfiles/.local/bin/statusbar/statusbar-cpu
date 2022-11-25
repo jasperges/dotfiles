@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 case $BUTTON in
     1) notify-send "🖥 CPU hogs" "$(ps axch -o cmd:15,%cpu --sort=-%cpu | head)\\n(100% per core)" ;;
@@ -9,10 +9,10 @@ cputotalfile="${XDG_CACHE_HOME:-$HOME/.cache}/cputotals"
 
 cpu() {
     read cpu a b c idle rest < /proc/stat
-    total=$((a+b+c+idle))
+    total=$((a + b + c + idle))
     prevtotal=$(cut -d "," -f 1 < $cputotalfile)
     previdle=$(cut -d "," -f 2 < $cputotalfile)
-    cpu=$((100*( (total - prevtotal) - (idle - previdle) ) / (total - prevtotal) ))
+    cpu=$((100 * ((total - prevtotal) - (idle - previdle)) / (total - prevtotal)))
     printf "   %d%%   " "$cpu"
 }
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 case $BUTTON in
     1) pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
@@ -8,24 +8,34 @@ esac
 vol() {
     # vol=$(amixer get Master | awk -F'[][]' 'END{ print $4":"$2 }')
     # icons: 婢奄奔墳
-    if [ "$(systemctl status bluetooth | awk '/Active/ {printf $2'})" = "active" ] \
-        && [ "$(bluetoothctl info 00:0A:45:0E:2B:2D | awk '/Connected/ {print $2}')" = "yes" ]; then
-        extra_icon=" ()"
-    else
-        extra_icon=""
-    fi
+    extra_icon=$(get_extra_icon)
     vol=$(pulsemixer --get-volume | cut -d ' ' -f 1)
     mute=$(pulsemixer --get-mute)
-    if [ $mute -gt 0 ]; then
+    if [[ $mute -gt 0 ]]; then
         icon="婢"
-    elif [ $(expr $vol \< 33) = 1 ]; then
+    elif [[ $(expr "${vol}" \< 33) = 1 ]]; then
         icon="奄"
-    elif [ $(expr $vol \< 66) = 1 ]; then
+    elif [[ $(expr "${vol}" \< 66) = 1 ]]; then
         icon="奔"
     else
         icon="墳"
     fi
-    printf "  $icon$extra_icon %d%%   " "$vol"
+    printf "  %s%s %d%%   " "${icon}" "${extra_icon}" "${vol}"
+}
+
+get_extra_icon() {
+    local -a kopjappies
+
+    if [[ $(systemctl status bluetooth | awk '/Active/ {printf $2}') == active ]]; then
+        mapfile -t kopjappies < <(bluetoothctl devices | awk '/kopjappie/ {print $2}')
+    fi
+    for kopjappie in "${kopjappies[@]}"; do
+        if [[ $(bluetoothctl info "${kopjappie}" | awk '/Connected/ {print $2}') == yes ]]; then
+            echo " ()"
+            return
+        fi
+    done
+
 }
 
 vol

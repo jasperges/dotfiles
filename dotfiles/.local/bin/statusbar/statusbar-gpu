@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 gpu() {
-    which nvidia-smi 2>/dev/null 1>&2 || exit
+    command -v nvidia-smi &> /dev/null || exit
     # Show the percentage of the used memory on smaller monitors
     monitorwidth=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)
-    nvidia-smi --query --display=memory | \
-        awk -F ":" '\
+    nvidia-smi --query --display=memory \
+        | awk -F ":" '\
         match($1, /^.*(FB|BAR1) Memory.*$/, c) \
             {t=c[1]} \
         /Total|Used/ && t=="FB" && match($2, /([0-9]+ MiB)/, m) \

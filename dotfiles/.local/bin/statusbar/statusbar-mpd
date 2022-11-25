@@ -1,10 +1,19 @@
 #!/bin/bash
 
-hostinfofile="${XDG_CACHE_HOME:-$HOME/.cache}/mpdhostinfo"
+# Show the music info in the statusbar. It was made for MPD but now also
+# (partly) supports Spotify.
+
+hostinfofile="${XDG_CACHE_HOME:-$HOME/.cache}/playerhostinfo"
 
 readhostinfo() {
     hostinfo=$(cat "$hostinfofile" 2> /dev/null)
     if [ -n "$hostinfo" ]; then
+        if [[ $hostinfo = spotify ]]; then
+            export SPOTIFY=1
+            unset MPD_HOST
+            unset MPD_PORT
+            return
+        fi
         host=$(echo "$hostinfo" | cut -d "," -f 1)
         port=$(echo "$hostinfo" | cut -d "," -f 2)
     fi
@@ -12,18 +21,23 @@ readhostinfo() {
     # If not found, set to default host 'localhost' and port 6600
     export MPD_HOST="${host:-localhost}"
     export MPD_PORT="${port:-6600}"
+    unset SPOTIFY
 }
 
 mpdtoggle() {
     readhostinfo
-    mpc toggle &> /dev/null
+    if [[ $SPOTIFY -eq 1 ]]; then
+        playerctl -p spotify play-pause &> /dev/null
+    else
+        mpc toggle &> /dev/null
+    fi
 }
 
 case $BUTTON in
     1) mpdtoggle ;;
-    2) readhostinfo && ${TERMINAL} --class OPAQUE -t ncmpcpp-centered \
+    2) readhostinfo && ${TERMINAL} --class alacritty,OPAQUE -t ncmpcpp-centered \
         -e ncmpcpp -h "${MPD_HOST:-localhost}" -p "${MPD_PORT:-6600}" ;;
-    3) mpdswitch ;;
+    3) music-player-switch ;;
 esac
 
 mpd() {
@@ -42,11 +56,18 @@ mpd() {
         currentwidth=20
     fi
 
-    status=$(mpc status | sed -n 's#^.*\(playing\|paused\|stopped\).*$#\1#p')
-    current=$(mpc --format "%artist% - %title%" current \
-        | sed "s/^ - //" | sed "s/^\(.\{$currentwidth\}\).*/\1.../")
+    if [[ $SPOTIFY -eq 1 ]]; then
+        status=$(playerctl -p spotify status)
+        artist=$(playerctl -p spotify metadata artist)
+        title=$(playerctl -p spotify metadata title)
+        current="$artist - $title"
+    else
+        status=$(mpc status | sed -n 's#^.*\(playing\|paused\|stopped\).*$#\1#p')
+        current=$(mpc --format "%artist% - %title%" current)
+    fi
+    current=$(sed -e "s/^ - //" -e "s/^\(.\{$currentwidth\}\).*/\1.../" <<< "$current")
 
-    case $status in
+    case ${status,,} in
         "playing") printf "   %s   " "$current" ;;
         "paused") printf "   %s   " "$current" ;;
         *) printf "  栗   " ;;
