@@ -1,13 +1,18 @@
-# .bashrc
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+# shellcheck shell=bash
+# shellcheck disable=1091,1094
 
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-      *) return;;
+    *) return ;;
 esac
 
 # Source global definitions
 [[ -f /etc/bashrc ]] && source /etc/bashrc
+[[ -f /etc/bash.bashrc ]] && source /etc/bash.bashrc
 
 [[ -f $HOME/.config/user-dirs.dirs ]] && source "$HOME/.config/user-dirs.dirs"
 
@@ -34,9 +39,9 @@ shopt -s globstar
 # use a vi-style line editing interface
 set -o vi
 # Change cursor shape for different vi modes.
-# bind 'set show-mode-in-prompt on'
-# bind 'set vi-cmd-mode-string "\1\e[2 q\2"'
-# bind 'set vi-ins-mode-string "\1\e[6 q\2"'
+bind 'set show-mode-in-prompt on'
+bind 'set vi-cmd-mode-string "\1\e[2 q\2"'
+bind 'set vi-ins-mode-string "\1\e[6 q\2"'
 
 # fuzzy finder
 [[ -f $HOME/.fzf.bash ]] && source "$HOME/.fzf.bash"
@@ -45,11 +50,11 @@ set -o vi
 [[ -z $REZ_SHELL_INTERACTIVE ]] && [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]] \
     && source "$HOME/.local/bin/virtualenvwrapper.sh"
 
-# rez completion
-# [[ -f /opt/rez/completion/complete.sh ]] && source /opt/rez/completion/complete.sh
-
-# tea completion
-PROG=tea source "/home/jasperge/.config/tea/autocomplete.sh"
+# pyenv
+if command -v pyenv &> /dev/null; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 
 # dir colors
 [[ -f $HOME/.dircolors ]] && eval "$(dircolors "$HOME/.dircolors")"
