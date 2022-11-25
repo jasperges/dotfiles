@@ -1,8 +1,10 @@
-#!/bin/sh
+#!/bin/bash
+
+shopt -s globstar
 
 case $BUTTON in
     1) managewifi ;;
-	3) toggle-nmtui ;;
+    3) toggle-nmtui ;;
 esac
 
 internet() {
@@ -13,17 +15,16 @@ internet() {
     #  - ethernet down: 
 
     # WiFi
-    if [ -f /sys/class/net/w*/operstate ]; then
-        grep -q "up" /sys/class/net/w*/operstate && wifiicon="直" \
-            || wifiicon="睊"
+    if grep -q "up" /sys/class/net/w*/operstate; then
+        wifiicon="直"
     else
-        wifiicon=""
+        wifiicon="睊"
     fi
-    if [ "$wifiicon" = "直" ]; then
-        activewifi=$(nmcli --terse --fields NAME,TYPE c show --active | \
-            awk -F ':' '/wireless/ {printf $1}')
-        wifisignal=$(nmcli --terse --fields SSID,SIGNAL d wifi list --rescan no | \
-            awk -F ':' '/'"$activewifi"'/ {print $2"%"}' | head -n1)
+    if [[ $wifiicon = "直" ]]; then
+        activewifi=$(nmcli --terse --fields NAME,TYPE c show --active \
+            | awk -F ':' '/wireless/ {printf $1}')
+        wifisignal=$(nmcli --terse --fields SSID,SIGNAL d wifi list --rescan no \
+            | awk -F ':' '/'"$activewifi"'/ {print $2"%"}' | head -n1)
         wifiicon="$wifiicon $wifisignal"
     fi
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # TODO: use a proper/better pomodoro timer that can be paused and reset. Then
 #       control it via clicking in the statusbar.

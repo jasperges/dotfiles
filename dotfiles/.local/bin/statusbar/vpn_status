@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Keep it simple, only show first connection
 vpn=$(nmcli -g TYPE,STATE,NAME c show --active \
