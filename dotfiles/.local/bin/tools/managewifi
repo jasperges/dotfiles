@@ -25,21 +25,25 @@ wifi="$(printf "%s\n" "${wifilist[@]}" \
     | awk -F: '{if ($2 == "activated") {printf " %s\n", $1} else {printf "  %s\n", $1}}' \
     | sort | dmenu -p "Toggle WiFi connection" -l ${#wifilist[@]} -i -r | cut -d " " -f 2-)"
 [[ -z "$wifi" ]] && exit
+wifi="${wifi# *}"
 wifistatus="$(printf "%s\n" "${wifilist[@]}" | awk -F ':' '/'"$wifi"'/ {printf $2}')"
 
 nmcli c up "$wifi"
 case "$wifistatus" in
     "activated")
-        nmcli connection down "$wifi" \
-            && notify-send " wifi Connection" "Disconnected $wifi" \
-            || notify-send -u critical "X wifi Connection" "Failed to disconnect $wifi"
+        if nmcli connection down "$wifi"; then
+            notify-send " wifi Connection" "Disconnected $wifi"
+        else
+            notify-send -u critical "X wifi Connection" "Failed to disconnect $wifi"
+        fi
         ;;
     *)
-        nmcli connection up "$wifi" \
-            && notify-send " wifi Connection" "Connected to $wifi" \
-            || notify-send -u critical "X wifi Connection" "Failed to connect to $wifi"
+        if nmcli connection up "$wifi"; then
+            notify-send " wifi Connection" "Connected to $wifi"
+        else
+            notify-send -u critical "X wifi Connection" "Failed to connect to $wifi"
+        fi
         ;;
 esac
 
-pgrep -u $UID -x polybar && echo "hook:module/wifi-status1" >> /tmp/ipc-topbar
 pkill -RTMIN+9 dwmblocks

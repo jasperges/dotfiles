@@ -7,7 +7,7 @@ rofi.width:                          30
 ! "Number of columns" Set from: Default
 ! rofi.columns:                        1
 ! "Font to use" Set from: Default
-! rofi.font:                           mono 12
+ rofi.font:                           Sauce Code Pro Nerd Font 12
 ! "Border width" Set from: Default
 ! rofi.bw:                             1
 ! "Location on screen" Set from: Default

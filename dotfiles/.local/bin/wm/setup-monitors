@@ -1,23 +1,68 @@
 #!/bin/bash
 
-external_monitor=$(xrandr | sed -nE "s/^((DP|HDMI)-[0-9]+) connected.*$/\1/p")
-internal_monitor=$(xrandr | sed -nE "s/^(LVDS-[0-9]+) connected.*$/\1/p")
+declare -a CONNECTED_MONITORS
+declare -a MATCHING_LAYOUT_SCRIPTS
 
-if [[ $(hostname) = "soeperjaps" ]]; then
-    xrandr --output DP-2 --auto --primary --panning 0x0 --pos 0x0
-    xrandr --output DP-0 --auto --right-of DP-2
-elif [[ -n $external_monitor ]]; then
-    xrandr --output $external_monitor --auto --primary
-    xrandr --output $internal_monitor --auto --right-of $external_monitor
-    # TODO: move the interal monitor based on the actual resolutions of the monitors
-    xrandr --output $internal_monitor --pos 2560x0
+# Try to automatically run the screen layout script for the currently connected
+# monitors
+
+get_layout_scripts() {
+    local -i match
+
+    # If a connected monitor is set to off in the script, we assume this script
+    # should not be used.
+    mapfile -t scripts < <(find "${HOME}/.screenlayout" -name "*.sh")
+    for script in "${scripts[@]}"; do
+        match=0
+        match=$(get_script_match "${script}")
+        [[ ${match} -eq 1 ]] && MATCHING_LAYOUT_SCRIPTS+=("${script}")
+    done
+}
+
+get_script_match() {
+    local script
+    local -a script_outputs
+
+    script="$1"
+
+    [[ -z ${script} ]] && return 1
+
+    mapfile -t script_outputs < <(grep -o -E " *(.*DP-[0-9-]+)\)" "${script}" | tr -d "[:blank:])")
+    if [[ ${#script_outputs[@]} -ne ${#CONNECTED_MONITORS[@]} ]]; then
+        echo 0
+        return
+    fi
+    for monitor in "${CONNECTED_MONITORS[@]}"; do
+        if ! grep " ${monitor})" "${script}" &> /dev/null; then
+            echo 0
+            return
+        fi
+    done
+    echo 1
+}
+
+# ----------------------------------- main -----------------------------------
+
+mapfile -t CONNECTED_MONITORS < <(xrandr -q | awk '/ connected/ {print $1}')
+get_layout_scripts
+if [[ -z ${MATCHING_LAYOUT_SCRIPTS[*]} ]]; then
+    notify-send "🖥  Monitor Setup" "Could not find a matching layout script for the connected monitors."
+    exit 0
+fi
+if [[ ${#MATCHING_LAYOUT_SCRIPTS[@]} -eq 1 ]]; then
+    # Run script if there is only one matching script
+    "${MATCHING_LAYOUT_SCRIPTS[0]}"
 else
-    xrandr --output $internal_monitor --auto --primary
-    xrandr --output $internal_monitor --pos 0x0
-    # TODO: get the resolution of the internal monitor
-    xrandr --output $internal_monitor --mode 1680x1050 --pos 0x0 --panning 0x0
+    # Assumes it's being run non-interactively for now, so exiting because we
+    # can't get the users choice
+    [[ -t 0 ]] && exit
+    # TODO: also strip off the extension
+    choice=$(printf "%s\n" "${MATCHING_LAYOUT_SCRIPTS[@]##*/}" | dmenu -l 5 -i -r)
+    [[ -n ${choice} ]] && "${HOME}/.screenlayout/${choice}"
 fi
 
-$HOME/.fehbg
-[[ $(pgrep picom) ]] || picom -b
-setxinputs 2>/dev/null
+# Make sure the background is displayed correctly, picom is still running and
+# inputs are configured properly (peripherals can be connected to a monitor).
+"${HOME}/.fehbg"
+pgrep picom &> /dev/null || picom --daemon
+setxinputs 2> /dev/null

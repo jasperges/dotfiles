@@ -23,7 +23,7 @@ killall -wq sxhkd
 sxhkd &
 
 # Set up monitors
-setxrandr &
+setup-monitors &
 
 # Enable tapping, drag lock and natural scrolling
 setxinputs &
@@ -55,16 +55,16 @@ spotifyd &
 
 # Start X compositor, notification and set wallpaper
 killall -wq picom
-picom --experimental-backends -b
+picom --daemon
 killall -wq dunst
 dunst &
 $HOME/.fehbg &
 
 # Start apps that show in tray area
-# killall -wq dropbox; dropbox start &
 killall -wq protonmail-bridge
 protonmail-bridge --no-window &
-# killall -wq nm-applet; nm-applet &
+killall -wq nm-applet
+nm-applet &
 killall blueman-applet -wq
 blueman-applet &
 
@@ -73,12 +73,7 @@ localectl set-locale LANG=en_US.UTF-8 LC_MONETARY=nl_NL.UTF-8 \
     LC_PAPER=nl_NL.UTF-8 LC_MEASUREMENT=nl_NL.UTF-8 LC_TIME=en_US.UTF-8 \
     LC_NUMERIC=en_US.UTF-8
 
-start_spectrwm() {
-    exec dbus-launch --exit-with-session spectrwm
-}
-
 start_dwm() {
-    setup-monitor &
     killall -wq dwmblocks
     dwmblocks &
     exec dbus-launch --exit-with-session dwm

@@ -32,15 +32,25 @@ super + d; {b, c, d, e, g, f, i, m, r, t, w, x, s}
         clipmenu, \
         dmenu-scrot, \
     }
+super + ctrl + l;
+    jasperge-locker --force
 super + i; {p}
     {media-import}
+super + n; {m, p, j, s, u, g, w, e, h, b}
+    { \
+        managevpn manage, managevpn Proton-NL, managevpn jjm-studio, \
+        managevpn Submarine, managevpn Proton-US, managevpn Proton-UK, \
+        managewifi, wifi-off, wifi-on, \
+        dmenu-bluetooth \
+    }
 super + shift + m; {m, u, s, d}
     {dmenu-mount,dmenu-umount,dmenu-servermount,dmenu-serverumount}
-super + o; {b, c, g, h, m, w, p, o, j, t, y, n}
+super + o; {b, c, g, h, m, w, i, p, o, u, j, s, t, y, n, z}
     { \
-        toggle-btop, launch-chat-apps, toggle-gotop, toggle-htop, neomutt_run, $BROWSER, \
-        ncmpcpp_local, ncmpcpp_guybrush, dmenu-jobs, \
-        toggle-trayer, toggle-ytop, toggle-nethogs \
+        toggle-btop, launch-chat-apps, toggle-gotop, toggle-htop, thunderbird \
+        , $BROWSER, player-switch, ncmpcpp_local, ncmpcpp_guybrush \
+        , spotify-tui, dmenu-jobs, toggle-touchscreen, toggle-trayer \
+        , toggle-ytop, toggle-nethogs, upgrade-os-term \
     }
 super + p
     passmenu -r -i -l 10
@@ -50,21 +60,24 @@ super + ctrl + shift + p
     passmenu --otp -r -i -l 10
 super + s; {p, a, s}
     {toggle-pulsemixer, play-silence, stop-silence}
-super + shift + t; {c, i, a, r, s}
+super + ctrl + t; {k, s}
+    {tmux-kill-session, tmux-start-session}
+super + shift + t; {r, s}
     { \
-        tt-control, \
-        tt-control start issue, \
-        tt-control start issue-all, \
         tt-control start recent, \
         tt-control stop \
     }
-super + v; {m, p, j, s, u, g, w, e, h, b}
-    { \
-        managevpn manage, managevpn Proton-NL, managevpn jjm-studio, \
-        managevpn Submarine, managevpn Proton-US, managevpn Proton-UK, \
-        managewifi, wifi-off, wifi-on, \
-        dmenu-bluetooth \
-    }
+# super + shift + t; {c, i, a, r, s}
+#     { \
+#         tt-control, \
+#         tt-control start issue, \
+#         tt-control start issue-all, \
+#         tt-control start recent, \
+#         tt-control stop \
+#     }
+# 'special' vim 'windows'
+super + v; {w}
+    {vimwiki-term}
 super + w: {h, j, k, l}
     notify-send -h "string:bgcolor:#93653e" "move mode" && winmove {-50 0, 0 50, 0 -50, 50 0}
 super + w: Escape
@@ -88,10 +101,10 @@ super + shift + x
 # Pulse Audio controls
 {_,shift} + XF86AudioRaiseVolume
     pactl set-sink-volume @DEFAULT_SINK@ +5%{;pkill -RTMIN+8 dwmblocks;, \
-        ;playsound /usr/share/sounds/freedesktop/stereo/bell.oga; pkill -RTMIN+8 dwmblocks}
+        ;ffplay -nodisp -autoexit /usr/share/sounds/freedesktop/stereo/bell.oga; pkill -RTMIN+8 dwmblocks}
 {_,shift} + XF86AudioLowerVolume
     pactl set-sink-volume @DEFAULT_SINK@ -5%{;pkill -RTMIN+8 dwmblocks;, \
-        ;playsound /usr/share/sounds/freedesktop/stereo/bell.oga; pkill -RTMIN+8 dwmblocks}
+        ;ffplay -nodisp -autoexit /usr/share/sounds/freedesktop/stereo/bell.oga; pkill -RTMIN+8 dwmblocks}
 XF86AudioMute
     pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+8 dwmblocks
 

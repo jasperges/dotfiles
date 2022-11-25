@@ -7,6 +7,9 @@
 # rope
 /.ropeproject/
 
+# vimspector
+/.vimspector.json
+
 # virtualenv
 venv/
 .venv/
@@ -16,6 +19,7 @@ ENV/
 *.swp
 *~
 *.*~
+/.vim
 
 # macOS
 .DS_Store
@@ -34,11 +38,14 @@ tags.temp
 .tags.lock
 .tags.temp
 
-# Temporarily disable `typings` until I've made a proper setup
-typings
 # Don't track 'test.py' files in the root of a repository. They are most likely
 # for my own testing purposes.
 /test.py
+
 # Gutentags settings
 /.gutctags
 /.notags
+
+# Directory for extra things I like to have in a repo but should never be
+# tracked. Note the highly descriptive name... 😇
+/jasperge-stuff
