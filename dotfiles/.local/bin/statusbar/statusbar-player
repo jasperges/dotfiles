@@ -1,21 +1,21 @@
 #!/bin/bash
 
 # Show the music info in the statusbar. It was made for MPD but now also
-# (partly) supports Spotify.
+# supports Spotify.
 
-hostinfofile="${XDG_CACHE_HOME:-$HOME/.cache}/playerhostinfo"
+declare -r HOSTINFOFILE="${XDG_CACHE_HOME:-$HOME/.cache}/playerhostinfo"
 
 readhostinfo() {
-    hostinfo=$(cat "$hostinfofile" 2> /dev/null)
-    if [ -n "$hostinfo" ]; then
+    hostinfo=$(cat "${HOSTINFOFILE}" 2> /dev/null)
+    if [ -n "${hostinfo}" ]; then
         if [[ $hostinfo = spotify ]]; then
             export SPOTIFY=1
             unset MPD_HOST
             unset MPD_PORT
             return
         fi
-        host=$(echo "$hostinfo" | cut -d "," -f 1)
-        port=$(echo "$hostinfo" | cut -d "," -f 2)
+        host=$(echo "${hostinfo}" | cut -d "," -f 1)
+        port=$(echo "${hostinfo}" | cut -d "," -f 2)
     fi
 
     # If not found, set to default host 'localhost' and port 6600
@@ -26,8 +26,10 @@ readhostinfo() {
 
 mpdtoggle() {
     readhostinfo
-    if [[ $SPOTIFY -eq 1 ]]; then
-        playerctl -p spotify play-pause &> /dev/null
+    if [[ ${SPOTIFY} -eq 1 ]]; then
+        spotify_player=$(playerctl -l | grep spotify | head -n1)
+        [[ -z ${spotify_player} ]] && exit 1
+        playerctl -p "${spotify_player}" play-pause &> /dev/null
     else
         mpc toggle &> /dev/null
     fi
@@ -40,7 +42,7 @@ case $BUTTON in
     3) music-player-switch ;;
 esac
 
-mpd() {
+player_status() {
     # icons:    栗
 
     readhostinfo
@@ -57,21 +59,24 @@ mpd() {
     fi
 
     if [[ $SPOTIFY -eq 1 ]]; then
-        status=$(playerctl -p spotify status)
-        artist=$(playerctl -p spotify metadata artist)
-        title=$(playerctl -p spotify metadata title)
-        current="$artist - $title"
+        spotify_player=$(playerctl -l | grep spotify | head -n1)
+        if [[ -n ${spotify_player} ]]; then
+            status=$(playerctl -p "${spotify_player}" status)
+            artist=$(playerctl -p "${spotify_player}" metadata artist)
+            title=$(playerctl -p "${spotify_player}" metadata title)
+            current="${artist} - ${title}"
+        fi
     else
         status=$(mpc status | sed -n 's#^.*\(playing\|paused\|stopped\).*$#\1#p')
         current=$(mpc --format "%artist% - %title%" current)
     fi
-    current=$(sed -e "s/^ - //" -e "s/^\(.\{$currentwidth\}\).*/\1.../" <<< "$current")
+    current=$(sed -e "s/^ - //" -e "s/^\(.\{${currentwidth}\}\).*/\1.../" <<< "${current}")
 
     case ${status,,} in
-        "playing") printf "   %s   " "$current" ;;
-        "paused") printf "   %s   " "$current" ;;
+        "playing") printf "   %s   " "${current}" ;;
+        "paused") printf "   %s   " "${current}" ;;
         *) printf "  栗   " ;;
     esac
 }
 
-mpd
+player_status
