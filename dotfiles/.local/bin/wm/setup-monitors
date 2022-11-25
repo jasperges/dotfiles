@@ -6,6 +6,26 @@ declare -a MATCHING_LAYOUT_SCRIPTS
 # Try to automatically run the screen layout script for the currently connected
 # monitors
 
+get_connected_monitors() {
+    # Sometime there are some strange issues with the connected monitors. Both
+    # the 'active' and 'connected' monitors can be reported incorrectly in my
+    # case. By making sure a monitor is in both arrays, the result shoul now be
+    # correct.
+    local -a active_monitors
+    local -a connected_monitors
+    local monitor
+
+    mapfile -t connected_monitors < <(xrandr -q | awk '/ connected/ {print $1}')
+    mapfile -t active_monitors < <(xrandr --listactivemonitors | awk '{print $4}')
+
+    for monitor in "${connected_monitors[@]}"; do
+        # shellcheck disable=SC2076
+        if [[ " ${active_monitors[*]} " =~ " ${monitor} " ]]; then
+            CONNECTED_MONITORS+=("${monitor}")
+        fi
+    done
+}
+
 get_layout_scripts() {
     local -i match
 
@@ -27,7 +47,7 @@ get_script_match() {
 
     [[ -z ${script} ]] && return 1
 
-    mapfile -t script_outputs < <(grep -o -E " *(.*DP-[0-9-]+)\)" "${script}" | tr -d "[:blank:])")
+    mapfile -t script_outputs < <(grep -o -E " *(.*(DP|LVDS)-[0-9-]+)\)" "${script}" | tr -d "[:blank:])")
     if [[ ${#script_outputs[@]} -ne ${#CONNECTED_MONITORS[@]} ]]; then
         echo 0
         return
@@ -43,7 +63,7 @@ get_script_match() {
 
 # ----------------------------------- main -----------------------------------
 
-mapfile -t CONNECTED_MONITORS < <(xrandr -q | awk '/ connected/ {print $1}')
+get_connected_monitors
 get_layout_scripts
 if [[ -z ${MATCHING_LAYOUT_SCRIPTS[*]} ]]; then
     notify-send "🖥  Monitor Setup" "Could not find a matching layout script for the connected monitors."
