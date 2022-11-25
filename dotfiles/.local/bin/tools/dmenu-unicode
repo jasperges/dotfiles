@@ -1,26 +1,26 @@
-#!/bin/sh
+#!/bin/bash
 # Give dmenu list of all unicode characters to copy.
 # Shows the selected character in dunst if running.
 
 # Must have xclip installed to even show menu.
-xclip -h >/dev/null || exit
+command -v xclip &> /dev/null || exit
 
 # if [ -e ~/.config/fontawesome ]; then
-#     chosen=$(grep -v "#" -h ~/.config/emoji ~/.config/fontawesome | rofi -dmenu -i -l 20 -fn Monospace-18 -p "Choose an emoji")
+#     chosen=$(grep -v "#" -h ~/.config/emoji ~/.config/fontawesome | rofi -dmenu -i -l 20 -p "Choose an emoji")
 if [ -e ~/.config/nerdfont ]; then
     chosen=$(grep -v "#" -h ~/.config/emoji ~/.config/nerdfont ~/.config/text-emoticons \
-        | rofi -dmenu -i -l 20 -fn Monospace-18 -p "Choose an emoji")
+        | rofi -dmenu -i -l 11 -p "Choose an emoji")
 else
     chosen=$(grep -v "#" ~/.config/emoji \
-        | rofi -dmenu -i -l 20 -fn Monospace-18 -p "Choose an emoji")
+        | rofi -dmenu -i -l 10 -p "Choose an emoji")
 fi
 
 [ "$chosen" != "" ] || exit
 
-c=$(echo "$chosen" | sed "s/ .*//")
-echo "$c" | tr -d '\n' | xclip -selection clipboard
+c="${chosen%% *}"
+printf "%s" "${c}" | xclip -selection clipboard
 notify-send "'$c' copied to clipboard." &
 
-s=$(echo "$chosen" | sed "s/.*; //" | awk '{print $1}')
-echo "$s" | tr -d '\n' | xclip
+s="${chosen##*;}"
+printf "%s" "${s}" | xclip
 notify-send "'$s' copied to primary." &

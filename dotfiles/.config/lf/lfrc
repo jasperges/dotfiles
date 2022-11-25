@@ -1,7 +1,7 @@
 # Jasper's lf settings
 
 # Basic vars
-set shell zsh
+set shell bash
 # set previewer ~/.config/lf/scope
 set previewer ~/.config/lf/previewer
 set cleaner ~/.config/lf/clear_img
@@ -17,12 +17,12 @@ cmd open ${{
     case $(file --mime-type $f -b) in
     	text/troff) man ./ $f;;
         text/*) $EDITOR $fx;;
-	image/x-xcf) setsid gimp $f >/dev/null 2>&1 & ;;
-    image/svg*xml) setsid inkscape $f >/dev/null 2>&1 & ;;
-	image/*) rotdir $f | setsid sxiv -aio 2>/dev/null | lf-select & ;;
-	audio/*) mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f ;;
-	video/*) setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f -quiet >/dev/null 2>&1 & ;;
-	application/pdf) setsid zathura $fx >/dev/null 2>&1 & ;;
+        image/x-xcf) setsid gimp $f >/dev/null 2>&1 & ;;
+        image/svg*xml) setsid inkscape $f >/dev/null 2>&1 & ;;
+        image/*) rotdir $f | setsid sxiv -aio 2>/dev/null | lf-select & ;;
+        audio/*) mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f ;;
+        video/*) setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f -quiet >/dev/null 2>&1 & ;;
+        application/pdf) setsid zathura $fx >/dev/null 2>&1 & ;;
         *) for f in $fx; do setsid $OPENER $f >/dev/null 2>&1 & done;;
     esac
 }}

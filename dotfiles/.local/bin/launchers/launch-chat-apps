@@ -1,9 +1,6 @@
 #!/bin/sh
 
-# mattermost &
-# sleep 5
 telegram-desktop &
 sleep 5
-# exec rambox
-exec ferdium
-# signal-desktop &
+ferdium &
+exec signal
