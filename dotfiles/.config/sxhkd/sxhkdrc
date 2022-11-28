@@ -95,7 +95,7 @@ super + shift + d; {a, c, h, x}
     {dunstctl close-all, dunstctl close, dunstctl history-pop, dunstctl context}
 
 # Kill windows
-super + shift + x
+super + shift + x:
     xkill
 
 # Pulse Audio controls
