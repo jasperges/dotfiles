@@ -428,6 +428,7 @@ let g:coc_config_home = '~/.config/coc'
 " prettier command for coc
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 let g:coc_global_extensions = [
+    \ 'coc-cfn-lint',
     \ 'coc-css',
     \ 'coc-diagnostic',
     \ 'coc-go',
