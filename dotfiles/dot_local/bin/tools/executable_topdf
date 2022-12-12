@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -euo pipefail
+
+[[ -z $* ]] && exit 1
+command -v libreoffice &> /dev/null || exit 1
+libreoffice --convert-to pdf "$1"

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# TODO: add usage and better argument handling
+
+# Add a directory to the user directory 'database'
+
+# --------------------------------- constants --------------------------------
+
+# TODO: make this configurable via envvar?
+DBFILE="${XDG_CONFIG_HOME:-${HOME}/.config}/.directorydb"
+
+# ----------------------------------- main -----------------------------------
+
+directory=$(absdir "${1:-${PWD}}")
+[[ ! -d ${directory} ]] && exit 1
+if ! grep "${directory}" "${DBFILE}" &> /dev/null; then
+    echo "${directory}" >> "${DBFILE}"
+fi

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if command -v neomutt &> /dev/null; then
+    # Check if an instance is already running. If yes, kill it, if not start a new one.
+    # This effectively makes it a toggle on/off.
+    pkill -U $UID -f ".*$TERMINAL -t neomutt-centered -e neomutt$" \
+        || exec $TERMINAL --class OPAQUE,alacritty -t neomutt-centered -e neomutt "$@"
+elif command -v thunderbird &> /dev/null; then
+    thunderbird &
+else
+    _error "Couldn't find a mail client"
+fi

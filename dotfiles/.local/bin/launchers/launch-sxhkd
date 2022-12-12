@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# Terminate already running instances
-killall -wq sxhkd
-
-# Launch new instance
-sxhkd $@ &
-
-echo "Simple X Hot Key Daemon launched..."

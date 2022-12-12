@@ -1,0 +1,49 @@
+#!/bin/bash
+
+shopt -s globstar
+
+case $BUTTON in
+    1) managewifi ;;
+    3) toggle-nmtui ;;
+esac
+
+internet() {
+    # icons:
+    #  - wifi up: 直
+    #  - wifi down: 睊
+    #  - ethernet up: 
+    #  - ethernet down: 
+
+    {{ if .wifiInterface -}}
+    # WiFi
+    if grep -q "up" /sys/class/net/{{ .wifiInterface }}/operstate; then
+        wifiicon="直"
+    else
+        wifiicon="睊"
+    fi
+    if [[ $wifiicon = "直" ]]; then
+        activewifi=$(nmcli --terse --fields NAME,TYPE c show --active \
+            | awk -F ':' '/wireless/ {printf $1}')
+        wifisignal=$(nmcli --terse --fields SSID,SIGNAL d wifi list --rescan no \
+            | awk -F ':' '/'"$activewifi"'/ {print $2"%"}' | head -n1)
+        wifiicon="$wifiicon $wifisignal"
+    fi
+    {{ end -}}
+
+    {{ if .ethernetInterface }}
+    # Ethernet
+    etherneticon="$(sed 's/up//;s/down//' /sys/class/net/{{ .ethernetInterface }}/operstate)"
+    {{ end -}}
+
+    {{ if and .wifiInterface .ethernetInterface }}
+    printf "  %s · %s   " "$wifiicon" "$etherneticon"
+    {{ end -}}
+    {{ if and .wifiInterface (not .ethernetInterface) }}
+    printf "  %s   " "$wifiicon"
+    {{ end -}}
+    {{ if and .ethernetInterface (not .wifiInterface) }}
+    printf "  %s   " "$etherneticon"
+    {{- end }}
+}
+
+internet

@@ -1,0 +1,4 @@
+{{- if not .isDesktop }}
+statusbar/
+wm/
+{{- end }}

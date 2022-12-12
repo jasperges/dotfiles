@@ -1,0 +1,12 @@
+{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $signingkey := promptStringOnce . "signingkey" "Git signing key" -}}
+{{- $beamdir := promptStringOnce . "beamdir" "The default beamer presentations directory" -}}
+{{- $ethernetDevice := promptStringOnce . "ethernetDevice" "The name of the primary ethernet device" -}}
+{{- $isDesktop := promptBoolOnce . "isDesktop" "Is this a desktop machine?" false -}}
+
+[data]
+    email = {{ $email | quote }}
+    signingkey = {{ signingkey | quote }}
+    beamdir = {{ beamdir | quote }}
+    ethernetDevice = {{ ethernetDevice | quote }}
+    isDesktop = {{ isDesktop }}

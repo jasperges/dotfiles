@@ -1,3 +1,0 @@
-#!/bin/bash
-
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/vsfm/bin exec /opt/vsfm/bin/VisualSFM

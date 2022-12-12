@@ -1,6 +1,0 @@
-#!/bin/sh
-
-telegram-desktop &
-sleep 5
-ferdium &
-exec signal

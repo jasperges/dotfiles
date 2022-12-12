@@ -1,4 +1,0 @@
-#!/bin/bash
-
-[[ $(tmux list-sessions 2>/dev/null 1>&2) ]] && exec tmux attach
-exec tmux

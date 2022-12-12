@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Terminate already running instances
-killall -wq picom
-
-# Launch new instance
-exec picom --experimental-backends

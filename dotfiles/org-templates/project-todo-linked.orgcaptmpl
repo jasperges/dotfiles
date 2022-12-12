@@ -1,8 +1,0 @@
-* TODO %^{Korte omschrijving} %^g
-  :LOGBOOK:
-  - Added: %U
-  - Link: %A
-  - #+begin_src
-    %i
-    #+end_src
-  :END:

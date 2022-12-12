@@ -1,6 +1,0 @@
-#! /bin/bash
-
-[[ $(pgrep -u $UID -x dropbox) ]] && dropbox stop >/dev/null
-
-while pgrep -u $UID -x dropbox >/dev/null; do sleep 1; done
-dropbox start

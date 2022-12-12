@@ -1,0 +1,5 @@
+{{- if not .isDesktop }}
+# Ignore Xorg files if this is not a desktop
+.xinitrc
+.Xresources
+{{- end }}

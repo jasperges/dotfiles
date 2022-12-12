@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# Terminate already running instances
-killall -wq dunst
-
-# Launch new instance
-dunst &
-
-echo "Dunst (notification daemon) launched..."

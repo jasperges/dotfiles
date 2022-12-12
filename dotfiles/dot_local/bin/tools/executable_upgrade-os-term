@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec $TERMINAL --class alacritty,OPAQUE -t os-upgrade-local-centered -e upgrade-os

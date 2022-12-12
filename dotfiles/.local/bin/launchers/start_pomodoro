@@ -1,5 +1,0 @@
-#!/bin/bash
-
-pomodoro_process_id=$(pgrep -a python | awk '/pomodoro/ {print $1}')
-[[ -n $pomodoro_process_id ]] && kill $pomodoro_process_id
-$HOME/src/pomodoro/pomodoro

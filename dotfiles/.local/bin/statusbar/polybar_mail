@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# polybar mail module.
-
-echo $(find ~/.local/share/mail/*/INBOX/new -type f 2>/dev/null | echo $(sed -n '$=' | sed -Ee "s/^(0)$/ \1/" -e "s/^([0-9]+)$/  \1/") | sed -Ee "s/^$/  0/")

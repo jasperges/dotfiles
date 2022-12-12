@@ -1,0 +1,14 @@
+#!/bin/sh
+
+{{ if ne .chezmoi.hostname "weerjappie" -}}
+telegram-desktop &
+sleep 3
+ferdium &
+sleep 3
+exec signal
+{{ end -}}
+{{ if eq .chezmoi.hostname "weerjappie" -}}
+slack &
+sleep 3
+exec ferdium
+{{ end -}}

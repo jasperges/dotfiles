@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Check if an instance is already running. If yes, kill it, if not start a new one.
+# This effectively makes it a toggle on/off.
+pkill -U $UID -f ".*$TERMINAL -t btop-centered -e btop$" || exec $TERMINAL -t btop-centered -e btop

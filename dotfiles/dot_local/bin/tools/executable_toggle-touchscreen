@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Toggle the touch screen on or off
+
+# shellcheck disable=2155
+declare -r touchid=$(xinput list --id-only "Wacom HID 490A Finger touch")
+choice=$(echo -e "on\noff" | dmenu -l 2 -i -r -p "Turn touchscreen")
+[[ -z ${choice} ]] && exit
+case "${choice}" in
+    on) xinput enable "${touchid}" ;;
+    off) xinput disable "${touchid}" ;;
+esac

@@ -1,0 +1,17 @@
+{{- if not .isDesktop }}
+clipmenu
+dmenu-*
+managebluetooth
+managevpn
+managewifi
+media-import
+media-view-sorted-photos
+passmenu
+pdfmerge
+purge-non-existing-images-darktable
+pwdc
+setxinputs
+setxrandr
+sysact
+topdf
+{{- end }}

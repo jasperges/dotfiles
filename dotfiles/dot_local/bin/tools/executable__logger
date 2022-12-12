@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Print the given message to stderr.
+
+set -euo pipefail
+
+declare -ar FUNCS=(_info _warning _error _help)
+declare -r USAGE="
+Usage: _logger [<loglevel>]  <message>
+       _info|_warning|_error <message>
+
+Log a message to stderr with ANSI colors. If called as '_logger' the first
+argument should be the log level. You can also call this script as the loglevel
+(by linking it) in which case the log level should be skipped. The message
+argument is always required.
+
+To have consistent arguments and not conflict with for example 'info' fro the FSF the log levels are prefixed with an '_'. Therefore the symlinked commands should also be named: '_info', '_warning' and '_error'.
+"
+# shellcheck disable=1091
+source ansicolors
+
+# --------------------------------- functions --------------------------------
+
+_info() {
+    echo -e "${WHITE}$1${NC}" >&2
+}
+
+_warning() {
+    echo -e "${ORANGE}$1${NC}" >&2
+}
+
+_error() {
+    echo -e "${RED}$1${NC}" >&2
+}
+
+_usage() {
+    echo "${USAGE}"
+    exit 0
+}
+
+_error_usage() {
+    echo "${USAGE}"
+    exit 1
+}
+
+_help() {
+    _usage
+}
+
+# ----------------------------------- main -----------------------------------
+
+[[ -z $* ]] && _error_usage
+
+if [[ ${0##*/} != "_logger" ]]; then
+    func="${0##*/}"
+else
+    func="$1"
+    shift
+fi
+
+[[ ${func} == help ]] && func=_help
+# shellcheck disable=2076
+[[ ! " ${FUNCS[*]} " =~ " ${func} " ]] && _error_usage
+
+"${func}" "$*"

@@ -1,0 +1,15 @@
+{{- if not .isDesktop }}
+alacritty/
+coc/
+dunst/
+fontconfig/
+gtk-3.0/
+rofi/
+sxhkd/
+zathura/
+emoji
+fontawesome
+nerdfont
+picom.conf
+text-emoticons
+{{- end }}

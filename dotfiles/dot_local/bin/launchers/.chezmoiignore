@@ -1,0 +1,10 @@
+{{- if not .isDesktop }}
+gaffer
+launch-chat-apps
+launch-xephyr
+rofi_calc
+rofi_run
+start_terminal_in_pwd
+toggle-*
+vim
+{{- end }}
