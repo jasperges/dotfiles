@@ -1,18 +1,20 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
 {{- $signingkey := promptStringOnce . "signingkey" "Git signing key" -}}
 {{- $beamdir := promptStringOnce . "beamdir" "The default beamer presentations directory" -}}
-{{- $ethernetDevice := promptStringOnce . "ethernetDevice" "The name of the primary ethernet device" -}}
+{{- $ethernetInterface := promptStringOnce . "ethernetInterface" "The name of the primary ethernet device" -}}
+{{- $wifiInterface := promptStringOnce . "wifiInterface" "The name of the primary wifi device" -}}
 {{- $dfDisk := promptStringOnce . "dfDisk" "The name of the harddisk to show the free space for" -}}
 {{- $kbdBacklight := promptStringOnce . "kbdBacklight" "The name of the keyboard backlight device" -}}
-{{- $ledBacklight := promptStringOnce . "ledBacklight" "The name of the screen backlight device" -}}
-{{- $isDesktop := promptBoolOnce . "isDesktop" "Is this a desktop machine?" false -}}
+{{- $screenBacklight := promptStringOnce . "screenBacklight" "The name of the screen backlight device" -}}
+{{- $isDesktop := promptBoolOnce . "isDesktop" "Is this a desktop machine" false -}}
 
 [data]
     email = {{ $email | quote }}
-    signingkey = {{ signingkey | quote }}
-    beamdir = {{ beamdir | quote }}
-    ethernetDevice = {{ ethernetDevice | quote }}
-    dfDisk = {{ dfDisk | quote }}
-    kbdBacklight = {{ kbdBacklight | quote }}
-    screenBacklight = {{ screenBacklight | quote }}
-    isDesktop = {{ isDesktop }}
+    signingkey = {{ $signingkey | quote }}
+    beamdir = {{ $beamdir | quote }}
+    ethernetInterface = {{ $ethernetInterface | quote }}
+    wifiInterface = {{ $wifiInterface | quote }}
+    dfDisk = {{ $dfDisk | quote }}
+    kbdBacklight = {{ $kbdBacklight | quote }}
+    screenBacklight = {{ $screenBacklight | quote }}
+    isDesktop = {{ $isDesktop }}
