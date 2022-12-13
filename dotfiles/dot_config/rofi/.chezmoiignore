@@ -1,0 +1,6 @@
+{{- if ne .chezmoi.hostname "weerjappie" }}
+config.rasi
+{{- end }}
+{{- if eq .chezmoi.hostname "weerjappie" }}
+config
+{{- end }}

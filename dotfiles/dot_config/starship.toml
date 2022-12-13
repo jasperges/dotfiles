@@ -6,3 +6,6 @@ command_timeout = 2000
 success_symbol = "[>>](5)"
 error_symbol = "[>>](bold red)"
 vicmd_symbol = "<<"
+
+[aws]
+force_display = true

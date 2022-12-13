@@ -2,10 +2,20 @@ setlocal expandtab
 setlocal shiftwidth=4
 setlocal tabstop=4
 setlocal softtabstop=4
+{{- if ne .chezmoi.hostname "weerjappie" }}
 setlocal textwidth=88
+{{ end -}}
+{{- if eq .chezmoi.hostname "weerjappie" }}
+setlocal textwidth=100
+{{ end -}}
 
+{{- if ne .chezmoi.hostname "weerjappie" }}
 " Set column to 88 to follow Black formatter
 setlocal colorcolumn=88
+{{- end }}
+{{- if eq .chezmoi.hostname "weerjappie" }}
+setlocal colorcolumn=100
+{{- end }}
 
 " Format file with isort and black on save
 let g:neoformat_enabled_python = ['black', 'isort']

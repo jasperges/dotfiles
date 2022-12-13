@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [[ -f .env.test ]]; then
+    docker compose --env-file=.env.test build --force "$@"
+else
+    docker compose build --force "$@"
+fi

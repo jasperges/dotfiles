@@ -1,14 +1,15 @@
 #!/bin/bash
 
-file="/sys/class/leds/smc::kbd_backlight/brightness"
+file="/sys/class/leds/{{- .kbdBacklight -}}::kbd_backlight/brightness"
 # Exit if the file doesn't exists.
 [[ ! -f "$file" ]] && exit 1
-read -r max < "/sys/class/leds/smc::kbd_backlight/max_brightness"
-((step = max / 20))  # 5%
+read -r max < "/sys/class/leds/{{- .kbdBacklight }}::kbd_backlight/max_brightness"
+{{ if eq .chezmoi.hostname "weerjappie" -}}step=1{{ end -}}
+{{ if ne .chezmoi.hostname "weerjappie" -}}((step = max / 20)) # 5%{{ end }}
 
 case "$1" in
-    -i|--increase) ((val = +step));;
-    -d|--decrease) ((val = -step));;
+    -i | --increase) ((val = +step)) ;;
+    -d | --decrease) ((val = -step)) ;;
 esac
 
 if !((val)); then
@@ -20,7 +21,7 @@ fi
 read -r cur < "$file"
 ((val = cur + val))
 
-if ((val <   0)); then ((val =   0)); fi
+if ((val < 0)); then ((val = 0)); fi
 if ((val > max)); then ((val = max)); fi
 
 printf '%d' "$val" > "$file"

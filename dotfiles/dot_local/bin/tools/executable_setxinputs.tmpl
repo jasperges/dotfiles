@@ -8,7 +8,7 @@ done
 # Disable touch
 xinput | awk -F '\t' '/Finger/ {print $2}' | cut -d = -f 2 | xargs -rL 1 xinput disable
 # Disable buttons
-xinput | awk -F '\t' '/Pad pad/ {print $2}' | cut -d = -f 2 | xargs -r -L 1 -I "{}" xinput set-button-map "{}" 0 0 0 0 0 0 0 0 0 0 0 0 0
+xinput | awk -F '\t' '/Pad pad/ {print $2}' | cut -d = -f 2 | xargs -r -I "{}" xinput set-button-map "{}" 0 0 0 0 0 0 0 0 0 0 0 0 0
 
 # Map wacom to main monitor
 primary_monitor=$(xrandr --listactivemonitors | awk '/[0-9]: \+\*/ {print $4}')
@@ -17,5 +17,8 @@ for i in "${wacomids[@]}"; do
     xinput map-to-output "$i" "$primary_monitor"
 done
 
+setxkbmap -layout us -variant mac
+{{ if ne .chezmoi.hostname "weerjappie" }}
 # Tilde next to z key, also on laptop. This disables the section/plusminus key which I never use.
 xmodmap -e 'keycode 94 = grave asciitilde grave asciitilde dead_grave dead_horn dead_grave' &
+{{- end }}

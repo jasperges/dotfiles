@@ -1,5 +1,7 @@
 # You can add comments to these files with #
+{{ if ne .chezmoi.hostname "weerjappie" -}}
 3d	$HOME/projects/3d-printing
+{{- end }}
 bin	$HOME/.local/bin
 cac	${XDG_CACHE_HOME:-$HOME/.cache}
 cf	${XDG_CONFIG_HOME:-$HOME/.config}
@@ -7,15 +9,14 @@ d	${XDG_DOCUMENTS_DIR:-$HOME/documents}
 D	${XDG_DOWNLOAD_DIR:-$HOME/downloads}
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
 h	$HOME
+{{ if ne .chezmoi.hostname "weerjappie" -}}
 ja	$HOME/syncthing/linesofjasper/administratie
 jf	$HOME/syncthing/linesofjasper/administratie/facturen/2022
 jj	$HOME/syncthing/linesofjasper
+{{- end }}
 m	${XDG_MUSIC_DIR:-$HOME/music}
 me	/media
 mn	/mnt
 pp	${XDG_PICTURES_DIR:-$HOME/pictures}
-sp	/media/projects
 src	$HOME/src
-sr	/media/studio-admin/resources
-srp	/media/studio-admin/resources/rez/packages
 vv	${XDG_VIDEOS_DIR:-$HOME/videos}
