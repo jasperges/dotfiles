@@ -1,0 +1,235 @@
+# User specified aliases and functions
+# shellcheck  shell=bash
+
+{{ if .isDesktop -}}
+# open files
+# alias open='xdg-open'
+open() {
+    xdg-open "$1" &
+}
+
+{{ end -}}
+# clear
+alias c='clear'
+
+# cd aliasses
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../../'
+
+# cp/mv
+alias cp='cp -v' # make it verbose by default
+alias mv='mv -v' # make it verbose by default
+
+# ls
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias la='ls -lA'
+alias llc='c; ll'
+alias lac='c; la'
+
+# tmux session
+alias tm='tmux new-session -A -s "${USER}-session"'
+
+{{ if .isDesktop -}}
+# lf
+alias lf='lfimg' # lf with ueberzug
+
+{{ end -}}
+# Create parent dirs on demand
+alias mkdir='mkdir -pv'
+# Create dir and parents dir and cd into it
+mkcd() {
+    # Use normal mkdir not the alias
+    'mkdir' -p "$1" && cd "$1" || return
+}
+
+beamdir() {
+    newdir="{{ .beamdir }}/$(date +%Y-%m-%d -d 'sunday')"
+    test -d "$newdir" || mkdir -p "$newdir"
+    cd "$newdir" || return
+}
+
+# Quickly go to a manually added directory
+goto() {
+    # TODO: make this configurable via envvar?
+    DBFILE="${XDG_CONFIG_HOME:-${HOME}/.config}/.directorydb"
+    cd "$(sort < "${DBFILE}" | fzf)" || exit
+}
+
+# Quickly go to a source code directory
+gotos() {
+    local -r _source_dir="${SOURCE_DIR:-${HOME}/src}"
+    local -a _git_dirs
+    local -a _git_repo_dirs
+    mapfile _git_dirs < <(find -L "${_source_dir}" -type d -name ".git")
+    for _git_dir in "${_git_dirs[@]}"; do
+        _git_repo_dirs+=("${_git_dir%/*}")
+    done
+    _choice=$(printf "%q\n" "${_git_repo_dirs[@]}" | fzf -i)
+    [[ -z "${_choice}" ]] && return 0
+    _choice="${_choice//[$'\t\r\n ']/}"
+    if [[ ! -d "${_choice}" ]]; then
+        _error "The directory doesn't exist: ${_choice}"
+        return 1
+    fi
+    cd "${_choice}" || return 1
+}
+
+gclone() {
+    local -r _source_dir="${SOURCE_DIR:-${HOME}/src}"
+
+    [[ -z $* ]] && error "Please provide the clone URL" && return 1
+
+    # TODO: also handle 'https://git.host/user/repo' URL's
+    _clone_url="$1"
+    _clone_path="${_clone_url##*@}"
+    _host="${_clone_path%%:*}"
+    _head="${_clone_path%/*}"
+    _tail="${_clone_path##*/}"
+    _user="${_head##*:}"
+    _clone_dir="${_source_dir}/${_host}/${_user}/${_tail%%.*}"
+    if [[ -d ${_clone_dir} ]]; then
+        error "Directory already exists: ${_clone_dir}"
+        return 1
+    fi
+    read -rp "Clone in directory: ${_clone_dir}? " _answer
+    case "${_answer}" in
+        y | Y | yes | YES | 1)
+            mkdir -p "${_clone_dir}"
+            cd "${_clone_dir}" || return 1
+            git clone "${_clone_url}" "${_clone_dir}"
+            ;;
+        *)
+            return 0
+            ;;
+    esac
+}
+
+# Extra commands
+alias path='echo -e ${PATH//:/\\n}'
+alias pythonpath='echo -e ${PYTHONPATH//:/\\n}'
+alias now='date +"%T"'
+alias nowtime=now
+alias todate='date +"%Y-%m-%d"'
+
+# wget resume
+alias wget='wget -c'
+
+# du
+# alias du='du -ch'
+
+# rsync
+[[ -f ${HOME}/.rsync_exclude ]] && alias rsync='rsync --exclude-from="${HOME}/.rsync_exclude"'
+
+# for typos
+alias gti='git'
+{{- if eq .chezmoi.osRelease.id "fedora" }}
+alias dfn='dnf'
+{{- end }}
+
+# qt5
+alias qmake='/usr/bin/qmake-qt5'
+
+# ping
+alias ping='ping -c 1'
+
+# ssh
+# shellcheck source=/dev/null
+[[ -f ~/.sshrc ]] && source ~/.sshrc
+
+# shortcuts
+# shellcheck disable=1090
+[[ -f ~/.config/shell/shortcutrc ]] && source ~/.config/shell/shortcutrc
+
+# cat/bat
+# alias ccat='highlight -O ansi'
+# alias cat='bat'
+alias batp='bat -p'
+alias batpp='bat -pp'
+
+# detox
+alias detox='detox -f ${HOME}/.config/detox/detoxrc'
+
+# fuzzy finder
+# alias se='$EDITOR $(find $HOME/.local/bin $HOME/.config -type f | fzf)'
+# alias vf='$EDITOR $(fzf)'
+se() {
+    files=$(find "${HOME}/.local/bin/jobs" \
+        "${HOME}/.local/bin/launchers" \
+        "${HOME}/.local/bin/statusbar" \
+        "${HOME}/.local/bin/tools" \
+        "${HOME}/.local/bin/wm" \
+        "${HOME}/.config" -type f -not -name ".*" | fzf)
+    [[ -n $files ]] && ${EDITOR} "${files}"
+}
+vf() {
+    files=$(find "${PWD}" -maxdepth 3 -type f | fzf)
+    [[ -n ${files} ]] && "${EDITOR}" "${files}"
+}
+
+# tools
+alias ns='new-script'
+
+alias '?'=duck
+
+{{ if .isDesktop -}}
+# start vnc server
+alias startvnc='x12vnc -noxdamage -display :0 -forever -usepw -xkb -noxrecord -noxfixes -shared'
+
+{{ end -}}
+# Docker compose 'shortcuts'
+dcbuild() {
+    _run_dc_command dcbuild "$@"
+}
+
+dcdown() {
+    _run_dc_command dcdown "$@"
+}
+
+dcup() {
+    _run_dc_command dcup "$@"
+}
+
+dclogs() {
+    _run_dc_command dclogs "$@"
+}
+
+_has_docker_compose() {
+    # Return exit code 1 if not exactly 1 docker-compose file is found
+    _num_dcfiles=$(find "${PWD}" -type f -name docker-compose.yml | wc -l)
+    [[ ${_num_dcfiles} -eq 1 ]] && return 0
+    return 1
+}
+
+_run_dc_command() {
+    [[ -z $1 ]] && exit 0
+    _cmd="$1"
+    shift
+    if _has_docker_compose; then
+        "${SCRIPTS}/docker/${_cmd}" "$@"
+    else
+        echo "No 'docker-compose.yml' file found in ${PWD}"
+    fi
+
+}
+
+{{ if eq .chezmoi.hostname "weerjappie" -}}
+# AWS session
+function aws-session() {
+    if [[ -z $1 ]]; then
+        account=$(jq -r 'keys[]' ~/.aws/accounts | fzf)
+    else
+        account="$1"
+    fi
+    idp_username=$(passprint username knmi/aws)
+    role_name=$(passprint rolename knmi/aws)
+    eval "$(start-session --idp-username="${idp_username}" \
+        aws --aws-account-name="${account}" --aws-role-name="${role_name}")"
+}
+{{ end -}}
+
+#  vim: set ts=4 sw=4 tw=0 et ft=sh :
