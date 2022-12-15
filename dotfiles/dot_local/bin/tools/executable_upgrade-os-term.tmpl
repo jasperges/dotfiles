@@ -1,0 +1,6 @@
+#!/bin/bash
+
+exec $TERMINAL --class
+    {{- if ne .chezmoi.hostname "weerjappie" }} OPAQUE,alacritty {{ end -}}
+    {{- if eq .chezmoi.hostname "weerjappie" }} alacritty,OPAQUE {{ end -}}
+    -t os-upgrade-local-centered -e upgrade-os

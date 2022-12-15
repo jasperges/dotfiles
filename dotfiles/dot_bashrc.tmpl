@@ -11,8 +11,7 @@ esac
 # Source global definitions
 [[ -f /etc/bashrc ]] && source /etc/bashrc
 [[ -f /etc/bash.bashrc ]] && source /etc/bash.bashrc
-
-{{ if eq .chezmoi.osRelease.id "ubuntu" -}}
+{{ if eq .chezmoi.osRelease.id "ubuntu" }}
 # TODO: have to figure out how completion is now configured exactly. If it
 # exsits the file /usr/share/bash-completion will be sourced (this does exist),
 # if not /etc/bash_completionis sourced. As far as I can see the files in
@@ -20,8 +19,7 @@ esac
 # not. Manually sourcing /etc/bash_completion here to have all desired
 # completions.
 [[ -f /etc/bash_completion ]] && source /etc/bash_completion
-{{- end }}
-
+{{ end }}
 [[ -f $HOME/.config/user-dirs.dirs ]] && source "${HOME}/.config/user-dirs.dirs"
 
 # Use beam shape cursor on startup.
@@ -83,11 +81,9 @@ export LESS_TERMCAP_so=$(printf "\e[0;37;102m")
 export LESS_TERMCAP_ue=$(printf "\e[0m")
 export LESS_TERMCAP_us=$(printf "\e[4;32m")
 export GROFF_NO_SGR=1 # For Konsole and Gnome-terminal
-
-{{ if .isDesktop -}}
+{{ if .isDesktop }}
 [[ -n $DISPLAY ]] && xrdb -merge "${HOME}/.Xresources"
-{{- end }}
-
+{{ end }}
 [[ -z $REZ_SHELL_INTERACTIVE ]] && [[ -x $(command -v starship) ]] && eval "$(starship init bash)"
 
 # zoxide
