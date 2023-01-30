@@ -74,8 +74,12 @@ Plug 'honza/vim-snippets'
 {{- if .isDesktop }}
 " Refactoring
 Plug 'python-rope/ropevim'
-" Debugging
+" Debugging / testing
 Plug 'puremourning/vimspector'
+Plug 'sagi-z/vimspectorpy', { 'do': { -> vimspectorpy#update() } }
+Plug 'vim-test/vim-test'
+" easily interact with tmux from vim
+Plug 'preservim/vimux'
 " CoC
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 {{- end }}
@@ -442,6 +446,14 @@ nmap <Leader>dk <Plug>VimspectorRestart
 nmap <Leader>dh <Plug>VimspectorStepOut
 nmap <Leader>dl <Plug>VimspectorStepInto
 nmap <Leader>dj <Plug>VimspectorStepOver
+
+" --------------------------------- vim-test ---------------------------------
+
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tf :TestFile<CR>
+nmap <silent> <leader>ts :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>tv :TestVisit<CR>
 
 " ------------------------------------ CoC -----------------------------------
 
