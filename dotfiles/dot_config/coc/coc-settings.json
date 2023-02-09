@@ -1,7 +1,7 @@
 {
   "pairs.enableCharacters": ["(", "[", "{", "'", "\"", "`"],
   "suggest.noselect": false,
-  "[go][graphql][javascript][javascriptreact][json][python][typescript][typescript.tsx][typescriptreact]": {
+  "[go][graphql][javascript][javascriptreact][json][python][rust][typescript][typescript.tsx][typescriptreact]": {
     "coc.preferences.formatOnSave": true
   },
   "pyright.disableOrganizeImports": false,
