@@ -64,6 +64,10 @@ if command -v pyenv &> /dev/null; then
     eval "$(pyenv virtualenv-init -)"
 fi
 
+# asdf
+[[ -f ${HOME}/.asdf/asdf.sh ]] && source "${HOME}/.asdf/asdf.sh"
+[[ -f ${HOME}/.asdf/completions/asdf.bash ]] && "${HOME}/.asdf/completions/asdf.bash"
+
 {{ end -}}
 # dir colors
 [[ -f $HOME/.dircolors ]] && eval "$(dircolors "$HOME/.dircolors")"

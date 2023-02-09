@@ -89,13 +89,14 @@ pathprepend \
     "${HOME}/.local/bin/statusbar" \
     "${HOME}/.local/bin/wm" \
     "${SCRIPTS}" \
-    /opt/go/go/bin
 
 pathappend \
+    /opt/go/go/bin \
     "${HOME}/.config/yarn/global/node_modules/.bin" \
     "${HOME}/.yarn/bin" \
     "${HOME}/.local/distrobox/bin" \
-    /opt/idea/bin
+    "${HOME}/.ghcup/bin" \
+    "${HOME}/.cabal/bin"
 
 # Paths for Go
 export GOPATH=${HOME}/.local/share/go
@@ -109,9 +110,7 @@ export CARGO_INSTALL_ROOT=${HOME}/.local/bin/cargo
 export RUSTUP_HOME=${HOME}/.local/share/rustup
 
 # Add shortcuts file if it doesn't exist yet.
-if [[ ! -f ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/shortcutrc ]]; then
-    shortcuts &> /dev/null &
-fi
+[[ ! -f ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/shortcutrc ]] && shortcuts &> /dev/null &
 
 {{ if .isDesktop -}}
 # Auto start X on tty1
