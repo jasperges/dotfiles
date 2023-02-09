@@ -52,6 +52,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 " Collection of language packs
 Plug 'sheerun/vim-polyglot'
+Plug 'gleam-lang/gleam.vim'
 " Distraction free writing
 Plug 'junegunn/goyo.vim'
 " VimWiki
@@ -442,6 +443,7 @@ nnoremap <Leader>dc :call vimspector#Continue()<CR>
 nnoremap <Leader>dt :call vimspector#ToggleBreakpoint()<CR>
 nnoremap <Leader>dT :call vimspector#ClearBreakpoints()<CR>
 
+nmap <Leader>db <Plug>VimspectorBreakpoints
 nmap <Leader>dk <Plug>VimspectorRestart
 nmap <Leader>dh <Plug>VimspectorStepOut
 nmap <Leader>dl <Plug>VimspectorStepInto
