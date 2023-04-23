@@ -1,11 +1,13 @@
 #!/bin/bash
 
 {{ if eq .chezmoi.osRelease.id "fedora" -}}
-sudo dnf --refresh upgrade
+sudo dnf upgrade
 {{ end -}}
 {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
 sudo apt update && sudo apt full-upgrade
 {{ end -}}
+flatpak update
+cargo install-update --all
 exitcode="$?"
 echo
 read -n1 -s -r -p "Press any key to close this window..."

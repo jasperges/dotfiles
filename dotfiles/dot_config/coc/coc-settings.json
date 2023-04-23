@@ -1,14 +1,16 @@
 {
   "pairs.enableCharacters": ["(", "[", "{", "'", "\"", "`"],
   "suggest.noselect": false,
-  "[go][graphql][javascript][javascriptreact][json][python][rust][typescript][typescript.tsx][typescriptreact]": {
+  "[clojure][gleam][go][graphql][haskell][javascript][javascriptreact][json][python][rust][typescript][typescript.tsx][typescriptreact]": {
     "coc.preferences.formatOnSave": true
   },
   "pyright.disableOrganizeImports": false,
   "pyright.organizeimports.provider": "isort",
+  "python.sortImports.args": ["--profile", "black"],
   "python.linting.enabled": true,
-  "python.linting.flake8Enabled": true,
-  "python.linting.pylintEnabled": true,
+  "python.linting.ruffEnabled": true,
+  "python.linting.flake8Enabled": false,
+  "python.linting.pylintEnabled": false,
   "python.linting.mypyEnabled": true,
   "python.formatting.provider": "black",
   "python.linting.lintOnSave": true,
@@ -25,6 +27,23 @@
       "command": "docker-langserver",
       "filetypes": ["dockerfile"],
       "args": ["--stdio"]
+    },
+    "gleam": {
+      "command": "gleam",
+      "args": ["lsp"],
+      "shell": true,
+      "rootPatterns": ["gleam.toml", "manifest.toml"],
+      "filetypes": ["gleam"],
+      "settings": {
+        "gleam": {
+          "formattingProvider": "gleam format"
+        }
+      }
+    },
+    "godot": {
+      "host": "127.0.0.1",
+      "filetypes": ["gd", "gdscript", "gdscript3"],
+      "port": 6008
     },
     "haskell": {
       "command": "haskell-language-server-wrapper",
@@ -150,6 +169,10 @@
           }
         }
       }
+    },
+    "nim": {
+      "command": "nimlsp",
+      "filetypes": ["nim"]
     }
   },
   "diagnostic-languageserver.filetypes": {

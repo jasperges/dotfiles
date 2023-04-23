@@ -69,13 +69,10 @@ if [[ -z ${MATCHING_LAYOUT_SCRIPTS[*]} ]]; then
     notify-send "🖥  Monitor Setup" "Could not find a matching layout script for the connected monitors."
     exit 0
 fi
-if [[ ${#MATCHING_LAYOUT_SCRIPTS[@]} -eq 1 ]]; then
-    # Run script if there is only one matching script
+if [[ ${#MATCHING_LAYOUT_SCRIPTS[@]} -eq 1 || -t 0 ]]; then
+    # Run script if there is only one matching script or we are running in a terminal
     "${MATCHING_LAYOUT_SCRIPTS[0]}"
 else
-    # Assumes it's being run non-interactively for now, so exiting because we
-    # can't get the users choice
-    [[ -t 0 ]] && exit
     # TODO: also strip off the extension
     choice=$(printf "%s\n" "${MATCHING_LAYOUT_SCRIPTS[@]##*/}" | dmenu -l 5 -i -r)
     [[ -n ${choice} ]] && "${HOME}/.screenlayout/${choice}"

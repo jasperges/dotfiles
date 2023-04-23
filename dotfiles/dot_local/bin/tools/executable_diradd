@@ -13,8 +13,11 @@ DBFILE="${XDG_CONFIG_HOME:-${HOME}/.config}/.directorydb"
 
 # ----------------------------------- main -----------------------------------
 
-directory=$(absdir "${1:-${PWD}}")
-[[ ! -d ${directory} ]] && exit 1
-if ! grep "${directory}" "${DBFILE}" &> /dev/null; then
+directory="${1:-${PWD}}"
+if [[ ! -d ${directory} ]]; then
+    echo "Directory doesn't exist: ${directory}"
+    exit 1
+fi
+if ! grep "^${directory}$" "${DBFILE}" &> /dev/null; then
     echo "${directory}" >> "${DBFILE}"
 fi

@@ -14,9 +14,8 @@ internet() {
     #  - ethernet up: 
     #  - ethernet down: 
 
-    {{ if .wifiInterface -}}
     # WiFi
-    if grep -q "up" /sys/class/net/{{ .wifiInterface }}/operstate; then
+    if grep -q "up" /sys/class/net/w*/operstate; then
         wifiicon="直"
     else
         wifiicon="睊"
@@ -28,22 +27,15 @@ internet() {
             | awk -F ':' '/'"$activewifi"'/ {print $2"%"}' | head -n1)
         wifiicon="$wifiicon $wifisignal"
     fi
-    {{ end -}}
 
-    {{ if .ethernetInterface }}
     # Ethernet
-    etherneticon="$(sed 's/up//;s/down//' /sys/class/net/{{ .ethernetInterface }}/operstate)"
-    {{ end -}}
+    if grep -q "up" /sys/class/net/e*/operstate; then
+        etherneticon=""
+    else
+        etherneticon=""
+    fi
 
-    {{ if and .wifiInterface .ethernetInterface }}
     printf "  %s · %s   " "$wifiicon" "$etherneticon"
-    {{ end -}}
-    {{ if and .wifiInterface (not .ethernetInterface) }}
-    printf "  %s   " "$wifiicon"
-    {{ end -}}
-    {{ if and .ethernetInterface (not .wifiInterface) }}
-    printf "  %s   " "$etherneticon"
-    {{- end }}
 }
 
 internet

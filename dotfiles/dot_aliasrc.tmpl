@@ -79,6 +79,25 @@ gotos() {
     cd "${_choice}" || return 1
 }
 
+# Quickly go to an Exercism exercise
+gotoe() {
+    local -r _exercism_dir="${SOURCE_DIR:-${HOME}/src}/exercism"
+    local -a _exercism_dirs
+    local -a _exercise_dirs
+    mapfile _exercism_dirs < <(find -L "${_exercism_dir}" -type d -name ".exercism")
+    for _ed in "${_exercism_dirs[@]}"; do
+        _exercise_dirs+=("${_ed%/*}")
+    done
+    _choice=$(printf "%q\n" "${_exercise_dirs[@]}" | fzf -i)
+    [[ -z "${_choice}" ]] && return 0
+    _choice="${_choice//[$'\t\r\n ']/}"
+    if [[ ! -d "${_choice}" ]]; then
+        _error "The directory doesn't exist: ${_choice}"
+        return 1
+    fi
+    cd "${_choice}" || return 1
+}
+
 gclone() {
     local -r _source_dir="${SOURCE_DIR:-${HOME}/src}"
 
@@ -109,6 +128,19 @@ gclone() {
     esac
 }
 
+# Download from exercism and goto exercise directory
+exd() {
+    exercise_dir=$("$@" 2> /dev/null)
+    cd "${exercise_dir}" || exit 1
+}
+
+{{ if .isDesktop -}}
+# CD into the directory that is in the clipboard (if any)
+cdc() {
+    cd "$(xclip -selection clipboard -out)" || exit 1
+}
+
+{{ end -}}
 # Extra commands
 alias path='echo -e ${PATH//:/\\n}'
 alias pythonpath='echo -e ${PYTHONPATH//:/\\n}'

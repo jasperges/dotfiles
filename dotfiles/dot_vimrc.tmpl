@@ -26,9 +26,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 " Plug
 call plug#begin('~/.vim/plugged')
 " Colors
-" Plug 'altercation/vim-colors-solarized'
-" Plug 'danilo-augusto/vim-afterglow'
-Plug 'ghifarit53/tokyonight-vim'
+Plug 'sainnhe/sonokai'
 " Mandatory tpope plug-ins
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
@@ -270,29 +268,24 @@ nnoremap <silent> <leader>ml :call AppendModeline()<CR>
 
 " Colors
 set background=dark
-" let g:solarized_termtrans = 1
-" available: night, storm; default: night
-let g:tokyonight_style = 'storm'
-" default: 0
-let g:tokyonight_transparent_background = 1
-" available: green, red, blue; default: green
-let g:tokyonight_menu_selection_background = 'green'
-" default: 0
-let g:tokyonight_disable_italic_comment = 0
-" default: 0
-let g:tokyonight_enable_italic = 1
-" available: auto, red, green, blue; default: auto
-let g:tokyonight_cursor = 'auto'
-" available: bold, underline, italic, grey background; default: grey background
-let g:tokyonight_current_word = 'grey background'
-colorscheme tokyonight
+let g:sonokai_style = 'atlantis'
+let g:sonokai_better_performance = 1
+let g:sonokai_enable_italic = 1
+let g:sonokai_transparent_background = 1
+let g:sonokai_dim_inactive_windows = 1  " only works in NeoVim
+let g:sonokai_menu_selection_background = 'blue'  " default
+let g:sonokai_spell_foreground = 'none'  " default, can also be 'colored'
+let g:sonokai_diagnostic_text_highlight = 1
+let g:sonokai_diagnostic_line_highlight = 1
+let g:sonokai_diagnostic_virtual_text = 'grey'  " default, can also be 'colored'
+colorscheme sonokai
 
 " Plug-in configurations
 
 " airline
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
-let g:airline_theme='tokyonight'
+let g:airline_theme='sonokai'
 
 " nerdtree
 map <C-n> :NERDTreeToggle<CR>
@@ -355,7 +348,7 @@ let wiki_settings = {
 \ 'ext': '.md',
 \ }
 {{- if ne .chezmoi.hostname "weerjappie" }}
-let wikis = ['werk', 'prive']
+let wikis = ['prive', 'werk']
 {{- end }}
 {{- if eq .chezmoi.hostname "weerjappie" }}
 let wikis = ['knmi', 'prive', 'werk']
@@ -466,12 +459,14 @@ let g:coc_config_home = '~/.config/coc'
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 let g:coc_global_extensions = [
     \ 'coc-cfn-lint',
+    \ 'coc-clangd',
     \ 'coc-clojure',
     \ 'coc-css',
     \ 'coc-diagnostic',
     \ 'coc-go',
     \ 'coc-html',
     \ 'coc-json',
+    \ 'coc-julia',
     \ 'coc-markdownlint',
     \ 'coc-pairs',
     \ 'coc-prettier',

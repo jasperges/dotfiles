@@ -76,7 +76,7 @@ window:
   #
   # Override the variant of the GTK theme. Commonly supported values are `dark` and `light`.
   # Set this to `None` to use the default theme variant.
-  decorations_theme_variant: dark
+  decorations_theme_variant: Dark
 
 #scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -186,7 +186,8 @@ import:
   # - ~/.config/alacritty/themes/tokyo-night.yaml
   # - ~/.config/alacritty/themes/afterglow.yaml
   # - ~/.config/alacritty/themes/tokyo-night.yaml
-  - ~/.config/alacritty/themes/tokyo-night-storm.yaml
+  # - ~/.config/alacritty/themes/tokyo-night-storm.yaml
+  - ~/.config/alacritty/themes/sonokai-atlantis.yml
 
 # Visual Bell
 #
@@ -272,9 +273,6 @@ live_config_reload: true
 # Setting this option to `true` makes Alacritty use the legacy WinPTY backend,
 # even if the ConPTY backend is available.
 #winpty_backend: false
-
-# Send ESC (\x1b) before characters when alt is pressed.
-alt_send_esc: false
 
 #debug:
   # Display the time it takes to redraw each frame.

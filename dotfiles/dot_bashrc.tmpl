@@ -50,14 +50,13 @@ shopt -s globstar
 # use a vi-style line editing interface
 set -o vi
 
+# alacritty
+[[ -f {$HOME}/src/github/alacritty/alacritty/extra/completions/alacritty.bash ]] && source "${HOME}/src/github.com/alacritty/alacritty/extra/completions/alacritty.bash"
+
 # fuzzy finder
 [[ -f $HOME/.fzf.bash ]] && source "$HOME/.fzf.bash"
 
 {{ if .isDesktop -}}
-# virtualenvwrapper
-[[ -z $REZ_SHELL_INTERACTIVE ]] && [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]] \
-    && source "$HOME/.local/bin/virtualenvwrapper.sh"
-
 # pyenv
 if command -v pyenv &> /dev/null; then
     eval "$(pyenv init -)"
