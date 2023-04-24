@@ -30,3 +30,6 @@ augroup END
 
 " Execute the python file with the default Python interpreter
 nnoremap <silent> <leader>pp :!python %:p<CR>
+
+" Ruff fix the current file
+nnoremap <silent> <leader>rf :!ruff --fix %:p<CR>

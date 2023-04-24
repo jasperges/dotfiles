@@ -1,3 +1,4 @@
 #!/bin/bash
 
+# Copy the current working directory to the clipboard
 xclip -selection clipboard -rmlastnl <<< "${PWD}"

@@ -51,12 +51,12 @@ shopt -s globstar
 set -o vi
 
 # alacritty
-[[ -f {$HOME}/src/github/alacritty/alacritty/extra/completions/alacritty.bash ]] && source "${HOME}/src/github.com/alacritty/alacritty/extra/completions/alacritty.bash"
+[[ -f ${HOME}/src/github.com/alacritty/alacritty/extra/completions/alacritty.bash ]] \
+    && source "${HOME}/src/github.com/alacritty/alacritty/extra/completions/alacritty.bash"
 
 # fuzzy finder
 [[ -f $HOME/.fzf.bash ]] && source "$HOME/.fzf.bash"
 
-{{ if .isDesktop -}}
 # pyenv
 if command -v pyenv &> /dev/null; then
     eval "$(pyenv init -)"
@@ -67,7 +67,9 @@ fi
 [[ -f ${HOME}/.asdf/asdf.sh ]] && source "${HOME}/.asdf/asdf.sh"
 [[ -f ${HOME}/.asdf/completions/asdf.bash ]] && source "${HOME}/.asdf/completions/asdf.bash"
 
-{{ end -}}
+# aws
+command -v /usr/local/bin/aws_completer &> /dev/null && complete -C "/usr/local/bin/aws_completer" aws
+
 # dir colors
 [[ -f $HOME/.dircolors ]] && eval "$(dircolors "$HOME/.dircolors")"
 
@@ -94,7 +96,7 @@ export GROFF_NO_SGR=1 # For Konsole and Gnome-terminal
 
 {{ if .isDesktop -}}
 {{if eq .chezmoi.osRelease.id "ubuntu" -}}
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then source /etc/profile.d/vte.sh; fi # Ubuntu Budgie END
+if [[ ${TILIX_ID} ]] || [[ ${VTE_VERSION} ]]; then source /etc/profile.d/vte.sh; fi # Ubuntu Budgie END
 {{ end -}}
 
 # Attach ble.sh

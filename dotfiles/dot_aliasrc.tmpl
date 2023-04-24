@@ -249,6 +249,8 @@ _run_dc_command() {
 
 }
 
+alias kubectl='minikube kubectl --'
+
 {{ if eq .chezmoi.hostname "weerjappie" -}}
 # AWS session
 function aws-session() {
@@ -262,6 +264,7 @@ function aws-session() {
     eval "$(start-session --idp-username="${idp_username}" \
         aws --aws-account-name="${account}" --aws-role-name="${role_name}")"
 }
+
 {{ end -}}
 
 #  vim: set ts=4 sw=4 tw=0 et ft=sh :

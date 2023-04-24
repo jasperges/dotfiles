@@ -18,7 +18,5 @@ for i in "${wacomids[@]}"; do
 done
 
 setxkbmap -layout us -variant mac
-{{ if ne .chezmoi.hostname "weerjappie" }}
 # Tilde next to z key, also on laptop. This disables the section/plusminus key which I never use.
 xmodmap -e 'keycode 94 = grave asciitilde grave asciitilde dead_grave dead_horn dead_grave' &
-{{- end }}

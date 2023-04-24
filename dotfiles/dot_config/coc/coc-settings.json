@@ -31,7 +31,6 @@
     "gleam": {
       "command": "gleam",
       "args": ["lsp"],
-      "shell": true,
       "rootPatterns": ["gleam.toml", "manifest.toml"],
       "filetypes": ["gleam"],
       "settings": {
@@ -178,5 +177,6 @@
   "diagnostic-languageserver.filetypes": {
     "dockerfile": "hadolint"
   },
-  "Lua.telemetry.enable": false
+  "Lua.telemetry.enable": false,
+  "yaml.format.enable": true
 }

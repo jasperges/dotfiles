@@ -24,7 +24,7 @@ sxhkd &
 
 # Set up monitors
 setup-monitors &
-redshift &
+command -v redshift &> /dev/null && redshift &
 
 # Enable tapping, drag lock and natural scrolling
 setxinputs &
@@ -74,7 +74,7 @@ localectl set-locale LANG=en_US.UTF-8 LC_MONETARY=nl_NL.UTF-8 \
     LC_PAPER=nl_NL.UTF-8 LC_MEASUREMENT=nl_NL.UTF-8 LC_TIME=en_US.UTF-8 \
     LC_NUMERIC=en_US.UTF-8
 
-setup-monitor &
+setup-monitor auto &
 killall -wq dwmblocks
 dwmblocks &
 exec dbus-launch --exit-with-session dwm

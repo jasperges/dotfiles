@@ -25,13 +25,15 @@ super + d; {b, c, d, e, g, f, i, m, r, t, w, x, s}
         dmenu-documents, \
         feh --bg-fill $HOME/pictures/backgrounds/active_wallpaper, \
         setxinputs, \
-        setup-monitors, \
+        setup-monitors auto, \
         dmenu-record, \
         dmenu-record kill, \
         dmenu-window-resolution, \
         clipmenu, \
         dmenu-scrot, \
     }
+super + shift + d; {m}
+    {setup-monitors}
 super + ctrl + l;
     jasperge-locker --force
 super + i; {p}

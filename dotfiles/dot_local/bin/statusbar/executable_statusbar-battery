@@ -12,8 +12,8 @@ battery() {
     # Use `acpi`, because simply getting the capacity from
     # /sys/class/power_supply/BAT* does not take lowered capacity (due to age)
     # into account.
-    capacity=$(acpi -b | cut -f2 -d ',' | tr -cd '[:digit:]')
-    status=$(acpi -b | cut -f2 -d ':' | cut -f 1 -d ',' | tr -d '[:space:]')
+    capacity=$(acpi -b | grep -v "Unknown" | cut -f2 -d ',' | tr -cd '[:digit:]')
+    status=$(acpi -b | grep -v "Unknown" | cut -f2 -d ':' | cut -f 1 -d ',' | tr -d '[:space:]')
     if [[ $status = "Full" ]]; then
         icon=""
     elif [[ $status = "Charging" ]]; then
