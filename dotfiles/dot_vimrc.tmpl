@@ -238,7 +238,13 @@ nnoremap <silent> <Leader>hl :nohlsearch<CR>
 " autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 " au InsertLeave * match ExtraWhitespace /\s\+$/
 " Automatically deletes all trailing whitespace on save.
-autocmd BufWritePre * %s/\s\+$//e
+augroup whitespace
+    autocmd!
+    autocmd BufWritePre * %s/\s\+$//e
+    " Disable for markdown and pandoc files, because trailing white space can
+    " be used to force a line break.
+    autocmd FileType markdown,pandoc autocmd! whitespace
+augroup end
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid or when inside an event handler
