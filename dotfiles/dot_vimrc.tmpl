@@ -81,6 +81,8 @@ Plug 'vim-test/vim-test'
 Plug 'preservim/vimux'
 " CoC
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Github Copilot
+Plug 'github/copilot.vim'
 {{- end }}
 call plug#end()
 
@@ -199,12 +201,6 @@ noremap <leader>v :exec ':e ~/.vimrc'<CR>
 autocmd BufWritePost .vimrc exec 'source ~/.vimrc'
 " Quickly source vimrc
 noremap <leader>vv :exec ':source ~/.vimrc'<CR>
-
-" Shortcuts for window navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
 
 " Folding options
 set foldnestmax=4
@@ -668,6 +664,14 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 "       \ coc#refresh()
 
 let g:coc_snippet_next = '<tab>'
+
+" ------------------------------ Github Copilot ------------------------------
+
+inoremap <C-x> <Plug>(copilot-dismiss)
+inoremap <C-h> <Plug>(copilot-next)
+inoremap <C-l> <Plug>(copilot-previous)
+inoremap <C-/> <Plug>(copilot-suggest)
+inoremap <silent><script><expr> <C-j> copilot#Accept("\<CR>")
 {{- end }}
 
 " vim: set ts=4 sw=4 tw=78 et :
