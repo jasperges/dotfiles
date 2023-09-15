@@ -6,22 +6,15 @@
 
 # Get a list of available VPN connections
 readarray -t vpnlist < <(nmcli --terse --fields NAME,STATE,TYPE c show | grep "vpn$" | sort | uniq -u)
-if [[ -f ${HOME}/.vpnrc ]]; then
-    vpnrc_cmd="passwd-file ${HOME}/.vpnrc"
-else
-    vpnrc_cmd=
-fi
 
 # Connect to a given VPN service if it's provided and it exists
-if [[ -n $* && -f ${HOME}/.vpnrc ]]; then
-    for vpn in "${vpnlist[@]}"; do
-        if [[ $1 == $(echo "${vpn}" | cut -d : -f 1) ]]; then
-            nmcli connection up "$1" "${vpnrc_cmd}" \
-                && pkill -RTMIN+10 dwmblocks
-            exit 0
-        fi
-    done
-fi
+for vpn in "${vpnlist[@]}"; do
+    if [[ $1 == $(echo "${vpn}" | cut -d : -f 1) ]]; then
+        nmcli connection up "$1" \
+            && pkill -RTMIN+10 dwmblocks
+        exit 0
+    fi
+done
 
 # If no VPN service was given or it doesn't exist, show available choices
 
@@ -52,7 +45,6 @@ case "${vpnstatus}" in
         fi
         ;;
     *)
-        # if nmcli connection up "${vpn}" "${vpnrc_cmd}"; then
         if nmcli connection up "${vpn}"; then
             notify-send " VPN Connection" "Connected to ${vpn}"
         else
@@ -61,5 +53,4 @@ case "${vpnstatus}" in
         ;;
 esac
 
-pgrep -u $UID -x polybar && echo "hook:module/vpn-status1" >> /tmp/ipc-topbar
 pkill -RTMIN+10 dwmblocks
