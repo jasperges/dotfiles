@@ -33,6 +33,7 @@ alias lac='c; la'
 
 # tmux session
 alias tm='tmux new-session -A -s "${USER}-session"'
+alias tmc='tmux list-panes -a -F "#{?#{==:#{pane_tty},$(tty)},#{session_name},}" | grep "."'
 
 {{ if .isDesktop -}}
 # lf
@@ -62,14 +63,16 @@ goto() {
 
 # Quickly go to a source code directory
 gotos() {
-    local -r _source_dir="${SOURCE_DIR:-${HOME}/src}"
-    local -a _git_dirs
+
     local -a _git_repo_dirs
-    mapfile _git_dirs < <(find -L "${_source_dir}" -type d -name ".git")
-    for _git_dir in "${_git_dirs[@]}"; do
-        _git_repo_dirs+=("${_git_dir%/*}")
-    done
-    _choice=$(printf "%q\n" "${_git_repo_dirs[@]}" | fzf -i)
+    local -r _searchterm="$1"
+
+    mapfile -t _git_repo_dirs < <(get-git-repo-dirs)
+    if [[ -n ${_searchterm} ]]; then
+        _choice=$(printf "%q\n" "${_git_repo_dirs[@]}" | fzf -i -q "${_searchterm}")
+    else
+        _choice=$(printf "%q\n" "${_git_repo_dirs[@]}" | fzf -i)
+    fi
     [[ -z "${_choice}" ]] && return 0
     _choice="${_choice//[$'\t\r\n ']/}"
     if [[ ! -d "${_choice}" ]]; then

@@ -1,0 +1,37 @@
+#!/bin/bash
+
+declare -r _source_dir="${SOURCE_DIR:-${HOME}/src}"
+declare -r _cache_file="${XDG_CACHE_HOME:-${HOME}/.cache}/japs/git-repo-dirs"
+
+_get_git_repo_dirs() {
+    local -a _git_dirs
+    local -a _git_repo_dirs
+
+    mapfile _git_dirs < <(find -L "${_source_dir}" -type d -name ".git")
+    for _git_dir in "${_git_dirs[@]}"; do
+        _git_repo_dirs+=("${_git_dir%/*}")
+    done
+
+    printf "%s\n" "${_git_repo_dirs[@]}" | sort -u
+}
+
+update_cache() {
+    [[ ! -d ${_cache_file%/*} ]] && mkdir -p "${_cache_file%/*}"
+    printf "%s\n" "$(_get_git_repo_dirs)" > "${_cache_file}"
+}
+
+main() {
+    local -a _git_repo_dirs
+
+    if [[ ! -f ${_cache_file} ]]; then
+        update_cache
+    else
+        # Update the cache in the background for the next run. It shouldn't
+        # change that often so only refreshing the cache once the command is
+        # run should be fine under most circumstatnces.
+        update_cache > /dev/null &
+    fi
+    printf "%s\n" "$(< "${_cache_file}")"
+}
+
+main "$@"
