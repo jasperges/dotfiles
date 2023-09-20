@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Get the absolute directory from the provided path. This can be used for
+# example to get the directory a script is in. In another bash script you could
+# do: directory=$(absdir "${BASH_SOURCE[0]}")
+
+# Adapted from this Stack Overflow answer:
+# https://stackoverflow.com/questions/59895/how-can-i-get-the-source-directory-of-a-bash-script-from-within-the-script-itsel#answer-246128
+
+[[ -z $* ]] && exit 1
+
+sourcepath="$1"
+
+# Resolve $sourcepath until the file is no longer a symlink
+while [ -h "$sourcepath" ]; do
+    directory=$(cd -P "$(dirname "$sourcepath")" > /dev/null 2>&1 && pwd)
+    sourcepath=$(readlink "$sourcepath")
+    # If $sourcepath was a relative symlink, we need to resolve it relative to
+    # the path where the symlink file was located
+    [[ $sourcepath != /* ]] && sourcepath=$directory/$sourcepath
+done
+directory=$(cd -P "$(dirname "$sourcepath")" > /dev/null 2>&1 && pwd)
+echo "$directory"

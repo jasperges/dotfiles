@@ -55,7 +55,10 @@ set -o vi
     && source "${HOME}/src/github.com/alacritty/alacritty/extra/completions/alacritty.bash"
 
 # fuzzy finder
-[[ -f $HOME/.fzf.bash ]] && source "$HOME/.fzf.bash"
+[[ -f ${HOME}/.fzf.bash ]] && source "${HOME}/.fzf.bash"
+
+# chezmoi
+[[ -f ${HOME}/.bash_completions/chezmoi.sh ]] && source "${HOME}/.bash_completions/chezmoi.sh"
 
 # pyenv
 if command -v pyenv &> /dev/null; then

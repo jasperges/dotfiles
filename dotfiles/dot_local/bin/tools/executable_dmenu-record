@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Usage:
 # `$0`: Ask for recording type via dmenu
@@ -10,157 +10,156 @@
 # If there is already a running instance, user will be prompted to end it.
 
 updateicon() {
-	echo "$1" > /tmp/recordingicon
-	pkill -RTMIN+14 "${STATUSBAR:-dwmblocks}"
+    echo "$1" > /tmp/recordingicon
+    pkill -RTMIN+14 "${STATUSBAR:-dwmblocks}"
 }
 
 killrecording() {
-	recpid="$(cat /tmp/recordingpid)"
-	# kill with SIGTERM, allowing finishing touches.
-	kill -15 "$recpid"
-	rm -f /tmp/recordingpid
-	updateicon ""
-	pkill -RTMIN+14 "${STATUSBAR:-dwmblocks}"
-	# even after SIGTERM, ffmpeg may still run, so SIGKILL it.
-	sleep 3
-	kill -9 "$recpid"
-	exit
+    recpid="$(cat /tmp/recordingpid)"
+    # kill with SIGTERM, allowing finishing touches.
+    kill -15 "$recpid"
+    rm -f /tmp/recordingpid
+    updateicon ""
+    pkill -RTMIN+14 "${STATUSBAR:-dwmblocks}"
+    # even after SIGTERM, ffmpeg may still run, so SIGKILL it.
+    sleep 3
+    kill -9 "$recpid"
+    exit
 }
 
 screencast() {
-    winid="$(xwininfo | awk '/xwininfo: Window id:/ {printf $4}')"
-    width="$(xwininfo -id $winid | awk '/Width:/ {printf $2}')"
-    height="$(xwininfo -id $winid | awk '/Height:/ {printf $2}')"
-    border="$(xwininfo -id $winid | awk '/Border width:/ {printf $3}')"
-    x="$(xwininfo -id $winid | awk '/Absolute upper-left X:/ {printf $4}')"
-    y="$(xwininfo -id $winid | awk '/Absolute upper-left Y:/ {printf $4}')"
-    x="$(expr $x + $border)"
-    y="$(expr $y + $border)"
+    winid=$(xwininfo | awk '/xwininfo: Window id:/ {printf $4}')
+    width=$(xwininfo -id "${winid}" | awk '/Width:/ {printf $2}')
+    height=$(xwininfo -id "${winid}" | awk '/Height:/ {printf $2}')
+    border=$(xwininfo -id "${winid}" | awk '/Border width:/ {printf $3}')
+    x=$(xwininfo -id "${winid}" | awk '/Absolute upper-left X:/ {printf $4}')
+    y=$(xwininfo -id "{$}winid" | awk '/Absolute upper-left Y:/ {printf $4}')
+    x=$((x + border))
+    y=$((y + border))
     for i in {5..1}; do
         sleep 1
         updateicon "  $i  "
     done
-	ffmpeg -y \
-	-f x11grab \
-	-framerate 60 \
-    -s "$width""x""$height" \
-    -i "$DISPLAY+$x,$y" \
-	-f alsa -i default \
-	-r 30 \
- 	-c:v h264 -crf 0 -preset ultrafast -c:a aac \
-	"$HOME/videos/recordings/screencast-$(date '+%y%m%d-%H%M-%S').mp4" &
-	echo $! > /tmp/recordingpid
-	updateicon "  ⏺️🎙️   "
+    ffmpeg -y \
+        -f x11grab \
+        -framerate 60 \
+        -s "$width""x""$height" \
+        -i "$DISPLAY+$x,$y" \
+        -f alsa -i default \
+        -r 30 \
+        -c:v h264 -crf 0 -preset ultrafast -c:a aac \
+        "$HOME/videos/recordings/screencast-$(date '+%y%m%d-%H%M-%S').mp4" &
+    echo $! > /tmp/recordingpid
+    updateicon "  ⏺️🎙️   "
 }
 
 video() {
-    winid="$(xwininfo | awk '/xwininfo: Window id:/ {printf $4}')"
-    width="$(xwininfo -id $winid | awk '/Width:/ {printf $2}')"
-    height="$(xwininfo -id $winid | awk '/Height:/ {printf $2}')"
-    border="$(xwininfo -id $winid | awk '/Border width:/ {printf $3}')"
-    x="$(xwininfo -id $winid | awk '/Absolute upper-left X:/ {printf $4}')"
-    y="$(xwininfo -id $winid | awk '/Absolute upper-left Y:/ {printf $4}')"
-    x="$(expr $x + $border)"
-    y="$(expr $y + $border)"
+    winid=$(xwininfo | awk '/xwininfo: Window id:/ {printf $4}')
+    width=$(xwininfo -id "${winid}" | awk '/Width:/ {printf $2}')
+    height=$(xwininfo -id "${winid}" | awk '/Height:/ {printf $2}')
+    border=$(xwininfo -id "${winid}" | awk '/Border width:/ {printf $3}')
+    x=$(xwininfo -id "${winid}" | awk '/Absolute upper-left X:/ {printf $4}')
+    y=$(xwininfo -id "${winid}" | awk '/Absolute upper-left Y:/ {printf $4}')
+    x=$((x + border))
+    y=$((y + border))
     for i in {5..1}; do
         sleep 1
         updateicon "  $i  "
     done
     ffmpeg \
-	-f x11grab \
-    -s "$width""x""$height" \
-    -i "$DISPLAY+$x,$y" \
- 	-c:v libx264 -qp 0 -r 30 \
-	"$HOME/videos/recordings/video-$(date '+%y%m%d-%H%M-%S').mkv" &
-	echo $! > /tmp/recordingpid
-	updateicon "  ⏺️   "
+        -f x11grab \
+        -s "$width""x""$height" \
+        -i "$DISPLAY+$x,$y" \
+        -c:v libx264 -qp 0 -r 30 \
+        "$HOME/videos/recordings/video-$(date '+%y%m%d-%H%M-%S').mkv" &
+    echo $! > /tmp/recordingpid
+    updateicon "  ⏺️   "
 }
 
 quickvideo() {
-	# -s "1920x1080" \
-	# -i "$DISPLAY+320,180" \
-    winid="$(xwininfo | awk '/xwininfo: Window id:/ {printf $4}')"
-    width="$(xwininfo -id $winid | awk '/Width:/ {printf $2}')"
-    height="$(xwininfo -id $winid | awk '/Height:/ {printf $2}')"
-    border="$(xwininfo -id $winid | awk '/Border width:/ {printf $3}')"
-    x="$(xwininfo -id $winid | awk '/Absolute upper-left X:/ {printf $4}')"
-    y="$(xwininfo -id $winid | awk '/Absolute upper-left Y:/ {printf $4}')"
-    x="$(expr $x + $border)"
-    y="$(expr $y + $border)"
+    # -s "1920x1080" \
+    # -i "$DISPLAY+320,180" \
+    winid=$(xwininfo | awk '/xwininfo: Window id:/ {printf $4}')
+    width=$(xwininfo -id "${winid}" | awk '/Width:/ {printf $2}')
+    height=$(xwininfo -id "${winid}" | awk '/Height:/ {printf $2}')
+    border=$(xwininfo -id "${winid}" | awk '/Border width:/ {printf $3}')
+    x=$(xwininfo -id "${winid}" | awk '/Absolute upper-left X:/ {printf $4}')
+    y=$(xwininfo -id "${winid}" | awk '/Absolute upper-left Y:/ {printf $4}')
+    x=$((x + border))
+    y=$((y + border))
     for i in {5..1}; do
         sleep 1
         updateicon "  $i  "
     done
     ffmpeg \
-	-f x11grab \
-    -s "$width""x""$height" \
-    -i "$DISPLAY+$x,$y" \
- 	-c:v libx264 -qp 0 -r 12 \
-	"$HOME/videos/recordings/video-$(date '+%Y%m%d-%H%M-%S').mp4" &
-	echo $! > /tmp/recordingpid
-	updateicon "  ⏺️   "
+        -f x11grab \
+        -s "$width""x""$height" \
+        -i "$DISPLAY+$x,$y" \
+        -c:v libx264 -qp 0 -r 12 \
+        "$HOME/videos/recordings/video-$(date '+%Y%m%d-%H%M-%S').mp4" &
+    echo $! > /tmp/recordingpid
+    updateicon "  ⏺️   "
 }
 
 webcamhidef() {
     ffmpeg \
-	-f v4l2 \
-	-i /dev/video0 \
-	-s 1920x1080 \
-	"$HOME/videos/recordings/webcam-$(date '+%y%m%d-%H%M-%S').mkv" &
-	echo $! > /tmp/recordingpid
-	updateicon "  🎥   "
+        -f v4l2 \
+        -i /dev/video0 \
+        -s 1920x1080 \
+        "$HOME/videos/recordings/webcam-$(date '+%y%m%d-%H%M-%S').mkv" &
+    echo $! > /tmp/recordingpid
+    updateicon "  🎥   "
 }
 
 webcam() {
     ffmpeg \
-	-f v4l2 \
-	-i /dev/video0 \
-	-video_size 640x480 \
-	"$HOME/videos/recordings/webcam-$(date '+%y%m%d-%H%M-%S').mkv" &
-	echo $! > /tmp/recordingpid
-	updateicon "  🎥   "
+        -f v4l2 \
+        -i /dev/video0 \
+        -video_size 640x480 \
+        "$HOME/videos/recordings/webcam-$(date '+%y%m%d-%H%M-%S').mkv" &
+    echo $! > /tmp/recordingpid
+    updateicon "  🎥   "
 }
 
-
 audio() {
-	ffmpeg \
-	-f alsa -i default \
-	-c:a flac \
-	"$HOME/videos/recordings/audio-$(date '+%y%m%d-%H%M-%S').flac" &
-	echo $! > /tmp/recordingpid
-	updateicon "  🎙️   "
+    ffmpeg \
+        -f alsa -i default \
+        -c:a flac \
+        "$HOME/videos/recordings/audio-$(date '+%y%m%d-%H%M-%S').flac" &
+    echo $! > /tmp/recordingpid
+    updateicon "  🎙️   "
 }
 
 askrecording() {
-	choice=$(printf "screencast\nvideo\nquick video\naudio\nwebcam\nwebcam (hi-def)" \
+    choice=$(printf "screencast\nvideo\nquick video\naudio\nwebcam\nwebcam (hi-def)" \
         | dmenu -i -l 5 -p "Select recording style:" -n 2 -r)
-	case "$choice" in
-		screencast) screencast;;
-		audio) audio;;
-		video) video;;
-        "quick video") quickvideo;;
-		webcam) webcam;;
-		"webcam (hi-def)") webcamhidef;;
-	esac
+    case "$choice" in
+        screencast) screencast ;;
+        audio) audio ;;
+        video) video ;;
+        "quick video") quickvideo ;;
+        webcam) webcam ;;
+        "webcam (hi-def)") webcamhidef ;;
+    esac
 }
 
 asktoend() {
-	response=$(printf "No\\nYes" | dmenu -i -l 2 -p "Recording still active. End recording?" -r)
-	[ "$response" = "Yes" ] && killrecording && exit
+    response=$(printf "No\\nYes" | dmenu -i -l 2 -p "Recording still active. End recording?" -r)
+    [ "$response" = "Yes" ] && killrecording && exit
 }
 
-
 case "$1" in
-	screencast) screencast;;
-	audio) audio;;
-	video) video;;
-    "quick video") quickvideo;;
-	kill) killrecording;;
-	*)
+    screencast) screencast ;;
+    audio) audio ;;
+    video) video ;;
+    "quick video") quickvideo ;;
+    kill) killrecording ;;
+    *)
         if [ -f /tmp/recordingpid ]; then
             asktoend
             exit
         else
             askrecording
-        fi ;;
+        fi
+        ;;
 esac

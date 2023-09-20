@@ -34,6 +34,8 @@ super + d; {b, c, d, e, g, f, i, m, r, t, w, x, s}
     }
 super + shift + d; {m}
     {setup-monitors}
+super + ctrl + d; {m}
+    {setup-monitors-knmi}
 super + ctrl + l;
     jasperge-locker --force
 super + i; {p}

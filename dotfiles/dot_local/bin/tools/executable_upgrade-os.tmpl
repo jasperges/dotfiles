@@ -1,16 +1,75 @@
 #!/bin/bash
 
 {{ if eq .chezmoi.osRelease.id "fedora" -}}
-sudo dnf upgrade \
-    && flatpak update \
-    && cargo install-update --all
+package_manager_upgrade() {
+    sudo dnf upgrade
+}
+
 {{ end -}}
 {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
-sudo apt update && sudo apt full-upgrade \
-    && flatpak update \
-    && cargo install-update --all
+package_manager_upgrade() {
+    sudo apt update && sudo apt full-upgrade
+}
+
 {{ end -}}
-exitcode="$?"
-echo
-read -n1 -s -r -p "Press any key to close this window..."
-exit "${exitcode}"
+flatpak_upgrade() {
+    flatpak update
+}
+
+rustup_upgrade() {
+    rustup self update && rustup update
+}
+
+cargo_upgrade() {
+    cargo install-update --all
+}
+
+asdf_upgrade() {
+    local _install_version
+    local _global_version
+
+    for lang in $(asdf list | grep -E "^[[:alpha:]]"); do
+        case "${lang}" in
+            "nodejs")
+                asdf nodejs update-nodebuild
+                _lts=${asdf nodejs resolve lts --latest-available}
+                _install_version="${_lts}"
+                _global_version="${_lts}"
+                ;;
+            "haskell")
+                _install_version="9.4-latest"
+                _global_version="9.4-latest"
+                ;;
+            *)
+                _install_version="latest"
+                _global_version="latest"
+                ;;
+        esac
+        asdf install "${lang}" "${_install_version}" \
+            && asdf global "${lang}" "${_global_version}"
+    done
+}
+
+pyenv_upgrade() {
+    pyenv update
+    # potentially check for a new python version, install it and set it to the default one
+}
+
+main() {
+    # TODO: properly check for the flag
+    local -r _non_interactive="$1"
+
+    package_manager_upgrade
+    flatpak_upgrade
+    rustup_upgrade cargo-upgrade
+    asdf_upgrade
+    pyenv_upgrade
+    exitcode="$?"
+    if [[ -z ${_non_interactive} ]]; then
+        echo
+        read -n1 -s -r -p "Press any key to close this window..."
+    fi
+    exit "${exitcode}"
+}
+
+main "$@"
