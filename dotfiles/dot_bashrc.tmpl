@@ -70,12 +70,11 @@ fi
 # aws
 command -v /usr/local/bin/aws_completer &> /dev/null && complete -C "/usr/local/bin/aws_completer" aws
 
+# gtp-engineer
+[[ -f ${HOME}/.bash_completions/gpt-engineer.sh ]] && source "${HOME}/.bash_completions/gpt-engineer.sh"
+
 # dir colors
 [[ -f $HOME/.dircolors ]] && eval "$(dircolors "$HOME/.dircolors")"
-
-# zsh like tab completion
-# bind 'set show-all-if-ambiguous on'
-# bind '"\C-i": menu-complete'
 
 # colors for less
 export LESS_TERMCAP_mb=$(printf "\e[1;31m")
