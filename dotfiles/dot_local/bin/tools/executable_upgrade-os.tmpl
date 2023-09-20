@@ -32,7 +32,7 @@ asdf_upgrade() {
         case "${lang}" in
             "nodejs")
                 asdf nodejs update-nodebuild
-                _lts=${asdf nodejs resolve lts --latest-available}
+                _lts=$(asdf nodejs resolve lts --latest-available)
                 _install_version="${_lts}"
                 _global_version="${_lts}"
                 ;;
