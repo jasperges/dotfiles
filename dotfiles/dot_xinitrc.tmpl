@@ -75,6 +75,9 @@ localectl set-locale LANG=en_US.UTF-8 LC_MONETARY=nl_NL.UTF-8 \
     LC_NUMERIC=en_US.UTF-8
 
 setup-monitor auto &
+# It seems programs sometimes give polkit errors, running the XFCE polkit to
+# see if this fixes the problem
+command -v /usr/libexec/xfce-polkit 2> /dev/null && /usr/libexec/xfce-polkit &
 killall -wq dwmblocks
 dwmblocks &
 exec dbus-launch --exit-with-session dwm
