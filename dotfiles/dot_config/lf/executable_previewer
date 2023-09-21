@@ -1,0 +1,80 @@
+#!/bin/sh
+
+set -C -f -u
+IFS="$(printf '%b_' '\n')"; IFS="${IFS%_}"
+
+# ANSI color codes are supported.
+# STDIN is disabled, so interactive scripts won't work properly
+
+# This script is considered a configuration file and must be updated manually.
+
+# Meanings of exit codes:
+# code | meaning    | action of ranger
+# -----+------------+-------------------------------------------
+# 0    | success    | Display stdout as preview
+# 1    | no preview | Display no preview at all
+# 2    | plain text | Display the plain content of the file
+
+
+# Settings
+HIGHLIGHT_SIZE_MAX=262143  # 256KiB
+HIGHLIGHT_TABWIDTH=8
+HIGHLIGHT_STYLE='pablo'
+
+draw() {
+    ~/.config/lf/draw_img "$@"
+    exit 1
+}
+
+hash() {
+    printf '%s/.cache/lf/%s' "$HOME" \
+        "$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$1")" | sha256sum | awk '{print $1}')"
+    }
+
+cache() {
+    if [ -f "$1" ]; then
+        draw "$@"
+    fi
+}
+
+file="$1"
+shift
+
+case "$(file -Lb --mime-type -- "$file")" in
+    text/html) w3m -dump "$file" ;;
+    text/troff) man ./ "$file" | col -b ;;
+    text/* | */xml) "$HOME/.local/bin/cargo/bin/bat" "$file" ;;
+    application/zip) atool --list -- "$file" ;;
+    */pdf) pdftotext -l 10 -nopgbrk -q -- "$file" - ;;
+    *opendocument*) odt2txt "$file" ;;
+    image/tiff)
+        cache="$(hash "$file").jpg"
+        cache "$cache" "$@"
+        convert -- "$file" -auto-orient "$cache"
+        draw "$cache" "$@"
+        ;;
+    image/*)
+        orientation="$(identify -format '%[EXIF:Orientation]\n' -- "$file")"
+        if [ -n "$orientation" ] && [ "$orientation" != 1 ]; then
+            cache="$(hash "$file").jpg"
+            cache "$cache" "$@"
+            convert -- "$file" -auto-orient "$cache"
+            draw "$cache" "$@"
+        else
+            draw "$file" "$@"
+        fi
+        ;;
+    # audio/*|application/octet-stream) mediainfo "$file" || exit 1;;
+    audio/*) mediainfo "$file" || exit 1;;
+    video/*|application/octet-stream)
+        cache="$(hash "$file").jpg"
+        cache "$cache" "$@"
+        ffmpegthumbnailer -i "$file" -o "$cache" -s 0
+        draw "$cache" "$@"
+        # TODO: add fallback when not using ueberzug
+        # mediainfo "${FILE_PATH}" || exit 1;;
+        ;;
+esac
+
+file -Lb -- "$1" | fold -s -w "$width"
+exit 0
