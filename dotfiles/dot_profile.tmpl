@@ -109,9 +109,6 @@ export CARGO_HOME=${HOME}/.local/share/cargo
 export CARGO_INSTALL_ROOT=${HOME}/.local/bin/cargo
 export RUSTUP_HOME=${HOME}/.local/share/rustup
 
-# Add shortcuts file if it doesn't exist yet.
-[[ ! -f ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/shortcutrc ]] && shortcuts &> /dev/null &
-
 {{ if .isDesktop -}}
 # Auto start X on tty1
 if [[ -z ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
