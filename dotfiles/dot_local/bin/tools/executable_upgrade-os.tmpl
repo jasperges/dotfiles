@@ -52,24 +52,45 @@ asdf_upgrade() {
 
 pyenv_upgrade() {
     pyenv update
-    # potentially check for a new python version, install it and set it to the default one
+    # TODO: potentially check for a new python version, install it and set it
+    #       to the default one
+}
+
+
+handle_ctrl_c() {
+    echo "Caught Ctrl+C, aborting..."
+    exit 1
 }
 
 main() {
-    # TODO: properly check for the flag
-    local -r _non_interactive="$1"
+    local _non_interactive=false
+    local _has_errors=false
 
-    package_manager_upgrade
-    flatpak_upgrade
-    rustup_upgrade cargo-upgrade
-    asdf_upgrade
-    pyenv_upgrade
-    exitcode="$?"
-    if [[ -z ${_non_interactive} ]]; then
+    trap 'handle_ctrl_c' SIGINT
+
+    # Check for '--non-interactive' flag
+    if [[ "$1" == "--non-interactive" ]]; then
+        _non_interactive=true
+    elif [[ "$1" != "" ]]; then
+        echo "Unknown parameter: $1"
+        echo "Usage: $0 [--non-interactive]"
+        exit 1
+    fi
+
+    package_manager_upgrade || _has_errors=true
+    flatpak_upgrade || _has_errors=true
+    rustup_upgrade cargo-upgrade || _has_errors=true
+    asdf_upgrade || _has_errors=true
+    pyenv_upgrade || _has_errors=true
+    if [[ ${_non_interactive} = true ]]; then
         echo
         read -n1 -s -r -p "Press any key to close this window..."
     fi
-    exit "${exitcode}"
+    if [[ ${_has_errors} = true ]]; then
+        _error "There were errors during the upgrade process. Please check the output for more information."
+        exitcode=1
+    fi
+    exitcode=0
 }
 
 main "$@"
