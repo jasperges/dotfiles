@@ -25,14 +25,6 @@ export SUDO_ASKPASS=${HOME}/.local/bin/tools/dmenupass
 
 export WORKON_HOME=${HOME}/.local/share/virtualenvs
 
-# Pyenv
-export PYENV_ROOT="${HOME}/.local/pyenv"
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-if command -v pyenv &> /dev/null; then
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
-
 {{ end -}}
 # Textwidth for htitle
 export HRULEWIDTH=80
@@ -101,6 +93,14 @@ pathappend \
     "${HOME}/.local/distrobox/bin" \
     "${HOME}/.ghcup/bin" \
     "${HOME}/.cabal/bin"
+
+# Pyenv
+export PYENV_ROOT="${HOME}/.local/pyenv"
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+if command -v pyenv &> /dev/null; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 
 # Paths for Go
 export GOPATH=${HOME}/.local/share/go
