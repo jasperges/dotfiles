@@ -14,7 +14,7 @@ argument should be the log level. You can also call this script as the loglevel
 (by linking it) in which case the log level should be skipped. The message
 argument is always required.
 
-To have consistent arguments and not conflict with for example 'info' fro the FSF the log levels are prefixed with an '_'. Therefore the symlinked commands should also be named: '_info', '_warning' and '_error'.
+To have consistent arguments and not conflict with for example 'info' for the FSF the log levels are prefixed with an '_'. Therefore the symlinked commands should also be named: '_info', '_warning' and '_error'.
 "
 # shellcheck disable=1091
 source ansicolors
