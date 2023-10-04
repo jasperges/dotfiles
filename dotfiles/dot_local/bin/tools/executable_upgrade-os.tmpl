@@ -65,6 +65,7 @@ handle_ctrl_c() {
 main() {
     local _non_interactive=false
     local _has_errors=false
+    local -i _exitcode=0
 
     trap 'handle_ctrl_c' SIGINT
 
@@ -82,15 +83,15 @@ main() {
     rustup_upgrade cargo-upgrade || _has_errors=true
     asdf_upgrade || _has_errors=true
     pyenv_upgrade || _has_errors=true
+    if [[ ${_has_errors} = true ]]; then
+        _error "There were errors during the upgrade process. Please check the output for more information."
+        _exitcode=1
+    fi
     if [[ ${_non_interactive} = true ]]; then
         echo
         read -n1 -s -r -p "Press any key to close this window..."
     fi
-    if [[ ${_has_errors} = true ]]; then
-        _error "There were errors during the upgrade process. Please check the output for more information."
-        exitcode=1
-    fi
-    exitcode=0
+    exit ${_exitcode}
 }
 
 main "$@"
