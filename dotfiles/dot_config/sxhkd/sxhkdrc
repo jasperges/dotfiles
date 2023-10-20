@@ -7,7 +7,7 @@ super + ctrl + BackSpace
 super + Return
     start_terminal_in_pwd
 super + space
-    dmenu_run -l 10 -i
+    rofi -show combi -modes combi -combi-modes drun,run
 # Reload sxhkd
 super + Escape
 	pkill -USR1 -x sxhkd
