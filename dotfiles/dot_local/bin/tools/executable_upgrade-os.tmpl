@@ -83,7 +83,7 @@ main() {
     package_manager_upgrade || _has_errors=true
     flatpak_upgrade || _has_errors=true
     rustup_upgrade || _has_errors=true
-    cargo-upgrade || _has_errors=true
+    cargo_upgrade || _has_errors=true
     asdf_upgrade || _has_errors=true
     pyenv_upgrade || _has_errors=true
     if [[ ${_has_errors} = true ]]; then
