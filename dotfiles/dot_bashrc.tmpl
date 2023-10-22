@@ -50,25 +50,20 @@ shopt -s globstar
 # use a vi-style line editing interface
 set -o vi
 
-# alacritty
-[[ -f ${HOME}/src/github.com/alacritty/alacritty/extra/completions/alacritty.bash ]] \
-    && source "${HOME}/src/github.com/alacritty/alacritty/extra/completions/alacritty.bash"
-
 # fuzzy finder
 [[ -f ${HOME}/.fzf.bash ]] && source "${HOME}/.fzf.bash"
 
-# chezmoi
-[[ -f ${HOME}/.bash_completions/chezmoi.sh ]] && source "${HOME}/.bash_completions/chezmoi.sh"
+# pyenv
+if command -v pyenv &> /dev/null; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 
 # asdf
 [[ -f ${HOME}/.asdf/asdf.sh ]] && source "${HOME}/.asdf/asdf.sh"
-[[ -f ${HOME}/.asdf/completions/asdf.bash ]] && source "${HOME}/.asdf/completions/asdf.bash"
 
 # aws
 command -v /usr/local/bin/aws_completer &> /dev/null && complete -C "/usr/local/bin/aws_completer" aws
-
-# gtp-engineer
-[[ -f ${HOME}/.bash_completions/gpt-engineer.sh ]] && source "${HOME}/.bash_completions/gpt-engineer.sh"
 
 # dir colors
 [[ -f $HOME/.dircolors ]] && eval "$(dircolors "$HOME/.dircolors")"
