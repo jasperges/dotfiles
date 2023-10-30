@@ -49,10 +49,10 @@ super + n; {m, p, j, s, u, g, w, e, h, b}
     }
 super + shift + m; {m, u, s, d}
     {dmenu-mount,dmenu-umount,dmenu-servermount,dmenu-serverumount}
-super + o; {b, c, g, h, m, w, i, p, o, u, s, t, y, n, z}
+super + o; {b, c, f, g, h, m, w, i, p, o, u, s, t, y, n, z}
     { \
-        toggle-btop, launch-chat-apps, toggle-gotop, toggle-htop, mailclient \
-        , $BROWSER, player-switch, ncmpcpp_local, ncmpcpp_guybrush \
+        toggle-btop, launch-chat-apps, toggle-weather, toggle-gotop, toggle-htop\
+        , mailclient , $BROWSER, player-switch, ncmpcpp_local, ncmpcpp_guybrush \
         , spotify-tui, toggle-touchscreen, toggle-trayer \
         , toggle-ytop, toggle-nethogs, upgrade-os-term \
     }
