@@ -7,18 +7,18 @@ esac
 
 vol() {
     # vol=$(amixer get Master | awk -F'[][]' 'END{ print $4":"$2 }')
-    # icons: 婢奄奔墳
+    # icons: 󰖁 󰝟 󰕿 󰖀 󰕾
     extra_icon=$(get_extra_icon)
     vol=$(pulsemixer --get-volume | cut -d ' ' -f 1)
     mute=$(pulsemixer --get-mute)
     if [[ $mute -gt 0 ]]; then
-        icon="婢"
+        icon="󰖁"
     elif [[ $(expr "${vol}" \< 33) = 1 ]]; then
-        icon="奄"
+        icon="󰕿"
     elif [[ $(expr "${vol}" \< 66) = 1 ]]; then
-        icon="奔"
+        icon="󰖀"
     else
-        icon="墳"
+        icon="󰕾"
     fi
     printf "  %s%s %d%%   " "${icon}" "${extra_icon}" "${vol}"
 }
@@ -31,7 +31,7 @@ get_extra_icon() {
     fi
     for kopjappie in "${kopjappies[@]}"; do
         if [[ $(bluetoothctl info "${kopjappie}" | awk '/Connected/ {print $2}') == yes ]]; then
-            echo " ()"
+            echo " (󰥰)"
             return
         fi
     done

@@ -9,9 +9,9 @@ hdd() {
     monitorwidth=$(xdotool getdisplaygeometry | cut -d ' ' -f 1)
     df -h | awk '/{{- .dfDisk -}}/ \
         {if ('$monitorwidth' >= 1920) \
-            {printf "   %s/%s   ", $3, $2} \
+            {printf "  󰋊 %s/%s   ", $3, $2} \
         else
-            {printf "   %d%%   ", $3 / $2 * 100}}'
+            {printf "  󰋊 %d%%   ", $3 / $2 * 100}}'
 }
 
 hdd

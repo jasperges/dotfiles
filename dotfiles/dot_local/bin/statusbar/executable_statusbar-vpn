@@ -12,11 +12,11 @@ vpn() {
         | awk -F ':' '\
         {if ($2=="vpn") \
             {if ('$monitorwidth' < 1680) \
-                {printf "    VPN   "} \
+                {printf "    VPN   "} \
             else \
-                {printf "    %s   ", $1}} \
+                {printf "    %s   ", $1}} \
         else \
-            {printf "    No VPN   "}}'
+            {printf "    No VPN   "}}'
 }
 
 vpn

@@ -15,47 +15,53 @@ battery() {
     capacity=$(acpi -b | grep -v "Unknown" | cut -f2 -d ',' | tr -cd '[:digit:]')
     status=$(acpi -b | grep -v "Unknown" | cut -f2 -d ':' | cut -f 1 -d ',' | tr -d '[:space:]')
     if [[ $status = "Full" ]]; then
-        icon=""
+        icon="󰂅"
     elif [[ $status = "Charging" ]]; then
-        if [[ $capacity -lt 20 ]]; then
-            icon=""
+        if [[ $capacity -lt 10 ]]; then
+            icon="󰢜"
+        elif [[ $capacity -lt 20 ]]; then
+            icon="󰂆"
         elif [[ $capacity -lt 30 ]]; then
-            icon=""
+            icon="󰂇"
         elif [[ $capacity -lt 40 ]]; then
-            icon=""
+            icon="󰂈"
+        elif [[ $capacity -lt 50 ]]; then
+            icon="󰢝"
         elif [[ $capacity -lt 60 ]]; then
-            icon=""
+            icon="󰂉"
+        elif [[ $capacity -lt 70 ]]; then
+            icon="󰢞"
         elif [[ $capacity -lt 80 ]]; then
-            icon=""
+            icon="󰂊"
         elif [[ $capacity -lt 90 ]]; then
-            icon=""
+            icon="󰂋"
         else
-            icon=""
+            icon="󰂅"
         fi
     elif [[ $status = "Discharging" ]]; then
         if [[ $capacity -lt 10 ]]; then
-            icon=""
+            icon="󰁺"
         elif [[ $capacity -lt 20 ]]; then
-            icon=""
+            icon="󰁻"
         elif [[ $capacity -lt 30 ]]; then
-            icon=""
+            icon="󰁼"
         elif [[ $capacity -lt 40 ]]; then
-            icon=""
+            icon="󰁽"
         elif [[ $capacity -lt 50 ]]; then
-            icon=""
+            icon="󰁾"
         elif [[ $capacity -lt 60 ]]; then
-            icon=""
+            icon="󰁿"
         elif [[ $capacity -lt 70 ]]; then
-            icon=""
+            icon="󰂀"
         elif [[ $capacity -lt 80 ]]; then
-            icon=""
+            icon="󰂁"
         elif [[ $capacity -lt 90 ]]; then
-            icon=""
+            icon="󰂂"
         else
-            icon=""
+            icon="󰁹"
         fi
     else
-        icon=""
+        icon="󰂃"
     fi
 
     printf "  %s %d%%  " "$icon" "$capacity"

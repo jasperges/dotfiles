@@ -9,18 +9,18 @@ esac
 
 internet() {
     # icons:
-    #  - wifi up: 直
-    #  - wifi down: 睊
-    #  - ethernet up: 
-    #  - ethernet down: 
+    #  - wifi up: 󰖩
+    #  - wifi down: 󰖪
+    #  - ethernet up: 󰈁
+    #  - ethernet down: 󰈂
 
     # WiFi
     if grep -q "up" /sys/class/net/w*/operstate; then
-        wifiicon="直"
+        wifiicon="󰖩"
     else
-        wifiicon="睊"
+        wifiicon="󰖪"
     fi
-    if [[ $wifiicon = "直" ]]; then
+    if [[ $wifiicon = "󰖩" ]]; then
         activewifi=$(nmcli --terse --fields NAME,TYPE c show --active \
             | awk -F ':' '/wireless/ {printf $1}')
         wifisignal=$(nmcli --terse --fields SSID,SIGNAL d wifi list --rescan no \
@@ -30,9 +30,9 @@ internet() {
 
     # Ethernet
     if grep -q "up" /sys/class/net/e*/operstate; then
-        etherneticon=""
+        etherneticon="󰈁"
     else
-        etherneticon=""
+        etherneticon="󰈂"
     fi
 
     printf "  %s · %s   " "$wifiicon" "$etherneticon"

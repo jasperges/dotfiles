@@ -43,7 +43,7 @@ case $BUTTON in
 esac
 
 player_status() {
-    # icons:    栗
+    # icons: 󰏥  󰐌  󰙦
 
     readhostinfo
 
@@ -73,9 +73,9 @@ player_status() {
     current=$(sed -e "s/^ - //" -e "s/^\(.\{${currentwidth}\}\).*/\1.../" <<< "${current}")
 
     case ${status,,} in
-        "playing") printf "   %s   " "${current}" ;;
-        "paused") printf "   %s   " "${current}" ;;
-        *) printf "  栗   " ;;
+        "playing") printf "  󰐌 %s   " "${current}" ;;
+        "paused") printf "  󰏥 %s   " "${current}" ;;
+        *) printf "  󰙦   " ;;
     esac
 }
 

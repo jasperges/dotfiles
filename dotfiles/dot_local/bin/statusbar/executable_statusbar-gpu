@@ -12,9 +12,9 @@ gpu() {
             {a[++i]=m[1]} \
         END \
         {if ('$monitorwidth' >= 1920) \
-            {printf "   %s/%s   ", a[2], a[1]} \
+            {printf "  󰍹 %s/%s   ", a[2], a[1]} \
         else \
-            {printf "   %d%%   ", a[2] / a[1] * 100}}'
+            {printf "  󰍹 %d%%   ", a[2] / a[1] * 100}}'
 }
 
 gpu
