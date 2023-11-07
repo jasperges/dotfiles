@@ -1,4 +1,5 @@
 #!/bin/bash
 
 "${HOME}"/.screenlayout/00-internal-only.sh \
-    && "${HOME}"/.screenlayout/20-knmi-triple.sh && setxinputs && "${HOME}"/.fehbg
+    && "${HOME}"/.screenlayout/20-knmi-triple.sh
+setxinputs && "${HOME}"/.fehbg
