@@ -461,7 +461,7 @@ key_bindings:
   - { key: V,              mods: Alt,     action: Paste            }
   - { key: C,              mods: Alt,     action: Copy             }
   - { key: Insert,         mods: Shift,   action: PasteSelection   }
-  - { key: 0,              mods: Control, action: ResetFontSize    }
+  - { key: Key0,           mods: Control, action: ResetFontSize    }
   - { key: Equals,         mods: Control, action: IncreaseFontSize }
   - { key: NumpadAdd,      mods: Control, action: IncreaseFontSize }
   - { key: NumpadSubtract, mods: Control, action: DecreaseFontSize }
