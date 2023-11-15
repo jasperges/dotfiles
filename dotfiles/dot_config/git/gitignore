@@ -23,6 +23,7 @@ ENV/
 *~
 *.*~
 /.vim
+/Session.vim
 
 # macOS
 .DS_Store
