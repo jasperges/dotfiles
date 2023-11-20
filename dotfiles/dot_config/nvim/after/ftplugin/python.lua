@@ -4,7 +4,7 @@ vim.opt_local.colorcolumn = { 88 }
 -- autocmd is added every time we open or save a Python file.
 local pythongroup = vim.api.nvim_create_augroup("filetype_python", { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = "*",
+  pattern = "*.py",
   group = pythongroup,
   callback = function()
     vim.lsp.buf.code_action({
