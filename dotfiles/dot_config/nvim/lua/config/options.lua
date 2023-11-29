@@ -3,3 +3,4 @@
 -- Add any additional options here
 vim.g.python3_host_prog = "~/.local/pyenv/shims/python"
 vim.opt.exrc = true
+vim.opt.wrap = true
