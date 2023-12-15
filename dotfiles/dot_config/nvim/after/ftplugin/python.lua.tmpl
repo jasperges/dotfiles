@@ -1,4 +1,9 @@
 vim.opt_local.colorcolumn = { 88, 100 }
+{{ if eq .chezmoi.hostname "weerjappie" -}}
+vim.opt_local.textwidth = 100
+{{ else -}}
+vim.opt_local.textwidth = 88
+{{ end -}}
 
 -- Group autocmd's so they can be removed first. If we don't do this, the same
 -- autocmd is added every time we open or save a Python file.
