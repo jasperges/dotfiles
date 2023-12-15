@@ -52,7 +52,6 @@ configuration {
 /*	window-format: "{w}    {i}{c}   {t}";*/
 /*	click-to-exit: true;*/
 /*	show-match: true;*/
-	theme: "slate";
 /*	color-normal: ;*/
 /*	color-urgent: ;*/
 /*	color-active: ;*/
@@ -92,6 +91,8 @@ configuration {
 /*	kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab";*/
 /*	kb-row-left: "Control+Page_Up";*/
 /*	kb-row-right: "Control+Page_Down";*/
+  kb-element-next: "";
+  kb-element-prev: "";
 	kb-row-up: "Up,Control+k,ISO_Left_Tab";
 	kb-row-down: "Down,Control+j";
 /*	kb-row-tab: "Tab";*/
@@ -141,3 +142,4 @@ configuration {
 /*	me-accept-entry: "MouseDPrimary";*/
 /*	me-accept-custom: "Control+MouseDPrimary";*/
 }
+@theme "~/.local/share/rofi/themes/rounded-blue-dark.rasi"
