@@ -5,14 +5,14 @@
     "coc.preferences.formatOnSave": true
   },
   "pyright.disableOrganizeImports": false,
-  "pyright.organizeimports.provider": "isort",
-  "python.sortImports.args": ["--profile", "black"],
+  "pyright.organizeimports.provider": "ruff",
+  "python.sortImports.args": [],
   "python.linting.enabled": true,
   "python.linting.ruffEnabled": true,
   "python.linting.flake8Enabled": false,
   "python.linting.pylintEnabled": false,
   "python.linting.mypyEnabled": true,
-  "python.formatting.provider": "black",
+  "python.formatting.provider": "ruff",
   "python.linting.lintOnSave": true,
   "languageserver": {
     "cmake": {
