@@ -269,4 +269,10 @@ function aws-session() {
 
 {{ end -}}
 
+# Enter the shell in the Poetry virtualenv
+penv() {
+    command -v poetry > /dev/null 2>&1 || return 1
+    poetry shell
+}
+
 #  vim: set ts=4 sw=4 tw=0 et ft=sh :

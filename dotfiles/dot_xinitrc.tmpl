@@ -75,12 +75,17 @@ localectl set-locale LANG=en_US.UTF-8 LC_MONETARY=nl_NL.UTF-8 \
     LC_NUMERIC=en_US.UTF-8
 
 setup-monitor auto &
+{{ if ne .chezmoi.hostname "weerjappie" -}}
 # It seems programs sometimes give polkit errors, running the XFCE polkit to
 # see if this fixes the problem
 command -v /usr/libexec/xfce-polkit 2> /dev/null && /usr/libexec/xfce-polkit &
+{{ end -}}
 killall -wq dwmblocks
 dwmblocks &
+{{ if eq .chezmoi.hostname "weerjappie" -}}
+exec dwm
+{{ else }}
 exec dbus-launch --exit-with-session dwm
-# exec dwm
+{{ end }}
 
 # vim: set ts=4 sw=4 tw=0 et ft=sh:
