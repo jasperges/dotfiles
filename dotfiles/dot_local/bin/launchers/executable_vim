@@ -1,4 +1,3 @@
 #!/bin/sh
 
-gvimpath=/usr/bin/gvim
-exec "$gvimpath" -v "$@"
+exec nvim "$@"
