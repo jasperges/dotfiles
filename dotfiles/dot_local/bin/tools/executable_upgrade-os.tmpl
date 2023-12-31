@@ -6,12 +6,6 @@ package_manager_upgrade() {
 }
 
 {{ end -}}
-{{ if eq .chezmoi.osRelease.id "ubuntu" -}}
-package_manager_upgrade() {
-    sudo apt update && sudo apt full-upgrade
-}
-
-{{ end -}}
 flatpak_upgrade() {
     flatpak update
 }
