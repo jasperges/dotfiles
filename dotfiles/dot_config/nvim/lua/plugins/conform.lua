@@ -13,6 +13,8 @@ return {
       },
       formatters_by_ft = {
         json = { "prettier" },
+        html = { "prettier" },
+        css = { "prettier" },
       },
     }
     return opts
