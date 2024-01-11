@@ -9,8 +9,8 @@ declare -a MATCHING_LAYOUT_SCRIPTS
 get_connected_monitors() {
     # Sometime there are some strange issues with the connected monitors. Both
     # the 'active' and 'connected' monitors can be reported incorrectly in my
-    # case. By making sure a monitor is in both arrays, the result shoul now be
-    # correct.
+    # case. By making sure a monitor is in both arrays, the result should now
+    # be correct.
     local -a active_monitors
     local -a connected_monitors
     local monitor
