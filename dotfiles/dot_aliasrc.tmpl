@@ -35,11 +35,6 @@ alias lac='c; la'
 alias tm='tmux new-session -A -s "${USER}-session"'
 alias tmc='tmux list-panes -a -F "#{?#{==:#{pane_tty},$(tty)},#{session_name},}" | grep "."'
 
-{{ if .isDesktop -}}
-# lf
-alias lf='lfimg' # lf with ueberzug
-
-{{ end -}}
 # Create parent dirs on demand
 alias mkdir='mkdir -pv'
 # Create dir and parents dir and cd into it

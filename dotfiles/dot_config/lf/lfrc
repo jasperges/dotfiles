@@ -2,9 +2,10 @@
 
 # Basic vars
 set shell bash
-# set previewer ~/.config/lf/scope
-set previewer ~/.config/lf/previewer
-set cleaner ~/.config/lf/clear_img
+set previewer ctpv
+set cleaner ctpvclear
+&ctpv -s $id
+&ctpvquit $id
 set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
