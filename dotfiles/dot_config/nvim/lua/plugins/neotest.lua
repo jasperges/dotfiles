@@ -4,5 +4,10 @@ return {
     "nvim-lua/plenary.nvim",
     "antoinemadec/FixCursorHold.nvim",
   },
-  opts = { adapters = { "neotest-python" } },
+  opts = {
+    adapters = {
+      "neotest-python",
+      "neotest-go",
+    }
+  },
 }
