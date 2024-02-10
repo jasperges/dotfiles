@@ -12,6 +12,7 @@ return {
         },
       },
       formatters_by_ft = {
+        sh = { "shfmt" },
         json = { "prettier" },
         html = { "prettier" },
         css = { "prettier" },
