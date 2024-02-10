@@ -3,8 +3,8 @@
     name = Jasper van Nieuwenhuizen
     email = {{ .email }}
     signingkey = {{ .signingkey }}
-# Set default so that only current branch will be pushed ('simple')
 [push]
+    # Set default so that only current branch will be pushed ('simple')
     default = simple
 [pull]
     rebase = true
@@ -18,13 +18,12 @@
     ui = auto
 [checkout]
     defaultRemote = origin
-# Set the default editor
 [core]
+    # Set the default editor
     editor = vim
     excludesfile = ~/.config/git/gitignore
     deltaBaseCacheLimit = 1G
     autocrlf = input
-# [credential]
 [alias]
     b = branch
     ci = commit
@@ -39,6 +38,7 @@
     st = status
     st = status
     sw = switch
+    drop = reset --hard
 [init]
     templatedir = ~/.config/git/templates
     defaultBranch = main
@@ -49,7 +49,12 @@
 [gpg]
     program = gpg
 [commit]
-	gpgsign = true
+    gpgsign = true
     template = ~/.config/git/commit-template
 [fetch]
-	prune = true
+    prune = true
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
