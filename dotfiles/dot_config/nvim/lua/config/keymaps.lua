@@ -7,3 +7,7 @@ vim.keymap.set("n", "<C-M-h>", "<cmd>TmuxNavigateLeft<cr>", { desc = "Go to left
 vim.keymap.set("n", "<C-M-l>", "<cmd>TmuxNavigateRight<cr>", { desc = "Go to right window", remap = false })
 vim.keymap.set("n", "<C-M-k>", "<cmd>TmuxNavigateUp<cr>", { desc = "Go to upper window", remap = false })
 vim.keymap.set("x", "<leader>tf", ":!column -t -s '|' -o '|'<cr>", { desc = "[T]able [f]ormat", remap = false })
+vim.keymap.set("n", "<leader>]", ":<C-u>lua BlankDown(vim.v.count > 0 and vim.v.count or 1)<CR>",
+  { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>[", ":<C-u>lua BlankUp(vim.v.count > 0 and vim.v.count or 1)<CR>",
+  { noremap = true, silent = true })
