@@ -6,7 +6,7 @@ set -euo pipefail
 
 # Check if the zettelkasten home directory exists and isn't empty
 if ! [[ -d ${ZETTELKASTEN_HOME} && $(ls "${ZETTELKASTEN_HOME}/index.md" 2> /dev/null) ]]; then
-  echo "Zettelkasten home not found or empty"
+  _error "Zettelkasten home not found or empty"
   exit 1
 fi
 
