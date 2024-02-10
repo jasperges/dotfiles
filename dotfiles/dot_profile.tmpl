@@ -25,6 +25,8 @@ export SUDO_ASKPASS=${HOME}/.local/bin/tools/dmenupass
 
 export WORKON_HOME=${HOME}/.local/share/virtualenvs
 
+export ZETTELKASTEN_HOME=/media/zettelkasten
+
 {{ end -}}
 # Textwidth for htitle
 export HRULEWIDTH=80
@@ -115,7 +117,7 @@ export RUSTUP_HOME=${HOME}/.local/share/rustup
 
 # Set up environment for opam
 test -r "${HOME}/.opam/opam-init/init.sh" \
-  && source "${HOME}/.opam/opam-init/init.sh" &> /dev/null
+    && source "${HOME}/.opam/opam-init/init.sh" &> /dev/null
 
 {{ if .isDesktop -}}
 # Auto start X on tty1

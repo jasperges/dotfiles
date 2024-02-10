@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# FIXME: Open zettelkasten tomb first
+
+# Check if the zettelkasten home directory exists and isn't empty
+if ! [[ -d ${ZETTELKASTEN_HOME} && $(ls "${ZETTELKASTEN_HOME}/index.md" 2> /dev/null) ]]; then
+  echo "Zettelkasten home not found or empty"
+  exit 1
+fi
+
+cd "${ZETTELKASTEN_HOME}" || exit 1
+vim index.md
