@@ -2,12 +2,11 @@
 
 set -euo pipefail
 
-# FIXME: Open zettelkasten tomb first
-
 # Check if the zettelkasten home directory exists and isn't empty
 if ! [[ -d ${ZETTELKASTEN_HOME} && $(ls "${ZETTELKASTEN_HOME}/index.md" 2> /dev/null) ]]; then
-  _error "Zettelkasten home not found or empty"
-  exit 1
+    _info "Zettelkasten home not found or empty, trying to open the tomb..."
+    sudo swapoff -a
+    tomb open -k "${ZETT_TOMB_KEY}" "${ZETT_TOMB}" || exit 1
 fi
 
 cd "${ZETTELKASTEN_HOME}" || exit 1

@@ -7,6 +7,8 @@
 {{- $kbdBacklight := promptStringOnce . "kbdBacklight" "The name of the keyboard backlight device" -}}
 {{- $screenBacklight := promptStringOnce . "screenBacklight" "The name of the screen backlight device" -}}
 {{- $isDesktop := promptBoolOnce . "isDesktop" "Is this a desktop machine" false -}}
+{{- $zettTombKey := promptStringOnce . "zettTombKey" "The Zettelkasten tomb key file" -}}
+{{- $zettTomb := promptStringOnce . "zettTomb" "The Zettelkasten tomb file" -}}
 
 [data]
     email = {{ $email | quote }}
@@ -18,3 +20,5 @@
     kbdBacklight = {{ $kbdBacklight | quote }}
     screenBacklight = {{ $screenBacklight | quote }}
     isDesktop = {{ $isDesktop }}
+    zettTombKey = {{ $zettTombKey | quote }}
+    zettTomb = {{ $zettTomb | quote }}
