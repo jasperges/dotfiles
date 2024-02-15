@@ -7,6 +7,8 @@ function _G.path_to_image_link(path)
   for match in string.gmatch(path, "!%[%]%((.+)%)") do
     -- We assume it's an image link without alt text
     path = match
+    -- Strip any space and double quotes at the end, e.g. ' ""'
+    path = string.gsub(path, '%s*"+$', '')
     break
   end
   -- Prompt for the alternative text
