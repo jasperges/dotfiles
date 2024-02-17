@@ -35,9 +35,11 @@ numlockx on &
 # Tilde next to z key, also on laptop. This disables the section/plusminus key which I never use.
 xmodmap -e 'keycode 94 = grave asciitilde grave asciitilde dead_grave dead_horn dead_grave' &
 
-# Use Super_L on it's own as Escape
+# Use Super_L on it's own as Escape (what I am used to)
 killall -wq xcape
 xcape -e 'Super_L=Escape' &
+# Swap caps lock and escape (what I am trying to get used to)
+setxkbmap -option caps:swapescape
 
 # Turn on autolock
 killall -wq xautolock
@@ -87,5 +89,4 @@ exec dwm
 {{ else }}
 exec dbus-launch --exit-with-session dwm
 {{ end }}
-
 # vim: set ts=4 sw=4 tw=0 et ft=sh:
