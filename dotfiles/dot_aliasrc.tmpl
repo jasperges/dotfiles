@@ -97,17 +97,15 @@ gotoe() {
 
 gclone() {
     local -r _source_dir="${SOURCE_DIR:-${HOME}/src}"
+    local _clone_dir
+    local _clone_url
+    local _repo_dir
 
     [[ -z $* ]] && _error "Please provide the clone URL" && return 1
 
-    # TODO: also handle 'https://git.host/user/repo' URL's
     _clone_url="$1"
-    _clone_path="${_clone_url##*@}"
-    _host="${_clone_path%%:*}"
-    _head="${_clone_path%/*}"
-    _tail="${_clone_path##*/}"
-    _user="${_head##*:}"
-    _clone_dir="${_source_dir}/${_host}/${_user}/${_tail%%.*}"
+    _repo_dir=$(git2dir "${_clone_url}")
+    _clone_dir="${_source_dir}/${_repo_dir}"
     if [[ -d ${_clone_dir} ]]; then
         _error "Directory already exists: ${_clone_dir}"
         return 1
