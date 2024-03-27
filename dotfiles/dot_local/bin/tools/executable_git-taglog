@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -euo pipefail
+
+main() {
+    local _latest_tag
+    local -a _commits
+    local _message
+
+    if [[ -z $* ]]; then
+        echo "Usage: $0 <tag>"
+        exit 1
+    fi
+
+    local -r _tag="${1}"
+
+    _latest_tag=$(git describe --abbrev=0 --tags)
+    readarray -t _commits < <(git log --pretty=format:'%s%n%b' --no-merges "${_latest_tag}".. \
+        | grep -v '^\s+$' | sed '/^$/d')
+
+    if [[ ${#_commits[@]} -eq 0 ]]; then
+        echo "No commits found since latest tag '${_latest_tag}'"
+        exit 1
+    fi
+
+    _message="# Changelog\n"
+    for commit in "${_commits[@]}"; do
+        _message="${_message}\n- ${commit}"
+    done
+
+    printf "%b" "${_message}" | git tag --cleanup=whitespace -aesF - "${_tag}"
+}
+
+main "$@"

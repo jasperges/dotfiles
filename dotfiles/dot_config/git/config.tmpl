@@ -39,6 +39,7 @@
     st = status
     sw = switch
     drop = reset --hard
+    taglog = !sh -c 'git-tag-log $1'
 [init]
     templatedir = ~/.config/git/templates
     defaultBranch = main
