@@ -3,5 +3,5 @@
 battery_pct=$(acpi | cut -f2 -d ',' | tr -cd '[:digit:]')
 charge_status=$(acpi | cut -f2 -d ':' | cut -f 1 -d ',' | tr -d '[:space:]')
 if [[ $battery_pct -lt 10 && $charge_status == 'Discharging' ]]; then
-    notify-send --urgency=critical --app-name="battery-status" " Battery almost empty" "Only $battery_pct% left!"
+    notify-send --urgency=critical --app-name="battery-status" "󱃍 Battery almost empty" "Only $battery_pct% left!"
 fi
