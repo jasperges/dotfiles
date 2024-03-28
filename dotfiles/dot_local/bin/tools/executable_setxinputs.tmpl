@@ -3,7 +3,9 @@
 # Try to enable tapping, drag lock and natural scrolling for every device that has this property.
 readarray -t pointerids < <(xinput list --short | sed -nEe "s/^.*id=([0-9]+).*\[slave[ \t]+pointer.*$/\1/p")
 for i in "${pointerids[@]}"; do
-    xinput list-props "$i" | sed -E -n -e "s/.*(Tapping( Drag Lock)?|Natural Scrolling) Enabled +\(([0-9]+)\).*/\3/p" | xargs -I '{}' xinput set-prop "$i" '{}' 1
+    xinput list-props "$i" \
+        | sed -E -n -e "s/.*(Tapping( Drag Lock)?|Natural Scrolling) Enabled +\(([0-9]+)\).*/\3/p" \
+        | xargs -I '{}' xinput set-prop "$i" '{}' 1
 done
 # Disable touch
 xinput | awk -F '\t' '/Finger/ {print $2}' | cut -d = -f 2 | xargs -rL 1 xinput disable
