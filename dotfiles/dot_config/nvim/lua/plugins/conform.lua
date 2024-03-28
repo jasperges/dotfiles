@@ -7,10 +7,10 @@ return {
       },
     },
     formatters_by_ft = {
-      shfmt = { "shfmt" },
-      json = { "prettier" },
-      html = { "prettier" },
       css = { "prettier" },
+      go = { "goimports" },
+      html = { "prettier" },
+      json = { "prettier" },
     },
   },
 }
