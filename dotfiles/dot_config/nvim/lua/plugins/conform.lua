@@ -1,23 +1,16 @@
 return {
   "stevearc/conform.nvim",
-  opts = function()
-    local spaces = 0
-    if vim.bo.expandtab then
-      spaces = vim.bo.shiftwidth
-    end
-    local opts = {
-      formatters = {
-        shfmt = {
-          prepend_args = { "-i", tostring(spaces), "-bn", "-ci", "-sr" },
-        },
+  opts = {
+    formatters = {
+      shfmt = {
+        prepend_args = { "-i", 4, "-bn", "-ci", "-sr" },
       },
-      formatters_by_ft = {
-        sh = { "shfmt" },
-        json = { "prettier" },
-        html = { "prettier" },
-        css = { "prettier" },
-      },
-    }
-    return opts
-  end,
+    },
+    formatters_by_ft = {
+      shfmt = { "shfmt" },
+      json = { "prettier" },
+      html = { "prettier" },
+      css = { "prettier" },
+    },
+  },
 }
