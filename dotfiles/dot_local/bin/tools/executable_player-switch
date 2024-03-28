@@ -2,7 +2,7 @@
 
 declare -r HOSTINFOFILE="${XDG_CACHE_HOME:-$HOME/.cache}/playerhostinfo"
 
-choice=$(printf "local\nguybrush\nspotify" | dmenu -p "Choose player" -l 3 -r -i)
+choice=$(printf "local\nguybrush\nspotify" | rofi -dmenu -p "Choose player" -l 3 -r -i)
 case "$choice" in
     local) echo "localhost,6600" > "${HOSTINFOFILE}" ;;
     guybrush) echo "192.168.2.120,5700" > "${HOSTINFOFILE}" ;;
