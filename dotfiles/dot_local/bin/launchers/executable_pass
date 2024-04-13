@@ -1,0 +1,4 @@
+#!/bin/sh
+
+EDITOR="nvim -i NONE -u NONE"
+exec /bin/pass "$@"
