@@ -104,13 +104,13 @@ super + shift + x:
 
 # Pulse Audio controls
 {_,shift} + XF86AudioRaiseVolume
-    pactl set-sink-volume @DEFAULT_SINK@ +5%{;pkill -RTMIN+8 dwmblocks;, \
+    wpctl set-volume @DEFAULT_SINK@ 0.05+{;pkill -RTMIN+8 dwmblocks;, \
         ;ffplay -nodisp -autoexit /usr/share/sounds/freedesktop/stereo/bell.oga; pkill -RTMIN+8 dwmblocks}
 {_,shift} + XF86AudioLowerVolume
-    pactl set-sink-volume @DEFAULT_SINK@ -5%{;pkill -RTMIN+8 dwmblocks;, \
+    wpctl set-volume @DEFAULT_SINK@ 0.05-{;pkill -RTMIN+8 dwmblocks;, \
         ;ffplay -nodisp -autoexit /usr/share/sounds/freedesktop/stereo/bell.oga; pkill -RTMIN+8 dwmblocks}
 XF86AudioMute
-    pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+8 dwmblocks
+    wpctl set-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+8 dwmblocks
 
 # Sreen brightness controls
 XF86MonBrightness{Up,Down}

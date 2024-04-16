@@ -1,17 +1,17 @@
 #!/bin/bash
 
 case $BUTTON in
-    1) pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
+    1) wpctl set-mute @DEFAULT_SINK@ toggle ;;
     3) toggle-pulsemixer ;;
 esac
 
 vol() {
-    # vol=$(amixer get Master | awk -F'[][]' 'END{ print $4":"$2 }')
     # icons: 󰖁 󰝟 󰕿 󰖀 󰕾
     extra_icon=$(get_extra_icon)
-    vol=$(pulsemixer --get-volume | cut -d ' ' -f 1)
-    mute=$(pulsemixer --get-mute)
-    if [[ $mute -gt 0 ]]; then
+    vol=$(wpctl get-volume @DEFAULT_SINK@ | awk '{print $2}')
+    vol=$(echo "${vol} * 100" | bc -l | xargs printf "%.0f")
+    mute=$(wpctl get-volume @DEFAULT_SINK@ | awk '{print $3}')
+    if [[ ${mute} = "[MUTED]" ]]; then
         icon="󰖁"
     elif [[ $(expr "${vol}" \< 33) = 1 ]]; then
         icon="󰕿"
