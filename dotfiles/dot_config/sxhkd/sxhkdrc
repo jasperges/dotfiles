@@ -56,12 +56,10 @@ super + o; {b, c, f, g, h, m, w, i, p, o, u, s, t, y, n, z}
         , spotify-tui, toggle-touchscreen, toggle-trayer \
         , toggle-ytop, toggle-nethogs, upgrade-os-term \
     }
-super + p
-    passmenu -r -i -l 10
-super + shift + p
-    passmenu --username -r -i -l 10
-super + ctrl + shift + p
-    passmenu --otp -r -i -l 10
+super + p; {p, u, o}
+    {passmenu -r -i -l 10, passmenu --username -r -i -l 10, passmenu --otp -r -i -l 10}
+super + shift + p; {p, u, o}
+    {passmenu --type -r -i -l 10, passmenu --type --username -r -i -l 10, passmenu --type --otp -r -i -l 10}
 super + s; {p, a, s}
     {toggle-pulsemixer, play-silence, stop-silence}
 super + ctrl + t; {k, s}
