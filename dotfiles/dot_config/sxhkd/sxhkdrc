@@ -36,6 +36,8 @@ super + shift + d; {m}
     {setup-monitors}
 super + ctrl + d; {m}
     {setup-monitors-knmi}
+super + e
+    thunar
 super + ctrl + l;
     jasperge-locker --force
 super + i; {p}
