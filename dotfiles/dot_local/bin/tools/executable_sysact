@@ -1,17 +1,26 @@
 #!/bin/bash
 
 # A dmenu wrapper script for system functions.
-[[ -t 0 ]] && match_prog=fzf || match_prog=dmenu
+# [[ -t 0 ]] && match_prog=fzf || match_prog=dmenu
+match_prog=dmenu
 
-cmds="\
-   Lock Screen	jasperge-locker
-   Leave dwm	kill -TERM $(pidof -s dwm)
-   Restart dwm	kill -HUP $(pidof -s dwm)
-⭘   Reboot		shutdown -r now
-   Shutdown	shutdown -h now"
+if [[ ${XDG_SESSION_TYPE} = wayland ]]; then
+    cmds="\
+󰌾   Lock Screen	hyprlock --immediate
+󰍃   Leave Hyprland	hyprctl dispatch exit
+󰤁   Reboot		shutdown -r now
+󰤂   Shutdown	shutdown -h now"
+else
+    cmds="\
+󰌾   Lock Screen	jasperge-locker
+󰍃   Leave dwm	kill -TERM $(pidof -s dwm)
+󰜉   Restart dwm	kill -HUP $(pidof -s dwm)
+󰤁   Reboot		shutdown -r now
+󰤂   Shutdown	shutdown -h now"
+fi
 
 if [[ $match_prog = dmenu ]]; then
-    choice="$(echo "$cmds" | cut -d'	' -f 1 | dmenu -i -r -l 5 -p "Choose a system action")" || exit 1
+    choice="$(echo "$cmds" | cut -d'	' -f 1 | rofi -dmenu -i -r -l 5 -p "Choose a system action")" || exit 1
 else
     choice="$(echo "$cmds" | cut -d'	' -f 1 | fzf -i --height 8 --prompt "Choose a system action: ")" || exit 1
 fi
