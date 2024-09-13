@@ -43,6 +43,7 @@
       "class<lutris>": "󰊗",
       "class<spotify>": "󰓇",
       "class<steam>": "󰓓",
+      "class<Wfica>": "",
       "class<thunar>": "󰝰",
       "class<blender>": "󰂫",
       "class<.*UltiMaker-Cura>": "󰌨",
@@ -50,7 +51,10 @@
       "class<Ferdium>": "󰖣",
       "class<org.telegram.desktop>": "󰷹",
       "codium": "󰨞",
-      "vim": ""
+      "vim": "",
+      "class<jetbrains-pycharm>": "󰌠",
+      "class<Slack>": "󰒱",
+      "class<Ferdium>": "󰭹"
     }
   },
   "hyprland/language": {
