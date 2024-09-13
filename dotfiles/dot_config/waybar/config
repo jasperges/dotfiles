@@ -40,8 +40,15 @@
       "title<.*youtube.*>": "",
       "title<.*github.*>": "",
       "title<.*gitlab.*>": "󰮠",
+      "class<lutris>": "󰊗",
       "class<spotify>": "󰓇",
       "class<steam>": "󰓓",
+      "class<thunar>": "󰝰",
+      "class<blender>": "󰂫",
+      "class<.*UltiMaker-Cura>": "󰌨",
+      "class<Gimp-.*>": "",
+      "class<Ferdium>": "󰖣",
+      "class<org.telegram.desktop>": "󰷹",
       "codium": "󰨞",
       "vim": ""
     }
