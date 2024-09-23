@@ -8,7 +8,7 @@ monitor=eDP-2,2560x1600@165,auto,1.25
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
 exec-once = kanshi & waybar & hyprpaper & hyrpidle & dunst & nm-applet & blueman-applet
-exec-once = /usr/libexec/kf5/polkit-kde-authentication-agent-1
+exec-once = systemctl --user start plasma-polkit-agent.service
 exec-once = wl-paste --type text --watch cliphist store #Stores only text data
 exec-once = wl-paste --type image --watch cliphist store #Stores only image data
 
