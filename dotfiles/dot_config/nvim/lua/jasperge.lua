@@ -19,3 +19,7 @@ function BlankUp(count)
   end
   vim.api.nvim_buf_set_lines(0, current_line - 1, current_line - 1, false, blank_lines)
 end
+
+vim.filetype.add({
+  pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+})
