@@ -33,13 +33,13 @@
     "window-rewrite": {
       "class<alacritty>": "",
       "class<org.mozilla.firefox>": "",
-      "title<.*jira.*>": "󰌃",
-      "title<.*mail.*>": "󰇮",
-      "title<.*calendar.*>": "󰸘",
-      "title<.*gmail.*>": "󰊫",
-      "title<.*youtube.*>": "",
-      "title<.*github.*>": "",
-      "title<.*gitlab.*>": "󰮠",
+      "class<org.mozilla.firefox> title<.*jira.*>": "󰌃",
+      "class<org.mozilla.firefox> title<.*mail.*>": "󰇮",
+      "class<org.mozilla.firefox> title<.*calendar.*>": "󰸘",
+      "class<org.mozilla.firefox> title<.*gmail.*>": "󰊫",
+      "class<org.mozilla.firefox> title<.*youtube.*>": "",
+      "class<org.mozilla.firefox> title<.*github.*>": "",
+      "class<org.mozilla.firefox> title<.*gitlab.*>": "󰮠",
       "class<lutris>": "󰊗",
       "class<spotify>": "󰓇",
       "class<steam>": "󰓓",
@@ -50,11 +50,11 @@
       "class<Gimp-.*>": "",
       "class<Ferdium>": "󰖣",
       "class<org.telegram.desktop>": "󰷹",
+      "class<Slack>": "󰒱",
+      "class<Ferdium>": "󰭹"
       "codium": "󰨞",
       "vim": "",
       "class<jetbrains-pycharm>": "󰌠",
-      "class<Slack>": "󰒱",
-      "class<Ferdium>": "󰭹"
     }
   },
   "hyprland/language": {
