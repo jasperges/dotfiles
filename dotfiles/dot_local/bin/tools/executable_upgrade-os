@@ -1,11 +1,10 @@
 #!/bin/bash
 
-{{ if eq .chezmoi.osRelease.id "fedora" -}}
 package_manager_upgrade() {
-    sudo dnf upgrade
+    command -v dnf &> /dev/null && sudo dnf upgrade --refresh
+    command -v apt &> /dev/null && sudo apt update && sudo apt full-upgrade
 }
 
-{{ end -}}
 flatpak_upgrade() {
     flatpak update
 }
