@@ -31,24 +31,24 @@ done
 # vpnconnection=$(echo "$vpn" | cut -d : -f 1)
 
 vpn="$(printf "%s\n" "${vpnlist[@]}" \
-    | awk -F: '{if ($2 == "activated") {printf " %s\n", $1} else {printf " %s\n", $1}}' \
-    | sort | dmenu -p "Toggle VPN connection" -l ${#vpnlist[@]} -i -r | cut -d " " -f 2)"
+    | awk -F: '{if ($2 == "activated") {printf "󰌾 %s\n", $1} else {printf "󰌿 %s\n", $1}}' \
+    | sort | rofi -dmenu -p "Toggle VPN connection" -l ${#vpnlist[@]} -i -r | cut -d " " -f 2)"
 [[ -z ${vpn} ]] && exit
 vpnstatus="$(printf "%s\n" "${vpnlist[@]}" | awk -F ':' '/'"${vpn}"'/ {printf $2}')"
 
 case "${vpnstatus}" in
     "activated")
         if nmcli connection down "${vpn}"; then
-            notify-send " VPN Connection" "Disconnected ${vpn}"
+            notify-send "󰌿 VPN Connection" "Disconnected ${vpn}"
         else
-            notify-send -u critical " VPN Connection" "Failed to disconnect ${vpn}"
+            notify-send -u critical "󰌿 VPN Connection" "Failed to disconnect ${vpn}"
         fi
         ;;
     *)
         if nmcli connection up "${vpn}"; then
-            notify-send " VPN Connection" "Connected to ${vpn}"
+            notify-send "󰌾 VPN Connection" "Connected to ${vpn}"
         else
-            notify-send -u critical " VPN Connection" "Failed to connect to ${vpn}"
+            notify-send -u critical "󰌾 VPN Connection" "Failed to connect to ${vpn}"
         fi
         ;;
 esac

@@ -29,29 +29,30 @@ done
 bluetoothdevices+=("App xxx toggle-bluetooth $(powerstate)")
 bluetoothdevices+=("App xxx blueman-manager")
 
-# Show available choices (icons: 📱 🎧  📟 )
-deviceidx="$(printf '%s\n' "${bluetoothdevices[@]}" | \
-    awk '{
+# Show available choices (icons: 📱 🎧  📟 󰤁)
+deviceidx="$(printf '%s\n' "${bluetoothdevices[@]}" \
+    | awk '{
     if($4=="yes")
         {print "<span foreground=\"#1db954\" font_weight=\"bold\">"$3"</span>";}
     else
         { print $3;}
-    }' | \
-    sed -r -e 's#((foon|phone).*)$#📱 \1#' \
+    }' \
+    | sed -r -e 's#((foon|phone).*)$#📱 \1#' \
         -e 's#((kop|head).*)$#🎧 \1#' \
-        -e 's#(.*toggle-bluetooth.*)$# \1#' \
+        -e 's#(.*toggle-bluetooth.*)$#󰤁   \1#' \
         -e 's#(.*manager)$#📟 \1#' \
-        -e 's#(----.*)$#   \1#' | \
-        rofi -dmenu -lines "${#bluetoothdevices[@]}" -p "Connect to Bluetooth Device" -i -markup-rows \
-    -select "kop" -format i)"
+        -e 's#(----.*)$#   \1#' \
+    | rofi -dmenu -lines "${#bluetoothdevices[@]}" -p "Connect to Bluetooth Device" -i -markup-rows \
+        -select "kop" -format i)"
 [[ "$deviceidx" ]] || exit
 device="${bluetoothdevices[deviceidx]}"
 
 case $device in
-    "App xxx toggle-bluetooth" ) toggle_bluetooth;;
-    "App xxx blueman-manager" ) blueman-manager;;
-    "x x ----------" ) exit;;
-    * )
+    "App xxx toggle-bluetooth") toggle_bluetooth ;;
+    "App xxx blueman-manager") blueman-manager ;;
+    "x x ----------") exit ;;
+    *)
         command=$([ "$(echo "$device" | cut -d " " -f 4)" = "yes" ] && echo "disconnect" || echo "connect")
-        bluetoothctl "$command" "$(echo "$device" | cut -d " " -f 2)";;
+        bluetoothctl "$command" "$(echo "$device" | cut -d " " -f 2)"
+        ;;
 esac

@@ -4,8 +4,8 @@ shopt -s nullglob globstar
 
 typeit=0
 if [[ $1 == "--type" ]]; then
-	typeit=1
-	shift
+    typeit=1
+    shift
 fi
 
 username=0
@@ -21,13 +21,13 @@ if [[ $1 == "--otp" ]]; then
 fi
 
 prefix=${PASSWORD_STORE_DIR-~/.password-store}
-password_files=( "$prefix"/**/*.gpg )
-password_files=( "${password_files[@]#"$prefix"/}" )
-password_files=( "${password_files[@]%.gpg}" )
-password_files=( "${password_files[@]#proton/mail/credentials/*/}" )
-password_files=( "${password_files[@]#protonmail-credentials/*/}" )
+password_files=("$prefix"/**/*.gpg)
+password_files=("${password_files[@]#"$prefix"/}")
+password_files=("${password_files[@]%.gpg}")
+password_files=("${password_files[@]#proton/mail/credentials/*/}")
+password_files=("${password_files[@]#protonmail-credentials/*/}")
 
-password=$(printf '%s\n' "${password_files[@]}" | dmenu "$@")
+password=$(printf '%s\n' "${password_files[@]}" | rofi -dmenu "$@")
 
 [[ -n $password ]] || exit
 
@@ -36,22 +36,31 @@ if [[ $typeit -eq 0 ]]; then
         pass show "$password" | awk -F ":" '/username/ {printf $2}' \
             | tr -d "[:blank:]" | xsel -i -b -t 45000
     elif [[ $otp -eq 1 ]]; then
-        pass otp show -c "$password" 2>/dev/null
+        pass otp show -c "$password" 2> /dev/null
     else
-        pass show -c "$password" 2>/dev/null
+        pass show -c "$password" 2> /dev/null
     fi
 else
     if [[ $username -eq 1 ]]; then
         pass show "$password" \
             | awk -F ":" '/username/ {printf $2}' | tr -d "[:blank:]" \
-            | { IFS= read -r pass; printf %s "$pass"; } \
+            | {
+                IFS= read -r pass
+                printf %s "$pass"
+            } \
             | xdotool type --clearmodifiers --file -
 
     elif [[ $otp -eq 1 ]]; then
-        pass otp show -c "$password" | { IFS= read -r pass; printf %s "$pass"; } \
+        pass otp show -c "$password" | {
+            IFS= read -r pass
+            printf %s "$pass"
+        } \
             | xdotool type --clearmodifiers --file -
     else
-        pass show "$password" | { IFS= read -r pass; printf %s "$pass"; } \
+        pass show "$password" | {
+            IFS= read -r pass
+            printf %s "$pass"
+        } \
             | xdotool type --clearmodifiers --file -
     fi
 fi
