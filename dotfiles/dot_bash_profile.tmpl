@@ -21,13 +21,17 @@ export BROWSER=firefox
 export NOTMUCH_CONFIG=${HOME}/.config/notmuch/notmuch-config
 
 {{ if .isDesktop -}}
-export SUDO_ASKPASS=${HOME}/.local/bin/tools/dmenupass
+export SUDO_ASKPASS=${HOME}/.local/bin/tools/askpass
 
 export WORKON_HOME=${HOME}/.local/share/virtualenvs
 
 export ZETTELKASTEN_HOME=/media/zettelkasten
 export ZETT_TOMB_KEY={{ .zettTombKey }}
 export ZETT_TOMB={{ .zettTomb }}
+
+export GTK_THEME=Arc-Dark
+export GTK_ICON_THEME=Papirus-Dark
+export GTK_CURSOR_THEME=breeze_cursors
 
 {{ end -}}
 # Textwidth for htitle
@@ -77,7 +81,7 @@ export SCRIPTS=~/.local/bin/tools
 
 # Remember last arg will be first in path
 pathprepend \
-    "${PYENV_ROOT}/bin" \
+    "${HOME}/.local/pyenv/bin" \
     "${HOME}/.local/share/cargo/bin" \
     "${HOME}/.local/bin/cargo/bin" \
     "${HOME}/.local/bin/go" \
@@ -121,18 +125,6 @@ export RUSTUP_HOME=${HOME}/.local/share/rustup
 test -r "${HOME}/.opam/opam-init/init.sh" \
     && source "${HOME}/.opam/opam-init/init.sh" &> /dev/null
 
-{{ if .isDesktop -}}
-# Auto start X on tty1
-if [[ -z ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
-    exec startx &> /dev/null
-fi
-
-if [[ -n ${DISPLAY} ]]; then
-    # Add non-network connections to access control list
-    xhost + local: &> /dev/null
-fi
-
-{{ end -}}
 # Connect to tmux when logging in via ssh
 if [[ -z ${TMUX} ]] && [[ -n ${SSH_TTY} ]]; then
     exec tmux new-session -A -s "${USER}"
