@@ -73,7 +73,7 @@ export LESS_TERMCAP_ue=$(printf "\e[0m")
 export LESS_TERMCAP_us=$(printf "\e[4;32m")
 export GROFF_NO_SGR=1 # For Konsole and Gnome-terminal
 {{ if .isDesktop }}
-[[ -n $DISPLAY ]] && xrdb -merge "${HOME}/.Xresources"
+[[ -n $DISPLAY ]] && command -v xrdb &> /dev/null && xrdb -merge "${HOME}/.Xresources"
 {{ end }}
 [[ -z $REZ_SHELL_INTERACTIVE ]] && [[ -x $(command -v starship) ]] && eval "$(starship init bash)"
 
