@@ -20,7 +20,7 @@ for i in "${wacomids[@]}"; do
 done
 
 setxkbmap -layout us -variant mac
-setxkbmap -option caps:swapescape
+setxkbmap -option caps:escape_shifted_capslock
 
 # Tilde next to z key, also on laptop. This disables the section/plusminus key which I never use.
 xmodmap -e 'keycode 94 = grave asciitilde grave asciitilde dead_grave dead_horn dead_grave' &

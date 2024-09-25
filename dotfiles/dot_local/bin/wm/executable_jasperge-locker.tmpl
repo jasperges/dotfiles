@@ -96,10 +96,10 @@ create_monitor_spanning_image() {
     for image in "${LOCK_IMAGES[@]}"; do
         filename="${image%.png}"
         offset=$(echo "$filename" | awk -F '-' '{print "+"$2"+"$3}')
-        convert_command="$convert_command -page $offset $image"
+        convert_command+=" -page $offset $image"
     done
 
-    convert_command="$convert_command -background gray10 -layers merge \"$2\""
+    convert_command+=" -background gray10 -layers merge \"$2\""
 
     # Run the convert command
     eval "$convert_command"

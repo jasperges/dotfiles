@@ -23,7 +23,7 @@ readarray -t wifilist < <(nmcli --terse --fields NAME,STATE,TYPE c show | grep "
 
 wifi="$(printf "%s\n" "${wifilist[@]}" \
     | awk -F: '{if ($2 == "activated") {printf " %s\n", $1} else {printf "  %s\n", $1}}' \
-    | sort | dmenu -p "Toggle WiFi connection" -l ${#wifilist[@]} -i -r | cut -d " " -f 2-)"
+    | sort | rofi -dmenu -p "Toggle WiFi connection" -l ${#wifilist[@]} -i -r | cut -d " " -f 2-)"
 [[ -z "$wifi" ]] && exit
 wifi="${wifi# *}"
 wifistatus="$(printf "%s\n" "${wifilist[@]}" | awk -F ':' '/'"$wifi"'/ {printf $2}')"

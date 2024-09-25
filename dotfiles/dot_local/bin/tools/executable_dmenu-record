@@ -132,7 +132,7 @@ audio() {
 
 askrecording() {
     choice=$(printf "screencast\nvideo\nquick video\naudio\nwebcam\nwebcam (hi-def)" \
-        | dmenu -i -l 5 -p "Select recording style:" -n 2 -r)
+        | rofi -dmenu -i -l 5 -p "Select recording style:" -n 2 -r)
     case "$choice" in
         screencast) screencast ;;
         audio) audio ;;
@@ -144,7 +144,7 @@ askrecording() {
 }
 
 asktoend() {
-    response=$(printf "No\\nYes" | dmenu -i -l 2 -p "Recording still active. End recording?" -r)
+    response=$(printf "No\\nYes" | rofi -dmenu -i -l 2 -p "Recording still active. End recording?" -r)
     [ "$response" = "Yes" ] && killrecording && exit
 }
 

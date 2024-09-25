@@ -10,30 +10,36 @@ choices+=("Selection + Delay + Edit in Gimp")
 delay=5
 
 choice=$(printf "%s\n" "${choices[@]}" \
-    | dmenu -p "Choose how to take a screenshot" -l ${#choices[@]} -r -i)
+    | rofi -dmenu -p "Choose how to take a screenshot" -l ${#choices[@]} -r -i)
 case $choice in
-    "Selection" )
+    "Selection")
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
-            --pointer --exec 'mv $f ~/pictures/screenshots/';;
+            --pointer --exec 'mv $f ~/pictures/screenshots/'
+        ;;
     "Selection + Delay")
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
-            --delay $delay --pointer --exec 'mv $f ~/pictures/screenshots/';;
-    "Selection and View" )
+            --delay $delay --pointer --exec 'mv $f ~/pictures/screenshots/'
+        ;;
+    "Selection and View")
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             -selection --line style=dash,width=2,color="red" \
-            --pointer --exec 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f';;
+            --pointer --exec 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f'
+        ;;
     "Selection and View + Delay")
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
-            --delay $delay --pointer --exec 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f';;
-    "Selection + Edit in Gimp" )
+            --delay $delay --pointer --exec 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f'
+        ;;
+    "Selection + Edit in Gimp")
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
-            --pointer --exec 'mv $f ~/pictures/screenshots/ && gimp ~/pictures/screenshots/$f';;
+            --pointer --exec 'mv $f ~/pictures/screenshots/ && gimp ~/pictures/screenshots/$f'
+        ;;
     "Selection + Delay + Edit in Gimp")
         scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
             --select --line style=dash,width=2,color="red" \
-            --delay $delay --pointer --exec 'mv $f ~/pictures/screenshots/ && gimp ~/pictures/screenshots/$f';;
+            --delay $delay --pointer --exec 'mv $f ~/pictures/screenshots/ && gimp ~/pictures/screenshots/$f'
+        ;;
 esac

@@ -2,11 +2,11 @@
 
 # TODO: add option to sort by filename
 
-[[ $1 ]] && photodir="$1" || photodir=$(find $HOME/pictures -maxdepth 2 -type d | dmenu -p "Photo dir")
+[[ $1 ]] && photodir="$1" || photodir=$(find $HOME/pictures -maxdepth 2 -type d | rofi -dmenu -p "Photo dir")
 echo "Viewing pictures in $photodir..."
 
-while IFS=  read -r -d $'\0'; do
-    photodate=$(exiv2 "$REPLY" 2>/dev/null| grep "timestamp" | awk -F " : " '{print $2}' | sed 's/[: ]//g')
+while IFS= read -r -d $'\0'; do
+    photodate=$(exiv2 "$REPLY" 2> /dev/null | grep "timestamp" | awk -F " : " '{print $2}' | sed 's/[: ]//g')
     [[ ! $photodate ]] && photodate=$(stat -c "%y" "$REPLY" | cut -d "." -f 1 | sed 's/[: -]//g')
     if [[ ! $(echo "$photodate" | grep -E "[0-9]{14}") ]]; then
         photodate= && continue

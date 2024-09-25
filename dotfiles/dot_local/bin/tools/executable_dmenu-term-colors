@@ -22,7 +22,7 @@ changetheme() {
 
 ask() {
     theme=$(printf "Solarized Light\nSolarized Dark" \
-        | dmenu -p "Which terminal color scheme would you like to use?" \
+        | rofi -dmenu -p "Which terminal color scheme would you like to use?" \
             -r -l 2 -i \
         | tr '[:upper:]' '[:lower:]')
     # If no theme in chosen, just exit
@@ -41,8 +41,14 @@ toggle() {
 }
 
 case "$1" in
-    "dark") theme="solarized dark"; changetheme ;;
-    "light") theme="solarized light"; changetheme ;;
+    "dark")
+        theme="solarized dark"
+        changetheme
+        ;;
+    "light")
+        theme="solarized light"
+        changetheme
+        ;;
     "toggle") toggle ;;
     *) ask ;;
 esac

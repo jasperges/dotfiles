@@ -51,7 +51,7 @@ else
             | xdotool type --clearmodifiers --file -
 
     elif [[ $otp -eq 1 ]]; then
-        pass otp show -c "$password" | {
+        pass otp show "$password" | {
             IFS= read -r pass
             printf %s "$pass"
         } \

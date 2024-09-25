@@ -36,7 +36,7 @@ numlockx on &
 xmodmap -e 'keycode 94 = grave asciitilde grave asciitilde dead_grave dead_horn dead_grave' &
 
 xcape -e 'Hyper_L=Escape' &
-setxkbmap -option caps:swapescape
+setxkbmap -option caps:escape_shifted_capslock
 
 # Turn on autolock
 killall -wq xautolock
@@ -47,11 +47,15 @@ killall -wq xss-lock
 xss-lock -- "${HOME}/.local/bin/wm/jasperge-locker" &
 
 # Start mpd
-killall -wq mpd
-mpd &
+if command -v mpd &> /dev/null; then
+    killall -wq mpd
+    mpd &
+fi
 # Start spotifyd
-killall -wq spotifyd
-spotifyd &
+if command -v spotifyd &> /dev/null; then
+    killall -wq spotifyd
+    spotifyd &
+fi
 
 # Start X compositor, notification and set wallpaper
 killall -wq picom
@@ -61,8 +65,10 @@ dunst &
 "${HOME}/.fehbg" &
 
 # Start apps that show in tray area
-killall -wq protonmail-bridge
-protonmail-bridge --no-window &
+if command -v protonmail-bridge &> /dev/null; then
+    killall -wq protonmail-bridge
+    protonmail-bridge --no-window &
+fi
 killall -wq nm-applet
 nm-applet &
 killall blueman-applet -wq

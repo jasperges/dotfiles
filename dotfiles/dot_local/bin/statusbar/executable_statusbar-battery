@@ -60,6 +60,8 @@ battery() {
         else
             icon="󰁹"
         fi
+    elif [[ $status = "Not charging" ]]; then
+        icon="󰁹"
     else
         icon="󰂃"
     fi
