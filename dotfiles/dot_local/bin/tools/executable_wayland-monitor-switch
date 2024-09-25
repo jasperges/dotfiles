@@ -5,7 +5,7 @@ set -euo pipefail
 declare -a profiles
 declare choice
 
-mapfile -t profiles < <(awk '/^profile [a-z]+ \{$/ { print $2}' "${XDG_CONFIG_HOME:-${HOME}/.config}/kanshi/config")
+mapfile -t profiles < <(awk '/^profile [a-z0-9-]+ \{$/ { print $2}' "${XDG_CONFIG_HOME:-${HOME}/.config}/kanshi/config")
 choice=$(printf "%s\n" "${profiles[@]}" | rofi -dmenu -p "Select monitor profile")
 [[ -z ${choice} ]] && exit 1
 kanshictl switch "${choice}"
