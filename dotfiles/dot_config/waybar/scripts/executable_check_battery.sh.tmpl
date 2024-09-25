@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bat=/sys/class/power_supply/BAT1
+bat=/sys/class/power_supply/{{ .battery }}
 CRIT=${1:-15}
 
 FILE=~/.config/waybar/scripts/notified

@@ -3,6 +3,7 @@
 {{- $beamdir := promptStringOnce . "beamdir" "The default beamer presentations directory" -}}
 {{- $ethernetInterface := promptStringOnce . "ethernetInterface" "The name of the primary ethernet device" -}}
 {{- $wifiInterface := promptStringOnce . "wifiInterface" "The name of the primary wifi device" -}}
+{{- $battery := promptStringOnce . "battery" "The name of the battery device" -}}
 {{- $dfDisk := promptStringOnce . "dfDisk" "The name of the harddisk to show the free space for" -}}
 {{- $kbdBacklight := promptStringOnce . "kbdBacklight" "The name of the keyboard backlight device" -}}
 {{- $screenBacklight := promptStringOnce . "screenBacklight" "The name of the screen backlight device" -}}
@@ -16,6 +17,7 @@
     beamdir = {{ $beamdir | quote }}
     ethernetInterface = {{ $ethernetInterface | quote }}
     wifiInterface = {{ $wifiInterface | quote }}
+    battery = {{ $battery | quote }}
     dfDisk = {{ $dfDisk | quote }}
     kbdBacklight = {{ $kbdBacklight | quote }}
     screenBacklight = {{ $screenBacklight | quote }}
