@@ -1,16 +1,17 @@
 # See https://wiki.hyprland.org/Configuring/Monitors/
 {{- if eq .chezmoi.hostname "weerjappie" }}
 monitor=eDP-1,1920x1200@60,auto,1
-{{ else }}
+{{- else -}}
 monitor=eDP-2,2560x1600@165,auto,1.25
 {{- end }}
 
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
-exec-once = kanshi & waybar & hyprpaper & hyrpidle & dunst & nm-applet & blueman-applet
+exec = pkill kanshi; kanshi
+exec-once = waybar & hyprpaper & hypridle & dunst & nm-applet & blueman-applet
 exec-once = systemctl --user start plasma-polkit-agent.service
-exec-once = wl-paste --type text --watch cliphist store #Stores only text data
-exec-once = wl-paste --type image --watch cliphist store #Stores only image data
+exec-once = wl-paste --type text --watch cliphist store # Stores only text data
+exec-once = wl-paste --type image --watch cliphist store # Stores only image data
 
 # Source a file (multi-file configs)
 # source = ~/.config/hypr/myColors.conf
@@ -46,14 +47,6 @@ input {
 
     sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
 }
-
-# device {
-#     name = apple,-inc-apple-keyboard
-#     kb_rules {
-#         keycode = 86
-#         keysym = ~
-#   }
-# }
 
 general {
     # See https://wiki.hyprland.org/Configuring/Variables/ for more
@@ -288,4 +281,4 @@ windowrulev2 = float,class:(openlp),title:(Display Window)
 windowrulev2 = float,class:(alacritty),title:(-centered)$
 windowrulev2 = size 80% 80%,class:(alacritty),title:(-centered)$
 windowrulev2 = stayfocused, class:(pinentry-)
-# windowrulev2 = float,class:(firefox),title:(PassFF)
+windowrulev2 = float,class:(firefox),title:(PassFF)
