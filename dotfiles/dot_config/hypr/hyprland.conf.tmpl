@@ -1,10 +1,9 @@
 # See https://wiki.hyprland.org/Configuring/Monitors/
 {{- if eq .chezmoi.hostname "weerjappie" }}
 monitor=eDP-1,1920x1200@60,auto,1
-{{- else -}}
+{{ else }}
 monitor=eDP-2,2560x1600@165,auto,1.25
-{{- end }}
-
+{{ end }}
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
 exec = pkill kanshi; kanshi
