@@ -6,9 +6,12 @@ return {
     opts = function()
       vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
       vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+      return {
+        app = "webview",
+      }
     end,
     keys = {
-      { "<leader>pp", mode = "n", "<cmd>PeekOpen<CR>",  desc = "Peek Open" },
+      { "<leader>pp", mode = "n", "<cmd>PeekOpen<CR>", desc = "Peek Open" },
       { "<leader>pc", mode = "n", "<cmd>PeekClose<CR>", desc = "Peek Close" },
     },
   },
