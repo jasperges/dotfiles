@@ -45,6 +45,7 @@
       "class<steam>": "󰓓",
       "class<Wfica>": "",
       "class<thunar>": "󰝰",
+      "class<org.freecad.FreeCAD>": "󰒓",
       "class<blender>": "󰂫",
       "class<.*UltiMaker-Cura>": "󰌨",
       "class<Gimp-.*>": "",
