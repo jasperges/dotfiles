@@ -1,0 +1,94 @@
+#!/bin/bash
+
+declare -ir DELAY=5
+declare -r SCREENSHOT_DIR="${HOME}/pictures/screenshots"
+
+declare -a CHOICES
+CHOICES=("Selection")
+CHOICES+=("Selection + Delay")
+CHOICES+=("Selection and View")
+CHOICES+=("Selection and View + Delay")
+CHOICES+=("Selection + Edit in Gimp")
+CHOICES+=("Selection + Delay + Edit in Gimp")
+
+screenshot_wayland() {
+    choice=$(printf "%s\n" "${CHOICES[@]}" \
+        | rofi -dmenu -p "Choose how to take a screenshot" -l ${#CHOICES[@]} -r -i)
+    case $choice in
+        "Selection")
+            grimblast copysave area "${SCREENSHOT_DIR}/$(date +%Y-%m-%d-%H%M%S).png"
+            ;;
+        "Selection + Delay")
+            grimblast --wait "${DELAY}" copysave area "${SCREENSHOT_DIR}/$(date +%Y-%m-%d-%H%M%S).png"
+            ;;
+        "Selection and View")
+            filename="$(date +%Y-%m-%d-%H%M%S).png"
+            grimblast copysave area "${SCREENSHOT_DIR}/${filename}"
+            imv "${SCREENSHOT_DIR}/${filename}"
+            ;;
+        "Selection and View + Delay")
+            filename="$(date +%Y-%m-%d-%H%M%S).png"
+            grimblast --wait "${DELAY}" copysave area "${SCREENSHOT_DIR}/${filename}"
+            imv "${SCREENSHOT_DIR}/${filename}"
+            ;;
+        "Selection + Edit in Gimp")
+            grimblast edit area "${SCREENSHOT_DIR}/$(date +%Y-%m-%d-%H%M%S).png"
+            ;;
+        "Selection + Delay + Edit in Gimp")
+            grimblast --wait "${DELAY}" edit area "${SCREENSHOT_DIR}/$(date +%Y-%m-%d-%H%M%S).png"
+            ;;
+    esac
+}
+
+screenshot_xorg() {
+    choice=$(printf "%s\n" "${CHOICES[@]}" \
+        | rofi -dmenu -p "Choose how to take a screenshot" -l ${#CHOICES[@]} -r -i)
+    case $choice in
+        "Selection")
+            # shellcheck disable=SC2016
+            scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
+                --select --line style=dash,width=2,color="red" \
+                --pointer --exec 'mv $f ~/pictures/screenshots/'
+            ;;
+        "Selection + Delay")
+            # shellcheck disable=SC2016
+            scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
+                --select --line style=dash,width=2,color="red" \
+                --delay $DELAY --pointer --exec 'mv $f ~/pictures/screenshots/'
+            ;;
+        "Selection and View")
+            # shellcheck disable=SC2016
+            scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
+                -selection --line style=dash,width=2,color="red" \
+                --pointer --exec 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f'
+            ;;
+        "Selection and View + Delay")
+            # shellcheck disable=SC2016
+            scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
+                --select --line style=dash,width=2,color="red" \
+                --delay $DELAY --pointer --exec 'mv $f ~/pictures/screenshots/ && sxiv ~/pictures/screenshots/$f'
+            ;;
+        "Selection + Edit in Gimp")
+            # shellcheck disable=SC2016
+            scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
+                --select --line style=dash,width=2,color="red" \
+                --pointer --exec 'mv $f ~/pictures/screenshots/ && gimp ~/pictures/screenshots/$f'
+            ;;
+        "Selection + Delay + Edit in Gimp")
+            # shellcheck disable=SC2016
+            scrot '%Y-%m-%d-%H%M%S_$wx$h.png' \
+                --select --line style=dash,width=2,color="red" \
+                --delay $DELAY --pointer --exec 'mv $f ~/pictures/screenshots/ && gimp ~/pictures/screenshots/$f'
+            ;;
+    esac
+}
+
+if [[ ${XDG_SESSION_TYPE} == "x11" ]]; then
+    screenshot_xorg
+elif
+    [[ ${XDG_SESSION_TYPE} == "wayland" ]]
+then
+    screenshot_wayland
+else
+    notify-send "⛔ Error" "The screenshot script only works on Wayland and X11"
+fi

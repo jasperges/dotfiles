@@ -220,7 +220,7 @@ bind = $mainMod SHIFT, Return, layoutmsg, swapwithmaster
 bind = $mainMod, TAB, workspace, previous
 
 # Create screenshots
-bind = $mainMod SHIFT, D, exec, grimblast save active ~/pictures/screenshots/$(date +%Y-%m-%d-%H%M%S).png
+bind = $mainMod SHIFT, D, exec, take-screenshot
 
 # Volume down/up/mute
 bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
