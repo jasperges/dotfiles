@@ -11,6 +11,9 @@ exec-once = waybar & hyprpaper & hypridle & dunst & nm-applet & blueman-applet
 exec-once = systemctl --user start plasma-polkit-agent.service
 exec-once = wl-paste --type text --watch cliphist store # Stores only text data
 exec-once = wl-paste --type image --watch cliphist store # Stores only image data
+{{ if eq .chezmoi.hostname "weerjappie" -}}
+exec-once = hypr-portal-fix
+{{- end }}
 
 # Source a file (multi-file configs)
 # source = ~/.config/hypr/myColors.conf
@@ -19,7 +22,7 @@ exec-once = wl-paste --type image --watch cliphist store # Stores only image dat
 env = XCURSOR_SIZE,24
 
 # Programs
-$terminal = alacritty
+$terminal = kitty
 $fileManager = thunar
 $menu = rofi -show combi -modes combi -combi-modes drun,run
 
@@ -265,6 +268,7 @@ bind = $mainMod CTRL, backspace, exec, sysact
 # ------------------------------- window rules -------------------------------
 
 windowrulev2 = opacity 0.95, class:(alacritty)
+windowrulev2 = opacity 0.95, class:(kitty)
 windowrulev2 = float, class:(thunar)
 windowrulev2 = size 75% 70%, class:(thunar)
 windowrulev2 = float, class:(org.kde.dolphin)
@@ -285,5 +289,8 @@ windowrulev2 = workspace 10, class:(firefox)
 windowrulev2 = float, class:(openlp), title:(Display Window)
 windowrulev2 = float, class:(alacritty), title:(-centered)$
 windowrulev2 = size 80% 80%, class:(alacritty), title:(-centered)$
+windowrulev2 = float, class:(kitty), title:(-centered)$
+windowrulev2 = size 80% 80%, class:(kitty), title:(-centered)$
 windowrulev2 = stayfocused, class:(pinentry-)
 windowrulev2 = float, class:(firefox), title:(PassFF)
+windowrulev2 = float, class:( Xdg-desktop-portal-gtk), title:(Open Files)
