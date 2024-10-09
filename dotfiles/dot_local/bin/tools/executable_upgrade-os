@@ -51,9 +51,9 @@ asdf_upgrade() {
 
 pyenv_upgrade() {
     pyenv update
-    # Install both Python 3.11 and the latest 3.x release and use the latest
+    # Install both Python 3.12 and the latest 3.x release and use the latest
     # 3.x release globally.
-    pyenv install --skip-existing 3.11 3
+    pyenv install --skip-existing 3.12 3
     pyenv global 3
 }
 
