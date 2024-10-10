@@ -74,6 +74,7 @@ _get_weather_data() {
         BACKOFF_MS=$((BACKOFF_MS * 2))
     done
     if [[ -n ${weather_data} ]]; then
+        [[ ! -d ${cache_dir} ]] && mkdir -p "${cache_dir}"
         echo "${weather_data}" > "${cache_file}"
     else
         # We weren't able to retrieve new weather data, return the content of the expired cache
