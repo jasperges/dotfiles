@@ -1,6 +1,9 @@
 #!/bin/bash
 
-declare -A WEATHER_CODES=(
+declare -i CACHE_EXPIRATION=3600
+declare -i RETRY_COUNT=5
+declare -i BACKOFF_MS=1000
+declare -r -A WEATHER_CODES=(
     ["113"]="☀️"
     ["116"]="⛅️"
     ["119"]="☁️"
@@ -51,74 +54,85 @@ declare -A WEATHER_CODES=(
     ["395"]="❄️"
 )
 
-# data = {}
-#
-#
-# weather = requests.get("https://wttr.in/Springfield, Manitoba?format=j1").json()
-weather=$(curl -s "https://wttr.in/Zeist?format=j1")
-#
-#
-# def format_time(time):
-#     return time.replace("00", "").zfill(2)
-#
-#
-# def format_temp(temp):
-#     return (hour['FeelsLikeC']+"°").ljust(3)
-#
-#
-# def format_chances(hour):
-#     chances = {
-#         "chanceoffog": "Fog",
-#         "chanceoffrost": "Frost",
-#         "chanceofovercast": "Overcast",
-#         "chanceofrain": "Rain",
-#         "chanceofsnow": "Snow",
-#         "chanceofsunshine": "Sunshine",
-#         "chanceofthunder": "Thunder",
-#         "chanceofwindy": "Wind"
-#     }
-#
-#     conditions = []
-#     for event in chances.keys():
-#         if int(hour[event]) > 0:
-#             conditions.append(chances[event]+" "+hour[event]+"%")
-#     return ", ".join(conditions)
-#
-#
-# data['text'] = WEATHER_CODES[weather['current_condition'][0]['weatherCode']] + \
-#     " " + weather['current_condition'][0]['FeelsLikeC']+ "°"
-# #data['text'] = weather['current_condition'][0]['FeelsLikeC']+"°"
-#
-# data['tooltip'] = f"<b>{weather['current_condition'][0]['weatherDesc'][0]['value']} {weather['current_condition'][0]['temp_C']}°</b>\n"
-# data['tooltip'] += f"Feels like: {weather['current_condition'][0]['FeelsLikeC']}°\n"
-# data['tooltip'] += f"Wind: {weather['current_condition'][0]['windspeedKmph']}Km/h\n"
-# data['tooltip'] += f"Humidity: {weather['current_condition'][0]['humidity']}%\n"
-# for i, day in enumerate(weather['weather']):
-#     data['tooltip'] += f"\n<b>"
-#     if i == 0:
-#         data['tooltip'] += "Today, "
-#     if i == 1:
-#         data['tooltip'] += "Tomorrow, "
-#     data['tooltip'] += f"{day['date']}</b>\n"
-#     data['tooltip'] += f"⬆️ {day['maxtempC']}° ⬇️ {day['mintempC']}° "
-#     data['tooltip'] += f" {day['astronomy'][0]['sunrise']}  {day['astronomy'][0]['sunset']}\n"
-#     for hour in day['hourly']:
-#         if i == 0:
-#             if int(format_time(hour['time'])) < datetime.now().hour-2:
-#                 continue
-#         data['tooltip'] += f"{format_time(hour['time'])} {WEATHER_CODES[hour['weatherCode']]} {format_temp(hour['FeelsLikeC'])} {hour['weatherDesc'][0]['value']}, {format_chances(hour)}\n"
+_get_weather_data() {
+    local weather_data
+    local -r cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/japs"
+    local -r cache_file="${cache_dir}/wttr"
 
-icon=${WEATHER_CODES[$(jq -r .current_condition[0].weatherCode <<< "${weather}")]}
-temp=$(jq -r .current_condition[0].temp_C <<< "${weather}")
-text="${icon} ${temp}°"
+    if [[ -s ${cache_file} ]] && (($(stat -c "%Y" "$cache_file") > $(date +%s) - CACHE_EXPIRATION)); then
+        weather_data="$(< "${cache_file}")"
+        echo "${weather_data}"
+        return
+    fi
+    while ((RETRY_COUNT > 0)); do
+        if weather_data=$(curl -sf "https://wttr.in/Zeist?format=j1"); then
+            break
+        fi
+        echo "Request failed, retrying in $((BACKOFF_MS / 1000)) seconds..." > /dev/stderr
+        ((RETRY_COUNT--))
+        sleep $((BACKOFF_MS / 1000))
+        BACKOFF_MS=$((BACKOFF_MS * 2))
+    done
+    if [[ -n ${weather_data} ]]; then
+        echo "${weather_data}" > "${cache_file}"
+    else
+        # We weren't able to retrieve new weather data, return the content of the expired cache
+        if [[ -s ${cache_file} ]]; then
+            weather_data="$(< "${cache_file}")"
+        fi
+    fi
+    echo "${weather_data}"
+}
 
-weather_desc=$(jq -r .current_condition[0].weatherDesc[0].value <<< "${weather}")
-feels_like=$(jq -r .current_condition[0].FeelsLikeC <<< "${weather}")
-wind_speed=$(jq -r .current_condition[0].windspeedKmph <<< "${weather}")
-humidity=$(jq -r .current_condition[0].humidity <<< "${weather}")
-tooltip="<b>${weather_desc} ${temp}°</b>\n"
-tooltip+="Feels like: ${feels_like}°\n"
-tooltip+="Wind: ${wind_speed}Km/h\n"
-tooltip+="Humidity: ${humidity}%"
+_get_text() {
+    local weather_data
 
+    weather_data=$1
+
+    if [[ -z ${weather_data} ]]; then
+        echo "⚠"
+        return 1
+    fi
+
+    local icon
+    local temp
+    local text
+
+    icon=${WEATHER_CODES[$(jq -r .current_condition[0].weatherCode <<< "${weather_data}")]}
+    temp=$(jq -r .current_condition[0].temp_C <<< "${weather_data}")
+    text="${icon} ${temp}°"
+    echo "${text}"
+}
+
+_get_tooltip() {
+    local weather_data
+
+    weather_data=$1
+
+    if [[ -z ${weather_data} ]]; then
+        echo "Could not retrieve weather data."
+        return 1
+    fi
+
+    local weather_desc
+    local feels_like
+    local wind_speed
+    local humidity
+    local tooltip
+
+    weather_desc=$(jq -r .current_condition[0].weatherDesc[0].value <<< "${weather_data}")
+    feels_like=$(jq -r .current_condition[0].FeelsLikeC <<< "${weather_data}")
+    wind_speed=$(jq -r .current_condition[0].windspeedKmph <<< "${weather_data}")
+    humidity=$(jq -r .current_condition[0].humidity <<< "${weather_data}")
+    tooltip="<b>${weather_desc} ${temp}°</b>\n"
+    tooltip+="Feels like: ${feels_like}°\n"
+    tooltip+="Wind: ${wind_speed}Km/h\n"
+    tooltip+="Humidity: ${humidity}%"
+
+    echo "${tooltip}"
+}
+
+WEATHER_DATA=$(_get_weather_data)
+text=$(_get_text "${WEATHER_DATA}")
+tooltip=$(_get_tooltip "${WEATHER_DATA}")
 echo "{\"text\": \"${text}\", \"tooltip\": \"${tooltip}\"}"

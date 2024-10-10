@@ -102,7 +102,7 @@
   "custom/weather": {
     "format": "{}",
     "tooltip": true,
-    "interval": 3600,
+    "interval": 60,
     "exec": "$HOME/.config/waybar/scripts/wttr.sh",
     "return-type": "json"
   },
