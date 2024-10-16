@@ -73,13 +73,17 @@ _get_weather_data() {
         sleep $((BACKOFF_MS / 1000))
         BACKOFF_MS=$((BACKOFF_MS * 2))
     done
-    if [[ -n ${weather_data} ]]; then
+    # Check if we have data and if it is valid JSON.
+    if [[ -n ${weather_data} && $(jq <<< "${weather_data}" &> /dev/null) ]]; then
         [[ ! -d ${cache_dir} ]] && mkdir -p "${cache_dir}"
         echo "${weather_data}" > "${cache_file}"
     else
         # We weren't able to retrieve new weather data, return the content of the expired cache
         if [[ -s ${cache_file} ]]; then
             weather_data="$(< "${cache_file}")"
+        else
+            # We weren't able to retrieve new weather data and the cache is empty, return nothing
+            unset weather_data
         fi
     fi
     echo "${weather_data}"
