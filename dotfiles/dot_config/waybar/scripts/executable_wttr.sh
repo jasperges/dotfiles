@@ -65,7 +65,7 @@ _get_weather_data() {
         return
     fi
     while ((RETRY_COUNT > 0)); do
-        if weather_data=$(curl -sf "https://wttr.in/Zeist?format=j1"); then
+        if weather_data=$(curl -sLf "https://wttr.in/Zeist?format=j1"); then
             break
         fi
         echo "Request failed, retrying in $((BACKOFF_MS / 1000)) seconds..." > /dev/stderr
@@ -74,7 +74,7 @@ _get_weather_data() {
         BACKOFF_MS=$((BACKOFF_MS * 2))
     done
     # Check if we have data and if it is valid JSON.
-    if [[ -n ${weather_data} && $(jq <<< "${weather_data}" &> /dev/null) ]]; then
+    if [[ -n ${weather_data} ]] && jq <<< "${weather_data}" &> /dev/null; then
         [[ ! -d ${cache_dir} ]] && mkdir -p "${cache_dir}"
         echo "${weather_data}" > "${cache_file}"
     else
