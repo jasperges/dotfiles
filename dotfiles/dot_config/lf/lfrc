@@ -2,10 +2,11 @@
 
 # Basic vars
 set shell bash
+set sixel true
 set previewer ctpv
 set cleaner ctpvclear
-&ctpv -s $id
-&ctpvquit $id
+# &ctpv -s $id
+# &ctpvquit $id
 set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
