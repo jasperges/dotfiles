@@ -9,7 +9,7 @@ return {
   opts = {
     adapters = {
       "neotest-python",
-      "neotest-go",
+      "neotest-golang",
     },
   },
 }
