@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Check if an instance is already running. If yes, kill it, if not start a new one.
+# This effectively makes it a toggle on/off.
+cmd="${TERMINAL} --title ncmpcpp-local-centered "
+if [[ ${TERMINAL} == "alacritty" ]]; then
+    cmd+="-e "
+fi
+cmd+="ncmpcpp"
+pkill -U "${UID}" -f "^${cmd}$" || exec ${cmd}

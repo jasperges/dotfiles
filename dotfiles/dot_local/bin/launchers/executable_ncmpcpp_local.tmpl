@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# Check if an instance is already running. If yes, kill it, if not start a new one.
-# This effectively makes it a toggle on/off.
-pkill -U $UID -f ".*$TERMINAL -t ncmpcpp-local-centered -e ncmpcpp.*$" \
-    || exec $TERMINAL --class
-    {{- if ne .chezmoi.hostname "weerjappie" }} OPAQUE,alacritty {{ end -}}
-    {{- if eq .chezmoi.hostname "weerjappie" }} alacritty,OPAQUE {{ end -}}
-    -t ncmpcpp-local-centered -e ncmpcpp "$@"
