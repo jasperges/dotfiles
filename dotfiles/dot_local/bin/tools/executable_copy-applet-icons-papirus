@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# The applect icons (for example from nm-applet and blueman-applet) are ugly.
+# This script 'copies' the icons from the 'Papirus-Dark' theme to 'hicolor' so
+# they look nice.
+
+declare -r HICOLOR_APPS_DIR="/usr/share/icons/hicolor/22x22/apps"
+declare -r PAPIRUS_PANEL_DIR="/usr/share/icons/Papirus-Dark/22x22/panel"
+
+for icon in "${HICOLOR_APPS_DIR}/"*.png; do
+    icon_file="${icon##*/}"
+    icon_filename="${icon_file%.*}"
+    [[ ! -f "${PAPIRUS_PANEL_DIR}/${icon_filename}.svg" ]] && continue
+    sudo cp -v -f "${PAPIRUS_PANEL_DIR}/${icon_filename}.svg" "${HICOLOR_APPS_DIR}/"
+    sudo magick -background transparent \
+        "${HICOLOR_APPS_DIR}/${icon_filename}.svg" \
+        "${HICOLOR_APPS_DIR}/${icon_file}"
+done
