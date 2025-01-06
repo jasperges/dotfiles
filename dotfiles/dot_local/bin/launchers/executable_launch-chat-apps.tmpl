@@ -1,46 +1,27 @@
 #!/bin/sh
 
 run_telegram() {
-    if command -v telegram-desktop > /dev/null; then
-        telegram-desktop
-    else
-        flatpak run org.telegram.desktop
-    fi
+    flatpak run org.telegram.desktop
 }
 
 run_slack() {
-    if command -v slack > /dev/null; then
-        slack
-    else
-        flatpak run com.slack.Slack
-    fi
+    flatpak run com.slack.Slack
 }
 
 run_ferdium() {
-    if command -v ferdium > /dev/null; then
-        ferdium
-    else
-        flatpak run org.ferdium.Ferdium
-    fi
+    flatpak run org.ferdium.Ferdium
 }
 
 run_signal() {
-    if command -v signal-desktop > /dev/null; then
-        signal-desktop
-    else
-        flatpak run org.signal.Signal
-    fi
+    flatpak run org.signal.Signal
 }
 
 {{ if ne .chezmoi.hostname "weerjappie" -}}
 run_telegram &
-sleep 3
 run_ferdium &
-sleep 3
 run_signal
 {{ end -}}
 {{ if eq .chezmoi.hostname "weerjappie" -}}
 run_slack &
-sleep 3
 run_ferdium
 {{ end -}}
