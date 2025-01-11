@@ -17,7 +17,11 @@ gtk-theme-name=Breeze-Dark
 gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
 gtk-toolbar-style=3
 gtk-xft-antialias=1
+{{- if eq .chezmoi.hostname "framejappie" }}
+gtk-xft-dpi=147456
+{{ else }}
 gtk-xft-dpi=98304
+{{ end -}}
 gtk-xft-hinting=1
 gtk-xft-hintstyle=hintfull
 gtk-xft-rgba=rgb
