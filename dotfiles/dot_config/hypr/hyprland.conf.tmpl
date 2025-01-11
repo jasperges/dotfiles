@@ -97,7 +97,7 @@ decoration {
     }
 
     dim_inactive = true
-    dim_strength = 0.3
+    dim_strength = 0.1
 }
 
 animations {
@@ -123,6 +123,7 @@ dwindle {
 
 master {
     # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
+    orientation = center
     new_status = slave
     mfact = 0.55
 }
@@ -314,3 +315,5 @@ windowrulev2 = stayfocused,  class:pinentry-.*
 windowrulev2 = float, class:org.mozilla.firefox, title:PassFF
 windowrulev2 = float, class:Xdg-desktop-portal-gtk, title:Open Files
 windowrulev2 = float, class:nm-openconnect-auth-dialog
+windowrulev2 = float, class:org.gnome.Calculator
+windowrulev2 = float, class:org.kde.kcalc
