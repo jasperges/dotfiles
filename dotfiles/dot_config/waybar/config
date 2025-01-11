@@ -32,6 +32,7 @@
     "window-rewrite-default": "",
     "window-rewrite": {
       "class<alacritty>": "",
+      "class<kitty>": "",
       "class<org.mozilla.firefox>": "",
       "class<org.mozilla.firefox> title<.*jira.*>": "󰌃",
       "class<org.mozilla.firefox> title<.*mail.*>": "󰇮",
@@ -42,6 +43,7 @@
       "class<org.mozilla.firefox> title<.*gitlab.*>": "󰮠",
       "class<lutris>": "󰊗",
       "class<spotify>": "󰓇",
+      "class<net.lutris.Lutris>": "󰮂",
       "class<steam>": "󰓓",
       "class<Wfica>": "",
       "class<thunar>": "󰝰",
