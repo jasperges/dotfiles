@@ -18,10 +18,13 @@ run_signal() {
 
 {{ if ne .chezmoi.hostname "weerjappie" -}}
 run_telegram &
+sleep 2
 run_ferdium &
+sleep 2
 run_signal
 {{ end -}}
 {{ if eq .chezmoi.hostname "weerjappie" -}}
 run_slack &
+sleep 2
 run_ferdium
 {{ end -}}
