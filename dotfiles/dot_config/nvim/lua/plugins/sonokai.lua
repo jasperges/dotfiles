@@ -16,7 +16,7 @@ return {
     vim.g.sonokai_diagnostic_virtual_text = "highlighted" -- available values: 'grey', 'colored', 'highlighted'
     vim.g.sonokai_disable_terminal_colors = 1
   end,
-  config = function()
-    vim.cmd.colorscheme("sonokai")
-  end,
+  -- config = function()
+  --   vim.cmd.colorscheme("sonokai")
+  -- end,
 }
