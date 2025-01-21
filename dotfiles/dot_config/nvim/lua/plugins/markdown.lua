@@ -21,7 +21,7 @@ return {
     opts = {
       modules = {
         yaml = true,
-        cmp = true,
+        cmp = false,
       },
       perspective = {
         priority = "current",
