@@ -15,6 +15,7 @@ exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESK
 
 exec = pkill kanshi; kanshi
 exec-once = waybar & hyprpaper & hypridle & dunst & nm-applet & blueman-applet & gammastep
+exec-once = flatpak run org.jousse.vincent.Pomodorolm
 exec-once = systemctl --user start plasma-polkit-agent.service
 exec-once = wl-paste --type text --watch cliphist store # Stores only text data
 exec-once = wl-paste --type image --watch cliphist store # Stores only image data
@@ -318,3 +319,5 @@ windowrulev2 = float, class:nm-openconnect-auth-dialog
 windowrulev2 = float, class:org.gnome.Calculator
 windowrulev2 = float, class:org.kde.kcalc
 windowrulev2 = float, class:pomodorolm
+windowrulev2 = move 100%-w-12 44, class:pomodorolm
+windowrulev2 = pin, class:pomodorolm
