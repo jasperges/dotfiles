@@ -231,6 +231,18 @@ bind = , W, submap, reset
 bind = , escape, submap, reset
 submap = reset
 
+# The '*t*ime tracking' mode for time tracking
+bind = $mainMod SHIFT, T, submap, tt
+submap = tt
+bind = , R, exec, tt-control start recent
+bind = , R, submap, reset
+bind = , S, exec, tt-control stop
+bind = , S, submap, reset
+bind = , T, exec, tt-control
+bind = , T, submap, reset
+bind = , escape, submap, reset
+submap = reset
+
 # Scroll through existing workspaces with mainMod + scroll
 bind = $mainMod, mouse_down, workspace, e+1
 bind = $mainMod, mouse_up, workspace, e-1
