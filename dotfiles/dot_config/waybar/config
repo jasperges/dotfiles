@@ -55,10 +55,11 @@
       "class<Ferdium> title<.*Telegram.*>": "",
       "class<org.telegram.desktop>": "",
       "class<Signal>": "󰭹",
-      "class<Slack>": "󰒱",
+      "class<com.slack.Slack>": "󰒱",
       "codium": "󰨞",
       "vim": "",
-      "class<jetbrains-pycharm>": "󰌠"
+      "class<jetbrains-pycharm>": "󰌠",
+      "class<pomodorolm>": ""
     }
   },
   "hyprland/language": {
