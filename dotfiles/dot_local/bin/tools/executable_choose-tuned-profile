@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -euo pipefail
+
+main() {
+    local -a profiles
+    mapfile -t profiles < <(tuned-adm list profiles | awk '/^- [a-z]/ {print $2}')
+    choice=$(printf "%s\n" "${profiles[@]}" | rofi -dmenu -l 10 -i -r -p "Choose power profile:")
+    [[ -z "${choice}" ]] && exit 0
+    tuned-adm profile "${choice}"
+    notify-send "⚡ Power profile" "Set power profile to '${choice}'."
+}
+
+main
