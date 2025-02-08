@@ -20,11 +20,6 @@ exec-once = /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=protonv
 exec-once = systemctl --user start plasma-polkit-agent.service
 exec-once = wl-paste --type text --watch cliphist store # Stores only text data
 exec-once = wl-paste --type image --watch cliphist store # Stores only image data
-{{ if eq .chezmoi.hostname "weerjappie" -}}
-exec-once = hypr-portal-fix
-{{- end }}
-# Source a file (multi-file configs)
-# source = ~/.config/hypr/myColors.conf
 
 # Programs
 $terminal = kitty
