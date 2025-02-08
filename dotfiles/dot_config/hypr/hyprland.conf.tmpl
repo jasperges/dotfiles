@@ -16,7 +16,7 @@ exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESK
 exec = pkill kanshi; kanshi
 exec-once = waybar & hyprpaper & hypridle & dunst & nm-applet & blueman-applet & gammastep
 exec-once = flatpak run org.jousse.vincent.Pomodorolm
-exec-once = systemctl --user start hyprpolkitagent
+exec-once = systemctl --user start plasma-polkit-agent.service
 exec-once = wl-paste --type text --watch cliphist store # Stores only text data
 exec-once = wl-paste --type image --watch cliphist store # Stores only image data
 {{ if eq .chezmoi.hostname "weerjappie" -}}
