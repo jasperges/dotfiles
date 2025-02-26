@@ -24,28 +24,29 @@ cargo_upgrade() {
 }
 
 asdf_upgrade() {
+    local lang
+    local _current_version
     local _install_version
-    local _global_version
+    local _lts
 
     for lang in $(asdf list | grep -E "^[[:alpha:]]"); do
         case "${lang}" in
             "nodejs")
-                asdf nodejs update-nodebuild
-                _lts=$(asdf nodejs resolve lts --latest-available)
+                asdf cmd nodejs update-nodebuild
+                _lts=$(asdf cmd nodejs resolve lts --latest-available)
                 _install_version="${_lts}"
-                _global_version="${_lts}"
                 ;;
             "haskell")
                 _install_version="9.4-latest"
-                _global_version="9.4-latest"
                 ;;
             *)
-                _install_version="latest"
-                _global_version="latest"
+                _install_version=$(asdf latest "${lang}")
                 ;;
         esac
+        _current_version=$(asdf current --no-header "${lang}" | awk '{print $2}')
+        [[ ${_current_version} == "${_install_version}" ]] && continue
         asdf install "${lang}" "${_install_version}" \
-            && asdf global "${lang}" "${_global_version}"
+            && asdf set --home "${lang}" "${_install_version}"
     done
 }
 
@@ -57,6 +58,7 @@ pyenv_upgrade() {
     pyenv global 3
 }
 
+# shellcheck disable=SC2317
 handle_ctrl_c() {
     echo "Caught Ctrl+C, aborting..."
     exit 1
