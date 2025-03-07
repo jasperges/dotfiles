@@ -84,6 +84,7 @@ export SCRIPTS=~/.local/bin/tools
 # Remember last arg will be first in path
 pathprepend \
     "${HOME}/.local/pyenv/bin" \
+    "${HOME}/.local/share/asdf/shims" \
     "${HOME}/.local/share/cargo/bin" \
     "${HOME}/.local/bin/cargo/bin" \
     "${HOME}/.local/bin/go" \
@@ -111,6 +112,9 @@ if command -v pyenv &> /dev/null; then
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
+
+# asdf
+export ASDF_DATA_DIR="${HOME}/.local/share/asdf"
 
 # Paths for Go
 export GOPATH=${HOME}/.local/share/go
