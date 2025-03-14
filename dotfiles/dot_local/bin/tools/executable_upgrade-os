@@ -31,13 +31,17 @@ asdf_upgrade() {
 
     for lang in $(asdf list | grep -E "^[[:alpha:]]"); do
         case "${lang}" in
+            "gleam")
+                # asdf latest gleam returns 'nightly' and we don't want that
+                _install_version=$(asdf list all gleam | grep -Ev "(.*-rc[0-9]+|nightly)" | sort | tail -n1)
+                ;;
+            "haskell")
+                _install_version="9.4-latest"
+                ;;
             "nodejs")
                 asdf cmd nodejs update-nodebuild
                 _lts=$(asdf cmd nodejs resolve lts --latest-available)
                 _install_version="${_lts}"
-                ;;
-            "haskell")
-                _install_version="9.4-latest"
                 ;;
             *)
                 _install_version=$(asdf latest "${lang}")
