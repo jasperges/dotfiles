@@ -51,9 +51,6 @@ if command -v pyenv &> /dev/null; then
     eval "$(pyenv virtualenv-init -)"
 fi
 
-# asdf
-[[ -f ${HOME}/.asdf/asdf.sh ]] && source "${HOME}/.asdf/asdf.sh"
-
 # nix
 [[ -f ${HOME}/.nix-profile/etc/profile.d/nix.sh ]] && source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 
