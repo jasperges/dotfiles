@@ -4,3 +4,5 @@
 vim.g.python3_host_prog = "~/.local/pyenv/shims/python"
 vim.opt.exrc = true
 vim.opt.wrap = true
+-- Custom setting for setting the default state of Github Copilot
+vim.g.copilot_enabled = false
