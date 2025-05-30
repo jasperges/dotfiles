@@ -19,17 +19,17 @@ getdatearray() {
     extension="${filepath##*.}"
     case "${extension,,}" in
         mp4)
-            datestring=$(mediainfo --Output=JSON "$filepath" \
+            datestring=$(mediainfo --Output=JSON "${filepath}" \
                 | jq -cr '.media.track[] | select(."@type" == "General") | .Encoded_Date')
-            LC_TIME=nl_NL.UTF-8 date "+%Y %m %d %H %M %S" -d "$datestring" | tr -d '\n'
+            LC_TIME=nl_NL.UTF-8 date "+%Y %m %d %H %M %S" -d "${datestring}" | tr -d '\n'
             ;;
         mts)
-            datestring=$(mediainfo --Output=JSON "$filepath" \
+            datestring=$(mediainfo --Output=JSON "${filepath}" \
                 | jq -cr '.media.track[] | select(."@type" == "General") | .Recorded_Date')
-            LC_TIME=nl_NL.UTF-8 date "+%Y %m %d %H %M %S" -d "$datestring" | tr -d '\n'
+            LC_TIME=nl_NL.UTF-8 date "+%Y %m %d %H %M %S" -d "${datestring}" | tr -d '\n'
             ;;
         arw | jpg)
-            datestring=$(exiv2 -g DateTimeOriginal "$filepath" | awk '{print $4" "$5}')
+            datestring=$(exiv2 -g DateTimeOriginal "${filepath}" | awk '{print $4" "$5}')
             printf "%s" "${datestring//:/ }"
             ;;
     esac
@@ -39,7 +39,7 @@ printdate() {
     local filepath
 
     filepath="$1"
-    readarray -d " " -t datearray < <(getdatearray "$filepath")
+    readarray -d " " -t datearray < <(getdatearray "${filepath}")
     printf -v datestring '%s-' "${datearray[@]:0:3}"
     echo "${datestring%-}"
 }
@@ -53,10 +53,10 @@ latest() {
     i=1
     basename="$1"
     extension="$2"
-    checkfile="${basename}_$(printf "%03d" "$i").${extension}"
-    while [[ -f $checkfile ]]; do
+    checkfile="${basename}_$(printf "%03d" "${i}").${extension}"
+    while [[ -f ${checkfile} ]]; do
         ((i++))
-        checkfile="${basename}_$(printf "%03d" "$i").${extension}"
+        checkfile="${basename}_$(printf "%03d" "${i}").${extension}"
     done
     echo "${checkfile}"
 }
@@ -66,36 +66,34 @@ syncfile() {
     local day
     local destdir
     local extension
-    local filepath
     local hour
-    local importdir
     local minute
     local month
     local second
     local year
+    local -r filepath="$1"
+    local -r importdir="$2"
 
-    filepath="$1"
-    importdir="$2"
-    readarray -d " " -t datearray < <(getdatearray "$filepath")
+    readarray -d " " -t datearray < <(getdatearray "${filepath}")
     year=${datearray[0]}
     month=${datearray[1]}
     day=${datearray[2]}
     hour=${datearray[3]}
     minute=${datearray[4]}
     second=${datearray[5]}
-    destdir="$importdir/$year/$month/$year-$month-$day"
-    [[ ! -d $destdir ]] && mkdir -p "$destdir"
+    destdir="${importdir}/${year}/${month}/${year}-${month}-${day}"
+    [[ ! -d ${destdir} ]] && mkdir -p "${destdir}"
     extension="${filepath##*.}"
     basename="${destdir}/${year}${month}${day}_${hour}${minute}${second}"
-    destfile=$(latest "$basename" "$extension")
+    destfile=$(latest "${basename}" "${extension}")
     # Also copy and rename xml files for video's if present
     if [[ -f ${filepath%.*}M01.XML ]]; then
         rsync -a --no-p --no-g --chmod=F644 "${filepath%.*}M01.XML" "${destfile%.*}.XML"
         # echo "Copying ${filepath%.*}M01.XML -> ${destfile%.*}.XML"
     fi
-    # rsync -ptgoDvh "$filepath" "$destfile"
-    rsync -a --no-p --no-g --chmod=F644 "$filepath" "$destfile"
-    # echo "Copying $filepath -> $destfile"
+    # rsync -ptgoDvh "${filepath}" "${destfile}"
+    rsync -a --no-p --no-g --chmod=F644 "${filepath}" "${destfile}"
+    # echo "Copying ${filepath} -> ${destfile}"
 }
 
 convertmovie() {
@@ -105,36 +103,35 @@ convertmovie() {
     filepath="$1"
     if [ ! -f "${filepath%.*}.mp4" ]; then
         output="${filepath%.*}.mp4"
-        printf "Converting movie %s to %s" "$filepath" "$output"
-        ffmpeg -i "$filepath" -c:v libx264 -preset slow -crf 18 \
-            -c:a aac -b:a 128k -r 25 "$output"
-        touch -r "$filepath" "$output"
+        printf "Converting movie %s to %s" "${filepath}" "${output}"
+        ffmpeg -i "${filepath}" -c:v libx264 -preset slow -crf 18 \
+            -c:a aac -b:a 128k -r 25 "${output}"
+        touch -r "${filepath}" "${output}"
     fi
 }
 
 syncphotos() {
     local count
     local datestring
-    local importdir
     local numfiles
-    local photodir
+    local -r importdir="$1"
+    local -r photodir="$2"
+    local -r device="$3"
 
-    importdir="$1"
-    photodir=/media/photocamera/DCIM
-    readarray -t files < <(find "$photodir" -type f -regextype egrep -iregex ".*\.(arw|jpg)")
+    readarray -t files < <(find "${photodir}" -type f -regextype egrep -iregex ".*\.(arw|jpg)")
     numfiles="${#files[@]}"
     count=1
 
-    echo "Importing $numfiles photo's...                                      "
+    echo "Importing ${numfiles} photo's...                                      "
     for f in "${files[@]}"; do
         {
-            datestring=$(printdate "$f")
+            datestring=$(printdate "${f}")
         } 2> /dev/null
-        printf "Processing photo %d of %d (%s)                \r" "$count" "$numfiles" "$datestring"
+        printf "Processing photo %d of %d (%s)                \r" "${count}" "${numfiles}" "${datestring}"
         [[ ${NOTIFY} -eq 1 ]] && notify-send -a import_photos \
-            -h int:value:"$(echo "$count*100/$numfiles" | bc)" \
-            " Photo/Video import" "Importing photo's from photo camera..."
-        syncfile "$f" "$importdir"
+            -h int:value:"$(echo "${count}*100/${numfiles}" | bc)" \
+            " Photo/Video import" "Importing photo's from ${device}..."
+        syncfile "${f}" "${importdir}"
         count=$((count + 1))
     done
 }
@@ -142,36 +139,53 @@ syncphotos() {
 syncmovies() {
     local count
     local datestring
-    local importdir
     local moviedir
     local numfiles
+    local -r importdir="$1"
+    local -r moviedir="$2"
+    local -r device="$3"
 
-    importdir="$1"
-    moviedir=/media/photocamera/PRIVATE
-    readarray -t files < <(find "$moviedir" -type f -regextype egrep -iregex ".*\.(mp4|mts)")
+    readarray -t files < <(find "${moviedir}" -type f -regextype egrep -iregex ".*\.(mp4|mts)")
     numfiles="${#files[@]}"
     count=1
 
-    echo "Importing $numfiles video's...                                      "
+    echo "Importing ${numfiles} video's...                                      "
     for f in "${files[@]}"; do
         {
-            datestring=$(printdate "$f")
+            datestring=$(printdate "${f}")
         } 2> /dev/null
-        printf "Processing movie %d of %d (%s)                \r" "$count" "$numfiles" "$datestring"
+        printf "Processing movie %d of %d (%s)                \r" "${count}" "${numfiles}" "${datestring}"
         [[ ${NOTIFY} -eq 1 ]] && notify-send -a import_photos \
-            -h int:value:"$(echo "$count*100/$numfiles" | bc)" \
-            " Photo/Video import" "Importing video's from photo camera..."
-        syncfile "$f" "$importdir"
+            -h int:value:"$(echo "${count}*100/${numfiles}" | bc)" \
+            " Photo/Video import" "Importing video's from ${device}..."
+        syncfile "${f}" "${importdir}"
         count=$((count + 1))
     done
 }
 
 importcamera() {
-    local importdir
+    local -r importdir="${HOME}/pictures/fototoestel"
+    local -r photodir=/media/photocamera/DCIM
+    local -r moviedir=/media/photocamera/PRIVATE
 
-    importdir="$HOME/pictures/fototoestel"
-    syncphotos "$importdir"
-    syncmovies "$importdir"
+    syncphotos "${importdir}" "${photodir}" "photo camera"
+    syncmovies "${importdir}" "${moviedir}" "osmo action sd-card"
+    printf "Done!                                                               \n"
+    [[ ${NOTIFY} -eq 1 ]] && notify-send " Photo/Video import" \
+        "All media from photo camera is imported."
+}
+
+importosmointernal() {
+    echo "Importing from Osmo Action Internal..."
+}
+
+importosmosd() {
+    local -r importdir="${HOME}/pictures/action-camera"
+    local -r photodir=/media/osmo-sdcard/DCIM/DJI_001
+    local -r moviedir=/media/osmo-sdcard/DCIM/DJI_001
+
+    syncphotos "${importdir}" "${photodir}" "osmo action sd-card"
+    syncmovies "${importdir}" "${moviedir}" "osmo action sd-card"
     printf "Done!                                                               \n"
     [[ ${NOTIFY} -eq 1 ]] && notify-send " Photo/Video import" \
         "All media from photo camera is imported."
@@ -185,21 +199,21 @@ importiphone() {
     local photodir
 
     photodir=/media/foonjappie/DCIM
-    importdir=$HOME/pictures/foonjappie
-    readarray -t files < <(find "$photodir" -type f -regextype egrep -iregex ".*\.(mov|jpg)")
+    importdir=${HOME}/pictures/foonjappie
+    readarray -t files < <(find "${photodir}" -type f -regextype egrep -iregex ".*\.(mov|jpg)")
     numfiles=$(printf '%d\n' "${files[@]}" | wc -l)
-    echo "Importing $numfiles photo's and video's..."
+    echo "Importing ${numfiles} photo's and video's..."
     count=1
     for f in "${files[@]}"; do
         {
-            datestring=$(printdate "$f")
+            datestring=$(printdate "${f}")
         } 2> /dev/null
-        [[ $datestring == "--" ]] && continue
-        printf "Processing file %d of %d (%s)                \r" "$count" "$numfiles" "$datestring"
-        notify-send -a import_photos -h int:value:"$(echo "$count*100/$numfiles" | bc)" \
+        [[ ${datestring} == "--" ]] && continue
+        printf "Processing file %d of %d (%s)                \r" "${count}" "${numfiles}" "${datestring}"
+        notify-send -a import_photos -h int:value:"$(echo "${count}*100/${numfiles}" | bc)" \
             " Photo/Video import" "Importing media from foonjappie..."
 
-        syncfile "$f" "$importdir"
+        syncfile "${f}" "${importdir}"
         count=$((count + 1))
     done
     printf "Done!                                                               \n"
@@ -211,8 +225,12 @@ importiphone() {
 choices=()
 [[ -d /media/foonjappie/DCIM ]] && choices+=("foonjappie")
 [[ -d /media/photocamera/DCIM ]] && choices+=("Photo Camera")
+[[ -d /media/osmo-internal/DCIM ]] && choices+=("Osmo Action Internal")
+[[ -d /media/osmo-sdcard/DCIM ]] && choices+=("Osmo Action SDCard")
 
 case "$(printf "%s\n" "${choices[@]}" | rofi -dmenu -i -l ${#choices[@]} -p "Import photo's from which device?")" in
     "foonjappie") importiphone ;;
     "Photo Camera") importcamera ;;
+    "Osmo Action Internal") importosmointernal ;;
+    "Osmo Action SDCard") importosmosd ;;
 esac

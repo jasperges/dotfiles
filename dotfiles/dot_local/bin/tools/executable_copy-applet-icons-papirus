@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# The applect icons (for example from nm-applet and blueman-applet) are ugly.
+# The applet icons (for example from nm-applet and blueman-applet) are ugly.
 # This script 'copies' the icons from the 'Papirus-Dark' theme to 'hicolor' so
 # they look nice.
 
