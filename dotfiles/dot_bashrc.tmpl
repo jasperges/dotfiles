@@ -22,7 +22,8 @@ esac
 [[ $- == *i* ]] && source "${HOME}"/.local/share/blesh/ble.sh --attach=none
 
 {{ end -}}
-export XDG_CONFIG_HOME="${HOME}"/.config
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_BIN_HOME="${HOME}/.local/bin"
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 export SYSTEMD_PAGER=
