@@ -1,4 +1,4 @@
 #!/bin/bash
 
-curl nl.wttr.in/de_bilt && read -rs -n1 key
+curl nl.wttr.in/zeist && read -rs -n1 key
 [[ -n ${key} ]] && exit
