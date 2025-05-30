@@ -38,6 +38,9 @@ asdf_upgrade() {
             "haskell")
                 _install_version="9.4-latest"
                 ;;
+            "lua")
+                _install_version="5.1"
+                ;;
             "nodejs")
                 asdf cmd nodejs update-nodebuild
                 _lts=$(asdf cmd nodejs resolve lts --latest-available)
@@ -59,7 +62,7 @@ pyenv_upgrade() {
     # Install both Python 3.12 and the latest 3.x release and use the latest
     # 3.x release globally.
     pyenv install --skip-existing 3.12 3
-    pyenv global 3
+    pyenv global 3 3.12
 }
 
 # shellcheck disable=SC2317
