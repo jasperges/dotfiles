@@ -35,6 +35,9 @@ export GTK_CURSOR_THEME=breeze_cursors
 
 export QT_QPA_PLATFORMTHEME=kde
 
+# Selects the preferred platform backend. The default one is x11. auto selects Wayland if possible, X11 otherwise.
+export ELECTRON_OZONE_PLATFORM_HINT=auto
+
 {{ end -}}
 # Textwidth for htitle
 export HRULEWIDTH=80
