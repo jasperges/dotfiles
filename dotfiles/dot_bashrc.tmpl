@@ -53,7 +53,7 @@ if command -v pyenv &> /dev/null; then
 fi
 
 # nix
-[[ -f ${HOME}/.nix-profile/etc/profile.d/nix.sh ]] && source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
+# [[ -f ${HOME}/.nix-profile/etc/profile.d/nix.sh ]] && source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 
 # aws
 command -v /usr/local/bin/aws_completer &> /dev/null && complete -C "/usr/local/bin/aws_completer" aws
