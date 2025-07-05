@@ -46,9 +46,9 @@
     templatedir = ~/.config/git/templates
     defaultBranch = main
 [merge]
-    tool = vimdiff
+    tool = nvimdiff
 [diff]
-    tool = vimdiff
+    tool = nvimdiff
 [gpg]
     program = gpg
 [commit]
@@ -61,3 +61,8 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+[difftool "nvimdiff"]
+    cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+[mergetool "nvimdiff"]
+    cmd = nvim -d \"$LOCAL\" \"$REMOTE\" \"$MERGED\" \"$BASE\"
+    trustExitCode = false
