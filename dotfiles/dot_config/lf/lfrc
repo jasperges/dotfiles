@@ -96,3 +96,5 @@ map X !$f
 map o open $f
 map O $mimeopen --ask $f
 map f set hidden!
+map sg push :glob-select<space>
+map su unselect
