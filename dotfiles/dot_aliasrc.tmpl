@@ -268,4 +268,12 @@ penv() {
     poetry shell
 }
 
+y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+    yazi "$@" --cwd-file="${tmp}"
+    IFS= read -r -d '' cwd < "${tmp}"
+    [[ -n ${cwd} ]] && [[ ${cwd} != "${PWD}" ]] && builtin cd -- "${cwd}"
+    rm -f -- "${tmp}"
+}
+
 #  vim: set ts=4 sw=4 tw=0 et ft=sh :
