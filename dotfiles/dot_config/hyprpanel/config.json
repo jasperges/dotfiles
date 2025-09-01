@@ -1,0 +1,123 @@
+{
+  "bar.customModules.storage.paths": [
+    "/"
+  ],
+  "theme.bar.floating": true,
+  "bar.layouts": {
+    "0": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "clock"
+      ],
+      "right": [
+        "media",
+        "volume",
+        "network",
+        "bluetooth",
+        "battery",
+        "systray",
+        "notifications"
+      ]
+    },
+    "1": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "clock"
+      ],
+      "right": [
+        "media",
+        "volume",
+        "network",
+        "bluetooth",
+        "battery",
+        "systray",
+        "notifications"
+      ]
+    },
+    "2": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "clock"
+      ],
+      "right": [
+        "media",
+        "volume",
+        "network",
+        "bluetooth",
+        "battery",
+        "systray",
+        "notifications"
+      ]
+    }
+  },
+  "menus.clock.time.hideSeconds": false,
+  "menus.clock.weather.unit": "metric",
+  "menus.clock.weather.location": "Zeist",
+  "theme.font.size": "1.0rem",
+  "menus.dashboard.shortcuts.left.shortcut1.icon": "󰈹",
+  "menus.dashboard.shortcuts.left.shortcut1.command": "floorp",
+  "menus.dashboard.shortcuts.left.shortcut1.tooltip": "Floorp",
+  "menus.dashboard.shortcuts.left.shortcut3.icon": "",
+  "menus.dashboard.shortcuts.left.shortcut3.command": "kitty",
+  "menus.dashboard.shortcuts.left.shortcut3.tooltip": "Kitty",
+  "menus.dashboard.directories.left.directory2.label": "󰉏 Videos",
+  "menus.dashboard.directories.left.directory1.command": "bash -c \"xdg-open $HOME/downloads/\"",
+  "menus.dashboard.directories.left.directory2.command": "bash -c \"xdg-open $HOME/videos/\"",
+  "menus.dashboard.directories.left.directory3.command": "bash -c \"xdg-open $HOME/projects/\"",
+  "menus.dashboard.directories.right.directory1.command": "bash -c \"xdg-open $HOME/documents/\"",
+  "menus.dashboard.directories.right.directory2.command": "bash -c \"xdg-open $HOME/pictures/\"",
+  "menus.dashboard.recording.path": "$HOME/videos/screencasts",
+  "menus.dashboard.stats.interval": 2000,
+  "menus.power.lowBatteryThreshold": 15,
+  "wallpaper.enable": false,
+  "wallpaper.image": "/home/jasperge/pictures/backgrounds/active_wallpaper",
+  "wallpaper.pywal": false,
+  "theme.matugen": true,
+  "theme.matugen_settings.mode": "dark",
+  "theme.matugen_settings.scheme_type": "tonal-spot",
+  "theme.matugen_settings.variation": "standard_1",
+  "theme.osd.opacity": 100,
+  "theme.bar.opacity": 65,
+  "theme.bar.transparent": true,
+  "theme.bar.buttons.opacity": 90,
+  "theme.bar.menus.border.size": "0.13em",
+  "theme.bar.menus.border.radius": "0.7em",
+  "bar.autoHide": "fullscreen",
+  "theme.bar.border.width": "0.15em",
+  "theme.bar.shadowMargins": "0px 0px 4px 0px",
+  "theme.bar.enableShadow": false,
+  "theme.bar.border_radius": "0.8em",
+  "theme.bar.outer_spacing": "0.4em",
+  "theme.bar.buttons.y_margins": "0.2em",
+  "theme.bar.buttons.radius": "0.8em",
+  "theme.bar.margin_top": "0.5em",
+  "theme.bar.margin_sides": "0",
+  "bar.launcher.icon": "",
+  "bar.launcher.autoDetectIcon": true,
+  "bar.workspaces.showWsIcons": false,
+  "bar.workspaces.showApplicationIcons": false,
+  "bar.workspaces.applicationIconMap": {
+    "Signal": "󰭹",
+    "Ferdium": "󰖣",
+    "Telegram": ""
+  },
+  "bar.clock.format": "%a %b %d  %H:%M",
+  "menus.clock.time.military": true,
+  "theme.bar.buttons.systray.enableBorder": false,
+  "bar.customModules.weather.unit": "metric",
+  "bar.workspaces.show_numbered": true,
+  "bar.workspaces.show_icons": false,
+  "bar.workspaces.workspaceMask": false
+}
