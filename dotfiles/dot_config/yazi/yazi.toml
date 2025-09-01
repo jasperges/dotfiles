@@ -1,5 +1,5 @@
 [tasks]
-image_bound = [10000, 10000]
+image_bound = [15000, 15000]
 
 [[plugin.prepend_fetchers]]
 id = "git"
