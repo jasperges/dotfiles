@@ -14,7 +14,7 @@ exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CUR
 exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
 exec = pkill kanshi; kanshi
-exec-once = waybar & hyprpaper & hypridle & dunst & nm-applet & blueman-applet & gammastep
+exec-once = hyprpanel & hyprpaper & hypridle & gammastep
 exec-once = /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=pomodorolm org.jousse.vincent.Pomodorolm
 exec-once = /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=protonvpn-app --file-forwarding com.protonvpn.www
 exec-once = /usr/bin/nextcloud
