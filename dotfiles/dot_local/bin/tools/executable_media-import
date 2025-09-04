@@ -55,8 +55,21 @@ latest() {
     extension="$2"
     checkfile="${basename}_$(printf "%03d" "${i}").${extension}"
     while [[ -f ${checkfile} ]]; do
-        ((i++))
-        checkfile="${basename}_$(printf "%03d" "${i}").${extension}"
+        read -rp "${checkfile} already exists. Skip, overwrite or increment filename (s,o,i)? " answer
+        case ${answer} in
+            "s")
+                echo ""
+                return
+                ;;
+            "o")
+                echo "${checkfile}"
+                return
+                ;;
+            "i")
+                ((i++))
+                checkfile="${basename}_$(printf "%03d" "${i}").${extension}"
+                ;;
+        esac
     done
     echo "${checkfile}"
 }
@@ -84,8 +97,10 @@ syncfile() {
     destdir="${importdir}/${year}/${month}/${year}-${month}-${day}"
     [[ ! -d ${destdir} ]] && mkdir -p "${destdir}"
     extension="${filepath##*.}"
+    extension="${extension,,}"
     basename="${destdir}/${year}${month}${day}_${hour}${minute}${second}"
     destfile=$(latest "${basename}" "${extension}")
+    [[ -z ${destfile} ]] && return 1
     # Also copy and rename xml files for video's if present
     if [[ -f ${filepath%.*}M01.XML ]]; then
         rsync -a --no-p --no-g --chmod=F644 "${filepath%.*}M01.XML" "${destfile%.*}.XML"
@@ -131,7 +146,7 @@ syncphotos() {
         [[ ${NOTIFY} -eq 1 ]] && notify-send -a import_photos \
             -h int:value:"$(echo "${count}*100/${numfiles}" | bc)" \
             " Photo/Video import" "Importing photo's from ${device}..."
-        syncfile "${f}" "${importdir}"
+        syncfile "${f}" "${importdir}" || _warning "Skipping file ${f}..."
         count=$((count + 1))
     done
 }
@@ -158,7 +173,7 @@ syncmovies() {
         [[ ${NOTIFY} -eq 1 ]] && notify-send -a import_photos \
             -h int:value:"$(echo "${count}*100/${numfiles}" | bc)" \
             " Photo/Video import" "Importing video's from ${device}..."
-        syncfile "${f}" "${importdir}"
+        syncfile "${f}" "${importdir}" || _warning "Skipping file ${f}..."
         count=$((count + 1))
     done
 }
@@ -169,7 +184,7 @@ importcamera() {
     local -r moviedir=/media/photocamera/PRIVATE
 
     syncphotos "${importdir}" "${photodir}" "photo camera"
-    syncmovies "${importdir}" "${moviedir}" "osmo action sd-card"
+    syncmovies "${importdir}" "${moviedir}" "photo camera"
     printf "Done!                                                               \n"
     [[ ${NOTIFY} -eq 1 ]] && notify-send " Photo/Video import" \
         "All media from photo camera is imported."
@@ -177,6 +192,15 @@ importcamera() {
 
 importosmointernal() {
     echo "Importing from Osmo Action Internal..."
+    local -r importdir="${HOME}/pictures/action-camera"
+    local -r photodir=/media/osmo-internal/DCIM/DJI_001
+    local -r moviedir=/media/osmo-internal/DCIM/DJI_001
+
+    syncphotos "${importdir}" "${photodir}" "osmo action internal"
+    syncmovies "${importdir}" "${moviedir}" "osmo action internal"
+    printf "Done!                                                               \n"
+    [[ ${NOTIFY} -eq 1 ]] && notify-send " Photo/Video import" \
+        "All media from osmo action internal is imported."
 }
 
 importosmosd() {
@@ -188,7 +212,7 @@ importosmosd() {
     syncmovies "${importdir}" "${moviedir}" "osmo action sd-card"
     printf "Done!                                                               \n"
     [[ ${NOTIFY} -eq 1 ]] && notify-send " Photo/Video import" \
-        "All media from photo camera is imported."
+        "All media from osmo action sd-card is imported."
 }
 
 importiphone() {
