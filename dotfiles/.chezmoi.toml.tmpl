@@ -1,6 +1,7 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
 {{- $signingkey := promptStringOnce . "signingkey" "Git signing key" -}}
 {{- $beamdir := promptStringOnce . "beamdir" "The default beamer presentations directory" -}}
+{{- $mediaMount := promptStringOnce . "mediaMount" "The mount (directory) where to put (large) media files" -}}
 {{- $ethernetInterface := promptStringOnce . "ethernetInterface" "The name of the primary ethernet device" -}}
 {{- $wifiInterface := promptStringOnce . "wifiInterface" "The name of the primary wifi device" -}}
 {{- $battery := promptStringOnce . "battery" "The name of the battery device" -}}
@@ -15,6 +16,7 @@
     email = {{ $email | quote }}
     signingkey = {{ $signingkey | quote }}
     beamdir = {{ $beamdir | quote }}
+    mediaMount = {{ $mediaMount | quote }}
     ethernetInterface = {{ $ethernetInterface | quote }}
     wifiInterface = {{ $wifiInterface | quote }}
     battery = {{ $battery | quote }}

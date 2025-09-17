@@ -192,7 +192,7 @@ importcamera() {
 
 importosmointernal() {
     echo "Importing from Osmo Action Internal..."
-    local -r importdir="${HOME}/pictures/action-camera"
+    local -r importdir="${MEDIA_MOUNT}/pictures/action-camera"
     local -r photodir=/media/osmo-internal/DCIM/DJI_001
     local -r moviedir=/media/osmo-internal/DCIM/DJI_001
 
@@ -204,7 +204,7 @@ importosmointernal() {
 }
 
 importosmosd() {
-    local -r importdir="${HOME}/pictures/action-camera"
+    local -r importdir="${MEDIA_MOUNT}/pictures/action-camera"
     local -r photodir=/media/osmo-sdcard/DCIM/DJI_001
     local -r moviedir=/media/osmo-sdcard/DCIM/DJI_001
 
