@@ -155,6 +155,8 @@ misc {
 
 workspace = special:scratchpad, gapsin:5, gapsout:50
 workspace = special:scratchpad, on-created-empty:$terminal
+workspace = special:documentation, gapsin:5, gapsout:50
+workspace = special:documentation, on-created-empty:$terminal zett
 
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 $mainMod = SUPER
@@ -200,9 +202,18 @@ bind = $mainMod SHIFT, 8, movetoworkspace, 8
 bind = $mainMod SHIFT, 9, movetoworkspace, 9
 bind = $mainMod SHIFT, 0, movetoworkspace, 10
 
-# Example special workspace (scratchpad)
-bind = $mainMod, S, togglespecialworkspace, scratchpad
-bind = $mainMod SHIFT, S, movetoworkspace, special:scratchpad
+# Open *s*pecial workspaces
+bind = $mainMod, S, submap, open
+submap = open
+# Special workspace: *s*cratchpad
+bind = , S, togglespecialworkspace, scratchpad
+bind = , S, submap, reset
+# Special workspace: *d*ocumentation
+bind = , D, togglespecialworkspace, documentation
+bind = , D, submap, reset
+# reset submap
+bind = , escape, submap, reset
+submap = reset
 
 # Get from clipboard history
 bind = $mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy
