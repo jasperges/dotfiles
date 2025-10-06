@@ -3,6 +3,7 @@
 -- Add any additional options here
 vim.opt.exrc = true
 vim.opt.wrap = true
+vim.g.lazyvim_python_lsp = "basedpyright"
 -- Custom setting for setting the default state of Github Copilot
 vim.g.copilot_enabled = false
 -- Disable language providers
