@@ -88,7 +88,6 @@ export SCRIPTS=~/.local/bin/tools
 
 # Remember last arg will be first in path
 pathprepend \
-    "${HOME}/.local/pyenv/bin" \
     "${HOME}/.local/share/asdf/shims" \
     "${HOME}/.local/share/cargo/bin" \
     "${HOME}/.local/bin/cargo/bin" \
@@ -109,14 +108,6 @@ pathappend \
     "${HOME}/.local/distrobox/bin" \
     "${HOME}/.ghcup/bin" \
     "${HOME}/.cabal/bin"
-
-# Pyenv
-export PYENV_ROOT="${HOME}/.local/pyenv"
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-if command -v pyenv &> /dev/null; then
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
 
 # asdf
 export ASDF_DATA_DIR="${HOME}/.local/share/asdf"

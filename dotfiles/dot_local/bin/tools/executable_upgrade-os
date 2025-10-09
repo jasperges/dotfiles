@@ -77,10 +77,10 @@ asdf_upgrade() {
 pyenv_upgrade() {
     _info_header "pyenv update"
     pyenv update
-    # Install both Python 3.12 and the latest 3.x release and use the latest
+    # Install latest Python 3.x release and use the latest
     # 3.x release globally.
-    pyenv install --skip-existing 3.12 3
-    pyenv global 3 3.12
+    pyenv install --skip-existing 3
+    pyenv global 3
 }
 
 # shellcheck disable=SC2317
@@ -110,7 +110,6 @@ main() {
     rustup_upgrade || _has_errors=true
     cargo_upgrade || _has_errors=true
     asdf_upgrade || _has_errors=true
-    pyenv_upgrade || _has_errors=true
     if [[ ${_has_errors} = true ]]; then
         _error "There were errors during the upgrade process. Please check the output for more information."
         _exitcode=1

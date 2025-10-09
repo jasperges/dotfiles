@@ -46,12 +46,6 @@ set -o vi
 # fuzzy finder
 [[ -f ${HOME}/.fzf.bash ]] && source "${HOME}/.fzf.bash"
 
-# pyenv
-if command -v pyenv &> /dev/null; then
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
-
 # nix
 # [[ -f ${HOME}/.nix-profile/etc/profile.d/nix.sh ]] && source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 

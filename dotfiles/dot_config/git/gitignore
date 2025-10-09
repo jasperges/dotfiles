@@ -1,9 +1,6 @@
 # mapping authors for git shortlog
 /.mailmap
 
-# pyenv
-.python-version
-
 # dotenv
 .env
 
