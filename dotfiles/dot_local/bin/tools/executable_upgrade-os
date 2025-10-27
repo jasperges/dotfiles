@@ -1,17 +1,23 @@
 #!/bin/bash
 
+set -euo pipefail
+
+# shellcheck disable=SC2317
 _info_header() {
     local title="$1"
     local title_length=${#title}
-    local padding=$(((72 - title_length) / 2))
+    local total_padding=$(((72 - title_length) / 2))
+    local left_padding=$total_padding
+    local right_padding=$((total_padding + (72 - title_length) % 2))
     local padded_title
-    padded_title=$(printf "%*s%s%*s" ${padding} "" "${title}" ${padding} "")
+    padded_title=$(printf "%*s%s%*s" "${left_padding}" "" "${title}" "${right_padding}" "")
 
     _info "\n================================================================================"
     _info "=== ${padded_title} ==="
     _info "================================================================================\n"
 }
 
+# shellcheck disable=SC2317
 package_manager_upgrade() {
     _info_header "DNF update"
     if command -v dnf &> /dev/null; then
@@ -24,21 +30,25 @@ package_manager_upgrade() {
     fi
 }
 
+# shellcheck disable=SC2317
 flatpak_upgrade() {
     _info_header "Flatpak update"
     flatpak update
 }
 
+# shellcheck disable=SC2317
 rustup_upgrade() {
     _info_header "Rust update"
     rustup self update && rustup update
 }
 
+# shellcheck disable=SC2317
 cargo_upgrade() {
     _info_header "Cargo update"
     cargo install-update --all
 }
 
+# shellcheck disable=SC2317
 asdf_upgrade() {
     _info_header "ASDF update"
     local lang
@@ -52,17 +62,14 @@ asdf_upgrade() {
                 # asdf latest gleam returns 'nightly' and we don't want that
                 _install_version=$(asdf list all gleam | grep -Ev "(.*-rc[0-9]+|nightly)" | sort | tail -n1)
                 ;;
-            "haskell")
-                _install_version="9.4-latest"
-                ;;
             "lua")
                 _install_version="5.1"
                 ;;
-            "nodejs")
-                asdf cmd nodejs update-nodebuild
-                _lts=$(asdf cmd nodejs resolve lts --latest-available)
-                _install_version="${_lts}"
-                ;;
+            # "nodejs")
+            #     asdf cmd nodejs update-nodebuild
+            #     _lts=$(asdf cmd nodejs resolve lts --latest-available)
+            #     _install_version="${_lts}"
+            #     ;;
             *)
                 _install_version=$(asdf latest "${lang}")
                 ;;
@@ -74,15 +81,6 @@ asdf_upgrade() {
     done
 }
 
-pyenv_upgrade() {
-    _info_header "pyenv update"
-    pyenv update
-    # Install latest Python 3.x release and use the latest
-    # 3.x release globally.
-    pyenv install --skip-existing 3
-    pyenv global 3
-}
-
 # shellcheck disable=SC2317
 handle_ctrl_c() {
     echo "Caught Ctrl+C, aborting..."
@@ -90,35 +88,56 @@ handle_ctrl_c() {
 }
 
 main() {
-    local _non_interactive=false
-    local _has_errors=false
-    local -i _exitcode=0
+    local non_interactive=false
+    local has_errors=false
+    local -i exit_code=0
+    local -r usage="Usage: $0 [--non-interactive]"
+
+    local -r upgrade_functions=(
+        "package_manager_upgrade"
+        "flatpak_upgrade"
+        "rustup_upgrade"
+        "cargo_upgrade"
+        "asdf_upgrade"
+    )
 
     trap 'handle_ctrl_c' SIGINT
 
     # Check for '--non-interactive' flag
-    if [[ "$1" == "--non-interactive" ]]; then
-        _non_interactive=true
-    elif [[ "$1" != "" ]]; then
-        echo "Unknown parameter: $1"
-        echo "Usage: $0 [--non-interactive]"
-        exit 1
-    fi
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            "--non-interactive")
+                non_interactive=true
+                shift
+                ;;
+            --)
+                shift
+                break
+                ;;
+            -*)
+                echo "Unknown parameter: $1" >&2
+                echo "${usage}" >&2
+                exit 1
+                ;;
+            *)
+                break
+                ;;
+        esac
+    done
 
-    package_manager_upgrade || _has_errors=true
-    flatpak_upgrade || _has_errors=true
-    rustup_upgrade || _has_errors=true
-    cargo_upgrade || _has_errors=true
-    asdf_upgrade || _has_errors=true
-    if [[ ${_has_errors} = true ]]; then
+    for upgrade_function in "${upgrade_functions[@]}"; do
+        "${upgrade_function}" || has_errors=true
+    done
+
+    if [[ ${has_errors} = true ]]; then
         _error "There were errors during the upgrade process. Please check the output for more information."
-        _exitcode=1
+        exit_code=1
     fi
-    if [[ ${_non_interactive} = true ]]; then
+    if [[ ${non_interactive} == true ]]; then
         echo
         read -n1 -s -r -p "Press any key to close this window..."
     fi
-    exit ${_exitcode}
+    exit ${exit_code}
 }
 
 main "$@"
