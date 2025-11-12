@@ -1,13 +1,18 @@
 #!/bin/bash
 
 declare -ir DELAY=5
-declare -r SCREENSHOT_DIR="${HOME}/pictures/screenshots" DATE_FORMAT="%Y%m%d-%H%M%S"
+declare -r SCREENSHOT_DIR="${XDG_SCREENSHOTS_DIR:-${XDG_PICTURES_DIR:-${HOME}/pictures}/screenshots}"
+declare -r DATE_FORMAT="%Y%m%d-%H%M%S"
 
 declare -a CHOICES
 CHOICES=("Selection")
 CHOICES+=("Selection + Delay")
 CHOICES+=("Selection and View")
 CHOICES+=("Selection and View + Delay")
+if [[ ${XDG_SESSION_TYPE} == "wayland" ]]; then
+    CHOICES+=("Selection + Annotate in Satty")
+    CHOICES+=("Selection + Delay + Annotate in Satty")
+fi
 CHOICES+=("Selection + Edit in Gimp")
 CHOICES+=("Selection + Delay + Edit in Gimp")
 
@@ -30,6 +35,12 @@ screenshot_wayland() {
             filename="$(date +${DATE_FORMAT}.png)"
             grimblast --wait "${DELAY}" copysave area "${SCREENSHOT_DIR}/${filename}"
             imv "${SCREENSHOT_DIR}/${filename}"
+            ;;
+        "Selection + Annotate in Satty")
+            grimblast save area - | satty --filename - --output-filename "${SCREENSHOT_DIR}/$(date +${DATE_FORMAT}.png)"
+            ;;
+        "Selection + Delay + Annotate in Satty")
+            grimblast --wait "${DELAY}" save area - | satty --filename - --output-filename "${SCREENSHOT_DIR}/$(date +${DATE_FORMAT}.png)"
             ;;
         "Selection + Edit in Gimp")
             grimblast edit area "${SCREENSHOT_DIR}/$(date +${DATE_FORMAT}.png)"

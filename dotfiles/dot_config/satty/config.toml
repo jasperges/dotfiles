@@ -1,0 +1,4 @@
+[general]
+fullscreen = true
+disable-notifications = true
+actions-on-enter = ["save-to-clipboard"]
