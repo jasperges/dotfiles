@@ -34,4 +34,27 @@ return {
       },
     },
   },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = {
+      code = {
+        sign = false,
+        width = "block",
+        left_pad = 1,
+        right_pad = 2,
+      },
+      heading = {
+        -- sign = true,
+        -- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+        width = "block",
+        left_pad = 1,
+        right_pad = 2,
+        border = true,
+        border_virtual = true,
+      },
+      checkbox = {
+        enabled = true,
+      },
+    },
+  },
 }
