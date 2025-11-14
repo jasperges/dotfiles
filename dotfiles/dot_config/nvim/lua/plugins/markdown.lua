@@ -44,8 +44,8 @@ return {
         right_pad = 2,
       },
       heading = {
-        -- sign = true,
-        -- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+        sign = true,
+        icons = { "󰎤 ", "󰎧 ", "󰎪 ", "󰎭 ", "󰎱 ", "󰎳 " },
         width = "block",
         left_pad = 1,
         right_pad = 2,
