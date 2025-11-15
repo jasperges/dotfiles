@@ -55,6 +55,9 @@ return {
       checkbox = {
         enabled = true,
       },
+      dash = {
+        width = 0.66,
+      },
     },
   },
 }
