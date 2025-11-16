@@ -245,14 +245,18 @@ bind = $mainMod, D, submap, do
 submap = do
 bind = , C, exec, rofi_calc
 bind = , C, submap, reset
-bind = , E, exec, dmenu-unicode
-bind = , E, submap, reset
 bind = , D, exec, bookmarks-documents
 bind = , D, submap, reset
+bind = , E, exec, dmenu-unicode
+bind = , E, submap, reset
+bind = , K, exec, hyprpicker --autocopy --lowercase-hex
+bind = , K, submap, reset
 bind = , M, exec, wayland-monitor-switch
 bind = , M, submap, reset
 bind = , P, exec, choose-tuned-profile
 bind = , P, submap, reset
+bind = , S, exec, take-screenshot
+bind = , S, submap, reset
 bind = , W, exec, workspaces-to-monitors
 bind = , W, submap, reset
 bind = , escape, submap, reset
@@ -281,9 +285,6 @@ bindm = $mainMod, mouse:273, resizewindow
 bind = $mainMod SHIFT, Return, layoutmsg, swapwithmaster
 
 bind = $mainMod, TAB, workspace, previous
-
-# Create screenshots
-bind = $mainMod SHIFT, D, exec, take-screenshot
 
 # Volume down/up/mute
 bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
