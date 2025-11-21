@@ -1,0 +1,31 @@
+%YAML 1.3
+---
+- Key: [Screen Lock, pressed]
+- Execute: hyprlock
+...
+---
+- Key: [Emoji, pressed]
+- Execute: dmenu-unicode
+...
+---
+- Key: [Screen Capture, pressed]
+- Execute: take-screenshot
+...
+---
+- Key: [Mute Microphone, pressed]
+- KeyPress:
+  - XF86_AudioMicMute
+  - click
+...
+---
+- Key: [Mission Control/Task View, pressed]
+- Execute: [rofi, -show, combi, -modes, combi, -combi-modes, 'drun,run']
+...
+---
+- Key: [Multiplatform App Switch/Launchpad, pressed]
+- Execute: [rofi, -show, window]
+...
+---
+- Key: [Calculator, pressed]
+- Execute: kcalc
+...
